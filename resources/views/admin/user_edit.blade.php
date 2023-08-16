@@ -38,6 +38,23 @@
                         <div class="invalid-feedback d-block">{{ $errors->first('password') }}</div>
                     @endif
                 </div>
+                <div class="col-sm-5 fw-bold mb-3">
+                    Szerepkör
+                </div>
+                <div class="col-sm-7">
+                    <select name="roles[]" class="select2 form-control" multiple>
+                    @foreach ($roles AS $role)
+			            <option value="{{ $role->id }}"
+				            @if($user->roles!=null)				
+					            @selected(in_array(old('roles',$role->id),$user->roles))				
+				            @endif
+				        >{{ $role->name}}</option>
+			        @endforeach
+                    </select>
+                    @if ($errors->has('roles'))
+                        <div class="invalid-feedback d-block">{{ $errors->first('roles') }}</div>
+                    @endif
+                </div>
             </div>
             <div class="bg-dark p-3">
                 <div class="submit">

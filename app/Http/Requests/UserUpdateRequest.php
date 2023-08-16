@@ -17,6 +17,7 @@ class UserUpdateRequest extends FormRequest
         // E-mail és név ellenőrzése
         $rules['email'] = 'required|email:rfc,dns';           
         $rules['name'] = 'required';
+        $rules['roles'] = 'required';
 
         // Jelszó ellenőrzése
         // Csak új felhasználó létrehozásakor legyen kötelező megadni!
@@ -42,7 +43,8 @@ class UserUpdateRequest extends FormRequest
            'name.required' => 'Név megadása kötelető!',
            'password.required' => 'Jelszó megadása kötelező!',
            'password.min' => 'Jelszó minimum 8 karaktert tartalmazhat!',
-           'password.regex' => 'A jelszó legalább egy számot, legalább egy kis betűt és legalább egy nagy betűt kell tartalmaznia!'
+           'password.regex' => 'A jelszó legalább egy számot, legalább egy kis betűt és legalább egy nagy betűt kell tartalmaznia!',
+           'roles.required' => 'Legalább egy szerepkör megadása kötelező!'
         ];
     }
 }

@@ -10,14 +10,22 @@ use Illuminate\Support\Facades\Hash;
 class UserUpdate {
 
     public $name;
-    private $id, $email, $password;
+    private $id, $email, $password, $roles;
 
     // Adatok lekérdezése
     function __construct(UserUpdateRequest $userUpdateRequest) {
         $this->id = $userUpdateRequest->id;
         $this->email = $userUpdateRequest->email;
         $this->name = $userUpdateRequest->name;
-        $this->password = $userUpdateRequest->password;        
+        $this->password = $userUpdateRequest->password;   
+        $this->roles = $userUpdateRequest->roles;     
+        $this->updateRoles();
+    }
+
+    // Szerepkörök frissítése
+    private function updateRoles() {
+
+        // Felhasználó módosítása
         $this->updateUser();
     }
 

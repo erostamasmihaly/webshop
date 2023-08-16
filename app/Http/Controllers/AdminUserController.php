@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Http\Services\UserUpdate;
+use App\Models\Role;
 use App\Models\User;
+use App\Models\UserRole;
 use Illuminate\Http\Request;
 
 class AdminUserController extends Controller
@@ -41,9 +43,16 @@ class AdminUserController extends Controller
             $user = User::find($id);
         }
 
+        // Felhasználóhoz tartozó szerepkörök
+        $user->roles = UserRole::where("user_id", $id)->pluck("role_id")->toArray(); 
+
+        // Szerepkörök lekérdezése
+        $roles = Role::get();
+
         // Oldal meghívása
         return view('admin.user_edit',[
-            'user' => $user
+            'user' => $user,
+            'roles' => $roles
         ]);
     }
 
