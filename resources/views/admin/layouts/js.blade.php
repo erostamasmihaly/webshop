@@ -4,6 +4,7 @@
 <script src="{{ asset('js/kulso/select2.min.js') }}" defer></script>
 <script src="{{ asset('js/kulso/jquery-ui.js') }}" defer></script>
 <script src="{{ asset('js/kulso/popper.min.js') }}" defer></script>
+<script src="{{ asset('js/kulso/font-awesome.js') }}" defer></script>
 
 <!-- Saját -->
 <script src="{{ asset('js/sajat/select2.js') }}" defer></script>
