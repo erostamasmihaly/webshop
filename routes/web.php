@@ -11,10 +11,10 @@ Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-// Admin felület
-Route::group([ 'prefix' => 'admin' ], function() {
+//// Admin szerepkör
 
-    // Vezérlőpult
-    Route::get('index', [App\Http\Controllers\AdminIndexController::class, 'index'])->name('admin_index');
+// Vezérlőpult
+require 'admin/index.php';
 
-});
+// Felhasználók
+require 'admin/user.php';
