@@ -1,4 +1,5 @@
 <!-- Külső -->
+<script src="{{ asset('js/kulso/jquery-3.6.0.min.js') }}" defer></script>
 <script src="{{ asset('js/kulso/sb-scripts.js') }}" defer></script>
 <script src="{{ asset('js/kulso/datatables.min.js') }}" defer></script>
 <script src="{{ asset('js/kulso/select2.min.js') }}" defer></script>

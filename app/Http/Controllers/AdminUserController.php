@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Services\UserUpdate;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -20,7 +21,7 @@ class AdminUserController extends Controller
         $users = User::get();
 
         // Oldal meghívása
-        return view('admin.user.user',[
+        return view('admin.user',[
             'users' => $users
         ]);
     }    
@@ -29,10 +30,10 @@ class AdminUserController extends Controller
     public function edit($id) {
 
         if ($id==0) {
+            
             // Új felhasználó
             $user = new User();
             $user->id = 0;
-            $user->active = 1;
 
         } else {
         
@@ -41,7 +42,7 @@ class AdminUserController extends Controller
         }
 
         // Oldal meghívása
-        return view('admin.user.user_edit',[
+        return view('admin.user_edit',[
             'user' => $user
         ]);
     }
