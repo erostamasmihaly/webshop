@@ -18,3 +18,6 @@ require 'admin/index.php';
 
 // Felhasználók
 require 'admin/user.php';
+
+// Kategóriák
+require 'admin/category.php';

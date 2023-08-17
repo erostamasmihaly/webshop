@@ -14,7 +14,7 @@ class UserUpdateRequest extends FormRequest
     // Validálási szabályok
     public function rules() {        
 
-        // E-mail és név ellenőrzése
+        // Szabályok megadása
         $rules['email'] = 'required|email:rfc,dns';           
         $rules['name'] = 'required';
         $rules['roles'] = 'required';
