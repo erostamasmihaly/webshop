@@ -88,6 +88,36 @@
                         @endif
                     </div>  
                 </div>   
+                <div class="row mb-2">
+                    <div class="col-sm-4 fw-bold">
+                        GPS szélesség
+                    </div>
+                    <div class="col-sm-8">
+                        <input type="text" class="form-control" name="latitude" value="{{ old('latitude', $shop->latitude) }}"/>
+                        @if ($errors->has('latitude'))
+                            <div class="invalid-feedback d-block">{{ $errors->first('latitude') }}</div>
+                        @endif
+                    </div>  
+                </div>  
+                <div class="row mb-2">
+                    <div class="col-sm-4 fw-bold">
+                        GPS hosszúság
+                    </div>
+                    <div class="col-sm-8">
+                        <input type="text" class="form-control" name="longitude" value="{{ old('longitude', $shop->longitude) }}"/>
+                        @if ($errors->has('longitude'))
+                            <div class="invalid-feedback d-block">{{ $errors->first('longitude') }}</div>
+                        @endif
+                    </div>  
+                </div>  
+                <div class="row mb-2">
+                    <div class="col-sm-4 fw-bold">
+                        Térkép
+                    </div>
+                    <div class="col-sm-8">
+                        <div id="map"></div>
+                    </div>  
+                </div> 
             </div>
             <div class="bg-dark p-3">
                 <div class="submit">

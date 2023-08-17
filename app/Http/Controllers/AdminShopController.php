@@ -34,6 +34,8 @@ class AdminShopController extends Controller
             // Új üzlet
             $shop = new Shop();
             $shop->id = 0;
+            $shop->latitude = 48.1037;
+            $shop->longitude = 20.7781;
 
         } else {
         
