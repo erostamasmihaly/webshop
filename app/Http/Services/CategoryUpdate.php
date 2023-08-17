@@ -9,15 +9,13 @@ use Illuminate\Support\Facades\DB;
 class CategoryUpdate
 {
     public $name;
-    private $id, $category_id, $sequence;
+    private $id;
 
     // Adatok lekérdezése
     public function __construct(CategoryUpdateRequest $categoryUpdateRequest)
     {
         $this->id = $categoryUpdateRequest->id;
         $this->name = $categoryUpdateRequest->name;
-        $this->category_id = $categoryUpdateRequest->category_id;
-        $this->sequence = $categoryUpdateRequest->sequence;
         $this->updateCategory();
     }
 
@@ -33,10 +31,21 @@ class CategoryUpdate
                 $category = Category::find($this->id);
             }
 
+            // Lekérdezni, hogy van-e szülőtlen kategória és ha igen, akkor melyik az utolsó
+            $has_last_sequence = Category::whereNull('category_id')->orderBy('sequence','desc')->first();
+            if ($has_last_sequence) {
+
+                // Ha van, akkor a következő az 1-el nagyobb sorszámot fogja kapni
+                $sequence = $has_last_sequence->sequence + 1;
+            } else {
+
+                // Ha nincs, akkor 0 lesz a sorszám
+                $sequence = 1;
+            }
+
             // További adatok módosítása
             $category->name = $this->name;
-            $category->category_id = $this->category_id;
-            $category->sequence = $this->sequence;
+            $category->sequence = $sequence;
             
             // Mentés
             $category->save();

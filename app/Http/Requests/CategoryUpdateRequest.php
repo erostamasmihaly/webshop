@@ -16,6 +16,9 @@ class CategoryUpdateRequest extends FormRequest
 
         // Szabályok megadása
         $rules['name'] = 'required';
+
+        // Visszatérés a szabályokkal
+        return $rules;
     }
 
     // Validálási hibaüzenetek

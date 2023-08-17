@@ -41,9 +41,13 @@ class AdminCategoryController extends Controller
             $category = Category::find($id);
         }
 
+        // Összes kategória lekérdezése
+        $parents = Category::get();
+
         // Oldal meghívása
         return view('admin.category_edit',[
-            'category' => $category
+            'category' => $category,
+            'parents' => $parents
         ]);
     }
 

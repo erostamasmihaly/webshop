@@ -19,7 +19,7 @@
                     @if ($errors->has('name'))
                         <div class="invalid-feedback d-block">{{ $errors->first('name') }}</div>
                     @endif
-                </div>        
+                </div>     
             </div>
             <div class="bg-dark p-3">
                 <div class="submit">
