@@ -12,7 +12,7 @@
         <div class="card">
             <div class="card-body row">
                 <div class="col-sm-5 fw-bold mb-3">
-                    Felhasználó neve
+                    Felhasználói név
                 </div>
                 <div class="col-sm-7">
                     <input type="text" class="form-control" name="name" value="{{ old('name', $user->name) }}"/>
@@ -21,7 +21,25 @@
                     @endif
                 </div>
                 <div class="col-sm-5 fw-bold mb-3">
-                    E-mail címe
+                    Vezetéknév
+                </div>
+                <div class="col-sm-7">
+                    <input type="text" class="form-control" name="surname" value="{{ old('surname', $user->surname) }}"/>
+                    @if ($errors->has('surname'))
+                        <div class="invalid-feedback d-block">{{ $errors->first('surname') }}</div>
+                    @endif
+                </div>
+                <div class="col-sm-5 fw-bold mb-3">
+                    Keresztnév
+                </div>
+                <div class="col-sm-7">
+                    <input type="text" class="form-control" name="forename" value="{{ old('forename', $user->forename) }}"/>
+                    @if ($errors->has('forename'))
+                        <div class="invalid-feedback d-block">{{ $errors->first('forename') }}</div>
+                    @endif
+                </div>
+                <div class="col-sm-5 fw-bold mb-3">
+                    E-mail cím
                 </div>
                 <div class="col-sm-7">
                     <input type="text" class="form-control" name="email" value="{{ old('email', $user->email) }}"/>
@@ -30,7 +48,7 @@
                     @endif
                 </div>
                 <div class="col-sm-5 fw-bold mb-3">
-                    Jelszava
+                    Jelszó
                 </div>
                 <div class="col-sm-7">
                     <input type="password" class="form-control" name="password">
@@ -55,11 +73,19 @@
                         <div class="invalid-feedback d-block">{{ $errors->first('roles') }}</div>
                     @endif
                 </div>
+                <div class="col-sm-5 fw-bold mb-3">
+                    Aktív
+                </div>
+                <div class="col-sm-7">
+                    <select name="active" class="form-control">
+                        <option value="0" @selected(old('active',$user->active)==0)>Nem</option>
+                        <option value="1" @selected(old('active',$user->active)==1)>Igen</option>
+                    </select>
+                </div>
             </div>
             <div class="bg-dark p-3">
                 <div class="submit">
-                    <button type="submit" class="btn btn-primary">Mentés</button>
-                    <a href="{{ route('admin_user') }}" class="btn btn-primary">Kilépés mentés nélkül</a>              
+                    <button type="submit" class="btn btn-primary">Mentés</button>            
                 </div>
             </div>
         </div>

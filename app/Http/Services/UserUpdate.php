@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Hash;
 class UserUpdate {
 
     public $name;
-    private $id, $email, $password, $roles;
+    private $id, $email, $password, $roles, $active, $surname, $forename;
 
     // Adatok lekérdezése
     function __construct(UserUpdateRequest $userUpdateRequest) {
@@ -19,7 +19,10 @@ class UserUpdate {
         $this->email = $userUpdateRequest->email;
         $this->name = $userUpdateRequest->name;
         $this->password = $userUpdateRequest->password;   
-        $this->roles = $userUpdateRequest->roles;     
+        $this->roles = $userUpdateRequest->roles;
+        $this->active = $userUpdateRequest->active;
+        $this->surname = $userUpdateRequest->surname;
+        $this->forename = $userUpdateRequest->forename;     
         $this->updateRoles();
     }
 
@@ -78,6 +81,9 @@ class UserUpdate {
 
             // További adatok mentése
             $user->name = $this->name;
+            $user->active = $this->active;
+            $user->surname = $this->surname;
+            $user->forename = $this->forename;
 
             // Felhasználó mentése
             $user->save();
