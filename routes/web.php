@@ -21,3 +21,6 @@ require 'admin/user.php';
 
 // Kategóriák
 require 'admin/category.php';
+
+// Üzletek
+require 'admin/shop.php';
