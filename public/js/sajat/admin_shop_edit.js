@@ -31,6 +31,39 @@ $(function () {
         var latitude = position.lat.toFixed(4);
         var longitude = position.lng.toFixed(4);
 
+        // Térkép és a hozzá kapcsolódó mezők módosítása
+		changeMap(latitude, longitude);
+        
+      });
+
+      // Koordináta keresése cím alapján
+      $("#google").on("click", function() {
+
+        address = $("input[name='address']").val();
+    
+        // Google Térképnek a cím elküldése
+		var googleAPI = "https://maps.googleapis.com/maps/api/geocode/json?";
+		$.getJSON(googleAPI, {
+			address: address,
+			sensor: "false",
+			key: "AIzaSyDtcyeMMK8AMF8j4En1k1ItJNcyErcXvIM"
+		})
+		.done(function(data) {
+
+            console.log(data);
+
+			// Koordináták lekérdezése a válaszból
+			var latitude = data.results[0].geometry.location.lat;
+			var longitude = data.results[0].geometry.location.lng;
+
+			// Térkép és a hozzá kapcsolódó mezők módosítása
+			changeMap(latitude, longitude);
+		});
+    });
+
+    // Térkép és a hozzá kapcsolódó mezők módosítása
+    function changeMap(latitude, longitude) {
+
         // Beviteli mezők módosítása
         $("input[name='latitude']").val(latitude);
         $("input[name='longitude']").val(longitude);
@@ -44,8 +77,6 @@ $(function () {
         // Térkép mozgatása erre a pontra
         map.panTo(point);
 
-      });
-
-      
+    }
 
 });
