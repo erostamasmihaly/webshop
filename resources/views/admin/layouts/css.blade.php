@@ -10,4 +10,5 @@
 <!-- Admin: Üzlet szerkesztése -->
 @if (Request::is('admin/shop/edit/*'))
     <link href="{{ asset('css/sajat/admin_shop_edit.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/kulso/leaflet.css') }}" rel="stylesheet">
 @endif

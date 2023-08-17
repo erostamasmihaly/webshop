@@ -11,3 +11,9 @@
 <script src="{{ asset('js/sajat/select2.js') }}" defer></script>
 <script src="{{ asset('js/sajat/datumvalaszto.js') }}" defer></script>
 <script src="{{ asset('js/sajat/tablak.js') }}" defer></script>
+
+<!-- Admin: Üzlet szerkesztése -->
+@if (Request::is('admin/shop/edit/*'))
+    <script src="{{ asset('js/sajat/admin_shop_edit.js') }}" defer></script>
+    <script src="{{ asset('js/kulso/leaflet.js') }}" defer></script>
+@endif
