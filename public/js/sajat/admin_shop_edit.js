@@ -28,8 +28,8 @@ $(function () {
         var position = marker.getLatLng();
 
         // Szélesség és hosszúság lekérdezése és kerekítése
-        var latitude = position.lat.toFixed(4);
-        var longitude = position.lng.toFixed(4);
+        var latitude = position.lat;
+        var longitude = position.lng;
 
         // Térkép és a hozzá kapcsolódó mezők módosítása
 		changeMap(latitude, longitude);
@@ -46,7 +46,7 @@ $(function () {
 		$.getJSON(googleAPI, {
 			address: address,
 			sensor: "false",
-			key: "AIzaSyDtcyeMMK8AMF8j4En1k1ItJNcyErcXvIM"
+			key: "AIzaSyDsDnKkPmP5LxA_CL0-d2WiywXjZPiMPKw"
 		})
 		.done(function(data) {
 
@@ -63,6 +63,10 @@ $(function () {
 
     // Térkép és a hozzá kapcsolódó mezők módosítása
     function changeMap(latitude, longitude) {
+
+        // Kerekítés
+        latitude = latitude.toFixed(4);
+        longitude = longitude.toFixed(4);
 
         // Beviteli mezők módosítása
         $("input[name='latitude']").val(latitude);
