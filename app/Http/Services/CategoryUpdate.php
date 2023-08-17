@@ -6,7 +6,7 @@ use App\Http\Requests\CategoryUpdateRequest;
 use App\Models\Category;
 use Illuminate\Support\Facades\DB;
 
-class UserUpdate
+class CategoryUpdate
 {
     public $name;
     private $id, $category_id, $sequence;
