@@ -11,10 +11,10 @@
         @csrf
         <div class="card">
             <div class="card-body row">
-                <div class="col-sm-5 fw-bold mb-3">
-                    Név
+                <div class="col-sm-4 fw-bold mb-3">
+                    Név *
                 </div>
-                <div class="col-sm-7">
+                <div class="col-sm-8">
                     <input type="text" class="form-control" name="name" value="{{ old('name', $category->name) }}"/>
                     @if ($errors->has('name'))
                         <div class="invalid-feedback d-block">{{ $errors->first('name') }}</div>

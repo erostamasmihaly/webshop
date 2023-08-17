@@ -6,23 +6,27 @@ use Illuminate\Foundation\Http\FormRequest;
 
 class ShopUpdateRequest extends FormRequest
 {
-    /**
-     * Determine if the user is authorized to make this request.
-     */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
-    /**
-     * Get the validation rules that apply to the request.
-     *
-     * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array|string>
-     */
-    public function rules(): array
-    {
+    // Validálási szabályok
+    public function rules() {
+
+        // Szabályok megadása
+        $rules['name'] = 'required';
+        $rules['summary'] = 'required';
+
+        // Visszatérés a szabályokkal
+        return $rules;
+    }
+
+    // Validálási hibaüzenetek
+    public function messages() {
         return [
-            //
+           'name.required' => 'Név megadása kötelető!',
+           'summary.required' => 'Rövid leírás megadása kötelező!'
         ];
     }
 }
