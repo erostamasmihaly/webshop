@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Services\ShopUpdate;
+use App\Models\Position;
 use App\Models\Shop;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -68,9 +69,18 @@ class AdminShopController extends Controller
     }
 
     // Új alkalmazott felvitele
-    public function add_user() {
+    public function add_user($shop_id) {
+
+        // Seller joggal rendelkező felhasználók lekérdezése
+        $sellers = User::join('user_roles','user_roles.user_id','users.id')->join('roles','user_roles.role_id','roles.id')->where('roles.name','seller')->get(['users.id','users.surname','users.forename']);
+
+        // Bolthoz tartozó munkakörök lekérdezése
+        $positions = Position::where('shop_id', $shop_id)->get();
         
         // Oldal meghívása
-        return view('admin.shop_edit_user');
+        return view('admin.shop_edit_user',[
+            'sellers' => $sellers,
+            'positions' => $positions
+        ]);
     }
 }
