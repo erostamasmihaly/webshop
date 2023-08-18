@@ -20,5 +20,7 @@
 			   @endforeach
 			</tbody>
 		</table>
+	@else
+		@include('layouts.empty')
 	@endif
 </div>
