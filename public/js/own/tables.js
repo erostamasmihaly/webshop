@@ -3,15 +3,15 @@ $(function () {
     table = $(".datatable").DataTable({
         responsive: true, // Reszponzív
         language: { 
-            url: "/js/sajat/hu.json"
+            url: "/js/own/hu.json"
         }, // Magyar nyelv
         lengthMenu: [10, 20, 30], // Oldalankénti találatok száma
         stateSave: true, // Visszatérés esetén az eredeti állapot megtartása
         stateDuration:-1, // Visszatérés eredeti állapotba új fül megnyitásakor
         order: [], // Betöltéskor még ne legyen sorrend alkalmazva
         initComplete: function(settings, json) {
-            $(".datatable").css("display","table"); // Tábla megjelenítése
-            $("#folyamatban").remove(); // Folyamatban szöveg törlése
+            $(".datatable").removeClass("d-none").addClass("d-table"); // Tábla megjelenítése
+            $("#waiting").addClass("d-none"); // Folyamatban szöveg törlése
         }
     });   
 });

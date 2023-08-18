@@ -9,7 +9,8 @@
     <div class="card">
         <div class="card-body">
             @if ($shops->count() !== 0)
-                <table class="datatable table table-bordered table-striped table-condensed">
+                @include('layouts.waiting')
+                <table class="datatable table table-bordered table-striped table-condensed d-none">
                     <thead>
                         <tr>
                             <th scope="col" class="all">Név</th>
