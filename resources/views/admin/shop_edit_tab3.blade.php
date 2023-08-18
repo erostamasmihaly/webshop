@@ -24,6 +24,6 @@
 		@include('layouts.empty')
 	@endif
 	<div>
-		<a href="{{ route('admin_shop_add_user',$shop->id) }}" class="btn btn-primary">Új alkalmazott felvitele</a>
+		<a href="{{ route('admin_shop_user_edit',[$shop->id,0]) }}" class="btn btn-primary">Új alkalmazott felvitele</a>
 	</div>
 </div>

@@ -17,7 +17,10 @@ Route::group(['prefix' => 'admin/shop'], function() {
     // Létrehozás
     Route::get('create', [App\Http\Controllers\AdminShopController::class, 'create'])->name('admin_shop_create');
 
-    // Alkalmazott felvitele felület
-    Route::get('add_user/{shopId}', [App\Http\Controllers\AdminShopController::class, 'add_user'])->name('admin_shop_add_user'); 
+    // Alkalmazott szerkesztése
+    Route::get('user_edit/{shopId}/{userId}', [App\Http\Controllers\AdminShopController::class, 'user_edit'])->name('admin_shop_user_edit'); 
+
+    // Alkalmazott mentése
+    Route::put('user', [App\Http\Controllers\AdminShopController::class, 'user_update'])->name('admin_shop_user_update'); 
 
 });

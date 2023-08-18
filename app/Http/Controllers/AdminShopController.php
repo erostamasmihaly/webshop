@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Services\ShopUpdate;
+use App\Http\Services\UserShopUpdate;
 use App\Models\Position;
 use App\Models\Shop;
 use App\Models\User;
@@ -68,8 +69,8 @@ class AdminShopController extends Controller
 
     }
 
-    // Új alkalmazott felvitele
-    public function add_user($shop_id) {
+    // Alkalmazott szerkesztése
+    public function user_edit($shop_id, $user_id) {
 
         // Seller joggal rendelkező felhasználók lekérdezése
         $sellers = User::join('user_roles','user_roles.user_id','users.id')->join('roles','user_roles.role_id','roles.id')->where('roles.name','seller')->get(['users.id','users.surname','users.forename']);
@@ -82,5 +83,11 @@ class AdminShopController extends Controller
             'sellers' => $sellers,
             'positions' => $positions
         ]);
+    }
+
+    // Alkalmazott módosítása
+    public function user_update(UserShopUpdate $userShopUpdate) {
+
+        return redirect()->route('admin_shop_edit', $userShopUpdate->shop_id)->withMessage('Alkalmazott sikeresen módosítva lett.');
     }
 }

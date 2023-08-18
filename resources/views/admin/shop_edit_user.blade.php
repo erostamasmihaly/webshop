@@ -15,7 +15,11 @@
                         Alkalmazott
                     </div>
                     <div class="col-sm-8">
-                        
+                        <select name="seller" class="form-control">
+                            @foreach($sellers AS $seller)
+                                <option value="{{ $seller->id }}">{{ $seller->surname }} {{ $seller->forename }}</option>
+                            @endforeach
+                        </select>
                     </div>    
                 </div> 
                 <div class="row mb-2">
@@ -23,7 +27,11 @@
                         Munkakör
                     </div>
                     <div class="col-sm-8">
-                        
+                        <select name="position" class="form-control">
+                            @foreach($positions AS $position)
+                                <option value="{{ $position->id }}">{{ $position->name }}</option>
+                            @endforeach
+                        </select>
                     </div>    
                 </div> 
             </div>
