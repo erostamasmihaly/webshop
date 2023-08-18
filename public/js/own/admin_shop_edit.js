@@ -83,4 +83,11 @@ $(function () {
 
     }
 
+    // Térképes hiba javítása
+    $(".nav-tabs .nav-link").on("click", function() {
+        setTimeout(function() {
+            map.invalidateSize();
+        }, 500);
+    });
+
 });
