@@ -66,6 +66,12 @@
 		</div>  
 	</div>  
 	<div class="row mb-2">
+		<div class="col-sm-4"></div>
+		<div class="col-sm-8">
+			<button type="button" class="btn btn-primary" id="google">Koordináta meghatározása cím alapján</button> 
+		</div>
+	</div>
+	<div class="row mb-2">
 		<div class="col-sm-4 fw-bold">
 			Térkép
 		</div>

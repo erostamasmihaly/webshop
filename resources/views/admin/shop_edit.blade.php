@@ -24,8 +24,7 @@
             </div>
             <div class="bg-dark p-3">
                 <div class="submit">
-                    <button type="submit" class="btn btn-primary mr-2">Mentés</button>  
-                    <button type="button" class="btn btn-primary" id="google">Koordináta cím alapján</button>          
+                    <button type="submit" class="btn btn-primary mr-2">Mentés</button>           
                 </div>
             </div>
         </div>
