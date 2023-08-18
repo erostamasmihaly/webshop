@@ -11,7 +11,7 @@
 			<tbody>
 			   @foreach ($users as $user)
 				<tr>
-					<td>{{ $user->full_name }}</td>
+					<td>{{ $user->surname }} {{ $user->forename }}</td>
 					<td>{{ $user->position }}</td>
 					<td>
 						<a class="btn btn-primary mb-3" href="">Módosítás</a>

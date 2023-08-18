@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Services\ShopUpdate;
 use App\Models\Shop;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class AdminShopController extends Controller
@@ -43,9 +44,13 @@ class AdminShopController extends Controller
             $shop = Shop::find($id);
         }
 
+        // Üzlet alkalmazottjainak lekérdezése
+        $users = User::join('user_shops','user_shops.user_id','users.id')->join('positions','user_shops.position_id','positions.id')->where('positions.shop_id',$id)->get(['users.surname','users.forename','positions.name AS position']);
+
         // Oldal meghívása
         return view('admin.shop_edit',[
-            'shop' => $shop
+            'shop' => $shop,
+            'users' => $users
         ]);
     }
 
