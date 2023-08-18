@@ -1,19 +1,19 @@
 <!-- Külső -->
-<script src="{{ asset('js/kulso/jquery-3.6.0.min.js') }}" defer></script>
-<script src="{{ asset('js/kulso/sb-scripts.js') }}" defer></script>
-<script src="{{ asset('js/kulso/datatables.min.js') }}" defer></script>
-<script src="{{ asset('js/kulso/select2.min.js') }}" defer></script>
-<script src="{{ asset('js/kulso/jquery-ui.js') }}" defer></script>
-<script src="{{ asset('js/kulso/popper.min.js') }}" defer></script>
-<script src="{{ asset('js/kulso/font-awesome.js') }}" defer></script>
+<script src="{{ asset('js/external/jquery-3.6.0.min.js') }}" defer></script>
+<script src="{{ asset('js/external/sb-scripts.js') }}" defer></script>
+<script src="{{ asset('js/external/datatables.min.js') }}" defer></script>
+<script src="{{ asset('js/external/select2.min.js') }}" defer></script>
+<script src="{{ asset('js/external/jquery-ui.js') }}" defer></script>
+<script src="{{ asset('js/external/popper.min.js') }}" defer></script>
+<script src="{{ asset('js/external/font-awesome.js') }}" defer></script>
 
 <!-- Saját -->
-<script src="{{ asset('js/sajat/select2.js') }}" defer></script>
-<script src="{{ asset('js/sajat/datumvalaszto.js') }}" defer></script>
-<script src="{{ asset('js/sajat/tablak.js') }}" defer></script>
+<script src="{{ asset('js/own/select2.js') }}" defer></script>
+<script src="{{ asset('js/own/selectdate.js') }}" defer></script>
+<script src="{{ asset('js/own/tables.js') }}" defer></script>
 
 <!-- Admin: Üzlet szerkesztése -->
 @if (Request::is('admin/shop/edit/*'))
-    <script src="{{ asset('js/sajat/admin_shop_edit.js') }}" defer></script>
-    <script src="{{ asset('js/kulso/leaflet.js') }}" defer></script>
+    <script src="{{ asset('js/own/admin_shop_edit.js') }}" defer></script>
+    <script src="{{ asset('js/external/leaflet.js') }}" defer></script>
 @endif
