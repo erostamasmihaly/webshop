@@ -7,13 +7,15 @@ use Illuminate\Database\Eloquent\Model;
 use Spatie\Activitylog\LogOptions;
 use Spatie\Activitylog\Traits\LogsActivity;
 
-class UserShop extends Model
+class Position extends Model
 {
     use HasFactory, LogsActivity;
 
     protected $fillable = [
-        'user_id',
-        'position_id'
+        'shop_id',
+        'name',
+        'summary',
+        'body'
     ];
 
     // Naplózás beállítása
