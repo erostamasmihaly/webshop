@@ -30,20 +30,27 @@ class UserShopUpdate
         DB::transaction(function () {
 
             // Ellenőrizni, hogy ilyen alkalmazott-munkakör páros létezik-e
-            
+            $is_exists = UserShop::where('user_id',$this->user_id)->where('position_id',$this->new_position_id)->first();
 
-            // Megnézni, hogy létrehozásról vagy módosításról van szó
-            if ($this->prev_position_id == 0) {
+            // Ha nem létezik
+            if (!$is_exists) {
 
-                //// Ha még nem volt előző munkakör megadva: Felvinni újként
-                $user_shop = new UserShop();
-                $user_shop->user_id = $this->user_id;
-                $user_shop->position_id = $this->new_position_id;
-                $user_shop->save();
-            } else {
+                // Megnézni, hogy létrehozásról vagy módosításról van szó
+                if ($this->prev_position_id == 0) {
 
-                //// Ha már volt előző munkakör megadva: Módosítás
+                    //// Ha még nem volt előző munkakör megadva: Felvinni újként
+                    $user_shop = new UserShop();
+                    $user_shop->user_id = $this->user_id;
+                    $user_shop->position_id = $this->new_position_id;
+                    $user_shop->save();
+                } else {
 
+                    //// Ha már volt előző munkakör megadva: Módosítás
+                    $user_shop = UserShop::where('user_id', $this->user_id)->where('position_id', $this->prev_position_id)->first();
+                    $user_shop->position_id = $this->new_position_id;
+                    $user_shop->save();
+
+                }
 
             }
         });

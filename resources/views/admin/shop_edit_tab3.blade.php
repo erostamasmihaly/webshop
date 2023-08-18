@@ -1,6 +1,6 @@
 <div id="tab3" class="tab-pane fade">
     @if ($users->count() !== 0)
-		<table class="datatable table table-bordered table-striped table-condensed">
+		<table class="datatable table table-bordered table-striped table-condensed w-100">
 			<thead>
 				<tr>
 					<th scope="col" class="all">Név</th>
@@ -14,7 +14,7 @@
 					<td>{{ $user->surname }} {{ $user->forename }}</td>
 					<td>{{ $user->position }}</td>
 					<td>
-						<a class="btn btn-primary mb-3" href="">Módosítás</a>
+						<a class="btn btn-primary mb-3" href="{{ route('admin_shop_user_edit',[$shop->id,$user->user_id,$user->position_id]) }}">Módosítás</a>
 					</td>
 				</tr>
 			   @endforeach
@@ -24,6 +24,6 @@
 		@include('layouts.empty')
 	@endif
 	<div>
-		<a href="{{ route('admin_shop_user_edit',[$shop->id,0]) }}" class="btn btn-primary">Új alkalmazott felvitele</a>
+		<a href="{{ route('admin_shop_user_edit',[$shop->id,0,0]) }}" class="btn btn-primary">Új alkalmazott felvitele</a>
 	</div>
 </div>

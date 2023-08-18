@@ -47,7 +47,7 @@ class AdminShopController extends Controller
         }
 
         // Üzlet alkalmazottjainak lekérdezése
-        $users = User::join('user_shops','user_shops.user_id','users.id')->join('positions','user_shops.position_id','positions.id')->where('positions.shop_id',$id)->get(['users.surname','users.forename','positions.name AS position']);
+        $users = User::join('user_shops','user_shops.user_id','users.id')->join('positions','user_shops.position_id','positions.id')->where('positions.shop_id',$id)->get(['users.surname','users.forename','positions.name AS position','users.id AS user_id','positions.id AS position_id']);
 
         // Oldal meghívása
         return view('admin.shop_edit',[
@@ -70,7 +70,7 @@ class AdminShopController extends Controller
     }
 
     // Alkalmazott szerkesztése
-    public function user_edit($shop_id, $user_id) {
+    public function user_edit($shop_id, $user_id, $prev_position_id) {
 
         // Seller joggal rendelkező felhasználók lekérdezése
         $sellers = User::join('user_roles','user_roles.user_id','users.id')->join('roles','user_roles.role_id','roles.id')->where('roles.name','seller')->get(['users.id','users.surname','users.forename']);
@@ -81,7 +81,10 @@ class AdminShopController extends Controller
         // Oldal meghívása
         return view('admin.shop_edit_user',[
             'sellers' => $sellers,
-            'positions' => $positions
+            'positions' => $positions,
+            'user_id' => $user_id,
+            'prev_position_id' => $prev_position_id,
+            'shop_id' => $shop_id
         ]);
     }
 
