@@ -23,7 +23,42 @@ class UserUpdate {
         $this->active = $userUpdateRequest->active;
         $this->surname = $userUpdateRequest->surname;
         $this->forename = $userUpdateRequest->forename;     
-        $this->updateRoles();
+        $this->updateUser();
+    }
+
+    // Felhasználó módosítása
+    private function updateUser() {
+        DB::transaction(function () {
+
+            // Ha nincs ilyen felhasználó, akkor létrehozni
+            // Ha van, akkor meg lekérdezni
+            if ($this->id == 0) {
+                $user = new User();
+                $user->email = $this->email;
+            } else {
+                $user = User::find($this->id);
+            }            
+
+            // Ha van új jelszó megadva, akkor az új tárolása HASHelve
+            if ($this->password!=null) {
+                $user->password = Hash::make($this->password);
+            }
+
+            // További adatok mentése
+            $user->name = $this->name;
+            $user->active = $this->active;
+            $user->surname = $this->surname;
+            $user->forename = $this->forename;
+
+            // Felhasználó mentése
+            $user->save();
+
+            // Felhasználói azonosító lekérdezése
+            $this->id = $user->id;
+
+            // Szerepkör lekezelése
+            $this->updateRoles();
+        });
     }
 
     // Szerepkörök frissítése
@@ -56,37 +91,6 @@ class UserUpdate {
                 $user_role->save();
             }
 
-            // Felhasználó módosítása
-            $this->updateUser();
-        });
-    }
-
-    // Felhasználó módosítása
-    private function updateUser() {
-        DB::transaction(function () {
-
-            // Ha nincs ilyen felhasználó, akkor létrehozni
-            // Ha van, akkor meg lekérdezni
-            if ($this->id == 0) {
-                $user = new User();
-                $user->email = $this->email;
-            } else {
-                $user = User::find($this->id);
-            }            
-
-            // Ha van új jelszó megadva, akkor az új tárolása HASHelve
-            if ($this->password!=null) {
-                $user->password = Hash::make($this->password);
-            }
-
-            // További adatok mentése
-            $user->name = $this->name;
-            $user->active = $this->active;
-            $user->surname = $this->surname;
-            $user->forename = $this->forename;
-
-            // Felhasználó mentése
-            $user->save();
         });
     }
 
