@@ -15,24 +15,8 @@ class SellerMiddleware
     public function handle(Request $request, Closure $next): Response
     {
 
-        // Alapértelmezetten nincs eladó szerepköre
-        $has_seller_role = false;
-
-        // Ha be van jelentkezve a felhasználó
-        if (Auth::user()) {
-
-            // Eladó szerepkör ID lekérdezése
-            $role_id = Role::where("name", "seller")->first()->id;
-             
-            // Megnézni, hogy van-e eladó szerepköre a felhasználónak
-            $has_seller_role = UserRole::where("user_id", Auth::id())->where("role_id", $role_id)->first();
-            
-        }
-
-        // Ha nincs eladó szerepköre, akkor 403-as hiba
-        if (!$has_seller_role) {
-            abort(403);
-        }
+        // Megnézni, hogy van-e eladó szerepköre
+        restrict_role("seller");
 
         return $next($request);
     }
