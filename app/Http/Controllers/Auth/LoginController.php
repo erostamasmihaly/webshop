@@ -3,38 +3,42 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\User;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
 {
-    /*
-    |--------------------------------------------------------------------------
-    | Login Controller
-    |--------------------------------------------------------------------------
-    |
-    | This controller handles authenticating users for the application and
-    | redirecting them to your home screen. The controller uses a trait
-    | to conveniently provide its functionality to your applications.
-    |
-    */
 
     use AuthenticatesUsers;
 
-    /**
-     * Where to redirect users after login.
-     *
-     * @var string
-     */
-    protected $redirectTo = RouteServiceProvider::HOME;
+    // Belépés után visszatérés a főoldalra
+    protected $redirectTo = '/';
 
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
     public function __construct()
     {
         $this->middleware('guest')->except('logout');
+    }
+
+    protected function authenticated()
+    {
+        
+        // Felhasználó lekérdezése
+        $user = User::find(Auth::id());
+
+        // Ha nem aktív
+        if ($user->active==0) {
+
+            // Kijelentkezés
+            Auth::logout();
+            
+            // Visszatérés a bejelentketési felületre hibaüzenettel
+            return redirect('login')->withErrors(['email' => 'Bejelentkezés megtagadva a fiók inaktív állapota miatt.']);
+        }    
+
+        // Felhasználó naplózása
+        activity()->causedBy($user)->event('login')->log('login');
+
     }
 }
