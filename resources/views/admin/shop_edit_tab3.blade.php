@@ -23,4 +23,7 @@
 	@else
 		@include('layouts.empty')
 	@endif
+	<div>
+		<a href="{{ route('admin_shop_add_user') }}" class="btn btn-primary">Új alkalmazott felvitele</a>
+	</div>
 </div>

@@ -17,4 +17,7 @@ Route::group(['prefix' => 'admin/shop'], function() {
     // Létrehozás
     Route::get('create', [App\Http\Controllers\AdminShopController::class, 'create'])->name('admin_shop_create');
 
+    // Alkalmazott felvitele felület
+    Route::get('add_user', [App\Http\Controllers\AdminShopController::class, 'add_user'])->name('admin_shop_add_user'); 
+
 });

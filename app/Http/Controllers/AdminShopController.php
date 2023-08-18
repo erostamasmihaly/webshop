@@ -66,4 +66,11 @@ class AdminShopController extends Controller
         return redirect()->route('admin_shop_edit', 0);
 
     }
+
+    // Új alkalmazott felvitele
+    public function add_user() {
+        
+        // Oldal meghívása
+        return view('admin.shop_edit_user');
+    }
 }
