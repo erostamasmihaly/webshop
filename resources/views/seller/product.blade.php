@@ -14,13 +14,15 @@
                     <thead>
                         <tr>
                             <th scope="col" class="all">Név</th>
+                            <th scope="col" class="all">Termék ára</th>
                             <th scope="col" class="all">Műveletek</th>
                         </tr>
                     </thead>
                     <tbody>
                        @foreach ($products as $product)
                         <tr>
-                            <td>{{ $product->name }}</td>
+                            <td>{{ $product->name }}<br><i class="fas fa-folder-tree"></i> {{ get_category_name($product->category_id) }}</td>
+                            <td>{{ numformat_with_unit($product->price,'Ft') }} + {{ $product->vat }} % ÁFA<br>+ {{ $product->discount }} % kedvezmény</td>
                             <td>
                                 <a class="btn btn-primary mb-3" href="{{ route('seller_product_edit',$product->id) }}">Szerkesztés</a>
                             </td>

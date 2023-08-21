@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Services\ProductUpdate;
 use App\Models\Category;
 use App\Models\Product;
+use App\Models\Shop;
 use App\Models\Unit;
 use Illuminate\Http\Request;
 
@@ -52,11 +53,15 @@ class SellerProductController extends Controller
         // Mértékegységek lekérdezése
         $units = Unit::get();
 
+        // Üzletek lekérdezése
+        $shops = Shop::get();
+
         // Oldal meghívása
         return view('seller.product_edit',[
             'product' => $product,
             'categories' => $categories,
-            'units' => $units
+            'units' => $units,
+            'shops' => $shops
         ]);
     }
 

@@ -10,7 +10,22 @@
         @method('PUT')
         @csrf
         <div class="card">
-            <div class="card-body row">
+            <div class="card-body">
+                <div class="row mb-2">
+                    <div class="col-sm-4 fw-bold">
+                        Üzlet *
+                    </div>
+                    <div class="col-sm-8">
+                        <select class="form-control select2" name="shop_id">
+                            @foreach($shops AS $shop)
+                                <option value="{{ $shop->id }}" @selected(old('shop_id',$product->shop_id)==$shop->id)>{{ $shop->name }}</option>
+                            @endforeach
+                        </select>
+                        @if ($errors->has('shop_id'))
+                            <div class="invalid-feedback d-block">{{ $errors->first('shop_id') }}</div>
+                        @endif
+                    </div> 
+                </div>
                 <div class="row mb-2">
                     <div class="col-sm-4 fw-bold">
                         Név *
@@ -126,6 +141,17 @@
                             <div class="invalid-feedback d-block">{{ $errors->first('body') }}</div>
                         @endif
                     </div> 
+                </div>
+                <div class="row mb-2">
+                    <div class="col-sm-4 fw-bold mb-3">
+                        Aktív *
+                    </div>
+                    <div class="col-sm-8">
+                        <select name="active" class="form-control">
+                            <option value="0" @selected(old('active',$product->active)==0)>Nem</option>
+                            <option value="1" @selected(old('active',$product->active)==1)>Igen</option>
+                        </select>
+                    </div>
                 </div>
             </div>
             <div class="bg-dark p-3">
