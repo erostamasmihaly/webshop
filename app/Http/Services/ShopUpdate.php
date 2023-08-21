@@ -48,6 +48,7 @@ class ShopUpdate
             $shop->telephone = $this->telephone;
             $shop->latitude = $this->latitude;
             $shop->longitude = $this->longitude;
+            $shop->url = $this->url;
             
             // Mentés
             $shop->save();

@@ -27,3 +27,6 @@ require 'admin/shop.php';
 
 // Vezérlőpult
 require 'seller/index.php';
+
+// Termékek
+require 'seller/product.php';
