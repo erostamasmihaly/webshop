@@ -58,10 +58,24 @@
                     <div class="col-sm-8">
                         <div class="input-group">
                             <input type="number" class="form-control" name="vat" value="{{ old('vat', $product->vat) }}"/>
-                            <span class="input-group-text">Ft</span>
+                            <span class="input-group-text">%</span>
                         </div>
                         @if ($errors->has('vat'))
                             <div class="invalid-feedback d-block">{{ $errors->first('vat') }}</div>
+                        @endif
+                    </div>
+                </div>
+                <div class="row mb-2">
+                    <div class="col-sm-4 fw-bold">
+                        Kedvezmény *
+                    </div>
+                    <div class="col-sm-8">
+                        <div class="input-group">
+                            <input type="number" class="form-control" name="discount" value="{{ old('discount', $product->discount) }}"/>
+                            <span class="input-group-text">%</span>
+                        </div>
+                        @if ($errors->has('discount'))
+                            <div class="invalid-feedback d-block">{{ $errors->first('discount') }}</div>
                         @endif
                     </div>
                 </div>

@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\DB;
 class ProductUpdate
 {
     public $name;
-    private $id, $summary, $body, $price, $category_id, $quantity;
+    private $id, $summary, $body, $price, $category_id, $quantity, $active, $vat, $discount, $shop_id, $unit_id;
 
     // Adatok lekérdezése
     public function __construct(ProductUpdateRequest $productUpdateRequest)
@@ -21,6 +21,11 @@ class ProductUpdate
         $this->price = $productUpdateRequest->price;
         $this->category_id = $productUpdateRequest->category_id;
         $this->quantity = $productUpdateRequest->quantity;
+        $this->active = $productUpdateRequest->active;
+        $this->vat = $productUpdateRequest->vat;
+        $this->discount = $productUpdateRequest->discount;
+        $this->shop_id = $productUpdateRequest->shop_id;
+        $this->unit_id = $productUpdateRequest->unit_id;
         $this->updateProduct();
     }
 
@@ -43,7 +48,11 @@ class ProductUpdate
             $product->price = $this->price;
             $product->category_id = $this->category_id;
             $product->quantity = $this->quantity;
-
+            $product->active = $this->active;
+            $product->vat = $this->vat;
+            $product->discount = $this->discount;
+            $product->shop_id = $this->shop_id;
+            $product->unit_id = $this->unit_id;
             
             // Mentés
             $product->save();

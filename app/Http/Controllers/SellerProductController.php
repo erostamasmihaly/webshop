@@ -36,6 +36,9 @@ class SellerProductController extends Controller
             // Új termék
             $product = new Product();
             $product->id = 0;
+            $product->vat = 27;
+            $product->quantity = 1;
+            $product->discount = 0;
 
         } else {
         

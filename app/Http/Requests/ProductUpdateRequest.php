@@ -22,6 +22,7 @@ class ProductUpdateRequest extends FormRequest
         $rules['quantity'] = 'required|min:0';
         $rules['category_id'] = 'required';
         $rules['vat'] = 'required|min:0';
+        $rules['shop_id'] = 'required';
         $rules['unit_id'] = 'required';
         $rules['discount'] = 'required|min:0';
 
@@ -39,6 +40,7 @@ class ProductUpdateRequest extends FormRequest
            'quantity' => 'Mennyiség megadása kötelető és nem lehet kisebb, mint 0!',
            'category_id' => 'Kategória megadása kötelető!',
            'vat'=> 'ÁFA megadáda kötelező és nem lehet kisebb, mint 0!',
+           'shop_id' => 'Üzlet megadása kötelező!',
            'unit_id' => 'Mértékegység megadása kötelező!',
            'discount' => 'Kedvezmény megadáda kötelező és nem lehet kisebb, mint 0!'
         ];
