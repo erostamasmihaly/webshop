@@ -4,7 +4,7 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="csrf-token" content="{{ csrf_token() }}">
-        <title>{{ config('app.name', 'Elügyi token adatbázis') }}</title>
+        <title>{{ config('app.name', 'ETM Webshop') }}</title>
         @vite(['resources/sass/app.scss'])
         @section('css')
         @include('admin/layouts/css')
@@ -12,7 +12,7 @@
     </head>
     <body>
         <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
-            <a class="navbar-brand ps-3" href="{{ route('home') }}">{{ config('app.name', 'Elügyi token adatbázis') }}</a>
+            <a class="navbar-brand ps-3" href="{{ route('home') }}">{{ config('app.name', 'ETM Webshop') }}</a>
             @if(isset(Auth::user()->name))
                 <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i class="fas fa-bars"></i></button>
             @endif
