@@ -13,7 +13,7 @@
             <div class="card-body row">
                 <div class="row mb-2">
                     <div class="col-sm-4 fw-bold">
-                        Termék neve *
+                        Név *
                     </div>
                     <div class="col-sm-8">
                         <input type="text" class="form-control" name="name" value="{{ old('name', $product->name) }}"/>
@@ -39,7 +39,7 @@
                 </div>
                 <div class="row mb-2">
                     <div class="col-sm-4 fw-bold">
-                        Termék ára *
+                        Nettó ár *
                     </div>
                     <div class="col-sm-8">
                         <div class="input-group">
@@ -53,17 +53,43 @@
                 </div>
                 <div class="row mb-2">
                     <div class="col-sm-4 fw-bold">
-                        Termék mennyisége *
+                        ÁFA *
                     </div>
                     <div class="col-sm-8">
                         <div class="input-group">
-                            <input type="number" class="form-control" name="quantity" value="{{ old('quantity', $product->quantity) }}"/>
-                            <span class="input-group-text">db</span>
+                            <input type="number" class="form-control" name="vat" value="{{ old('vat', $product->vat) }}"/>
+                            <span class="input-group-text">Ft</span>
                         </div>
+                        @if ($errors->has('vat'))
+                            <div class="invalid-feedback d-block">{{ $errors->first('vat') }}</div>
+                        @endif
+                    </div>
+                </div>
+                <div class="row mb-2">
+                    <div class="col-sm-4 fw-bold">
+                        Mennyiség *
+                    </div>
+                    <div class="col-sm-8">
+                        <input type="number" class="form-control" name="quantity" value="{{ old('quantity', $product->quantity) }}"/>
                         @if ($errors->has('quantity'))
                             <div class="invalid-feedback d-block">{{ $errors->first('quantity') }}</div>
                         @endif
                     </div>
+                </div>
+                <div class="row mb-2">
+                    <div class="col-sm-4 fw-bold">
+                        Mértékegység *
+                    </div>
+                    <div class="col-sm-8">
+                        <select class="form-control select2" name="unit_id">
+                            @foreach($units AS $unit)
+                                <option value="{{ $unit->id }}" @selected(old('unit_id',$product->unit_id)==$unit->id)>{{ $unit->name }}</option>
+                            @endforeach
+                        </select>
+                        @if ($errors->has('category_id'))
+                            <div class="invalid-feedback d-block">{{ $errors->first('category_id') }}</div>
+                        @endif
+                    </div> 
                 </div>
                 <div class="row mb-2">
                     <div class="col-sm-4 fw-bold">

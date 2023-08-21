@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Role;
+use App\Models\Unit;
 use App\Models\User;
 use App\Models\UserRole;
 use Illuminate\Database\Seeder;
@@ -54,6 +55,30 @@ class DatabaseSeeder extends Seeder
             $user_role->user_id = 1;
             $user_role->role_id = 1;
             $user_role->save();
+        }
+
+        // Ha nincs még DB mértékegység
+        $has_unit_db = Unit::where("name","db")->first();
+        if (!$has_unit_db) {
+            $unit = new Unit();
+            $unit->name = "db";
+            $unit->save();
+        }
+
+        // Ha nincs még KG mértékegység
+        $has_unit_db = Unit::where("name","kg")->first();
+        if (!$has_unit_db) {
+            $unit = new Unit();
+            $unit->name = "kg";
+            $unit->save();
+        }
+
+        // Ha nincs még liter mértékegység
+        $has_unit_db = Unit::where("name","liter")->first();
+        if (!$has_unit_db) {
+            $unit = new Unit();
+            $unit->name = "liter";
+            $unit->save();
         }
     }
 }

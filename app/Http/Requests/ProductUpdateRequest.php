@@ -21,6 +21,9 @@ class ProductUpdateRequest extends FormRequest
         $rules['price'] = 'required|min:0';
         $rules['quantity'] = 'required|min:0';
         $rules['category_id'] = 'required';
+        $rules['vat'] = 'required|min:0';
+        $rules['unit_id'] = 'required';
+        $rules['discount'] = 'required|min:0';
 
         // Visszatérés a szabályokkal
         return $rules;
@@ -29,12 +32,15 @@ class ProductUpdateRequest extends FormRequest
     // Validálási hibaüzenetek
     public function messages() {
         return [
-           'name.required' => 'Név megadása kötelető!',
-           'summary.required' => 'Rövid leírás megadása kötelető!',
-           'body.required' => 'Bővebb leírás megadása kötelető!',
+           'name' => 'Név megadása kötelető!',
+           'summary' => 'Rövid leírás megadása kötelető!',
+           'body.' => 'Bővebb leírás megadása kötelető!',
            'price' => 'Bruttó ár megadása kötelető és nem lehet kisebb, mint 0!',
            'quantity' => 'Mennyiség megadása kötelető és nem lehet kisebb, mint 0!',
-           'category_id.required' => 'Kategória megadása kötelető!'
+           'category_id' => 'Kategória megadása kötelető!',
+           'vat'=> 'ÁFA megadáda kötelező és nem lehet kisebb, mint 0!',
+           'unit_id' => 'Mértékegység megadása kötelező!',
+           'discount' => 'Kedvezmény megadáda kötelező és nem lehet kisebb, mint 0!'
         ];
     }
 }

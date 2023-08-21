@@ -7,21 +7,12 @@ use Illuminate\Database\Eloquent\Model;
 use Spatie\Activitylog\LogOptions;
 use Spatie\Activitylog\Traits\LogsActivity;
 
-class Product extends Model
+class Unit extends Model
 {
     use HasFactory, LogsActivity;
 
     protected $fillable = [
-        'name',
-        'summary',
-        'body',
-        'price',
-        'category_id',
-        'quantity',
-        'active',
-        'vat',
-        'discount',
-        'unit_id'
+        'name'
     ];
 
     // Naplózás beállítása
@@ -29,5 +20,4 @@ class Product extends Model
     {
         return LogOptions::defaults()->logFillable()->logOnlyDirty();
     }
-
 }
