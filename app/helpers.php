@@ -4,6 +4,7 @@ use App\Models\Category;
 use App\Models\Role;
 use App\Models\UserRole;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\File;
 
 // Megnézni, hogy az adott szerepkörrel rendelkezik-e a felhasználó
 if (!function_exists('has_role')) {
@@ -48,5 +49,34 @@ if (!function_exists('get_category_name')) {
 if (!function_exists('numformat_with_unit')) {
     function numformat_with_unit($number, $unit = "") {
         return trim(number_format($number, 0, ',', ' ').' '.$unit);
+    }
+}
+
+// Vezérkép létrehozása
+if (!function_exists('create_main_image')) {
+    function create_main_image($product_id, $image) {
+
+        // Könyvtár
+        $dir = public_path('images/products/'.$product_id);
+        $dir_exists = is_dir($dir);
+        if (!$dir_exists) {
+            mkdir($dir, 0777, true);
+        }
+
+        // Fájlok megadása
+        $file = $dir.'/'.$image;
+        $file_main = $dir.'/main_image.jpg';
+
+        // Megnézni, hogy van-e vezérkép fájl - ha igen, akkor törlés
+        if (File::exists($file_main)) {
+            File::delete($file_main);
+        }
+        
+        // Vezérkép létrehozása
+        $imageMod = ImageMod::make($file);            
+        $imageMod->resize(800, 600, function ($const) {
+            $const->aspectRatio();
+        })->save($file_main);
+
     }
 }
