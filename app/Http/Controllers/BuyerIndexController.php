@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-class HomeController extends Controller
+class BuyerIndexController extends Controller
 {
 
     public function __construct()
@@ -13,7 +13,7 @@ class HomeController extends Controller
     // Fő oldal
     public function index()
     {
-        return view('home');
+        return view('buyer.index');
     }
 
 }

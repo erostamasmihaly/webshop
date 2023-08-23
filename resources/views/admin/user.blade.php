@@ -5,11 +5,11 @@
     <h4 class="card-title">Felhasználók kezelése
         <a href="{{ route('admin_user_create') }}" class="btn btn-primary">Új felhasználó</a>
     </h4>
-    @include('layouts.message')
+    @include('message')
     <div class="card">
         <div class="card-body">
             @if ($users->count() !== 0)
-                @include('layouts.waiting')
+                @include('waiting')
                 <table class="datatable table table-bordered table-striped table-condensed d-none">
                     <thead>
                         <tr>

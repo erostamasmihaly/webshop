@@ -60,6 +60,10 @@
                                         <a class="dropdown-item" href="{{ route('admin_index') }}">Admin felület</a>
                                     @endif
 
+                                    @if(has_role('seller'))
+				                        <a class="dropdown-item" href="{{ route('seller_index') }}">Alkalmazotti felület</a>
+			                        @endif
+
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">

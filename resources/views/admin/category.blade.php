@@ -5,11 +5,11 @@
     <h4 class="card-title">Kategóriák kezelése
         <a href="{{ route('admin_category_create') }}" class="btn btn-primary">Új kategória</a>
     </h4>
-    @include('layouts.message')
+    @include('message')
     <div class="card">
         <div class="card-body">
             @if ($categories->count() !== 0)
-                @include('layouts.waiting')
+                @include('waiting')
                 <table class="datatable table table-bordered table-striped table-condensed d-none">
                     <thead>
                         <tr>

@@ -3,11 +3,13 @@
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
-// Fő oldal
-Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-
 // Bejelentkezés oldalai
 Auth::routes();
+
+//// Vásárlói szerepkör
+
+// Index
+require 'buyer/index.php';
 
 //// Admin szerepkör
 

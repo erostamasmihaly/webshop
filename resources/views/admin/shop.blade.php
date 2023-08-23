@@ -5,11 +5,11 @@
     <h4 class="card-title">Üzletek kezelése
         <a href="{{ route('admin_shop_create') }}" class="btn btn-primary">Új üzlet</a>
     </h4>
-    @include('layouts.message')
+    @include('message')
     <div class="card">
         <div class="card-body">
             @if ($shops->count() !== 0)
-                @include('layouts.waiting')
+                @include('waiting')
                 <table class="datatable table table-bordered table-striped table-condensed d-none">
                     <thead>
                         <tr>
