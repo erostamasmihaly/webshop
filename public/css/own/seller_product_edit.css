@@ -1,0 +1,17 @@
+.sortable {
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+}
+
+.sortable li {
+	padding: 1px;
+	float: left;
+	text-align: center;
+	cursor: grab;
+}
+
+.sortable li img {
+	max-width: 100%;
+	max-height: 100%;
+}

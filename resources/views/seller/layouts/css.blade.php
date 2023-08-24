@@ -6,3 +6,7 @@
 
 <!-- Saját --->
 <link href="{{ asset('css/own/tables.css') }}" rel="stylesheet">
+
+@if (Request::is('seller/product/edit/*'))
+    <link href="{{ asset('css/own/seller_product_edit.css') }}" rel="stylesheet">
+@endif

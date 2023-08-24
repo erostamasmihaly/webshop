@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Services\ImageDelete;
+use App\Http\Services\ImageMain;
 use App\Http\Services\ImageUpload;
 use App\Http\Services\ProductUpdate;
 use App\Models\Category;
+use App\Models\Image;
 use App\Models\Product;
 use App\Models\Shop;
 use App\Models\Unit;
@@ -83,6 +86,40 @@ class SellerProductController extends Controller
     // Kép feltöltése
     public function image_upload(ImageUpload $imageUpload) {
 
+        // Válasz küldése
+        $array['OK']=1;
+        return Response::json($array);
+    }
+
+    // Képek lekérdezése
+    public function image_list(Request $request)
+    {
+
+        // Azonosító lekérdezése
+        $product_id = $request->product_id;
+
+        // Lekérdezni, a hozzárendelt képeket
+        $array['images'] = Image::where('product_id',$product_id)->orderBy('sequence','asc')->get(['id','filename','is_main'])->toArray();
+
+        // Lekérdezni a könyvtár elérését
+        $array['dir'] = asset('images/products/'.$product_id);
+        
+        // Válasz küldése
+        $array['OK']=1;
+        return Response::json($array);
+    } 
+
+    // Kép vezérképpé tétele
+    public function image_main(ImageMain $imageMain) {
+        
+        // Válasz küldése
+        $array['OK']=1;
+        return Response::json($array);
+    }
+
+    // Kép törlése
+    public function image_delete(ImageDelete $imageDelete) {
+        
         // Válasz küldése
         $array['OK']=1;
         return Response::json($array);

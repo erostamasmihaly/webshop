@@ -1,33 +1,26 @@
 $(function () {
 
-    // Képek feltöltése
-    $("#upload").on("click", function() {
-        upload_images();
-    });
-
     // Ingatlan azonosító lekérdezése - vagy ha 0, akkor az ideiglenes random azonosító
     product_id = ($("#product_id").val() == 0) ? $("#temporary_id").val() : $("#product_id").val();
 
-    // Felugró ablak meghívása
-    /*$("#imageModalButton").on("click", function() {
+    // Képek betöltése
+    refreshImages();
 
-        // Képek frissítése
-        refreshImages();
+    // Képek feltöltése
+    $("#upload").on("click", function() {
+        upload_images();
     });
 
     // Sorrend mentése
     $("#sequence").on("click", function() {
         
         // Képek frissítése
-        refreshImages();
+        saveSequence();
     });
 
     // Sorbarendezés engedélyezése
-    $(".galeria_sortable").sortable({
-        cursor: "move",
-        stop: function() {
-            saveSequence();
-        }
+    $(".sortable").sortable({
+        cursor: "move"
     });
 
     // Sorrend mentése
@@ -52,8 +45,8 @@ $(function () {
         // Új sorrend átküldése a szervernek
         $.ajax({
             dataType: "json",
-            url: "/admin/property/image/sequence",
-            data: "images="+images+"&property_id="+property_id,
+            url: "/admin/product/image/sequence",
+            data: "images="+images+"&product_id="+product_id,
             type: "POST",
             cache: false,
             success: function (data) {
@@ -90,8 +83,8 @@ $(function () {
         // Képek lekérdezése
         $.ajax({
             dataType: "json",
-            url: "/admin/property/image/list",
-            data: "property_id="+property_id,
+            url: "/seller/product/image/list",
+            data: "product_id="+product_id,
             type: "POST",
             cache: false,
             success: function (data) {
@@ -110,10 +103,10 @@ $(function () {
                     $.each(data.images, function (key, val) {
 
                         // Megnézni, hogy vezérképről van-e szó
-                        main_image = (val.main==1) ? "text-success" : "text-secondary";
+                        main_image = (val.is_main==1) ? "text-success" : "text-secondary";
 
                         // Kép elhelyezése
-                        $("#gallery").append("<li class='col-sm-2'><div class='kep' image_id='"+val.id+"'><image src='"+dir+"/thumb/"+val.name+"' alt='"+val.name+"' title='"+val.name+"' class='mb-3 img-fluid w-90 object-fit-cover h-100'><div class='float-end'><div class='main' image_id='"+val.id+"'><i class='fa-sharp fa-solid fa-thumbtack "+main_image+"'></i></div><div class='delete' image_id='"+val.id+"'><i class='fa-solid fa-trash text-danger'></i></div></div></div></li>");
+                        $("#gallery").append("<li class='col-sm-3'><div class='image' image_id='"+val.id+"'><image src='"+dir+"/thumb/"+val.filename+"' alt='"+val.filename+"' title='"+val.filename+"' class='mb-3 img-fluid w-90 object-fit-cover h-100'><div class='float-end'><div class='main' image_id='"+val.id+"'><i class='fa-sharp fa-solid fa-thumbtack "+main_image+"'></i></div><div class='delete' image_id='"+val.id+"'><i class='fa-solid fa-trash text-danger'></i></div></div></div></li>");
                     });
         
                 } else {
@@ -154,8 +147,8 @@ $(function () {
             // Új vezérkép átküldése a szervernek
             $.ajax({
                 dataType: "json",
-                url: "/admin/property/image/main",
-                data: "image_id="+image_id+"&property_id="+property_id,
+                url: "/seller/product/image/main",
+                data: "image_id="+image_id+"&product_id="+product_id,
                 type: "POST",
                 cache: false,
                 success: function (data) {
@@ -202,7 +195,7 @@ $(function () {
             // Törlendő kép átküldése
             $.ajax({
                 dataType: "json",
-                url: "/admin/property/image/delete",
+                url: "/seller/product/image/delete",
                 data: "image_id="+image_id,
                 type: "POST",
                 cache: false,
@@ -220,7 +213,7 @@ $(function () {
                     } else {
 
                         // Kép törlése a felületen
-                        $(".kep[image_id="+image_id+"]").parent("li").remove();
+                        $(".image[image_id="+image_id+"]").parent("li").remove();
                     }
                     
                 },
@@ -237,17 +230,6 @@ $(function () {
         }
         
     });
-
-    // Fájl feltöltése gomb megnyomásakor
-    $("#file").on("click", function() {
-        
-        // Hiba üzenet elrejtése
-        $("#upload-error").addClass("d-none");
-
-    });
-
-    */
-
 
     // Fényképek feltöltése
     function upload_images() {
@@ -277,11 +259,11 @@ $(function () {
                 contentType: false,
                 processData: false,
                 success: function (data) {
-                    console.log(data);
-                    /*if (data.OK == 1) {
+
+                    if (data.OK == 1) {
 
                         // Képek frissítése
-                        //refreshImages();
+                        refreshImages();
 
                         // Fájl mező alapállapotba állítása
                         $("#file").val(null);
@@ -297,7 +279,7 @@ $(function () {
                         // Hibaszöveg megjelenítése a consolon
                         console.log(data);
 
-                    }*/
+                    }
                 },
                 error: function (error) {
                     
