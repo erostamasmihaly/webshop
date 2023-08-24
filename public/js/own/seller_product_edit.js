@@ -30,7 +30,7 @@ $(function () {
         images_array = [];
             
         // Végigmenni minden egyes képen
-        $(".kep").each(function(e) {
+        $(".image").each(function(e) {
                 
             // Aktuális kép azonosítójának lekérdezése
             image_id = $(this).attr("image_id");
@@ -45,7 +45,7 @@ $(function () {
         // Új sorrend átküldése a szervernek
         $.ajax({
             dataType: "json",
-            url: "/admin/product/image/sequence",
+            url: "/seller/product/image/sequence",
             data: "images="+images+"&product_id="+product_id,
             type: "POST",
             cache: false,
@@ -59,6 +59,10 @@ $(function () {
 
                     // Hibaszöveg megjelenítése a consolon
                     console.log(data);
+
+                } else {
+
+                    alert("Fényképek új sorrendje sikeresen elmentésre került!");
                 }
             },
             error: function (error) {

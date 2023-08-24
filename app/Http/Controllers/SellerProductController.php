@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Services\ImageDelete;
 use App\Http\Services\ImageMain;
+use App\Http\Services\ImageSequence;
 use App\Http\Services\ImageUpload;
 use App\Http\Services\ProductUpdate;
 use App\Models\Category;
@@ -119,6 +120,14 @@ class SellerProductController extends Controller
 
     // Kép törlése
     public function image_delete(ImageDelete $imageDelete) {
+        
+        // Válasz küldése
+        $array['OK']=1;
+        return Response::json($array);
+    }
+
+    // Kép sorrend elmentése
+    public function image_sequence(ImageSequence $imageSequence) {
         
         // Válasz küldése
         $array['OK']=1;

@@ -28,5 +28,8 @@ Route::group(['prefix' => 'seller/product'], function() {
 
     // Kép törlése
     Route::post('image/delete', [App\Http\Controllers\SellerProductController::class, 'image_delete'])->name('seller_product_image_delete')->withoutMiddleware([\App\Http\Middleware\VerifyCsrfToken::class]);
+    
+    // Kép sorrend elmentése
+    Route::post('image/sequence', [App\Http\Controllers\SellerProductController::class, 'image_sequence'])->name('seller_product_image_sequence')->withoutMiddleware([\App\Http\Middleware\VerifyCsrfToken::class]);
 
 });
