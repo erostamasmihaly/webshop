@@ -10,12 +10,13 @@
 			Fénykép feltöltése *
 		</div>
 		<div class="col-sm-8">
-			<input type="file" name="images[]" multiple />
+			<input id="file" type="file" name="file[]" multiple />
 			@if ($errors->has('shop_id'))
 				<div class="invalid-feedback d-block">{{ $errors->first('shop_id') }}</div>
 			@endif
 		</div> 
 	</div>
+	<div id="upload-error" class="alert alert-danger d-none" role="alert"></div>
     <div>
         <button type="button" id="upload" class="btn btn-primary">Feltöltés indítása</button>
     </div>

@@ -5,7 +5,6 @@ namespace App\Http\Services;
 use App\Models\Image;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use App\Models\Image;
 use Illuminate\Support\Facades\Storage;
 use ImageMod;
 
@@ -32,22 +31,17 @@ class ImageUpload {
                 foreach ($this->images AS $image) {
 
                     // Lekérdezni a kép fájl nevét
-                    $name = $image->getClientOriginalName();
+                    $filename = $image->getClientOriginalName();
                     
                     // Kép eltárolása fizikailag
                     Storage::putFileAs(
                         'images/products/'.$this->product_id,
                         $image,
-                        $name
+                        $filename
                     );
 
                     // Publikus átméretezett képek létrehozása
-                    $this->createImage($this->product_id, $image, $name);
-
-                    // Képet felvinni az adatbázisba
-                    $new_image = new Image();
-                    $new_image->name = $name;
-                    $new_image->save();
+                    $this->createImage($this->product_id, $image, $filename);
 
                     // Legnagyobb sorrend lekérdezése
                     // Ha nincs ilyen kép, akkor 1-es sorrendű lesz, ha van, akkor egyel nagyobb
@@ -59,11 +53,11 @@ class ImageUpload {
                     }
                     
                     // Képet hozzárendelni az ingatlanhoz
-                    $productImage = new Image();
-                    $productImage->product_id = $this->product_id;
-                    $productImage->image_id = $new_image->id;
-                    $productImage->sequence = $sequence;
-                    $productImage->save();
+                    $image = new Image();
+                    $image->product_id = $this->product_id;
+                    $image->filename = $filename;
+                    $image->sequence = $sequence;
+                    $image->save();
                 }
             }
 

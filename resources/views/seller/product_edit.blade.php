@@ -3,7 +3,8 @@
 @section('content')
 <div class="container-fluid">
     <form action="{{ route('seller_product') }}" method="POST" enctype="multipart/form-data">
-        <input type="hidden" name="id" value="{{ $product->id }}"/>    
+        <input type="hidden" name="id" id="product_id" value="{{ $product->id }}"/>  
+        <input type="hidden" id="temporary_id" name="temporary_id" value="{{ old('temporary_id',mt_rand(10000000,99999999)) }}"/>  
         <h4 class="card-title">
             @if($product->id==0) Termék hozzáadása @else Termék szerkesztése @endif
         </h4>

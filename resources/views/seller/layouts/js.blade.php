@@ -11,3 +11,7 @@
 <script src="{{ asset('js/own/select2.js') }}" defer></script>
 <script src="{{ asset('js/own/selectdate.js') }}" defer></script>
 <script src="{{ asset('js/own/tables.js') }}" defer></script>
+
+@if (Request::is('seller/product/edit/*'))
+    <script src="{{ asset('js/own/seller_product_edit.js') }}" defer></script>
+@endif

@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Services\ImageUpload;
 use App\Http\Services\ProductUpdate;
 use App\Models\Category;
 use App\Models\Product;
 use App\Models\Shop;
 use App\Models\Unit;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Response;
 
 class SellerProductController extends Controller
 {
@@ -76,5 +78,13 @@ class SellerProductController extends Controller
         // Ugrás a Szerkesztő oldalra
         return redirect()->route('seller_product_edit', 0);
 
+    }
+
+    // Kép feltöltése
+    public function image_upload(ImageUpload $imageUpload) {
+
+        // Válasz küldése
+        $array['OK']=1;
+        return Response::json($array);
     }
 }

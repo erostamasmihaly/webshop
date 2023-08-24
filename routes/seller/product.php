@@ -17,4 +17,7 @@ Route::group(['prefix' => 'seller/product'], function() {
     // Létrehozás
     Route::get('create', [App\Http\Controllers\SellerProductController::class, 'create'])->name('seller_product_create');
 
+    // Képek feltöltése
+    Route::post('image/upload', [App\Http\Controllers\SellerProductController::class, 'image_upload'])->name('seller_product_image_upload')->withoutMiddleware([\App\Http\Middleware\VerifyCsrfToken::class]);;
+
 });
