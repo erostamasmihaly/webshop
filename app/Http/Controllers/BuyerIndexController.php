@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Services\UserInsert;
 use App\Models\Product;
 use Illuminate\Http\Request;
 
@@ -28,6 +29,18 @@ class BuyerIndexController extends Controller
         return view('buyer.index', [
             'products' => $products
         ]);
+    }
+
+    // Regisztrációs felület
+    public function register() {
+        return view('buyer.register');
+    }
+
+    // Regisztráció mentése
+    public function register_save(UserInsert $userInsert) {
+        
+        // Visszatérés a főoldalra
+        return redirect()->route('buyer_index')->withMessage('Felhasználói fiók sikeresen létrehozva. A regisztráció befejezéséhez szükség e-mail elküldve.');
     }
 
 }

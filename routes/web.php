@@ -3,8 +3,8 @@
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
-// Bejelentkezés oldalai
-Auth::routes();
+// Bejelentkezés oldal
+Auth::routes(['register' => false, 'reset' => false]);
 
 //// Vásárlói szerepkör
 
