@@ -80,3 +80,17 @@ if (!function_exists('create_main_image')) {
 
     }
 }
+
+// Bruttó ár kiszámítása
+if (!function_exists('brutto_price')) {
+    function brutto_price($price, $vat) {
+        return (int)($price + ($price * ($vat / 100)));
+    }
+}
+
+// Kedvezményes ár kiszámítása
+if (!function_exists('discount_price')) {
+    function discount_price($brutto, $discount) {
+        return (int)($brutto - ($brutto * ($discount / 100)));
+    }
+}
