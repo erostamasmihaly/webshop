@@ -4,6 +4,7 @@
 <div class="container-fluid">
     <form action="{{ route('admin_user') }}" method="POST" enctype="multipart/form-data">
         <input type="hidden" name="id" value="{{ $user->id }}"/>    
+        <input type="hidden" name="register" value="0"/>
         <h4 class="card-title">
             @if($user->id==0) Felhasználó hozzáadása @else Felhasználó szerkesztése @endif
         </h4>

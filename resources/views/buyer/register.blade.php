@@ -10,6 +10,7 @@
                     <form method="POST" action="{{ route('register_save') }}" enctype="multipart/form-data">
                         @method('PUT')
                         @csrf
+                        <input type="hidden" name="register" value="1"/>
                         <div class="row mb-3">
                             <label for="name" class="col-md-4 col-form-label text-md-end">Felhasználói név</label>
                             <div class="col-md-6">
@@ -56,9 +57,9 @@
                             </div>
                         </div>
                         <div class="row mb-3">
-                            <label for="password-confirm" class="col-md-4 col-form-label text-md-end">Jelszó megerősítése</label>
+                            <label for="confirm" class="col-md-4 col-form-label text-md-end">Jelszó megerősítése</label>
                             <div class="col-md-6">
-                                <input type="password" class="form-control" name="password_confirmation">
+                                <input type="password" class="form-control" name="confirm">
                             </div>
                         </div>
                         <div class="alert alert-primary" role="alert">

@@ -10,8 +10,3 @@ Route::get('register', [App\Http\Controllers\BuyerIndexController::class, 'regis
 
 // Regisztráció mentése
 Route::put('register_save', [App\Http\Controllers\BuyerIndexController::class, 'register_save'])->name('register_save');
-
-// Vásárlói felület
-Route::group(['prefix' => 'seller/index'], function() {
-
-});

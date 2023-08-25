@@ -47,7 +47,7 @@ class UserInsert {
             // Szerepkör felvitele
             $user_role = new UserRole();
             $user_role->user_id = $this->id;
-            $user_role->role_id = Role::where('name','buyer');
+            $user_role->role_id = Role::where('name','buyer')->first()->id;
             $user_role->save();
         });
     }

@@ -40,7 +40,7 @@ class BuyerIndexController extends Controller
     public function register_save(UserInsert $userInsert) {
         
         // Visszatérés a főoldalra
-        return redirect()->route('buyer_index')->withMessage('Felhasználói fiók sikeresen létrehozva. A regisztráció befejezéséhez szükség e-mail elküldve.');
+        return redirect()->route('home')->withMessage('Felhasználói fiók sikeresen létrehozva. A regisztráció befejezéséhez szükség e-mail elküldve.');
     }
 
 }
