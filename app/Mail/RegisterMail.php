@@ -25,7 +25,7 @@ class RegisterMail extends Mailable
         $this->subject = "Regisztráció véglegesítése";
         $this->view = "mail.register";
         $this->to_email = $user->email;
-        $this->to_name = $user->name;
+        $this->to_name = $user->surname." ".$user->forename;
         $this->activation_code = $user->activation_code;
         
     }
