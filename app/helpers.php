@@ -94,3 +94,10 @@ if (!function_exists('discount_price')) {
         return (int)($brutto - ($brutto * ($discount / 100)));
     }
 }
+
+// Aktiváló kód létrehozása
+if (!function_exists('get_activtion_code')) {
+    function get_activation_code() {
+        return md5(uniqid(mt_rand(), true));
+    }
+}

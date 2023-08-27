@@ -11,8 +11,8 @@ use Illuminate\Support\Facades\Hash;
 
 class UserInsert {
 
-    public $name;
-    private $id, $email, $password, $surname, $forename;
+    public $user;
+    private $id, $email, $password, $surname, $forename, $name;
 
     // Adatok lekérdezése
     function __construct(UserUpdateRequest $userUpdateRequest) {
@@ -37,9 +37,13 @@ class UserInsert {
             $user->active = 0;
             $user->surname = $this->surname;
             $user->forename = $this->forename;
+            $user->activation_code = get_activation_code();
 
             // Felhasználó mentése
             $user->save();
+
+            // Felhasználó publikussá tétele
+            $this->user = $user;
 
             // Felhasználói azonosító lekérdezése
             $this->id = $user->id;
