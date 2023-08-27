@@ -5,7 +5,7 @@
     @if($product->discount)
         <div class="card p-2 bg-danger text-white text-center mb-2">
             <div class="text-decoration-line-through">{{ numformat_with_unit($product->brutto_price,'Ft') }}</div>
-            <div class="fw-bold">{{ numformat_with_unit($product->discount,'%') }} akció!</div>
+            <div class="fw-bold">{{ numformat_with_unit($product->discount,'%') }} kedvezmény!</div>
         </div>
     @endif
     <div class="card p-2 bg-success text-white text-center mb-2">
