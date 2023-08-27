@@ -24,7 +24,7 @@
                                     </span>
                                 @endif
                                 <span class="badge bg-success p-2 mb-2">{{ numformat_with_unit($product->discount_price,'Ft') }}</span>
-                                <a href="" class="btn btn-primary">Megtekintés</a>
+                                <a href="{{ route('product',$product->id) }}" class="btn btn-primary">Megtekintés</a>
                             </div>
                         </div>
                     @endforeach

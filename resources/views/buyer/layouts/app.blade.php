@@ -11,15 +11,15 @@
         @show
     </head>
     <body>
-        <nav class="sb-topnav navbar navbar-expand">
+        <nav class="sb-topnav navbar navbar-expand bg-info">
             <div class="container">
-                <a class="navbar-brand ps-3" href="{{ route('home') }}">{{ config('app.name', 'ETM Webshop') }}</a>
+                <a class="navbar-brand ps-3 fw-bold" href="{{ route('home') }}">{{ config('app.name', 'ETM Webshop') }}</a>
                 @section('menu_masodlagos')
                 @include('buyer.layouts.menu_masodlagos')
                 @show
             </div>
         </nav>
-        <main class="py-4">
+        <main class="py-4 bg-secondary">
             @yield('content')
         </main>
         <footer>

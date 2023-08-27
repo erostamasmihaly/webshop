@@ -5,6 +5,9 @@ use Illuminate\Support\Facades\Route;
 // Fő oldal
 Route::get('/', [App\Http\Controllers\BuyerIndexController::class, 'index'])->name('home');
 
+// Termék oldal
+Route::get('product/{id}', [App\Http\Controllers\BuyerIndexController::class, 'product'])->name('product');
+
 // Regisztráció
 Route::get('register', [App\Http\Controllers\BuyerIndexController::class, 'register'])->name('register');
 

@@ -34,6 +34,21 @@ class BuyerIndexController extends Controller
         ]);
     }
 
+    public function product($id) {
+
+        // Termék adatainak lekérdezése
+        $product = Product::join('shops','products.shop_id','shops.id')->join('units','products.unit_id','units.id')->where('products.id',$id)->get(['products.id','products.name','products.summary','products.body','products.price','products.vat','products.discount','shops.name AS shop_name','shops.id AS shop_id','units.name AS unit'])->first();
+
+        // Bruttó ár és a leárazás utáni ár meghatározása
+        $product->brutto_price = brutto_price($product->price, $product->vat);
+        $product->discount_price = discount_price($product->brutto_price, $product->discount);
+
+        // Felület betöltése
+        return view('buyer.product', [
+            'product' => $product
+        ]);
+    }
+
     // Regisztrációs felület
     public function register() {
         return view('buyer.register');
