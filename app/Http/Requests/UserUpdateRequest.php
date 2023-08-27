@@ -15,8 +15,8 @@ class UserUpdateRequest extends FormRequest
     public function rules() {        
 
         // Szabályok megadása
-        $rules['email'] = 'required|email:rfc,dns';           
-        $rules['name'] = 'required';
+        $rules['email'] = 'required|email:rfc,dns|unique:users';           
+        $rules['name'] = 'required|unique:users|regex:/^[a-z0-9\.]+$/';
         $rules['surname'] = 'required';
         $rules['forename'] = 'required';
 
@@ -55,7 +55,7 @@ class UserUpdateRequest extends FormRequest
     public function messages() {
         return [
            'email.required' => 'E-mail cím megadása kötelező!',
-           'email.email' => 'E-mail formátum nem megfelelő!',
+           'email.email' => 'E-mail cím nem megfelelő!',
            'name.required' => 'Név megadása kötelető!',
            'password.required' => 'Jelszó megadása kötelező!',
            'password.min' => 'Jelszó minimum 8 karaktert tartalmazhat!',
@@ -63,7 +63,10 @@ class UserUpdateRequest extends FormRequest
            'password.same' => 'Nem egyezik meg a két jelszó!',
            'roles.required' => 'Legalább egy szerepkör megadása kötelező!',
            'surname.required' => 'Vezetéknév megadása kötelező!',
-           'forename.required' => 'Keresztnév megadása kötelető!'
+           'forename.required' => 'Keresztnév megadása kötelető!',
+           'email.unique' => 'E-mail cím nem megfelelő!',
+           'name.unique' => 'Ezen felhasználói név foglalt, kérem válasszon másikat!',
+           'name.regex' => 'Felhasználói név csak az angol ABC kis betűit, számot és pontot tartalmazhat!'
         ];
     }
 }
