@@ -12,7 +12,7 @@
                             <div class="card p-1">
                                 <p class="text-center fw-bold">{{ $product->name }}</p>
                                 <p>
-                                    <img src="{{ asset('images/products/'.$product->id.'/main_image.jpg') }}" class="img-thumbnail"></img>
+                                    <img src="{{ asset('images/products/'.$product->id.'/main_image.jpg') }}" class="img-thumbnail"/>
                                 </p>
                                 @if($product->discount)
                                     <span class="badge bg-secondary p-2 mb-2">

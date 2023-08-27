@@ -5,8 +5,10 @@ namespace App\Http\Controllers;
 use App\Http\Services\UserActivate;
 use App\Http\Services\UserInsert;
 use App\Mail\RegisterMail;
+use App\Models\Image;
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Mail;
 
 class BuyerIndexController extends Controller
@@ -37,15 +39,25 @@ class BuyerIndexController extends Controller
     public function product($id) {
 
         // Termék adatainak lekérdezése
-        $product = Product::join('shops','products.shop_id','shops.id')->join('units','products.unit_id','units.id')->where('products.id',$id)->get(['products.id','products.name','products.summary','products.body','products.price','products.vat','products.discount','shops.name AS shop_name','shops.id AS shop_id','units.name AS unit'])->first();
+        $product = Product::join('shops','products.shop_id','shops.id')->join('units','products.unit_id','units.id')->join('categories','products.category_id','categories.id')->where('products.id',$id)->get(['products.id','products.name','products.summary','products.body','products.price','products.vat','products.discount','shops.name AS shop_name','shops.id AS shop_id','units.name AS unit','categories.name AS category_name'])->first();
 
         // Bruttó ár és a leárazás utáni ár meghatározása
         $product->brutto_price = brutto_price($product->price, $product->vat);
         $product->discount_price = discount_price($product->brutto_price, $product->discount);
+        
+        // Képek lekérdezése
+        $images = Image::where('product_id', $id)->orderBy('sequence')->get();
+        
+        // Képekhez tartozó URL meghatározása
+        foreach ($images AS $image) {
+            $image->thumb = asset('images/products/'.$id.'/thumb/'.$image->filename);
+            $image->url = asset('images/products/'.$id.'/'.$image->filename);
+        }
 
         // Felület betöltése
         return view('buyer.product', [
-            'product' => $product
+            'product' => $product,
+            'images' => $images
         ]);
     }
 

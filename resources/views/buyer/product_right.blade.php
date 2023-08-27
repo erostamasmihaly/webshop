@@ -1,7 +1,4 @@
 <div class="col-sm-4">
-    <div class="card p-2 bg-info bg-gradient text-dark text-center mb-2">
-        <h1>{{ $product->name }}</h1>
-    </div>
     @if($product->discount)
         <div class="card p-2 bg-danger text-white text-center mb-2">
             <div class="text-decoration-line-through">{{ numformat_with_unit($product->brutto_price,'Ft') }}</div>
