@@ -17,8 +17,8 @@
         <div class="card p-2 text-center">
             <div class="fw-bold">Ha tetszik a termék, akkor adja megy azt a mennyiséget, amennyit meg szeretne vásárolni és utána helyezze a terméket a kosárba.</div>
             <div class="alert alert-warning" role="alert">
-                Fizetés során kerül csak ellenőrzésre, hogy akkor ténylegesen mennyi mennyiség érhető el az adott termékből. Így az elérhetőnél nagyobb mennyiség esetén kell majd eldönteni, hogy ténylegesen mennyit szeretne megvenni! 
-</div>
+                Fizetés során kerül csak ellenőrzésre, hogy akkor ténylegesen mennyi mennyiség érhető el az adott termékből. Így az elérhetőnél nagyobb mennyiség esetén kell majd eldönteni, hogy ténylegesen mennyit szeretne megvenni! Valamint a termék ára esetén azon ár lesz figyelembe véve, ami épp a fizetés során volt érvényben!
+            </div>
             <div class="input-group">
                 <input type="number" class="form-control" id="quantity" value="0" min="0"/>
 				<span class="input-group-text">{{ $product->unit }}</span>

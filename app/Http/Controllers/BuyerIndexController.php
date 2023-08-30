@@ -7,6 +7,7 @@ use App\Http\Services\UserInsert;
 use App\Mail\RegisterMail;
 use App\Models\Image;
 use App\Models\Product;
+use App\Models\Shop;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Mail;
@@ -104,7 +105,18 @@ class BuyerIndexController extends Controller
 
         }
         
+    }
 
+    // Üzlet oldala
+    public function shop($id) {
+
+        // Bolt adatainak lekérdezése
+        $shop = Shop::where("id", $id)->first();
+
+        // Felület betöltése
+        return view('buyer.shop', [
+            'shop' => $shop
+        ]);
     }
 
 }

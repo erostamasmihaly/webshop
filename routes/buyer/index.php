@@ -8,6 +8,9 @@ Route::get('/', [App\Http\Controllers\BuyerIndexController::class, 'index'])->na
 // Termék oldal
 Route::get('product/{id}', [App\Http\Controllers\BuyerIndexController::class, 'product'])->name('product');
 
+// Üzlet oldala
+Route::get('shop/{id}', [App\Http\Controllers\BuyerIndexController::class, 'shop'])->name('shop');
+
 // Regisztráció
 Route::get('register', [App\Http\Controllers\BuyerIndexController::class, 'register'])->name('register');
 

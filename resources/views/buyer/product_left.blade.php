@@ -6,7 +6,7 @@
         <div class="row">
             <div class="col-sm-3 fw-bold">Bolt neve</div>
             <div class="col-sm-9">
-                <a href="" class="btn btn-primary">{{ $product->shop_name }}</a>
+                <a href="{{ route('shop',$product->shop_id) }}" class="btn btn-primary">{{ $product->shop_name }}</a>
             </div>
             <div class="col-sm-3 fw-bold">Kategória</div>
             <div class="col-sm-9">{{ $product->category_name }}</div>
