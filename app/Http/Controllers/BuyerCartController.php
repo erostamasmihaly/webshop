@@ -20,11 +20,22 @@ class BuyerCartController extends Controller
     public function index() {
 
         // Kosár lekérdezése
-        $carts = Cart::join('products','carts.product_id','products.id')->where('user_id', Auth::id())->whereNull('payment_id')->get('products.id','products.name','carts.quantity');
+        $carts = Cart::join('products','carts.product_id','products.id')->join('units','products.unit_id','units.id')->where('user_id', Auth::id())->whereNull('payment_id')->get(['products.id','products.name','carts.quantity','units.name AS unit','products.price']);
+
+        // Fizetendő összeg meghatározása
+        $total = 0;
+
+        // További árak meghatározása
+        foreach($carts AS $cart) {
+            $cart->brutto_price = brutto_price($cart->price, $cart->vat);
+            $cart->discount_price = discount_price($cart->brutto_price, $cart->discount);
+            $total += $cart->discount_price * $cart->quantity;
+        }
 
         // Oldal meghívása
         return view('buyer.cart',[
-            'carts' => $carts
+            'carts' => $carts,
+            'total' => $total
         ]);
     }
 

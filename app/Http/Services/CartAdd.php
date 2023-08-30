@@ -23,12 +23,27 @@ class CartAdd
 
     // Adatok felvitele
     private function addToCart() {
+
         DB::transaction(function () {
-            $cart = new Cart();
-            $cart->user_id = Auth::id();
-            $cart->product_id = $this->product_id;
-            $cart->quantity = $this->quantity;
-            $cart->save();
+
+            // Megnézni, hogy már ezen termék benne van-e a kosásrban
+            $cart = Cart::where("user_id", Auth::id())->where("product_id", $this->product_id)->whereNull("payment_id")->first();
+
+            if (!$cart) {
+
+                // Ha nincsen, akkor felvinni újként
+                $cart = new Cart();
+                $cart->user_id = Auth::id();
+                $cart->product_id = $this->product_id;
+                $cart->quantity = $this->quantity;
+                $cart->save();
+            
+            } else {
+
+                // Ha igen, akkor csak a mennyiséget növelni
+                $cart->quantity += $this->quantity;
+                $cart->save();
+            }
         });
     }
 
