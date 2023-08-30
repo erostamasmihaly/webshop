@@ -17,12 +17,14 @@
         <div class="card p-2 text-center">
             <div class="fw-bold">Ha tetszik a termék, akkor adja megy azt a mennyiséget, amennyit meg szeretne vásárolni és utána helyezze a terméket a kosárba.</div>
             <div class="input-group">
-                <input type="number" class="form-control" id="quantity" value="1" min="0"/>
+                <input type="number" class="form-control" id="quantity" value="0" min="0"/>
 				<span class="input-group-text">{{ $product->unit }}</span>
 			</div>
             <div class="mt-2">
-                <button type="button" class="btn btn-primary w-100">Kosárba helyezés</button>
+                <button type="button" id="add" class="btn btn-primary w-100">Kosárba helyezés</button>
             </div>
+            <span class="badge bg-success mt-2 p-2 d-none" id="success"></span>
+            <span class="badge bg-danger mt-2 p-2 d-none" id="error"></span>
         </div>
     @endguest
 </div>

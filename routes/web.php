@@ -11,6 +11,9 @@ Auth::routes(['register' => false, 'reset' => false]);
 // Index
 require 'buyer/index.php';
 
+// Kosár
+require 'buyer/cart.php';
+
 //// Admin szerepkör
 
 // Vezérlőpult
