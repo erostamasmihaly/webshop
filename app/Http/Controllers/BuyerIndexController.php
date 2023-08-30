@@ -39,7 +39,7 @@ class BuyerIndexController extends Controller
     public function product($id) {
 
         // Termék adatainak lekérdezése
-        $product = Product::join('shops','products.shop_id','shops.id')->join('units','products.unit_id','units.id')->join('categories','products.category_id','categories.id')->where('products.id',$id)->get(['products.id','products.name','products.summary','products.body','products.price','products.vat','products.discount','shops.name AS shop_name','shops.id AS shop_id','units.name AS unit','categories.name AS category_name'])->first();
+        $product = Product::join('shops','products.shop_id','shops.id')->join('units','products.unit_id','units.id')->join('categories','products.category_id','categories.id')->where('products.id',$id)->get(['products.id','products.name','products.summary','products.body','products.price','products.vat','products.discount','shops.name AS shop_name','shops.id AS shop_id','units.name AS unit','categories.name AS category_name','products.quantity'])->first();
 
         // Bruttó ár és a leárazás utáni ár meghatározása
         $product->brutto_price = brutto_price($product->price, $product->vat);

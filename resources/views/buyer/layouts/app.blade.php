@@ -10,7 +10,7 @@
         @include('buyer/layouts/css')
         @show
     </head>
-    <body>
+    <body class="bg-secondary">
         <nav class="sb-topnav navbar navbar-expand bg-info">
             <div class="container">
                 <a class="navbar-brand ps-3 fw-bold" href="{{ route('home') }}">{{ config('app.name', 'ETM Webshop') }}</a>
@@ -19,7 +19,7 @@
                 @show
             </div>
         </nav>
-        <main class="py-4 bg-secondary">
+        <main class="py-4">
             @yield('content')
         </main>
         <footer>

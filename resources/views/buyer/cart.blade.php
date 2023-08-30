@@ -5,12 +5,15 @@
     @include('message')
     <div class="card">
         <div class="card-body">
+            <div class="bg-info bg-gradient text-dark text-center mb-2">
+                <h1>Kosár</h1>
+            </div>
             @if ($carts->count() !== 0)
                 @include('waiting')
                 <table class="datatable table table-bordered table-striped table-condensed d-none">
                     <thead>
                         <tr>
-                            <th scope="col" class="all">Név</th>
+                            <th scope="col" class="all">Termék neve</th>
                             <th scope="col" class="all">Mennyiség</th>
                             <th scope="col" class="all">Egységár</th>
                             <th scope="col" class="all">Műveletek</th>
@@ -19,7 +22,11 @@
                     <tbody>
                        @foreach ($carts as $cart)
                         <tr id="p{{ $cart->id }}">
-                            <td>{{ $cart->name }}</td>
+                            <td>
+                                <a href="{{ route('product',$cart->id) }}" class="btn btn-primary">
+                                    {{ $cart->name }}
+                                </a>
+                            </td>
                             <td><span class="quantity">{{ $cart->quantity }}</span> {{ $cart->unit }}</td>
                             <td>{{ numformat_with_unit($cart->discount_price,'Ft') }} / {{ $cart->unit }}</td>
                             <td>

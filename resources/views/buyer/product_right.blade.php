@@ -1,12 +1,12 @@
 <div class="col-sm-4">
     @if($product->discount)
         <div class="card p-2 bg-danger text-white text-center mb-2">
-            <div class="text-decoration-line-through">{{ numformat_with_unit($product->brutto_price,'Ft') }}</div>
+            <div class="text-decoration-line-through">{{ numformat_with_unit($product->brutto_price,'Ft') }} / {{ $product->unit }}</div>
             <div class="fw-bold">{{ numformat_with_unit($product->discount,'%') }} kedvezmény!</div>
         </div>
     @endif
     <div class="card p-2 bg-success text-white text-center mb-2">
-        <div class="fw-bold">{{ numformat_with_unit($product->discount_price,'Ft') }}</div>
+        <div class="fw-bold">{{ numformat_with_unit($product->discount_price,'Ft') }} / {{ $product->unit }}</div>
     </div>
     @guest
         <div class="card p-2 bg-danger text-white text-center">
@@ -16,6 +16,9 @@
     @else
         <div class="card p-2 text-center">
             <div class="fw-bold">Ha tetszik a termék, akkor adja megy azt a mennyiséget, amennyit meg szeretne vásárolni és utána helyezze a terméket a kosárba.</div>
+            <div class="alert alert-warning" role="alert">
+                Fizetés során kerül csak ellenőrzésre, hogy akkor ténylegesen mennyi mennyiség érhető el az adott termékből. Így az elérhetőnél nagyobb mennyiség esetén kell majd eldönteni, hogy ténylegesen mennyit szeretne megvenni! 
+</div>
             <div class="input-group">
                 <input type="number" class="form-control" id="quantity" value="0" min="0"/>
 				<span class="input-group-text">{{ $product->unit }}</span>
