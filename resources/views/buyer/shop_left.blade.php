@@ -3,9 +3,9 @@
         <div class="bg-info bg-gradient text-dark text-center mb-2">
             <h1>{{ $shop->name }}</h1>
         </div>
-        <div class="fw-bold">{{ $shop->summary }}</div>
+        <div class="fw-bold">{!! nl2br($shop->summary) !!}</div>
         @if($shop->body)
-            <div>{{ $shop->body }}</div>
+            <div>{!! nl2br($shop->body) !!}</div>
         @endif
         <div class="bg-info bg-gradient text-dark text-center mb-2 fw-bold">Termékek</div>
     </div>
