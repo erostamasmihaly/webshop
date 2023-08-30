@@ -2,7 +2,6 @@
 
 @section('content')
 <div class="container-fluid">
-    <h4 class="card-title">Kosár</h4>
     @include('message')
     <div class="card">
         <div class="card-body">
@@ -21,7 +20,7 @@
                        @foreach ($carts as $cart)
                         <tr id="p{{ $cart->id }}">
                             <td>{{ $cart->name }}</td>
-                            <td class="quantity">{{ $cart->quantity }} {{ $cart->unit }}</td>
+                            <td><span class="quantity">{{ $cart->quantity }}</span> {{ $cart->unit }}</td>
                             <td>{{ numformat_with_unit($cart->discount_price,'Ft') }} / {{ $cart->unit }}</td>
                             <td>
                                 <button class="btn btn-primary plus m-1" product_id="{{ $cart->id }}">+1</button>  

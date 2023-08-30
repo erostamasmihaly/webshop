@@ -12,4 +12,7 @@ Route::group(['prefix' => 'buyer/cart'], function() {
     // Kosárba tétel
     Route::post('add', [App\Http\Controllers\BuyerCartController::class, 'add'])->name('buyer_cart_add')->withoutMiddleware([VerifyCsrfToken::class]);
 
+    // Kosár módosítása
+    Route::post('change', [App\Http\Controllers\BuyerCartController::class, 'change'])->name('buyer_cart_change')->withoutMiddleware([VerifyCsrfToken::class]);
+
 });

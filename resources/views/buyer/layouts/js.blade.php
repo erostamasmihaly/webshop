@@ -8,3 +8,6 @@
 @if (Request::is('product/*'))
     <script src="{{ asset('js/own/product.js') }}" defer></script>
 @endif
+@if (Request::is('buyer/cart'))
+    <script src="{{ asset('js/own/buyer_cart.js') }}" defer></script>
+@endif

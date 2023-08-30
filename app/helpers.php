@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Cart;
 use App\Models\Category;
 use App\Models\Role;
 use App\Models\UserRole;
@@ -99,5 +100,32 @@ if (!function_exists('discount_price')) {
 if (!function_exists('get_activtion_code')) {
     function get_activation_code() {
         return md5(uniqid(mt_rand(), true));
+    }
+}
+
+// Kosár lekérdezése
+if (!function_exists('get_cart')) {
+    function get_cart() {
+
+        // Kosár lekérdezése
+        $carts = Cart::join('products','carts.product_id','products.id')->join('units','products.unit_id','units.id')->where('user_id', Auth::id())->whereNull('payment_id')->get(['products.id','products.name','carts.quantity','units.name AS unit','products.price']);
+
+        // Fizetendő összeg meghatározása
+        $total = 0;
+
+        // További árak meghatározása
+        foreach($carts AS $cart) {
+            $cart->brutto_price = brutto_price($cart->price, $cart->vat);
+            $cart->discount_price = discount_price($cart->brutto_price, $cart->discount);
+            $total += $cart->discount_price * $cart->quantity;
+        }
+
+        // Tömbbe behelyezni az értékeket
+        $array["carts"] = $carts;
+        $array["total"] = $total;
+
+        // Visszatérés a tömbbel
+        return $array;
+
     }
 }
