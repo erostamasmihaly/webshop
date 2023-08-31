@@ -3,11 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Http\Services\CartAdd;
-use App\Models\Cart;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Response;
 
-class BuyerCartController extends Controller
+class BuyerProtectedController extends Controller
 {
     
     // Csak a vásárlók férhetnek hozzá az itteni tartalmakhoz

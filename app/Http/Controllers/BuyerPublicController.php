@@ -8,11 +8,9 @@ use App\Mail\RegisterMail;
 use App\Models\Image;
 use App\Models\Product;
 use App\Models\Shop;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Mail;
 
-class BuyerIndexController extends Controller
+class BuyerPublicController extends Controller
 {
 
     public function __construct()
@@ -117,6 +115,11 @@ class BuyerIndexController extends Controller
         return view('buyer.shop', [
             'shop' => $shop
         ]);
+    }
+
+    // Felhasználó oldala
+    public function user() {
+        
     }
 
 }

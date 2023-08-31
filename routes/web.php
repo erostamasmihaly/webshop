@@ -8,11 +8,11 @@ Auth::routes(['register' => false, 'reset' => false]);
 
 //// Vásárlói szerepkör
 
-// Index
-require 'buyer/index.php';
+// Publikus
+require 'buyer/public.php';
 
-// Kosár
-require 'buyer/cart.php';
+// Védett
+require 'buyer/protected.php';
 
 //// Admin szerepkör
 
