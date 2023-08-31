@@ -17,9 +17,13 @@ Route::group(['prefix' => 'buyer/cart'], function() {
 
 });
 
-// Egyéb oldalak
-Route::group(['prefix' => 'buyer'], function() {
+// Felhasználói oldalak
+Route::group(['prefix' => 'buyer/user'], function() {
 
     // Felhasználó adatai
-    Route::get('user', [App\Http\Controllers\BuyerProtectedController::class, 'user'])->name('buyer_user');
+    Route::get('/', [App\Http\Controllers\BuyerProtectedController::class, 'user'])->name('buyer_user');
+
+    // Felhasználó adatainak mentése
+    Route::put('/', [App\Http\Controllers\BuyerProtectedController::class, 'user_update'])->name('buyer_user_update');
+
 });

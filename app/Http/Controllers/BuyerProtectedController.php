@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Services\BuyerUserUpdate;
 use App\Http\Services\CartAdd;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
@@ -53,6 +54,14 @@ class BuyerProtectedController extends Controller
         return view('buyer.user', [
             'user' => $user
         ]);
+
+    }
+
+    // Felhasználó adatainak mentése
+    public function user_update(BuyerUserUpdate $buyerUserUpdate) {
+        
+        // Válasz küldése
+        return redirect()->route('buyer_user')->withMessage('Sikeres művelet!');
 
     }
 }
