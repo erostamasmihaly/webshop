@@ -3,7 +3,7 @@
 use App\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Support\Facades\Route;
 
-// Kategóriák kezelése
+// Kosár kezelése
 Route::group(['prefix' => 'buyer/cart'], function() {
 
     // Kosár tartalma
@@ -15,4 +15,11 @@ Route::group(['prefix' => 'buyer/cart'], function() {
     // Kosár módosítása
     Route::post('change', [App\Http\Controllers\BuyerProtectedController::class, 'change'])->name('buyer_cart_change')->withoutMiddleware([VerifyCsrfToken::class]);
 
+});
+
+// Egyéb oldalak
+Route::group(['prefix' => 'buyer'], function() {
+
+    // Felhasználó adatai
+    Route::get('user', [App\Http\Controllers\BuyerProtectedController::class, 'user'])->name('buyer_user');
 });

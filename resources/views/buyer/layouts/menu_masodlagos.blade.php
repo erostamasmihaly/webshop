@@ -24,6 +24,7 @@
 					<a class="dropdown-item" href="{{ route('seller_index') }}">Eladói felület</a> 
 				@endif
 				@if(has_role('buyer'))
+					<a class="dropdown-item" href="{{ route('buyer_user') }}">Profil</a>
 					<a class="dropdown-item" href="{{ route('buyer_cart') }}">Kosár</a> 
 				@endif
 				<a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();document.getElementById('logout-form').submit();">
