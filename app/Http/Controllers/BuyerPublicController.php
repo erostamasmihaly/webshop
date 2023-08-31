@@ -5,9 +5,11 @@ namespace App\Http\Controllers;
 use App\Http\Services\UserActivate;
 use App\Http\Services\UserInsert;
 use App\Mail\RegisterMail;
+use App\Models\Favourite;
 use App\Models\Image;
 use App\Models\Product;
 use App\Models\Shop;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 
 class BuyerPublicController extends Controller
@@ -53,10 +55,23 @@ class BuyerPublicController extends Controller
             $image->url = asset('images/products/'.$id.'/'.$image->filename);
         }
 
+        // Ha be van jelentkezve
+        if (Auth::user()) {
+
+            // Megnézni, hogy kedvelte-e a terméket
+            $is_fav = Favourite::where('user_id', Auth::id())->where('product_id', $id)->first();
+        
+        } else {
+
+            // Ha nincs bejelntkezve, akkor nem kedvelte
+            $is_fav = null;
+        }
+
         // Felület betöltése
         return view('buyer.product', [
             'product' => $product,
-            'images' => $images
+            'images' => $images,
+            'is_fav' => $is_fav
         ]);
     }
 

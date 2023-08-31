@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Services\BuyerUserUpdate;
 use App\Http\Services\CartAdd;
+use App\Http\Services\FavouriteUpdate;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Response;
@@ -18,7 +19,7 @@ class BuyerProtectedController extends Controller
     }
 
     // Kosár tartalma
-    public function index() {
+    public function cart() {
 
         // Oldal meghívása
         return view('buyer.cart',[
@@ -28,7 +29,7 @@ class BuyerProtectedController extends Controller
     }
 
     // Termék felvitele a kosárba
-    public function add(CartAdd $cartAdd) {
+    public function cart_add(CartAdd $cartAdd) {
 
         // Válasz küldése
         $array['OK'] = 1;
@@ -36,7 +37,7 @@ class BuyerProtectedController extends Controller
     }
 
     // Kosár módosítása
-    public function change(CartAdd $cartAdd) {
+    public function cart_change(CartAdd $cartAdd) {
 
         // Válasz küldése
         $array['OK'] = 1;
@@ -63,5 +64,13 @@ class BuyerProtectedController extends Controller
         // Válasz küldése
         return redirect()->route('buyer_user')->withMessage('Sikeres művelet!');
 
+    }
+
+    // Kedvelés módosítása
+    public function favourite_change(FavouriteUpdate $favouriteUpdate) {
+        
+        // Válasz küldése
+        $array['OK'] = 1;
+        return Response::json($array);
     }
 }

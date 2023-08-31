@@ -7,13 +7,21 @@ use Illuminate\Support\Facades\Route;
 Route::group(['prefix' => 'buyer/cart'], function() {
 
     // Kosár tartalma
-    Route::get('', [App\Http\Controllers\BuyerProtectedController::class, 'index'])->name('buyer_cart');
+    Route::get('', [App\Http\Controllers\BuyerProtectedController::class, 'cart'])->name('buyer_cart');
     
     // Kosárba tétel
-    Route::post('add', [App\Http\Controllers\BuyerProtectedController::class, 'add'])->name('buyer_cart_add')->withoutMiddleware([VerifyCsrfToken::class]);
+    Route::post('add', [App\Http\Controllers\BuyerProtectedController::class, 'cart_add'])->name('buyer_cart_add')->withoutMiddleware([VerifyCsrfToken::class]);
 
     // Kosár módosítása
-    Route::post('change', [App\Http\Controllers\BuyerProtectedController::class, 'change'])->name('buyer_cart_change')->withoutMiddleware([VerifyCsrfToken::class]);
+    Route::post('change', [App\Http\Controllers\BuyerProtectedController::class, 'cart_change'])->name('buyer_cart_change')->withoutMiddleware([VerifyCsrfToken::class]);
+
+});
+
+// Kedvelés
+Route::group(['prefix' => 'buyer/favourite'], function() {
+
+    // Kedvelés módosítása
+    Route::post('change', [App\Http\Controllers\BuyerProtectedController::class, 'favourite_change'])->name('buyer_favourite_change')->withoutMiddleware([VerifyCsrfToken::class]);
 
 });
 

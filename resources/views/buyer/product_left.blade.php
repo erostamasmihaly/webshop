@@ -2,10 +2,16 @@
     <div class="card p-2">
         <div class="bg-info bg-gradient text-dark mb-2 p-2">
             <h1 class="float-start">{{ $product->name }}</h1>
-            <span class="float-end">
-                <i class="fa-solid fa-star fa-2xl fav d-none"></i>
-                <i class="fa-regular fa-star fa-2xl unfav"></i>
-            </span>
+            @if(Auth())
+                <span class="float-end">
+                    <span class="unfav @if(!$is_fav) d-none @endif">
+                        <i class="fa-solid fa-star fa-2xl"></i>
+                    </span>
+                    <span class="fav @if($is_fav) d-none @endif">
+                        <i class="fa-regular fa-star fa-2xl"></i>
+                    </span>
+                </span>
+            @endif
         </div>
         <div class="row">
             <div class="col-sm-3 fw-bold">Bolt neve</div>

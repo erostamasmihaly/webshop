@@ -1,4 +1,7 @@
 $(function () {
+
+    // Termék azonosító lekérdezése
+    product_id = $("#product_id").val();
     
     // ColorBox beállítása
     $(".colorbox").colorbox({
@@ -10,9 +13,8 @@ $(function () {
     // Kosárba helyezés
     $("#add").on("click", function() {
 
-        // Adatok lekérdezése
+        // Mennyiség lekérdezése
         quantity = $("#quantity").val();
-        product_id = $("#product_id").val();
 
         // Megnézni, hogy van-e mennyiség megadva
         if (quantity > 0) {
@@ -75,4 +77,56 @@ $(function () {
         // Üzenetek elrejtése
         $("#success, #error").addClass("d-none");
     });
+
+    // Kedvelés
+    $(".fav").on("click", function() {
+        send_favourites(1);
+    });
+
+    // Kedvelés visszavonása
+    $(".unfav").on("click", function() {
+        send_favourites(0);
+    });
+
+    // Változás elküldése a kedveléssel kapcsolatban
+    function send_favourites(state) {
+
+        // Adatok átküldése
+        $.ajax({
+            dataType: "json",
+            url: "/buyer/favourite/change",
+            data: "product_id="+product_id+"&state="+state,
+            type: "POST",
+            cache: false,
+            success: function (data) {
+
+                // Ha minsen rendben volt
+                if (data.OK==1) {
+
+                    if (state==1) {
+                        
+                        //// Ha kedvelés volt
+                        // Kedvelés gomb elrejtése
+                        $(".fav").addClass("d-none");
+
+                        // Kedvelés visszavonása gomb megjelenítése
+                        $(".unfav").removeClass("d-none");
+
+                    } else {
+
+                        //// Ha kedvelés visszavonása volt
+                        // Kedvelés visszavonása gomb elrejtése
+                        $(".unfav").addClass("d-none");
+
+                        // Kedvelés gomb megjelenítése
+                        $(".fav").removeClass("d-none");
+
+                    }
+                }
+            },
+            error: function(error) {
+                console.log(error);
+            }
+        });
+    }
 });
