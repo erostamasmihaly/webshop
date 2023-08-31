@@ -43,7 +43,13 @@
         </div>
         <div class="bg-dark text-light fw-bold p-2">
             Fizetendő: <span id="total">{{ numformat_with_unit($total,'Ft') }}</span>
-            <span class="float-end"><a href="" class="btn btn-primary">Fizetés</a></span>
+            <span class="float-end">
+                @if(can_pay())
+                    <a href="" class="btn btn-primary">Fizetés</a>
+                @else
+                    <span class="text-warning">Kérem töltse ki a Profil oldal esetén az összes személyes adatát! Addig a Fizetés nem érhető el!</span>
+                @endif
+            </span>
         </div>
     </div>
 </div>

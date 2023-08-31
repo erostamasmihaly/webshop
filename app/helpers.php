@@ -3,6 +3,7 @@
 use App\Models\Cart;
 use App\Models\Category;
 use App\Models\Role;
+use App\Models\User;
 use App\Models\UserRole;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
@@ -127,5 +128,12 @@ if (!function_exists('get_cart')) {
         // Visszatérés a tömbbel
         return $array;
 
+    }
+}
+
+// Tud fizetni a felhasználó - vagyis megvan minden adata ahhoz, hogy fizessen?
+if (!function_exists('can_pay')) {
+    function can_pay() {
+        return User::where('id', Auth::id())->whereNotNull(['country','state','zip','city','address'])->first();
     }
 }

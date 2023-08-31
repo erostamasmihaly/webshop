@@ -81,6 +81,11 @@
 			    @endif
             </div>
         </div>
+        @if(!can_pay())
+            <div class="alert alert-warning" role="alert">
+                Amennyiben itt nincs minden személyes adat megadva és elmentve, addig nem lehet fizetést kezdeményezni az oldalon keresztül! Az itt megadott adatok lesznek elküldve az OTP rendszerébe a fizetés során! Így kérjük ezen adatokat haladéktalanul töltse ki, még mielőtt a kosárba tett termékeket megvásárolná!
+            </div>
+        @endif
         <div class="bg-dark p-3">
             <div class="submit">
                 <button type="submit" class="btn btn-primary">Mentés</button>            
