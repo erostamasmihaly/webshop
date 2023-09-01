@@ -8,10 +8,10 @@
                 @foreach($favs AS $fav)
                     <div class="col-sm-6 fav" product_id="{{ $fav->id }}">
                         <div class="card p-1">
-                            <p class="fw-bold">{{ $fav->name }}</p>
-                            <img src="{{ asset('images/products/'.$fav->id.'/main_image.jpg') }}" class="img-thumbnail mb-2"/>
-                            <div class="badge bg-primary">{{ $fav->discount }}</div>
-                            <div class="undo btn btn-danger mt-2">Visszavonás</div>
+                            <a href="{{ route('product',$fav->id) }}" class="btn btn-primary mb-2">{{ $fav->name }}
+                            <div class="badge bg-success">{{ $fav->discount }}</div>
+                            </a>
+                            <div class="undo btn btn-secondary mt-2">Visszavonás</div>
                         </div>
                     </div>
                 @endforeach
