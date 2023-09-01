@@ -4,7 +4,7 @@ $(function () {
     $(".plus").on("click", function() {
         
         // Termék azonosító lekérdezése
-        product_id = $(this).attr("product_id");
+        product_id = $(this).closest(".product").attr("product_id");
 
         // Módosítás elküldése
         send_change(product_id, 1);
@@ -15,10 +15,10 @@ $(function () {
     $(".minus").on("click", function() {
         
         // Termék azonosító lekérdezése
-        product_id = $(this).attr("product_id");
+        product_id = $(this).closest(".product").attr("product_id");
 
         // Mennyiség lekérdezése
-        quantity = $("#p"+product_id+" .quantity").html();
+        quantity = $(this).closest(".product").find(".quantity").html();
 
         // Ha még nem 0
         if (quantity > 0) {
@@ -35,7 +35,7 @@ $(function () {
     function send_change(product_id, quantity) {
 
         // Mennyiség lekérdezése
-        quantity_old = $("#p"+product_id+" .quantity").html();
+        quantity_old = $(".product[product_id="+product_id+"] .quantity").html();
         
         // Adatok átküldése
         $.ajax({
@@ -49,7 +49,7 @@ $(function () {
                 if (data.OK==1) {
 
                     // Mennyiség módosítása
-                    $("#p"+product_id+" .quantity").html(parseInt(quantity) + parseInt(quantity_old));
+                    $(".product[product_id="+product_id+"] .quantity").html(parseInt(quantity) + parseInt(quantity_old));
 
                     // Fizetendő összeg frissítése
                     $("#total").html(data.total);
