@@ -2,6 +2,7 @@
 
 use App\Models\Cart;
 use App\Models\Category;
+use App\Models\Product;
 use App\Models\Role;
 use App\Models\User;
 use App\Models\UserRole;
@@ -109,15 +110,15 @@ if (!function_exists('get_cart')) {
     function get_cart() {
 
         // Kosár lekérdezése
-        $carts = Cart::join('products','carts.product_id','products.id')->join('units','products.unit_id','units.id')->where('user_id', Auth::id())->whereNull('payment_id')->get(['products.id','products.name','carts.quantity','units.name AS unit','products.price']);
+        $carts = Cart::join('products','carts.product_id','products.id')->join('units','products.unit_id','units.id')->where('user_id', Auth::id())->whereNull('payment_id')->get(['products.id','products.name','carts.quantity','units.name AS unit']);
 
         // Fizetendő összeg meghatározása
         $total = 0;
 
         // További árak meghatározása
         foreach($carts AS $cart) {
-            $cart->brutto_price = brutto_price($cart->price, $cart->vat);
-            $cart->discount_price = discount_price($cart->brutto_price, $cart->discount);
+            $cart->brutto_price = product_prices($cart->id)["brutto"];
+            $cart->discount_price = product_prices($cart->id)["discount"];
             $total += $cart->discount_price * $cart->quantity;
         }
 
@@ -135,5 +136,27 @@ if (!function_exists('get_cart')) {
 if (!function_exists('can_pay')) {
     function can_pay() {
         return User::where('id', Auth::id())->whereNotNull(['country','state','zip','city','address'])->first();
+    }
+}
+
+// Termék árainak lekérdezése
+if (!function_exists('product_prices')) {
+    function product_prices($id) {
+
+        // Termék kikeresése
+        $product = Product::find($id);
+
+        // Árak meghatározása
+        $brutto_price = brutto_price($product->price, $product->vat);
+        $discount_price = discount_price($brutto_price, $product->discount);
+
+        // Ezen árak elmentése egy tömbbe
+        $array['brutto'] = $brutto_price;
+        $array['discount'] = $discount_price; 
+        $array['brutto_ft'] = numformat_with_unit($brutto_price, 'Ft');
+        $array['discount_ft'] = numformat_with_unit($discount_price, 'Ft');
+
+        // Visszatérés ezzel a tömbel
+        return $array;
     }
 }

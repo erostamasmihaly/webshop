@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Services\BuyerUserUpdate;
 use App\Http\Services\CartAdd;
 use App\Http\Services\FavouriteUpdate;
+use App\Models\Favourite;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Response;
@@ -51,9 +52,18 @@ class BuyerProtectedController extends Controller
         // Felhasználó adatainak lekérdezése
         $user = User::where('id', Auth::id())->first();
 
+        // Kedvencek lekérdezése
+        $favs = Favourite::where('user_id', Auth::id())->join('products','favourites.product_id','products.id')->get(['products.id','products.name']);
+
+        // Kedvencek esetén a bruttó és kedvezményes ár lekérdezése
+        foreach ($favs AS $fav) {
+            $fav->discount = product_prices($fav->id)["discount_ft"];
+        }
+
         // Oldal meghívása
         return view('buyer.user', [
-            'user' => $user
+            'user' => $user,
+            'favs' => $favs
         ]);
 
     }

@@ -47,7 +47,7 @@
                 @if(can_pay())
                     <a href="" class="btn btn-primary">Fizetés</a>
                 @else
-                    <span class="text-warning">Kérem töltse ki a Profil oldal esetén az összes személyes adatát! Addig a Fizetés nem érhető el!</span>
+                    <span class="text-warning">Kérem töltse ki a Profil oldalon az összes személyes adatát! Addig a Fizetés nem érhető el!</span>
                 @endif
             </span>
         </div>
