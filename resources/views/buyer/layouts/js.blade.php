@@ -12,6 +12,9 @@
 @if (Request::is('buyer/cart'))
     <script src="{{ asset('js/own/buyer_cart.js') }}" defer></script>
 @endif
+@if (Request::is('buyer/user'))
+    <script src="{{ asset('js/own/buyer_user.js') }}" defer></script>
+@endif
 @if (Request::is('shop/*'))
     <script src="{{ asset('js/own/buyer_shop.js') }}" defer></script>
     <script src="{{ asset('js/external/leaflet.js') }}" defer></script>
