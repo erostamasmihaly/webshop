@@ -42,7 +42,14 @@ class CartAdd
 
                 // Ha igen, akkor csak a mennyiséget növelni
                 $cart->quantity += $this->quantity;
-                $cart->save();
+
+                // Ha az új mennyiség 0, akkor törölni, különben menteni
+                if ($cart->quantity == 0) {
+                    $cart->delete();
+                } else {
+                    $cart->save();
+                }
+
             }
         });
     }

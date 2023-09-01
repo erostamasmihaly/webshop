@@ -29,6 +29,20 @@ $(function () {
    
     });
 
+    // Törlés gomb megnyomása
+    $(".delete").on("click", function() {
+        
+        // Termék azonosító lekérdezése
+        product_id = $(this).closest(".product").attr("product_id");
+
+        // Mennyiség lekérdezése
+        quantity = $(this).closest(".product").find(".quantity").html();
+
+        // Módosítás elküldése
+        send_change(product_id, -1*quantity);
+   
+    });
+
 
 
     // Módosítás elküldése
@@ -48,8 +62,19 @@ $(function () {
 
                 if (data.OK==1) {
 
-                    // Mennyiség módosítása
-                    $(".product[product_id="+product_id+"] .quantity").html(parseInt(quantity) + parseInt(quantity_old));
+                    new_quantity = parseInt(quantity) + parseInt(quantity_old);
+
+                    if (new_quantity > 0) {
+
+                        // Ha még mindig van belőle, akkor mennyiség módosítása
+                        $(".product[product_id="+product_id+"] .quantity").html(new_quantity);
+
+                    } else {
+
+                        // Adott sor törlése és a táblázat frissítése
+                        $(".datatable").DataTable().rows(".product[product_id="+product_id+"]").remove().draw();
+
+                    }
 
                     // Fizetendő összeg frissítése
                     $("#total").html(data.total);

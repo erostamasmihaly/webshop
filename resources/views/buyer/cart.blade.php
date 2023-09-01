@@ -40,7 +40,7 @@
                     </tbody>
                 </table>
             @else
-                @include('layouts.empty')
+                @include('empty')
             @endif
         </div>
         <div class="bg-dark text-light fw-bold p-2">
