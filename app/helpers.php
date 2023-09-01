@@ -119,6 +119,7 @@ if (!function_exists('get_cart')) {
         foreach($carts AS $cart) {
             $cart->brutto_price = product_prices($cart->id)["brutto"];
             $cart->discount_price = product_prices($cart->id)["discount"];
+            $cart->discount_ft = product_prices($cart->id)["discount_ft"];
             $total += $cart->discount_price * $cart->quantity;
         }
 
@@ -144,7 +145,7 @@ if (!function_exists('product_prices')) {
     function product_prices($id) {
 
         // Termék kikeresése
-        $product = Product::find($id);
+        $product = Product::where('products.id', $id)->join('units','products.unit_id','units.id')->get(['products.*','units.name AS unit'])->first();
 
         // Árak meghatározása
         $brutto_price = brutto_price($product->price, $product->vat);
@@ -153,8 +154,8 @@ if (!function_exists('product_prices')) {
         // Ezen árak elmentése egy tömbbe
         $array['brutto'] = $brutto_price;
         $array['discount'] = $discount_price; 
-        $array['brutto_ft'] = numformat_with_unit($brutto_price, 'Ft');
-        $array['discount_ft'] = numformat_with_unit($discount_price, 'Ft');
+        $array['brutto_ft'] = numformat_with_unit($brutto_price, 'Ft / '.$product->unit);
+        $array['discount_ft'] = numformat_with_unit($discount_price, 'Ft / '.$product->unit);
 
         // Visszatérés ezzel a tömbel
         return $array;

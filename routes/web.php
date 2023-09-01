@@ -28,7 +28,7 @@ require 'admin/category.php';
 // Üzletek
 require 'admin/shop.php';
 
-//// Alkalmazotti szerepkör
+//// Eladói szerepkör
 
 // Vezérlőpult
 require 'seller/index.php';

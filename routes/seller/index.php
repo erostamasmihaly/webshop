@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 
-// Alkalmazotti felület
+// Eladói felület
 Route::group(['prefix' => 'seller/index'], function() {
 
     // Vezérlőpult

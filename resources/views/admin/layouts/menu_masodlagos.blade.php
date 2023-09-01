@@ -7,7 +7,7 @@
 	<ul class="dropdown-menu dropdown-menu-end">
 		<li> 
 			@if(has_role('seller'))
-				<a class="dropdown-item" href="{{ route('seller_index') }}">Alkalmazotti felület</a>
+				<a class="dropdown-item" href="{{ route('seller_index') }}">Eladói felület</a>
 			@endif
 			<a class="dropdown-item" href="{{ route('home') }}">Áruház felület</a>
 			<a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();document.getElementById('logout-form').submit();">

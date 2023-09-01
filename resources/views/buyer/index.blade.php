@@ -16,14 +16,14 @@
                                 </p>
                                 @if($product->discount)
                                     <span class="badge bg-secondary p-2 mb-2">
-                                        <span class="text-decoration-line-through">{{ numformat_with_unit($product->brutto_price,'Ft') }} / {{ $product->unit }}</span>
+                                        <span class="text-decoration-line-through">{{ $product->brutto_price }}</span>
                                         <span class="badge rounded-pill bg-danger">
                                             {{ numformat_with_unit($product->discount,'%') }}
                                             <span class="visually-hidden">leárazás</span>
                                         </span>
                                     </span>
                                 @endif
-                                <span class="badge bg-success p-2 mb-2">{{ numformat_with_unit($product->discount_price,'Ft') }} / {{ $product->unit }}</span>
+                                <span class="badge bg-success p-2 mb-2">{{ $product->discount_price }}</span>
                                 <a href="{{ route('product',$product->id) }}" class="btn btn-primary">Megtekintés</a>
                             </div>
                         </div>

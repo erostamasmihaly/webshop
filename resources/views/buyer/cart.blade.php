@@ -28,7 +28,7 @@
                                 </a>
                             </td>
                             <td><span class="quantity">{{ $cart->quantity }}</span> {{ $cart->unit }}</td>
-                            <td>{{ numformat_with_unit($cart->discount_price,'Ft') }} / {{ $cart->unit }}</td>
+                            <td>{{ $cart->discount_ft }}</td>
                             <td>
                                 <button class="btn btn-primary plus m-1" product_id="{{ $cart->id }}">+1</button>  
                                 <button class="btn btn-primary minus m-1" product_id="{{ $cart->id }}">-1</button>  
