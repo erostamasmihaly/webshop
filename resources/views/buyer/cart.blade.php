@@ -44,14 +44,18 @@
             @endif
         </div>
         <div class="bg-dark text-light fw-bold p-2">
-            Fizetendő: <span id="total">{{ numformat_with_unit($total,'Ft') }}</span>
-            <span class="float-end">
-                @if(can_pay())
-                    <a href="" class="btn btn-primary">Fizetés</a>
-                @else
-                    <span class="text-warning">Kérem töltse ki a Profil oldalon az összes személyes adatát! Addig a Fizetés nem érhető el!</span>
-                @endif
-            </span>
+            @if ($carts->count() !== 0)
+                Fizetendő: <span id="total">{{ numformat_with_unit($total,'Ft') }}</span>
+                <span class="float-end">
+                    @if(can_pay())
+                        <a href="" class="btn btn-primary">Fizetés</a>
+                    @else
+                        <span class="text-warning">Kérem töltse ki a Profil oldalon az összes személyes adatát! Addig a Fizetés nem érhető el!</span>
+                    @endif
+                </span>
+            @else
+                Jelenleg üres a kosár!
+            @endif
         </div>
     </div>
 </div>

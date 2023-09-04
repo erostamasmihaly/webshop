@@ -76,8 +76,17 @@ $(function () {
 
                     }
 
-                    // Fizetendő összeg frissítése
-                    $("#total").html(data.total);
+                    if (data.total>0) {
+
+                        // Fizetendő összeg frissítése
+                        $("#total").html(data.total);
+                    } else {
+
+                        // Felület frissítése
+                        window.location.href = window.location.href;
+                    }
+                    
+
                 } else {
                     console.log(data);
                 }
