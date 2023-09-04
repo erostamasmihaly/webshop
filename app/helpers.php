@@ -126,6 +126,7 @@ if (!function_exists('get_cart')) {
         // Tömbbe behelyezni az értékeket
         $array["carts"] = $carts;
         $array["total"] = $total;
+        $array["total_ft"] = numformat_with_unit($total,'Ft');
 
         // Visszatérés a tömbbel
         return $array;

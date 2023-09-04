@@ -18,7 +18,7 @@ class BuyerPayController extends Controller
         // Oldal meghívása
         return view('buyer.pay_confirm',[
             'carts' => get_cart()['carts'],
-            'total' => get_cart()['total']
+            'total_ft' => get_cart()['total_ft']
         ]);
 
     } 
