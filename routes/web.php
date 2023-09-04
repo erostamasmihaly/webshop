@@ -14,6 +14,9 @@ require 'buyer/public.php';
 // Védett
 require 'buyer/protected.php';
 
+// Fizetés
+require 'buyer/pay.php';
+
 //// Admin szerepkör
 
 // Vezérlőpult

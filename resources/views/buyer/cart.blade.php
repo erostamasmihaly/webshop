@@ -48,7 +48,7 @@
                 Fizetendő: <span id="total">{{ numformat_with_unit($total,'Ft') }}</span>
                 <span class="float-end">
                     @if(can_pay())
-                        <a href="" class="btn btn-primary">Fizetés</a>
+                        <a href="{{ route('pay_confirm') }}" class="btn btn-primary">Fizetés</a>
                     @else
                         <span class="text-warning">Kérem töltse ki a Profil oldalon az összes személyes adatát! Addig a Fizetés nem érhető el!</span>
                     @endif
