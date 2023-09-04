@@ -22,21 +22,13 @@ class BuyerPublicController extends Controller
     public function index()
     {
 
-        // Termékek lekérdezése
-        $products = Product::join('shops','products.shop_id','shops.id')->join('units','products.unit_id','units.id')->where(function($query) {return $query->where('active', 1)->orWhere('quantity', '>', 0);})->get(['products.id','products.name','products.summary','shops.name AS shop','units.name AS unit','products.discount']);
-
-        // Bruttó és kedvezményes árak behelyezése a listába
-        foreach($products AS $product) {
-            $product->brutto_price = product_prices($product->id)["brutto_ft"];
-            $product->discount_price = product_prices($product->id)["discount_ft"];
-        }
-
         // Felület betöltése
         return view('buyer.index', [
-            'products' => $products
+            'products' => get_products()
         ]);
     }
 
+    // Egy termék adatai
     public function product($id) {
 
         // Termék adatainak lekérdezése
@@ -127,13 +119,7 @@ class BuyerPublicController extends Controller
         $shop = Shop::where("id", $id)->first();
 
         // Bolt termékeinek lekérdezése
-        $products = Product::join('units','products.unit_id','units.id')->where('shop_id', $id)->get(['products.*','units.name AS unit']);
-
-        // Bruttó és kedvezményes árak behelyezése a listába
-        foreach($products AS $product) {
-            $product->brutto_price = product_prices($product->id)["brutto_ft"];
-            $product->discount_price = product_prices($product->id)["discount_ft"];
-        }
+        $products = get_products([$id]);
 
         // Felület betöltése
         return view('buyer.shop', [

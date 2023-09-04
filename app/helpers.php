@@ -162,3 +162,29 @@ if (!function_exists('product_prices')) {
         return $array;
     }
 }
+
+// Termékek lekérdezése
+if (!function_exists('get_products')) {
+    function get_products($shop_id = null) {
+
+        // Összes termék lekérdezése
+        $products = Product::join('shops','products.shop_id','shops.id')->join('units','products.unit_id','units.id')->join('categories','products.category_id','categories.id')->where(function($query) {return $query->where('active', 1)->orWhere('quantity', '>', 0);});
+
+        // Ha megvan adva a bolt azonosítója, akkor ezen azonosítóra történő szűrés
+        if ($shop_id != null) {
+            $products = $products->whereIn('shop_id', $shop_id);
+        }
+        
+        // Adatok lekérdezése
+        $products = $products->get(['products.id','products.name','products.summary','shops.name AS shop','units.name AS unit','products.discount','products.category_id','categories.name AS category','products.quantity']);
+
+        // Bruttó és kedvezményes árak behelyezése
+        foreach($products AS $product) {
+            $product->brutto_price = product_prices($product->id)["brutto_ft"];
+            $product->discount_price = product_prices($product->id)["discount_ft"];
+        }
+
+        // Visszatérés ezen termékekkel
+        return $products;
+    }
+}

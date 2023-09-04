@@ -13,25 +13,44 @@
                 <table class="datatable table table-bordered table-striped table-condensed d-none">
                     <thead>
                         <tr>
-                            <th scope="col" class="all">Név</th>
-                            <th scope="col" class="all">Termék ára</th>
-                            <th scope="col" class="all">Műveletek</th>
+                            <th scope="col" class="all"></th>
+                            <th scope="col" class="all">Termék neve</th>
+                            <th scope="col" class="all">Egységár</th>
+                            <th scope="col" class="none">Kategória</th>
+                            <th scope="col" class="none">Rövid leírás</th>
+                            <th scope="col" class="none">Elérhető mennyiség</th>
+                            <th scope="col" class="none">Eredeti egységár</th>
+                            <th scope="col" class="none">Kedvezmény nagysága</th>
                         </tr>
                     </thead>
                     <tbody>
                        @foreach ($products as $product)
-                        <tr>
-                            <td>{{ $product->name }}<br><i class="fas fa-folder-tree"></i> {{ get_category_name($product->category_id) }}</td>
-                            <td>{{ numformat_with_unit($product->price,'Ft') }} + {{ $product->vat }} % ÁFA<br>+ {{ $product->discount }} % kedvezmény</td>
+                        <tr class="product" product_id="{{ $product->id }}">
+                            <td></td>
                             <td>
-                                <a class="btn btn-primary mb-3" href="{{ route('seller_product_edit',$product->id) }}">Szerkesztés</a>
+                                <a href="{{ route('seller_product_edit',$product->id) }}">
+                                    <i class="fa-solid fa-arrow-up-right-from-square"></i> {{ $product->name }}
+                                </a> 
                             </td>
+                            <td>
+                                {{ $product->discount_price }}
+                                @if($product->discount)
+									<span class="badge rounded-pill bg-danger float-end">
+										{{ numformat_with_unit($product->discount,'%') }}
+									</span>
+								@endif
+                            </td>
+                            <td>{{ $product->category }}</td>
+                            <td>{!! $product->summary !!}</td>
+                            <td>{{ $product->quantity }} {{ $product->unit }}</td>
+                            <td>{{ $product->brutto_price }}</td>
+                            <td>{{ numformat_with_unit($product->discount,'%') }}</td>
                         </tr>
                        @endforeach
                     </tbody>
                 </table>
             @else
-                @include('layouts.empty')
+                @include('empty')
             @endif
         </div>
     </div>
