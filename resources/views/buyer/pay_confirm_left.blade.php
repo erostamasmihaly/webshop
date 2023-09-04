@@ -30,7 +30,7 @@
             <div class="col-sm-9">{{ $user->address }}</div>
         </div>
         <div class="alert alert-warning" role="alert">
-            Felhasználói adatok módosítására csak a Profil oldalon van lehetőség!
+            Felhasználói adatok módosítására csak a <a href="{{ route('buyer_user') }}"><i class="fa-solid fa-arrow-up-right-from-square"></i> Profil oldalon</a> van lehetőség!
         </div>
     </div>
 </div>
