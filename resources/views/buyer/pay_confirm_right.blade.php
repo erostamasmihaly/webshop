@@ -1,7 +1,7 @@
 <div class="col-sm-4 mb-2">
     <div class="card p-2">
         <div class="bg-info bg-gradient text-dark text-center mb-2 fw-bold">Kosár tartalma</div>
-        <div class="row p-2">
+        <div class="row p-1 mb-2">
             @foreach($carts AS $cart)
                 <div class="col-sm-6">
                     <div class="card p-1">
@@ -32,15 +32,19 @@
                     <img src="{{ asset('images/simplepay.png') }}" class="img-thumbnail"/>
                 </a>
             </p>
-            <div class="form-check">
-                <input class="form-check-input" type="checkbox" value="" name="accept" id="accept">
-                <label class="form-check-label" for="accept">Elfogadom a 
-                    <a href="https://simplepay.hu/vasarlo-aff/" target="_blank">
-                        <i class="fa-solid fa-arrow-up-right-from-square"></i> Vásárlói általános felhasználási feltételeket
-                    </a>
-                </label>
-            </div>
+            <p>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" name="accept" id="accept">
+                    <label class="form-check-label" for="accept">Elfogadom a 
+                        <a href="https://simplepay.hu/vasarlo-aff/" target="_blank">
+                            <i class="fa-solid fa-arrow-up-right-from-square"></i> Vásárlói általános felhasználási feltételeket
+                        </a>
+                    </label>
+                </div>
             </p>
+        </div>
+        <div class="bg-dark p-2">
+            <a href="" class="btn btn-primary float-end">Fizetés megerősítése</a>
         </div>
     </div>
 </div>

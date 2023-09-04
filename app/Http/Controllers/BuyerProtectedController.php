@@ -25,7 +25,7 @@ class BuyerProtectedController extends Controller
         // Oldal meghívása
         return view('buyer.cart',[
             'carts' => get_cart()['carts'],
-            'total' => get_cart()['total']
+            'total_ft' => get_cart()['total_ft']
         ]);
     }
 

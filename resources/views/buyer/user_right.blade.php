@@ -4,11 +4,11 @@
             Kedvelt termékek
         </div>
         @if ($favs->count() !== 0)
-            <div class="favs row">
+            <div class="favs row p-1">
                 @foreach($favs AS $fav)
                     <div class="col-sm-6 fav" product_id="{{ $fav->id }}">
-                        <div class="card p-1">
-                            <a href="{{ route('product',$fav->id) }}" class="btn btn-primary mb-2">{{ $fav->name }}
+                        <div class="card p-1 fw-bold">
+                            <p><a href="{{ route('product',$fav->id) }}"><i class="fa-solid fa-arrow-up-right-from-square"></i> {{ $fav->name }}</a></p>
                             <div class="badge bg-success">{{ $fav->discount }}</div>
                             </a>
                             <div class="undo btn btn-secondary mt-2">Visszavonás</div>

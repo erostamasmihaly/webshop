@@ -87,7 +87,7 @@
             </div>
         @endif
         <div class="bg-dark p-3">
-            <div class="submit">
+            <div class="submit float-end">
                 <button type="submit" class="btn btn-primary">Mentés</button>            
             </div>
         </div>
