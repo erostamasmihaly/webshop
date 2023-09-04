@@ -6,17 +6,17 @@
                 <div class="col-sm-6">
                     <div class="card p-1">
                         <p class="fw-bold">
-                            {{ $cart->name }} 
-                            ({{ $cart->quantity }} {{ $cart->unit }})
+                            <a href="{{ route('product',$cart->id) }}"><i class="fa-solid fa-link"></i> {{ $cart->name }}</a>
+                            <br>
+                            <small>Mennyiség: {{ $cart->quantity }} {{ $cart->unit }}</small>
                         </p>
                         <div class="badge bg-success">{{ $cart->discount_ft }}</div>
                     </div>
                 </div>
             @endforeach
             <div class="col-sm-12 mt-2">
-                <div class="card bg-info p-1">
-                    <p class="fw-bold">Összesen</p>
-                    <div class="badge bg-success">{{ $total_ft }}</div>
+                <div class="card bg-success fw-bold p-1 text-light text-center">
+                    Fizetendő: {{ $total_ft }}
                 </div>
             </div>
         </div>
