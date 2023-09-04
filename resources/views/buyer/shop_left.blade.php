@@ -8,5 +8,49 @@
             <div>{!! nl2br($shop->body) !!}</div>
         @endif
         <div class="bg-info bg-gradient text-dark text-center mb-2 fw-bold">Termékek</div>
+        <div>
+            @if ($products->count() !== 0)
+                @include('waiting')
+                <table class="datatable table table-bordered table-striped table-condensed d-none">
+                    <thead>
+                        <tr>
+                            <th scope="col" class="all">Termék neve</th>
+                            <th scope="col" class="all">Egységár</th>
+                            <th scope="col" class="none">Rövid leírás</th>
+                            <th scope="col" class="none">Elérhető mennyiség</th>
+                            <th scope="col" class="none">Eredeti egységár</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                       @foreach ($products as $product)
+                        <tr class="product" product_id="{{ $product->id }}">
+                            <td>
+                                <a href="{{ route('product',$product->id) }}">
+                                    <i class="fa-solid fa-arrow-up-right-from-square"></i> {{ $product->name }}
+                                </a> 
+                            </td>
+                            <td>
+                                {{ $product->discount_price }}
+                                @if($product->discount)
+									<span class="badge rounded-pill bg-danger float-end">
+										{{ numformat_with_unit($product->discount,'%') }}
+									</span>
+								@endif
+                            </td>
+                            <td>
+                                {!! $product->summary !!}
+                            </td>
+                            <td>{{ $product->quantity }} {{ $product->unit }}</td>
+                            <td>
+                                {{ $product->brutto_price }}
+                            </td>
+                        </tr>
+                       @endforeach
+                    </tbody>
+                </table>
+            @else
+                @include('empty')
+            @endif
+		</div>
     </div>
 </div>

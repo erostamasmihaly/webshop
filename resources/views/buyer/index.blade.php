@@ -8,19 +8,19 @@
 				@foreach($products AS $product)
 					<div class="col-sm-3">
 						<div class="card p-1">
-							<div class="card-header bg-info fw-bold text-center mb-1">{{ $product->name }}</div>
+							<div class="card-header bg-info fw-bold text-center mb-1">
+                                <a href="{{ route('product',$product->id) }}" class="text-dark">
+                                    <i class="fa-solid fa-arrow-up-right-from-square"></i> {{ $product->name }}
+                                </a>
+                            </div>
 							<img src="{{ asset('images/products/'.$product->id.'/main_image.jpg') }}" class="img-thumbnail"/>
-							@if($product->discount)
-								<span class="badge bg-secondary p-2 mb-2">
-									<span class="text-decoration-line-through">{{ $product->brutto_price }}</span>
+							<span class="badge bg-success p-2 mb-2">{{ $product->discount_price }}
+								@if($product->discount)
 									<span class="badge rounded-pill bg-danger">
 										{{ numformat_with_unit($product->discount,'%') }}
-										<span class="visually-hidden">leárazás</span>
 									</span>
-								</span>
-							@endif
-							<span class="badge bg-success p-2 mb-2">{{ $product->discount_price }}</span>
-							<a href="{{ route('product',$product->id) }}" class="btn btn-primary">Megtekintés</a>
+								@endif
+							</span>
 						</div>
 					</div>
 				@endforeach

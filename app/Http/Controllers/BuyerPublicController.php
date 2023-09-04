@@ -126,15 +126,20 @@ class BuyerPublicController extends Controller
         // Bolt adatainak lekérdezése
         $shop = Shop::where("id", $id)->first();
 
+        // Bolt termékeinek lekérdezése
+        $products = Product::join('units','products.unit_id','units.id')->where('shop_id', $id)->get(['products.*','units.name AS unit']);
+
+        // Bruttó és kedvezményes árak behelyezése a listába
+        foreach($products AS $product) {
+            $product->brutto_price = product_prices($product->id)["brutto_ft"];
+            $product->discount_price = product_prices($product->id)["discount_ft"];
+        }
+
         // Felület betöltése
         return view('buyer.shop', [
-            'shop' => $shop
+            'shop' => $shop,
+            'products' => $products
         ]);
-    }
-
-    // Felhasználó oldala
-    public function user() {
-        
     }
 
 }
