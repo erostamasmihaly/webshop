@@ -208,8 +208,8 @@ class BuyerPayController extends Controller
                 $product->save(); 
             }
 
-            // Visszatérés a kosárba az üzenettel
-            return redirect()->route('buyer_cart')->withMessage('Sikeres vásárlás! SimplePay tranzakció azonosító: '.$payment->transaction_id);
+            // Átirányítás a Vásárlási előzményekhez az üzenettel
+            return redirect()->route('pay_history')->withMessage('Sikeres vásárlás! SimplePay tranzakció azonosító: '.$payment->transaction_id);
 
         } else {
 
@@ -219,5 +219,14 @@ class BuyerPayController extends Controller
             // Visszatérés a kosárba a hibával
             return redirect()->route('buyer_cart')->withErrors(['Sikertelen művelet! Hiba oka: '.$payment->result]);
         }
+    }
+
+    // Vásárlási előzmények oldal
+    public function history() {
+
+        // Oldal meghívása
+        return view('buyer.pay_history',[
+            'carts' => get_pay_history()
+        ]);
     }
 }

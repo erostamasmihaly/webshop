@@ -20,4 +20,7 @@ Route::group(['prefix' => 'pay'], function() {
     // Fizetés befejezése
     Route::get('back', [App\Http\Controllers\BuyerPayController::class, 'back'])->name('pay_back');
 
+    // Sikeres vásárlások listája
+    Route::get('history', [App\Http\Controllers\BuyerPayController::class, 'history'])->name('pay_history');
+
 });

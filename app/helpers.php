@@ -134,6 +134,24 @@ if (!function_exists('get_cart')) {
     }
 }
 
+// Kifizetett termékek lekérdezése
+if (!function_exists('get_pay_history')) {
+    function get_pay_history() {
+
+        // Kosár lekérdezése
+        $carts = Cart::join('products','carts.product_id','products.id')->join('units','products.unit_id','units.id')->join('payments','carts.payment_id','payments.id')->where('carts.user_id', Auth::id())->whereNotNull('payment_id')->orderBy('payments.updated_at','desc')->get(['products.id','products.name','carts.quantity','units.name AS unit','carts.id AS cart_id','payments.transaction_id','carts.price','payments.updated_at']);
+
+        // További árak meghatározása
+        foreach($carts AS $cart) {
+            $cart->price_ft = numformat_with_unit($cart->price,'Ft');;
+        }
+
+        // Visszatérés a tömbbel
+        return $carts;
+
+    }
+}
+
 // Tud fizetni a felhasználó - vagyis megvan minden adata ahhoz, hogy fizessen?
 if (!function_exists('can_pay')) {
     function can_pay() {
