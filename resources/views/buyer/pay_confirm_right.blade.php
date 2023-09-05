@@ -44,7 +44,7 @@
             </p>
         </div>
         <div class="bg-dark p-2">
-            <a href="" class="btn btn-primary float-end">Fizetés megerősítése</a>
+            <a href="{{ route('pay_start') }}" class="btn btn-primary float-end">Fizetés megerősítése</a>
         </div>
     </div>
 </div>
