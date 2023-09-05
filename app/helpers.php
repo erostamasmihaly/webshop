@@ -110,7 +110,7 @@ if (!function_exists('get_cart')) {
     function get_cart() {
 
         // Kosár lekérdezése
-        $carts = Cart::join('products','carts.product_id','products.id')->join('units','products.unit_id','units.id')->where('user_id', Auth::id())->whereNull('payment_id')->get(['products.id','products.name','carts.quantity','units.name AS unit']);
+        $carts = Cart::join('products','carts.product_id','products.id')->join('units','products.unit_id','units.id')->where('user_id', Auth::id())->whereNull('payment_id')->get(['products.id','products.name','carts.quantity','units.name AS unit','carts.id AS cart_id']);
 
         // Fizetendő összeg meghatározása
         $total = 0;

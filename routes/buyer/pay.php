@@ -18,6 +18,6 @@ Route::group(['prefix' => 'pay'], function() {
     Route::get('transaction_success', [App\Http\Controllers\BuyerPayController::class, 'transaction_success'])->name('pay_transaction_success');
 
     // Fizetés befejezése
-    Route::get('end', [App\Http\Controllers\BuyerPayController::class, 'end'])->name('pay_end');
+    Route::get('back', [App\Http\Controllers\BuyerPayController::class, 'back'])->name('pay_back');
 
 });

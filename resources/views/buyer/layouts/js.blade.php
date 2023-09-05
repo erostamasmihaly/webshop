@@ -19,3 +19,6 @@
     <script src="{{ asset('js/own/buyer_shop.js') }}" defer></script>
     <script src="{{ asset('js/external/leaflet.js') }}" defer></script>
 @endif
+@if (Request::is('pay/transaction_success'))
+    <script src="{{ asset('js/own/pay_transaction_success.js') }}" defer></script>
+@endif

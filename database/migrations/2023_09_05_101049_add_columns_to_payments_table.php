@@ -16,7 +16,8 @@ return new class extends Migration
             $table->string('order_ref'); // Egyedi azonosító
             $table->string('transaction_id')->default(0); // Tranzakciós azonosító - Ha 0, akkor hiba volt
             $table->json('error')->nullable(); // Tranzakciós hiba
-
+            $table->string('result')->nullable(); // Fizetés eredménye
+            $table->boolean('finished')->default(0); // Készen van
         });
     }
 
@@ -28,6 +29,8 @@ return new class extends Migration
             $table->dropColumn('order_ref');
             $table->dropColumn('transaction_id');
             $table->dropColumn('error');
+            $table->dropColumn('result');
+            $table->dropColumn('finsihed');
         });
     }
 };

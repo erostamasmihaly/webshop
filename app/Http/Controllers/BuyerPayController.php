@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Cart;
 use App\Models\Payment;
+use App\Models\Product;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -57,7 +59,7 @@ class BuyerPayController extends Controller
 
         // Kosár elemeinek behelyezése ebbe a tömbbe
         foreach ($carts as $cart) {
-            $items[$i]['ref'] = $cart->id;
+            $items[$i]['ref'] = $cart->cart_id;
             $items[$i]['title'] = $cart->name;
             $items[$i]['amount'] = $cart->quantity;
             $items[$i]['price'] = $cart->discount_price;
@@ -66,7 +68,7 @@ class BuyerPayController extends Controller
 
         // Termék adatai
         $trx->addData('items', $items);
-        //$trx->addData('orderRef', $order_ref);
+        $trx->addData('orderRef', $order_ref);
 
         // Felhasználó adatai
         $user = User::where('id', Auth::id())->first();
@@ -129,7 +131,7 @@ class BuyerPayController extends Controller
             $url = $returnData['paymentUrl'];
 
             // Fizetés előtti oldal betöltése
-            return redirect()->route('pay_transaction_success');
+            return redirect()->route('pay_transaction_success')->with(['payment_id' => $payment->id, 'url' => $url]);
 
         }
 
@@ -149,11 +151,73 @@ class BuyerPayController extends Controller
         ]);
     }
 
-    public function transaction_success($payment_id, $url) {
-        dd($payment_id, $url);
+    public function transaction_success() {
+
+        // URL lekérdezése
+        $url = Session::get('url');
+
+        // Felület megnyitása
+        return view('buyer.pay_transaction_success', [
+            'url' => $url
+        ]);
     }
 
+    // Visszatérés a fizetés után
     public function back() {
 
+        // Adatok importálása
+        $path = base_path();
+        require_once $path.'/simplepay/config.php';
+        require_once $path.'/simplepay/SimplePayV21.php';
+
+        // Fizetési tranzakció eredményének eltárolása
+        $trx = new \SimplePayBack;
+        $trx->addConfig($config);
+
+        // Eredmény lekérdezése
+        $result = array();
+        if (isset($_REQUEST['r']) && isset($_REQUEST['s'])) {
+            if ($trx->isBackSignatureCheck($_REQUEST['r'], $_REQUEST['s'])) {
+                $result = $trx->getRawNotification();
+            }
+        }
+
+        // Fizetés kikeresése
+        $payment = Payment::where('order_ref',$result['o'])->get()->first();
+
+        // Fizetés frissítése az eredménnyel
+        $payment->result = $result['e'];
+
+        if ($result['e']=='SUCCESS') {
+
+            // Fizetés mentése
+            $payment->finished = 1;
+            $payment->save();
+
+            $items = json_decode($payment->items);
+
+            for ($i=0; $i<count($items); $i++) {
+                $item = $items[$i];
+                $cart = Cart::find($item->ref);
+                $cart->payment_id = $payment->id;
+                $cart->price = $item->price;
+                $cart->save();
+
+                $product = Product::find($cart->product_id);
+                $product->quantity -= $cart->quantity;
+                $product->save(); 
+            }
+
+            // Visszatérés a kosárba az üzenettel
+            return redirect()->route('buyer_cart')->withMessage('Sikeres vásárlás! SimplePay tranzakció azonosító: '.$payment->transaction_id);
+
+        } else {
+
+            // Fizetés mentése
+            $payment->save();
+
+            // Visszatérés a kosárba a hibával
+            return redirect()->route('buyer_cart')->withErrors(['Sikertelen művelet! Hiba oka: '.$payment->result]);
+        }
     }
 }

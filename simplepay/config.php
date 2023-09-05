@@ -42,7 +42,7 @@ $config = [
     'SANDBOX' => true,
 
     //common return URL
-    'URL' => 'http://' . $_SERVER['HTTP_HOST'] . '/simplepay/back',
+    'URL' => 'http://' . $_SERVER['HTTP_HOST'] . '/pay/back',
 
     //optional uniq URL for events
     /*
