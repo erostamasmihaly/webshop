@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Services\PaymentFinish;
 use App\Models\Cart;
 use App\Models\Payment;
 use App\Models\Product;
@@ -194,19 +195,19 @@ class BuyerPayController extends Controller
             $payment->finished = 1;
             $payment->save();
 
+            // Elemek lekérdezése
             $items = json_decode($payment->items);
 
-            for ($i=0; $i<count($items); $i++) {
-                $item = $items[$i];
-                $cart = Cart::find($item->ref);
-                $cart->payment_id = $payment->id;
-                $cart->price = $item->price;
-                $cart->save();
+            // Kérés létrehozása
+            $request = new Request();
+            $request->setMethod('POST');
+            $request->request->add([
+                'items' => $items,
+                'payment_id' => $payment->id
+            ]);
 
-                $product = Product::find($cart->product_id);
-                $product->quantity -= $cart->quantity;
-                $product->save(); 
-            }
+            // Fizetés befejezése ezen elemekkel
+            new PaymentFinish($request);
 
             // Átirányítás a Vásárlási előzményekhez az üzenettel
             return redirect()->route('pay_history')->withMessage('Sikeres vásárlás! SimplePay tranzakció azonosító: '.$payment->transaction_id);
