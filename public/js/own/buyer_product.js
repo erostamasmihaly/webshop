@@ -163,8 +163,46 @@ $(function () {
     // Értékelés elküldése
     $("#send_rating").on("click", function() {
 
-        // Értékelések frissítése
-        $("#ratings").DataTable().ajax.reload();
+        user_id = $("#user_id").val();
+        title = $("#title").val();
+        body = $("#body").val();
+        stars = $("#stars").val();
+
+        // Adatok átküldése
+        $.ajax({
+            dataType: "json",
+            url: "/buyer/rating/change",
+            data: "product_id="+product_id+"&user_id="+user_id+"&title="+title+"&body="+body+"&stars="+stars,
+            type: "POST",
+            cache: false,
+            success: function (data) {
+
+                if (data.OK==1) {
+                    
+                    //// Ha minden rendben volt
+                    // Értékelések frissítése
+                    $("#ratings").DataTable().ajax.reload();
+
+                    // Mezők értékeinek törlése
+                    $("#title").val("");
+                    $("#body").val("");
+
+                } else {
+
+                    // Hiba jelzése
+                    alert("Probléma lépett fel az értékelés során!");
+                    console.log(data);
+
+                }
+            },
+            error: function(error) {
+
+                // Hiba jelzése
+                alert("Probléma lépett fel az értékelés során!");
+                console.log(error);
+
+            }
+        });
     });
 
 });

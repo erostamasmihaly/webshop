@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Services\BuyerUserUpdate;
 use App\Http\Services\CartAdd;
 use App\Http\Services\FavouriteUpdate;
+use App\Http\Services\RatingUpdate;
 use App\Models\Favourite;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
@@ -78,6 +79,14 @@ class BuyerProtectedController extends Controller
 
     // Kedvelés módosítása
     public function favourite_change(FavouriteUpdate $favouriteUpdate) {
+        
+        // Válasz küldése
+        $array['OK'] = 1;
+        return Response::json($array);
+    }
+
+    // Értékelés módosítása
+    public function rating_change(RatingUpdate $ratingUpdate) {
         
         // Válasz küldése
         $array['OK'] = 1;

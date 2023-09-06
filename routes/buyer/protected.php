@@ -25,6 +25,14 @@ Route::group(['prefix' => 'buyer/favourite'], function() {
 
 });
 
+// Értékelés
+Route::group(['prefix' => 'buyer/rating'], function() {
+
+    // Kedvelés módosítása
+    Route::post('change', [App\Http\Controllers\BuyerProtectedController::class, 'rating_change'])->name('buyer_rating_change')->withoutMiddleware([VerifyCsrfToken::class]);
+
+});
+
 // Felhasználói oldalak
 Route::group(['prefix' => 'buyer/user'], function() {
 

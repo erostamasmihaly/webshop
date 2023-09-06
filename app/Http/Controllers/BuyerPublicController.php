@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Services\UserActivate;
 use App\Http\Services\UserInsert;
 use App\Mail\RegisterMail;
+use App\Models\Cart;
 use App\Models\Favourite;
 use App\Models\Image;
 use App\Models\Product;
@@ -54,18 +55,23 @@ class BuyerPublicController extends Controller
 
             // Megnézni, hogy kedvelte-e a terméket
             $is_fav = Favourite::where('user_id', Auth::id())->where('product_id', $id)->first();
+
+            // Megnézni, hogy megvette-e a terméket
+            $is_buyed = Cart::where('user_id', Auth::id())->where('product_id', $id)->whereNotNull('payment_id')->first();
         
         } else {
 
-            // Ha nincs bejelntkezve, akkor nem kedvelte
+            // Ha nincs bejelntkezve, akkor nem kedvelte és nem vásárolta meg
             $is_fav = null;
+            $is_buyed = null;
         }
 
         // Felület betöltése
         return view('buyer.product', [
             'product' => $product,
             'images' => $images,
-            'is_fav' => $is_fav
+            'is_fav' => $is_fav,
+            'is_buyed' => $is_buyed
         ]);
     }
 
