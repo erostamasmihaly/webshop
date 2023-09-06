@@ -157,7 +157,14 @@ $(function () {
             { data: "updated" },
         ],
         processing: true,
-        serverSide: true
+        serverSide: false // Ez legyen FALSE, hogy az ajax.reload() működjön
+    });
+
+    // Értékelés elküldése
+    $("#send_rating").on("click", function() {
+
+        // Értékelések frissítése
+        $("#ratings").DataTable().ajax.reload();
     });
 
 });

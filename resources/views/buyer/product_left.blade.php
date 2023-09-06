@@ -52,6 +52,34 @@
                     </thead>
                 </table>
             </div>
+            <div class="bg-info bg-gradient text-dark text-center mb-2 fw-bold">Értékelés megadása</div>
+            <div class="row mb-2">
+                <div class="col-sm-3 fw-bold">Cím</div>
+                <div class="col-sm-9">
+                    <input type="text" id="title" class="form-control"/>
+                </div>
+            </div>
+            <div class="row mb-2">
+                <div class="col-sm-3 fw-bold">Szöveg</div>
+                <div class="col-sm-9">
+                    <textarea rows="3" id="body" class="form-control"></textarea>
+                </div>
+            </div>
+            <div class="row mb-2">
+                <div class="col-sm-3 fw-bold">Értékelés</div>
+                <div class="col-sm-9">
+                    <select id="stars" class="form-control">
+                        <option value="5">5 csillag - Megfelelő</option>
+                        <option value="4">4 csillag - Jó</option>
+                        <option value="3">3 csillag - Átlagos</option>
+                        <option value="2">2 csillag - Rossz</option>
+                        <option value="1">1 csillag - Borzalmas</option>
+                    </select>
+                </div>
+            </div>
+            <div>
+                <button class="btn btn-primary float-end" id="send_rating">Elküldés</button>
+            </div>
         </div>
     </div>
 </div>
