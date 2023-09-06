@@ -217,7 +217,7 @@ if (!function_exists('get_ratings')) {
         $result = [];
         
         // Értékelések lekérdezése
-        $ratings = Rating::join('users','ratings.user_id','users.id')->where('ratings.product_id', $product_id)->where('ratings.moderated',1)->get(['users.id AS user_id','users.name AS user_name','ratings.id AS rating_id','ratings.title','ratings.body','ratings.stars']);
+        $ratings = Rating::join('users','ratings.user_id','users.id')->where('ratings.product_id', $product_id)->where('ratings.moderated',1)->orderBy('ratings.updated_at','desc')->get(['users.id AS user_id','users.name AS user_name','ratings.id AS rating_id','ratings.title','ratings.body','ratings.stars','ratings.updated_at']);
 
         // Csillagonkénti statisztika
         $stars = Rating::where('product_id', $product_id)->where('moderated',1)->groupBy('stars')->orderBy('stars','desc')->get(['stars', DB::raw('COUNT(*) AS total')]);

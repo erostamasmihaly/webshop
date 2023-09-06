@@ -1,12 +1,16 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Middleware\VerifyCsrfToken;
 
 // Fő oldal
 Route::get('/', [App\Http\Controllers\BuyerPublicController::class, 'index'])->name('home');
 
 // Termék oldal
 Route::get('product/{id}', [App\Http\Controllers\BuyerPublicController::class, 'product'])->name('product');
+
+// Termék oldal
+Route::post('rating', [App\Http\Controllers\BuyerPublicController::class, 'product_rating'])->name('product_rating')->withoutMiddleware([VerifyCsrfToken::class]);
 
 // Üzlet oldala
 Route::get('shop/{id}', [App\Http\Controllers\BuyerPublicController::class, 'shop'])->name('shop');

@@ -9,6 +9,8 @@ use App\Models\Favourite;
 use App\Models\Image;
 use App\Models\Product;
 use App\Models\Shop;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 
@@ -59,11 +61,6 @@ class BuyerPublicController extends Controller
             $is_fav = null;
         }
 
-        // Értékelések lekérdezése
-        $ratings = get_ratings($id);
-
-        dd($ratings);
-
         // Felület betöltése
         return view('buyer.product', [
             'product' => $product,
@@ -71,6 +68,18 @@ class BuyerPublicController extends Controller
             'is_fav' => $is_fav
         ]);
     }
+
+    // Termék értékeléseinek lekérdezése
+    public function product_rating(Request $request) {
+
+        $ratings = get_ratings($request->product_id)["ratings"];
+        $array = [];
+        foreach ($ratings AS $rating) {
+            $array["data"][] = $rating;
+        }
+
+        return Response::json($array);
+    } 
 
     // Regisztrációs felület
     public function register() {

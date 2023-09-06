@@ -129,4 +129,46 @@ $(function () {
             }
         });
     }
+
+    // Értékelések
+    $("#ratings").DataTable({
+        responsive: true, // Reszponzív
+        language: { 
+            url: "/js/own/hu.json"
+        }, // Magyar nyelv
+        lengthMenu: [10, 20, 30], // Oldalankénti találatok száma
+        stateSave: true, // Visszatérés esetén az eredeti állapot megtartása
+        stateDuration:-1, // Visszatérés eredeti állapotba új fül megnyitásakor
+        order:[],
+        ajax: {
+            url: '/rating',
+            data: 'product_id='+product_id,
+            type: 'POST'
+        },
+        columns: [
+            { data: 'user_name' },
+            { data: 'title' },
+            { data: 'stars' },
+            { data: 'body' },
+            { data: 'updated_at' },
+        ],
+        processing: true,
+        serverSide: true
+    });
+
+    // Adatok átküldése
+    $.ajax({
+        dataType: "json",
+        url: "/rating",
+        data: "product_id="+product_id,
+        type: "POST",
+        cache: false,
+        success: function (data) {
+            console.log(data);
+        },
+        error: function(error) {
+            console.log(error);
+        }
+    });
+
 });

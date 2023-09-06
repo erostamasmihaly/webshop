@@ -37,5 +37,21 @@
                 @endforeach
             </div>
         </div>
+        <div>
+            <div class="bg-info bg-gradient text-dark text-center mb-2 fw-bold">Értékelések</div>
+            <div>
+                <table id="ratings" class="table table-bordered table-striped table-condensed">
+                    <thead>
+                        <tr>
+                            <th scope="col" class="all">Felhasználó neve</th>
+                            <th scope="col" class="all">Értékelés címe</th>
+                            <th scope="col" class="all">Értékelés</th>
+                            <th scope="col" class="none">Értékelés szövege</th>
+                            <th scope="col" class="none">Dátum</th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
     </div>
 </div>
