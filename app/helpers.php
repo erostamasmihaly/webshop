@@ -3,10 +3,12 @@
 use App\Models\Cart;
 use App\Models\Category;
 use App\Models\Product;
+use App\Models\Rating;
 use App\Models\Role;
 use App\Models\User;
 use App\Models\UserRole;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 
 // Megnézni, hogy az adott szerepkörrel rendelkezik-e a felhasználó
@@ -204,5 +206,31 @@ if (!function_exists('get_products')) {
 
         // Visszatérés ezen termékekkel
         return $products;
+    }
+}
+
+// Értékelések lekérdezése
+if (!function_exists('get_ratings')) {
+    function get_ratings($product_id) {
+
+        // Válasz tömb létrehozása
+        $result = [];
+        
+        // Értékelések lekérdezése
+        $ratings = Rating::join('users','ratings.user_id','users.id')->where('ratings.product_id', $product_id)->where('ratings.moderated',1)->get(['users.id AS user_id','users.name AS user_name','ratings.id AS rating_id','ratings.title','ratings.body','ratings.stars']);
+
+        // Csillagonkénti statisztika
+        $stars = Rating::where('product_id', $product_id)->where('moderated',1)->groupBy('stars')->orderBy('stars','desc')->get(['stars', DB::raw('COUNT(*) AS total')]);
+
+        // Összes statisztika
+        $total = Rating::where('product_id', $product_id)->where('moderated',1)->get([DB::raw('AVG(stars) AS stars'), DB::raw('COUNT(*) AS total')]);
+
+        // Választömb létrehozása
+        $result["ratings"] = $ratings;
+        $result["stars"] = $stars;
+        $result["total"] = $total;
+
+        // Visszatérés ezen értékelésekkel
+        return $result;
     }
 }

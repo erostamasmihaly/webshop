@@ -59,6 +59,11 @@ class BuyerPublicController extends Controller
             $is_fav = null;
         }
 
+        // Értékelések lekérdezése
+        $ratings = get_ratings($id);
+
+        dd($ratings);
+
         // Felület betöltése
         return view('buyer.product', [
             'product' => $product,
