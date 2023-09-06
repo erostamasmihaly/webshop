@@ -7,20 +7,17 @@ use Illuminate\Database\Eloquent\Model;
 use Spatie\Activitylog\LogOptions;
 use Spatie\Activitylog\Traits\LogsActivity;
 
-class Payment extends Model
+class Rating extends Model
 {
     use HasFactory, LogsActivity;
 
     protected $fillable = [
         'user_id',
-        'total',
-        'items',
-        'invoice',
-        'order_ref',
-        'transaction_id',
-        'error',
-        'result',
-        'finished'
+        'product_id',
+        'stars',
+        'title',
+        'body',
+        'moderated'
     ];
 
     // Naplózás beállítása
