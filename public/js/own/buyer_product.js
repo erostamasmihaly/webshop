@@ -140,35 +140,24 @@ $(function () {
         stateSave: true, // Visszatérés esetén az eredeti állapot megtartása
         stateDuration:-1, // Visszatérés eredeti állapotba új fül megnyitásakor
         order:[],
+        // AJAX forrás megadása
         ajax: {
-            url: '/rating',
-            data: 'product_id='+product_id,
-            type: 'POST'
+            url: "/rating", // Elérhetőség
+            data: { 
+                "product_id": product_id // Termék azonosító megadása
+            },
+            type: "POST" // POST típusú kérés
         },
+        // Oszlopok hozzárendelése
         columns: [
-            { data: 'user_name' },
-            { data: 'title' },
-            { data: 'stars' },
-            { data: 'body' },
-            { data: 'updated_at' },
+            { data: "user_name" },
+            { data: "title" },
+            { data: "stars" },
+            { data: "body" },
+            { data: "updated" },
         ],
         processing: true,
         serverSide: true
-    });
-
-    // Adatok átküldése
-    $.ajax({
-        dataType: "json",
-        url: "/rating",
-        data: "product_id="+product_id,
-        type: "POST",
-        cache: false,
-        success: function (data) {
-            console.log(data);
-        },
-        error: function(error) {
-            console.log(error);
-        }
     });
 
 });

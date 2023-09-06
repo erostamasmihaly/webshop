@@ -72,12 +72,16 @@ class BuyerPublicController extends Controller
     // Termék értékeléseinek lekérdezése
     public function product_rating(Request $request) {
 
-        $ratings = get_ratings($request->product_id)["ratings"];
-        $array = [];
-        foreach ($ratings AS $rating) {
-            $array["data"][] = $rating;
-        }
+        // Értékeléssel kapcsolatos tömb lekérdezése
+        $ratings_array = get_ratings($request->product_id);
 
+        // Adatok lekérdezése és behelyezése egy tömbbe
+        $array["data"] = $ratings_array["ratings"];
+        $array["recordsTotal"] = $ratings_array["total"][0]["total"];
+        $array["draw"] = 1;
+        $array["recordsFiltered"] = $array["recordsTotal"];
+
+        // Visszatérés ezen tömbbel
         return Response::json($array);
     } 
 
