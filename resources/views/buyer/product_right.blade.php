@@ -21,10 +21,10 @@
 				<span class="input-group-text">{{ $product->unit }}</span>
 			</div>
             <div class="mt-2">
-                <button type="button" id="add" class="btn btn-primary w-100">Kosárba helyezés</button>
+                <button type="button" id="cart_add" class="btn btn-primary w-100">Kosárba helyezés</button>
             </div>
-            <span class="badge bg-success mt-2 p-2 d-none" id="success"></span>
-            <span class="badge bg-danger mt-2 p-2 d-none" id="error"></span>
+            <div class="alert alert-success d-none" role="alert" id="cart_success"></div>
+            <div class="alert alert-danger d-none" role="alert" id="cart_error"></div>
         </div>
     @endguest
 </div>

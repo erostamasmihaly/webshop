@@ -38,6 +38,7 @@ class RatingUpdate {
             $rating->title = $this->title;
             $rating->body = $this->body;
             $rating->stars = $this->stars;  
+            $rating->moderated = 0;
             
             // Értékelés mentése
             $rating->save();

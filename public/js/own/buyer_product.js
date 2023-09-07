@@ -11,7 +11,7 @@ $(function () {
     });
 
     // Kosárba helyezés
-    $("#add").on("click", function() {
+    $("#cart_add").on("click", function() {
 
         // Mennyiség lekérdezése
         quantity = $("#quantity").val();
@@ -31,10 +31,7 @@ $(function () {
                     if (data.OK==1) {
 
                         // Ha sikeres volt, akkor a hozzá tartozó üzenet megjelenítése
-                        $("#success").removeClass("d-none").html("Sikeres művelet!");
-
-                        // Hibaüzenet elrejtése
-                        $("#error").addClass("d-none");
+                        $("#cart_success").removeClass("d-none").html("Sikeres művelet!");
 
                         // Visszaállítani 0-ra a mező értékét
                         $("#quantity").val(0);
@@ -42,41 +39,52 @@ $(function () {
                     } else {
 
                         // Ha nem sikerült, akkor a hibaüzenet megjelenítése
-                        $("#error").removeClass("d-none").html("Sikertelen művelet!");
+                        $("#cart_error").removeClass("d-none").html("Sikertelen művelet!");
 
-                        // Sikeresség üzenet elrejtése
-                        $("#success").addClass("d-none");
                     }
+
+                    // Kosárba rakás gomb elrejtése
+                    cart_add_hide();
+
                 },
                 error: function (error) {
 
                     // Ha hiba volt, akkor a hibaüzenet megjelenítése
-                    $("#error").removeClass("d-none").html("Sikertelen művelet!");
+                    $("#cart_error").removeClass("d-none").html("Sikertelen művelet!");
 
-                    // Sikeresség üzenet elrejtése
-                    $("#success").addClass("d-none");
-
-                    // Hibaüzenet kiírása a konzolra
-                    console.log(error);
+                    // Kosárba rakás gomb elrejtése
+                    cart_add_hide();
                 }
             });
         } else {
 
             // Ha hiba volt, akkor a hibaüzenet megjelenítése
-            $("#error").removeClass("d-none").html("Nincs mennyiség megadva!");
+            $("#cart_error").removeClass("d-none").html("Nincs mennyiség megadva!");
 
-            // Sikeresség üzenet elrejtése
-            $("#success").addClass("d-none");
+            // Kosárba rakás gomb elrejtése
+            cart_add_hide();
+
         }
 
-    });
+    }); 
 
-    // Mennyiség mezőre való fókusz során
-    $("#quantity").on("focus", function() {
+    // Kosárba rakás gomb elrejtése
+    function cart_add_hide() {
 
-        // Üzenetek elrejtése
-        $("#success, #error").addClass("d-none");
-    });
+        // Kosárba rakás gomb elrejtése
+        $("#cart_add").addClass("d-none");
+
+        // 5 másodperc után
+        setTimeout(function() {
+
+            // Kosárral kapcsolatos üzenetek elrejtése
+            $("#cart_success, #cart_error").addClass("d-none");
+
+            // Kosárba rakás gomb visszahozása
+            $("#cart_add").removeClass("d-none");
+
+        }, 5000);
+    }
 
     // Kedvelés
     $(".fav").on("click", function() {
@@ -187,22 +195,48 @@ $(function () {
                     $("#title").val("");
                     $("#body").val("");
 
+                    // Sikeresség üzenet megjelenítése
+                    $("#rating_success").removeClass("d-none");
+
                 } else {
 
-                    // Hiba jelzése
-                    alert("Probléma lépett fel az értékelés során!");
-                    console.log(data);
+                    // Sikertelenség üzenet megjelenítése
+                    $("#rating_error").removeClass("d-none");                    
 
                 }
+
+                // Értékelés gomb elrejtése
+                send_rating_hide();
+
             },
             error: function(error) {
 
-                // Hiba jelzése
-                alert("Probléma lépett fel az értékelés során!");
-                console.log(error);
+                // Sikertelenség üzenet megjelenítése
+                $("#error").removeClass("d-none");
+
+                // Értékelés gomb elrejtése
+                send_rating_hide();
 
             }
         });
     });
+
+    // Értékelés gomb elrejtése
+    function send_rating_hide() {
+
+        // Értékelés gomb elrejtése
+        $("#send_rating").addClass("d-none");
+
+        // 5 másodperc után
+        setTimeout(function() {
+
+            // Értékeléssek kapcsolatos üzenetek elrejtése
+            $("#rating_success, #rating_error").addClass("d-none");
+
+            // Értékelés gomb visszahozása
+            $("#send_rating").removeClass("d-none");
+
+        }, 5000);
+    }
 
 });

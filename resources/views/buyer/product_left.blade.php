@@ -80,7 +80,13 @@
                     </div>
                 </div>
                 <div class="alert alert-info" role="alert">
-                    Ha már egyszer értékelte a terméket, akkor az új értékelés esetén azon régi értékelése lesz módosítva!
+                    Ha már egyszer értékelte a terméket, akkor az új értékelés esetén azon régi értékelése lesz módosítva! Minden egyes értékelés csak akkor jelenik meg (újra), ha azt az üzlet valamelyik alkalmazottja elfogadja! Így emiatt szíves türelmüket és megértésüket kérjük!
+                </div>
+                <div class="alert alert-success d-none" role="alert" id="rating_success">
+                    Az érkékelés beküldése sikeres volt! Jelenleg moderálás alatt áll...
+                </div>
+                <div class="alert alert-danger d-none" role="alert" id="rating_error">
+                    Az érkékelés beküldése sikertelen volt! kérjük próbálja meg újra!
                 </div>
                 <div>
                     <button class="btn btn-primary float-end" id="send_rating">Elküldés</button>
