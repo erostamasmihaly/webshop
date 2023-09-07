@@ -211,13 +211,21 @@ if (!function_exists('get_products')) {
 
 // Értékelések lekérdezése
 if (!function_exists('get_ratings')) {
-    function get_ratings($product_id) {
+    function get_ratings($product_id, $moderated = true) {
 
         // Válasz tömb létrehozása
         $result = [];
         
         // Értékelések lekérdezése
-        $ratings = Rating::join('users','ratings.user_id','users.id')->where('ratings.product_id', $product_id)->where('ratings.moderated',1)->orderBy('ratings.updated_at','desc')->get(['users.id AS user_id','users.name AS user_name','ratings.id AS rating_id','ratings.title','ratings.body','ratings.stars','ratings.updated_at']);
+        $ratings = Rating::join('users','ratings.user_id','users.id')->where('ratings.product_id', $product_id);
+        
+        // Ha csak a moderáltak legyenek benne
+        if ($moderated) {
+            $ratings = $ratings->where('ratings.moderated', 1);
+        }
+        
+        // Sorrend és mezők megadása
+        $ratings = $ratings->orderBy('ratings.updated_at','desc')->get(['users.id AS user_id','users.name AS user_name','ratings.id AS rating_id','ratings.title','ratings.body','ratings.stars','ratings.updated_at']);
 
         // Dátumformátum
         foreach($ratings AS $rating) {

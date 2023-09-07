@@ -63,12 +63,16 @@ class SellerProductController extends Controller
         // Üzletek lekérdezése
         $shops = Shop::get();
 
+        // Értékelések lekérdezése
+        $ratings = get_ratings($id, false)["ratings"];
+
         // Oldal meghívása
         return view('seller.product_edit',[
             'product' => $product,
             'categories' => $categories,
             'units' => $units,
-            'shops' => $shops
+            'shops' => $shops,
+            'ratings' => $ratings
         ]);
     }
 
