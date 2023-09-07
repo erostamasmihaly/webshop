@@ -27,4 +27,19 @@
             <div class="alert alert-danger d-none" role="alert" id="cart_error"></div>
         </div>
     @endguest
+    <div class="card p-2 mt-2">
+        <div class="bg-info bg-gradient text-dark text-center mb-2 fw-bold">Fényképek</div>
+        <div class="alert alert-info" role="alert">
+            Fényképekre kattintva nagyobb méretben tekinthetőek meg.
+        </div>
+        <div class="row">
+            @foreach($images AS $image)
+            <div class="col-sm-4">
+                <a href="{{ $image->url }}" class="colorbox" rel="gallery">
+                    <img src="{{ $image->thumb }}" alt="{{ $product->name }}" title="{{ $product->name }}" class="img-thumbnail"/>
+                </a>
+            </div>
+            @endforeach
+        </div>
+    </div>
 </div>

@@ -26,16 +26,6 @@
             <div class="col-sm-9">{!! nl2br($product->summary) !!}</div>
             <div class="col-sm-3 fw-bold">Részletes leírás</div>
             <div class="col-sm-9">{!! nl2br($product->body) !!}</div>
-            <div class="col-sm-3 fw-bold">Képek</div>
-            <div class="col-sm-9 row">
-                @foreach($images AS $image)
-                    <div class="col-sm-3">
-                        <a href="{{ $image->url }}" class="colorbox" rel="gallery">
-                            <img src="{{ $image->thumb }}" alt="{{ $product->name }}" title="{{ $product->name }}" class="img-thumbnail"/>
-                        </a>
-                    </div>
-                @endforeach
-            </div>
         </div>
         <div>
             <div class="bg-info bg-gradient text-dark text-center mb-2 fw-bold">Értékelések</div>
