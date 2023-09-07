@@ -7,6 +7,7 @@ use App\Http\Services\ImageMain;
 use App\Http\Services\ImageSequence;
 use App\Http\Services\ImageUpload;
 use App\Http\Services\ProductUpdate;
+use App\Http\Services\RatingModeration;
 use App\Models\Category;
 use App\Models\Image;
 use App\Models\Product;
@@ -154,4 +155,12 @@ class SellerProductController extends Controller
         // Visszatérés ezen tömbbel
         return Response::json($array);
     } 
+
+    // Értékelés moderálásának módosítása
+    public function product_rating_moderation(RatingModeration $ratingModeration) {
+        
+        // Válasz küldése
+        $array['OK']=1;
+        return Response::json($array);
+    }
 }

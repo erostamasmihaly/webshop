@@ -328,9 +328,9 @@ $(function () {
                 data: "moderated",
                 "render": function ( data, type, row, meta ) {
                     if (data == 0) {
-                        html = '<button type="button" class="btn btn-secondary m-1" title="Publikálás" rating_id="'+row.rating_id+'"><i class="fa-solid fa-eye"></i>';
+                        html = '<button type="button" class="btn btn-secondary m-1 rating_show" title="Publikálás" rating_id="'+row.rating_id+'"><i class="fa-solid fa-eye"></i>';
                     } else {
-                        html = '<button type="button" class="btn btn-primary m-1" title="Elrejtés" rating_id="'+row.rating_id+'"><i class="fa-solid fa-eye-slash"></i>';
+                        html = '<button type="button" class="btn btn-primary m-1 rating_hide" title="Elrejtés" rating_id="'+row.rating_id+'"><i class="fa-solid fa-eye-slash"></i>';
                     }
                     return html;
                 }
@@ -339,4 +339,52 @@ $(function () {
         processing: true,
         serverSide: false // Ez legyen FALSE, hogy az ajax.reload() működjön
     });
+
+    // Jelenítse meg az értékelést
+    $("body").on("click", ".rating_show", function() {
+
+        // Azonosító lekérdezése
+        id = $(this).attr("rating_id");
+
+        // Publikálás
+        rating_moderation(id, 1);
+    });
+
+    // Rejtse el az értékelést
+    $("body").on("click", ".rating_hide", function() {
+        
+        // Azonosító lekérdezése
+        id = $(this).attr("rating_id");
+
+        // Elrejtés
+        rating_moderation(id, 0);
+    });
+
+    // Értékelés moderálásának módosítása
+    function rating_moderation(id, moderated) {
+        
+        // Adat összeállítás
+        data = "id="+id+"&moderated="+moderated;
+
+        // Adatok elküldése a szervernek
+        $.ajax({
+            dataType: "json",
+            url: "/seller/product/rating/moderation",
+            type: "POST",
+            data: data,
+            cache: false,
+            success: function (data) {
+
+                if (data.OK == 1) {
+                    
+                    // Ha minden rendben volt, akkor táblázat frissítése
+                    $("#ratings").DataTable().ajax.reload();
+
+                }
+            },
+            error: function(error) {
+                console.log(error);
+            }
+        });
+    }
 });
