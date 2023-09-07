@@ -33,4 +33,7 @@ Route::group(['prefix' => 'seller/product'], function() {
     // Kép sorrend elmentése
     Route::post('image/sequence', [App\Http\Controllers\SellerProductController::class, 'image_sequence'])->name('seller_product_image_sequence')->withoutMiddleware([VerifyCsrfToken::class]);
 
+    // Értékelések lekérdezése
+    Route::post('rating', [App\Http\Controllers\SellerProductController::class, 'product_rating'])->name('seller_product_rating')->withoutMiddleware([VerifyCsrfToken::class]);
+
 });

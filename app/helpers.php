@@ -225,7 +225,7 @@ if (!function_exists('get_ratings')) {
         }
         
         // Sorrend és mezők megadása
-        $ratings = $ratings->orderBy('ratings.updated_at','desc')->get(['users.id AS user_id','users.name AS user_name','ratings.id AS rating_id','ratings.title','ratings.body','ratings.stars','ratings.updated_at']);
+        $ratings = $ratings->orderBy('ratings.updated_at','desc')->get(['users.id AS user_id','users.name AS user_name','ratings.id AS rating_id','ratings.title','ratings.body','ratings.stars','ratings.updated_at','ratings.moderated']);
 
         // Dátumformátum
         foreach($ratings AS $rating) {

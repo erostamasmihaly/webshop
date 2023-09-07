@@ -298,4 +298,45 @@ $(function () {
         }
 
     } 
+
+    // Értékelések
+    $("#ratings").DataTable({
+        responsive: true, // Reszponzív
+        language: { 
+            url: "/js/own/hu.json"
+        }, // Magyar nyelv
+        lengthMenu: [10, 20, 30], // Oldalankénti találatok száma
+        stateSave: true, // Visszatérés esetén az eredeti állapot megtartása
+        stateDuration:-1, // Visszatérés eredeti állapotba új fül megnyitásakor
+        order:[],
+        // AJAX forrás megadása
+        ajax: {
+            url: "/seller/product/rating", // Elérhetőség
+            data: { 
+                "product_id": product_id // Termék azonosító megadása
+            },
+            type: "POST" // POST típusú kérés
+        },
+        // Oszlopok hozzárendelése
+        columns: [
+            { data: "user_name" },
+            { data: "title" },
+            { data: "stars" },
+            { data: "body" },
+            { data: "updated" },
+            {   
+                data: "moderated",
+                "render": function ( data, type, row, meta ) {
+                    if (data == 0) {
+                        html = '<button type="button" class="btn btn-secondary m-1" title="Publikálás" rating_id="'+row.rating_id+'"><i class="fa-solid fa-eye"></i>';
+                    } else {
+                        html = '<button type="button" class="btn btn-primary m-1" title="Elrejtés" rating_id="'+row.rating_id+'"><i class="fa-solid fa-eye-slash"></i>';
+                    }
+                    return html;
+                }
+            }
+        ],
+        processing: true,
+        serverSide: false // Ez legyen FALSE, hogy az ajax.reload() működjön
+    });
 });

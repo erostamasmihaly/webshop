@@ -9,7 +9,7 @@ Route::get('/', [App\Http\Controllers\BuyerPublicController::class, 'index'])->n
 // Termék oldal
 Route::get('product/{id}', [App\Http\Controllers\BuyerPublicController::class, 'product'])->name('product');
 
-// Termék oldal
+// Termék értékelései
 Route::post('rating', [App\Http\Controllers\BuyerPublicController::class, 'product_rating'])->name('product_rating')->withoutMiddleware([VerifyCsrfToken::class]);
 
 // Üzlet oldala

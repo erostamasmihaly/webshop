@@ -138,4 +138,20 @@ class SellerProductController extends Controller
         $array['OK']=1;
         return Response::json($array);
     }
+
+    // Termék értékeléseinek lekérdezése
+    public function product_rating(Request $request) {
+
+        // Értékeléssel kapcsolatos tömb lekérdezése
+        $ratings_array = get_ratings($request->product_id, false);
+
+        // Adatok lekérdezése és behelyezése egy tömbbe
+        $array["data"] = $ratings_array["ratings"];
+        $array["recordsTotal"] = $ratings_array["total"][0]["total"];
+        $array["draw"] = 1;
+        $array["recordsFiltered"] = $array["recordsTotal"];
+
+        // Visszatérés ezen tömbbel
+        return Response::json($array);
+    } 
 }
