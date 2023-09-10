@@ -78,6 +78,10 @@ class AdminCategoryController extends Controller
         // Kategóriák lekérdezése
         $categories = Category::orderBy("sequence")->get();
 
+        foreach($categories AS $category) {
+            $category->level = count(get_category_parents($category->id));
+        }
+
         // Visszatérés ezen tömbbel
         return Response::json($categories);
 

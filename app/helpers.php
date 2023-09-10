@@ -247,3 +247,27 @@ if (!function_exists('get_ratings')) {
         return $result;
     }
 }
+
+// Kategória szülők lekérdezése
+if (!function_exists('get_category_parents')) {
+    function get_category_parents($category_id, $array = []) {
+
+        // Szülő lekérdezése
+        $parent_id = Category::find($category_id)->category_id;
+        if ($parent_id == NULL) {
+
+            // Ha nincs szülő, akkor visszatérni a tömbbel
+            return $array;
+            
+        } else {
+
+            //// Ha van szülő
+
+            // Szülő behelyezése a tömbbe
+            $array[] = $parent_id;
+
+            // Rekurzív meghívás a szülővel és a tömbbrl
+            return get_category_parents($parent_id, $array);
+        }
+    }
+}
