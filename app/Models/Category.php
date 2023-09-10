@@ -14,9 +14,7 @@ class Category extends Model
     protected $fillable = [
         'name',
         'category_id',
-        'sequence',
-        'level',
-        'is_leaf'
+        'sequence'
     ];
 
     // Naplózás beállítása
