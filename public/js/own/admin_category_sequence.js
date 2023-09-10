@@ -82,6 +82,9 @@ $(function () {
             // Mostani elem szintje ettől legyen a megadott eltéréssel
             level = prev_level + where;
 
+            // Ha 0-nál kisebb érték jönne ki, akkor maradna 0
+            if (level<0) level = 0;
+
             // Ha van következő elem
             if (next_id != undefined) {
 
@@ -98,9 +101,6 @@ $(function () {
                     level+=1;
                 }
             }
-
-            // Ha 0-nál kisebb érték jönne ki, akkor maradna 0
-            if (level<0) level = 0;
 
             // Ezen új értékek szerint beállítani
             $("#"+id).attr("level", level).find("span").css("margin-left", level*30+"px");
