@@ -17,4 +17,13 @@ Route::group(['prefix' => 'admin/category'], function() {
     // Létrehozás
     Route::get('create', [App\Http\Controllers\AdminCategoryController::class, 'create'])->name('admin_category_create');
 
+    // Sorrend felület
+    Route::get('sequence', [App\Http\Controllers\AdminCategoryController::class, 'sequence'])->name('admin_category_sequence');
+
+    // Sorrend betöltése
+    Route::get('sequence/load', [App\Http\Controllers\AdminCategoryController::class, 'sequence_load'])->name('admin_category_sequence_load');
+
+    // Sorrend mentése
+    Route::post('sequence/save', [App\Http\Controllers\AdminCategoryController::class, 'sequence_save'])->name('admin_category_sequence_save');
+
 });

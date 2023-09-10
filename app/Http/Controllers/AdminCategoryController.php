@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Services\CategoryUpdate;
 use App\Models\Category;
-use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Response;
 
 class AdminCategoryController extends Controller
 {
@@ -61,6 +61,30 @@ class AdminCategoryController extends Controller
 
         // Ugrás a Szerkesztő oldalra
         return redirect()->route('admin_category_edit', 0);
+
+    }
+
+    // Sorrend módosítása felület
+    public function sequence() {
+
+        // Oldal meghívása
+        return view('admin.category_sequence');
+
+    }
+
+    // Aktuális sorrend betöltése
+    public function sequence_load() {
+
+        // Kategóriák lekérdezése
+        $categories = Category::orderBy("sequence")->get();
+
+        // Visszatérés ezen tömbbel
+        return Response::json($categories);
+
+    }
+
+    // Sorrend mentése
+    public function sequence_save() {
 
     }
 }

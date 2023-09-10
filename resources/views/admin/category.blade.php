@@ -4,6 +4,7 @@
 <div class="container-fluid">
     <h4 class="card-title">Kategóriák kezelése
         <a href="{{ route('admin_category_create') }}" class="btn btn-primary">Új kategória</a>
+        <a href="{{ route('admin_category_sequence') }}" class="btn btn-primary mr-2">Kategóriák sorrendje</a>
     </h4>
     @include('message')
     <div class="card">

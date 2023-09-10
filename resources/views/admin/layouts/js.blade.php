@@ -17,3 +17,8 @@
     <script src="{{ asset('js/own/admin_shop_edit.js') }}" defer></script>
     <script src="{{ asset('js/external/leaflet.js') }}" defer></script>
 @endif
+
+<!-- Kategóriák sorrendje -->
+@if (Request::is('admin/category/sequence'))
+    <script src="{{ asset('js/own/admin_category_sequence.js') }}" defer></script>
+@endif
