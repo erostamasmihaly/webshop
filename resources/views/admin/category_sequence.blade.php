@@ -17,4 +17,7 @@
         </div>
     </div>
 </div>
+<div id="dialog-confirm" title="Kérdés">
+    Melyik irányba legyen elmozgatva az előző elemhez képest!?
+</div>
 @endsection
