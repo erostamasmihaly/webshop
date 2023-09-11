@@ -7,7 +7,6 @@ use Illuminate\Support\Facades\DB;
 
 class CategorySeeder extends Seeder
 {
-
     public function run(): void
     {
 
@@ -53,5 +52,57 @@ class CategorySeeder extends Seeder
             "created_at" => $now,
             "updated_at" => $now
         ]);
+
+        // Kíváló
+        DB::table("categories")->insertOrIgnore([
+            "id" => 5,
+            "name" => "kíváló",
+            "category_group_id" => 3,
+            "sequence" => 5,
+            "created_at" => $now,
+            "updated_at" => $now
+        ]);
+
+        // Jó
+        DB::table("categories")->insertOrIgnore([
+            "id" => 6,
+            "name" => "jó",
+            "category_group_id" => 3,
+            "sequence" => 4,
+            "created_at" => $now,
+            "updated_at" => $now
+        ]);
+
+        // Átlagos
+        DB::table("categories")->insertOrIgnore([
+            "id" => 7,
+            "name" => "átlagos",
+            "category_group_id" => 3,
+            "sequence" => 3,
+            "created_at" => $now,
+            "updated_at" => $now
+        ]);
+
+        // Rossz
+        DB::table("categories")->insertOrIgnore([
+            "id" => 8,
+            "name" => "rossz",
+            "category_group_id" => 3,
+            "sequence" => 2,
+            "created_at" => $now,
+            "updated_at" => $now
+        ]);
+
+        // Borzalmas
+        DB::table("categories")->insertOrIgnore([
+            "id" => 9,
+            "name" => "borzalmas",
+            "category_group_id" => 3,
+            "sequence" => 1,
+            "created_at" => $now,
+            "updated_at" => $now
+        ]);
+
+
     }
 }
