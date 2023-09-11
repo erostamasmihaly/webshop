@@ -2,19 +2,18 @@
 
 namespace App\Models;
 
-// MÁR NEM HASZÁLT! HELYETTE: CategoryGroup és Category
-
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Activitylog\LogOptions;
 use Spatie\Activitylog\Traits\LogsActivity;
 
-class Unit extends Model
+class UserPosition extends Model
 {
     use HasFactory, LogsActivity;
 
     protected $fillable = [
-        'name'
+        'user_id',
+        'position_id'
     ];
 
     // Naplózás beállítása

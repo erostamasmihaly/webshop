@@ -2,14 +2,12 @@
 
 namespace App\Models;
 
-// MÁR NEM HASZÁLT! HELYETTE: CategoryGroup és Category
-
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Activitylog\LogOptions;
 use Spatie\Activitylog\Traits\LogsActivity;
 
-class Unit extends Model
+class CategoryGroup extends Model
 {
     use HasFactory, LogsActivity;
 
