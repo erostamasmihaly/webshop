@@ -103,6 +103,60 @@ class CategorySeeder extends Seeder
             "updated_at" => $now
         ]);
 
+        // Ruha
+        DB::table("categories")->insertOrIgnore([
+            "id" => 10,
+            "name" => "ruha",
+            "category_group_id" => 1,
+            "sequence" => 1,
+            "created_at" => $now,
+            "updated_at" => $now
+        ]);
+
+        // Nadrág
+        DB::table("categories")->insertOrIgnore([
+            "id" => 11,
+            "name" => "nadrág",
+            "category_id" => 10,
+            "category_group_id" => 1,
+            "sequence" => 2,
+            "created_at" => $now,
+            "updated_at" => $now
+        ]);
+
+        // Felső
+        DB::table("categories")->insertOrIgnore([
+            "id" => 12,
+            "name" => "felső",
+            "category_id" => 10,
+            "category_group_id" => 1,
+            "sequence" => 3,
+            "created_at" => $now,
+            "updated_at" => $now
+        ]);
+
+        // Pulóver
+        DB::table("categories")->insertOrIgnore([
+            "id" => 13,
+            "name" => "pulóver",
+            "category_id" => 12,
+            "category_group_id" => 1,
+            "sequence" => 4,
+            "created_at" => $now,
+            "updated_at" => $now
+        ]);
+
+        // Kabát
+        DB::table("categories")->insertOrIgnore([
+            "id" => 14,
+            "name" => "kabát",
+            "category_id" => 12,
+            "category_group_id" => 1,
+            "sequence" => 5,
+            "created_at" => $now,
+            "updated_at" => $now
+        ]);
+
 
     }
 }
