@@ -1,25 +1,34 @@
 $(function () {
 
+    // Felugró ablak elrejtése
     $("#dialog-confirm").hide();
 
+    // Adatok betöltése
     load_sequence();
 
+    // Sortable bekapcsolása
     $("#sortable").sortable();
 
+    // Adatok beküldése
     function load_sequence() {
         
-        // Adatok átküldése
+        // AJAX kérés
         $.ajax({
             dataType: "json",
             url: "/admin/category/sequence/load",
             type: "GET",
             cache: false,
             success: function (data) {
+
+                // Lista űrítése
                 $("#sortable").html("");
+
+                // Végigmenni minden egyes elemen
                 $.each(data, function (key, val) {
-                    $("#sortable").append("<li id='li_"+val.id+"' level='"+val.level+"' class='mb-2'><span class='badge bg-info text-dark' style='margin-left: "+val.level*30+"px;'>"+val.name+"</span></li>");
+
+                    // Elem megfelelő megjelenítése
+                    $("#sortable").append("<li id='"+val.id+"' level='"+val.level+"' class='mb-2'><span class='badge bg-info text-dark' style='margin-left: "+val.level*30+"px;'>"+val.name+"</span></li>");
                 });
-                console.log(data);
             },
             error: function (error) {
                 console.log(error);
@@ -40,14 +49,20 @@ $(function () {
             width: 400,
             modal: true,
             buttons: {
+
+                // Előző szinten legyen
                 "<<": function() {
                     $(this).dialog("close");
                     change(id, -1);
                 },
+
+                // Megegyező szinten legyen
                 "--": function() {
                     $(this).dialog("close");
                     change(id, 0);
                 },
+
+                // Következő szinten legyen
                 ">>": function() {
                     $(this).dialog("close");
                     change(id, 1);
@@ -110,6 +125,80 @@ $(function () {
             $("#"+id).attr("level", 0).find("span").css("margin-left", "0px");
         }
     }
+
+    
+
+    // Szülő lekérdezése
+    function get_parent(id) {
+
+        // Mostani elem szintjének lekérdezése
+        level = $("#"+id).attr("level");
+
+        if (level==0) {
+            
+            // Ha nulla, akkor nincsen szüleje
+            return null;
+
+        } else {
+        
+            // Előző elem lekérdezése
+            prev_id = get_previous(id);
+
+            // Előző elem szintjének lekérdezése
+            prev_level = $("#"+prev_id).attr("level");
+
+            if (prev_level >= level) {
+
+                // Ha egyezik, akkor folytatni tovább a keresést ezen előző elemmel
+                return get_parent(prev_id);
+            } else {
+
+                // Ha kisebb, akkor viszatérni ezen elem azonosítójával
+                return prev_id;
+            }
+        }
+
+    }
+
+    // Katefória fa összeállítása
+    function get_tree() {
+
+        // Üres tömb létrehozása
+        array = [];
+
+        // Végigmenni minden egyes elemen
+        $("#sortable li").each(function() {
+            
+            // Lekérdezni az azonosítóját
+            id = $(this).attr("id")
+
+            // Lekérdezni a szülőjét
+            parent_id = get_parent(id);
+
+            // Objektum létrehozása
+            obj = new Object();
+            obj.id = id;
+            obj.level = level;
+            obj.parent_id = parent_id;
+            obj.name = $("#"+id).find("span").html();
+            obj.parent_name =  $("#"+parent_id).find("span").html();
+
+            // Objektum elhelyezése a tömbbe
+            array.push(obj);
+        });
+
+        // JSON létrehozása a tömbből
+        json = JSON.stringify(array);
+
+        // Visszatérés ezzel a JSON-nal
+        return json;
+    }
+
+    // Mentés gomb
+    $("body").on("click", "#save", function() {
+        tree = get_tree();
+        console.log(tree);
+    });
 
 
 });
