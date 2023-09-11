@@ -188,7 +188,7 @@ if (!function_exists('get_products')) {
     function get_products($shop_id = null) {
 
         // Összes termék lekérdezése
-        $products = Product::join('shops','products.shop_id','shops.id')->join('units','products.unit_id','units.id')->join('categories','products.category_id','categories.id')->where(function($query) {return $query->where('active', 1)->orWhere('quantity', '>', 0);});
+        $products = Product::join('shops','products.shop_id','shops.id')->join('categories AS units','products.unit_id','units.id')->join('categories','products.category_id','categories.id')->where(function($query) {return $query->where('active', 1)->orWhere('quantity', '>', 0);});
 
         // Ha megvan adva a bolt azonosítója, akkor ezen azonosítóra történő szűrés
         if ($shop_id != null) {
