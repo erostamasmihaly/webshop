@@ -129,12 +129,12 @@ $(function () {
     
 
     // Szülő lekérdezése
-    function get_parent(id) {
+    function get_parent(current_id, max_level) {
 
         // Mostani elem szintjének lekérdezése
-        level = $("#"+id).attr("level");
+        current_level = $("#"+current_id).attr("level");
 
-        if (level==0) {
+        if (current_level==0) {
             
             // Ha nulla, akkor nincsen szüleje
             return null;
@@ -142,19 +142,24 @@ $(function () {
         } else {
         
             // Előző elem lekérdezése
-            prev_id = get_previous(id);
+            prev_id = get_previous(current_id);
 
             // Előző elem szintjének lekérdezése
             prev_level = $("#"+prev_id).attr("level");
 
-            if (prev_level >= level) {
+            if (prev_level >= current_level) {
 
                 // Ha egyezik, akkor folytatni tovább a keresést ezen előző elemmel
-                return get_parent(prev_id);
+                return get_parent(prev_id, max_level);
             } else {
 
                 // Ha kisebb, akkor viszatérni ezen elem azonosítójával
-                return prev_id;
+                if (max_level <= prev_level) {
+                    return get_parent(prev_id, max_level);
+                } else {
+                    return prev_id;
+                }
+                
             }
         }
 
@@ -172,8 +177,11 @@ $(function () {
             // Lekérdezni az azonosítóját
             id = $(this).attr("id")
 
+            // Lekérdezni a szintjét
+            level = $(this).attr("level");
+
             // Lekérdezni a szülőjét
-            parent_id = get_parent(id);
+            parent_id = get_parent(id, level);
 
             // Objektum létrehozása
             obj = new Object();
