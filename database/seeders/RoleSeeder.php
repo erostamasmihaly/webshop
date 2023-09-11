@@ -2,8 +2,8 @@
 
 namespace Database\Seeders;
 
-use App\Models\Role;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class RoleSeeder extends Seeder
 {
@@ -11,24 +11,32 @@ class RoleSeeder extends Seeder
     public function run(): void
     {
 
-        // Ha nincs még szerepkörök
-        if (Role::count()==0) {
-            
-            // Admin
-            $role = new Role();
-            $role->name = "admin";
-            $role->save();
+        // Aktuális idő lekérdezése
+        $now = date("Y-m-d H:i:s", time());
 
-            // Vásárló
-            $role = new Role();
-            $role->name = "buyer";
-            $role->save();
+        // Admin
+        DB::table("roles")->insertOrIgnore([
+            "id" => 1,
+            "name" => "admin",
+            "created_at" => $now,
+            "updated_at" => $now
+        ]);
 
-            // Boltos
-            $role = new Role();
-            $role->name = "seller";
-            $role->save();
-            
-        }
+        // Vásárló
+        DB::table("roles")->insertOrIgnore([
+            "id" => 2,
+            "name" => "buyer",
+            "created_at" => $now,
+            "updated_at" => $now
+        ]);
+
+        // Boltos
+        DB::table("roles")->insertOrIgnore([
+            "id" => 3,
+            "name" => "seller",
+            "created_at" => $now,
+            "updated_at" => $now
+        ]);
+
     }
 }

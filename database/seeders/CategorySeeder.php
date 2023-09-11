@@ -2,45 +2,56 @@
 
 namespace Database\Seeders;
 
-use App\Models\Category;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class CategorySeeder extends Seeder
 {
 
     public function run(): void
     {
-        // Ha még nincsen kategória létrehozva
-        if (Category::count()==0) {
 
-            // Darab
-            $category = new Category();
-            $category->name = "darab";
-            $category->category_group_id = 2;
-            $category->sequence = 1;
-            $category->save();
+        // Aktuális idő lekérdezése
+        $now = date("Y-m-d H:i:s", time());
 
-            // Liter
-            $category = new Category();
-            $category->name = "liter";
-            $category->category_group_id = 2;
-            $category->sequence = 2;
-            $category->save();
+        // Darab
+        DB::table("categories")->insertOrIgnore([
+            "id" => 1,
+            "name" => "darab",
+            "category_group_id" => 2,
+            "sequence" => 1,
+            "created_at" => $now,
+            "updated_at" => $now
+        ]);
 
-            // Kilogramm
-            $category = new Category();
-            $category->name = "kg";
-            $category->category_group_id = 2;
-            $category->sequence = 3;
-            $category->save();
+        // Liter
+        DB::table("categories")->insertOrIgnore([
+            "id" => 2,
+            "name" => "liter",
+            "category_group_id" => 2,
+            "sequence" => 2,
+            "created_at" => $now,
+            "updated_at" => $now
+        ]);
 
-            // Méter
-            $category = new Category();
-            $category->name = "m";
-            $category->category_group_id = 2;
-            $category->sequence = 4;
-            $category->save();
+        // Kilogramm
+        DB::table("categories")->insertOrIgnore([
+            "id" => 3,
+            "name" => "kilogramm",
+            "category_group_id" => 2,
+            "sequence" => 3,
+            "created_at" => $now,
+            "updated_at" => $now
+        ]);
 
-        }
+        // Méter
+        DB::table("categories")->insertOrIgnore([
+            "id" => 4,
+            "name" => "méter",
+            "category_group_id" => 2,
+            "sequence" => 4,
+            "created_at" => $now,
+            "updated_at" => $now
+        ]);
     }
 }

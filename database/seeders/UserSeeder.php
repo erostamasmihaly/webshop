@@ -2,71 +2,85 @@
 
 namespace Database\Seeders;
 
-use App\Models\User;
-use App\Models\UserRole;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
 class UserSeeder extends Seeder
 {
     public function run(): void
     {
-        // Ha nincs még felhasználók létrehozva
-        if (User::count()==0) {
 
-            // Admin felhasználó
-            $user = new User();
-            $user->name = "admin";
-            $user->surname = "Admin";
-            $user->forename = "Felhasználó";
-            $user->email = "admin@etm.hu";
-            $user->password = Hash::make("Admin1234");
-            $user->active = 1;
-            $user->save();
+        // Aktuális idő lekérdezése
+        $now = date("Y-m-d H:i:s", time());
 
-            // Admin felhasználó felvitele az Admin szerepkörhöz
-            $user_role = new UserRole();
-            $user_role->user_id = 1;
-            $user_role->role_id = 1;
-            $user_role->save();
+        // Admin
+        DB::table("users")->insertOrIgnore([
+            "id" => 1,
+            "name" => "admin",
+            "surname" => "Admin",
+            "forename" => "Felhasználó",
+            "email" => "admin@etm.hu",
+            "password" => Hash::make("Admin1234"),
+            "active" => 1,
+            "created_at" => $now,
+            "updated_at" => $now
+        ]);
 
-            // Vásárló felhasználó
-            $user = new User();
-            $user->name = "buyer";
-            $user->surname = "Vásárló";
-            $user->forename = "Felhasználó";
-            $user->email = "buyer@etm.hu";
-            $user->password = Hash::make("Buyer1234");
-            $user->active = 1;
-            $user->country = "Magyarország";
-            $user->state = "Borsod-Abaúj-Zemplén vármegye";
-            $user->zip = 3630;
-            $user->city = "Miskolc";
-            $user->address = "Király utca 12. 2/1.";
-            $user->save();
+        DB::table("user_roles")->insertOrIgnore([
+            "id" => 1,
+            "user_id" => 1,
+            "role_id" => 1,
+            "created_at" => $now,
+            "updated_at" => $now
+        ]);
 
-            // Vásárló felhasználó felvitele a Vásárló szerepkörhöz
-            $user_role = new UserRole();
-            $user_role->user_id = 2;
-            $user_role->role_id = 2;
-            $user_role->save();
+        // Vásárló
+        DB::table("users")->insertOrIgnore([
+            "id" => 2,
+            "name" => "buyer",
+            "surname" => "Vásárló",
+            "forename" => "Felhasználó",
+            "email" => "buyer@etm.hu",
+            "password" => Hash::make("Buyer1234"),
+            "active" => 1,
+            "country" => "Magyarország",
+            "state" => "Borsod-Abaúj-Zemplén",
+            "zip" => 3530,
+            "city" => "Miskolc",
+            "address" => "Király utca 12. 2/1.",
+            "created_at" => $now,
+            "updated_at" => $now
+        ]);
 
-            // Boltos felhasználó
-            $user = new User();
-            $user->name = "seller";
-            $user->surname = "Boltos";
-            $user->forename = "Felhasználó";
-            $user->email = "seller@etm.hu";
-            $user->password = Hash::make("Seller1234");
-            $user->active = 1;
-            $user->save();
+        DB::table("user_roles")->insertOrIgnore([
+            "id" => 2,
+            "user_id" => 2,
+            "role_id" => 2,
+            "created_at" => $now,
+            "updated_at" => $now
+        ]);
 
-            // Boltos felhasználó felvitele a Boltos szerepkörhöz
-            $user_role = new UserRole();
-            $user_role->user_id = 3;
-            $user_role->role_id = 3;
-            $user_role->save();
+        // Boltos
+        DB::table("users")->insertOrIgnore([
+            "id" => 3,
+            "name" => "seller",
+            "surname" => "Boltos",
+            "forename" => "Felhasználó",
+            "email" => "seller@etm.hu",
+            "password" => Hash::make("Seller1234"),
+            "active" => 1,
+            "created_at" => $now,
+            "updated_at" => $now
+        ]);
 
-        } 
+        DB::table("user_roles")->insertOrIgnore([
+            "id" => 3,
+            "user_id" => 3,
+            "role_id" => 3,
+            "created_at" => $now,
+            "updated_at" => $now
+        ]);
+
     }
 }
