@@ -6,7 +6,7 @@
 	</button>
 	<ul class="dropdown-menu dropdown-menu-end">
 		<li>
-			@if(has_role('seller'))
+			@if(has_role('admin'))
 				<a class="dropdown-item" href="{{ route('admin_index') }}">Admin felület</a>
 			@endif
 			<a class="dropdown-item" href="{{ route('home') }}">Áruház felület</a> 

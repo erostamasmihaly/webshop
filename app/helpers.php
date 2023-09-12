@@ -101,7 +101,7 @@ if (!function_exists('discount_price')) {
 }
 
 // Aktiváló kód létrehozása
-if (!function_exists('get_activtion_code')) {
+if (!function_exists('get_activation_code')) {
     function get_activation_code() {
         return md5(uniqid(mt_rand(), true));
     }
@@ -112,7 +112,7 @@ if (!function_exists('get_cart')) {
     function get_cart() {
 
         // Kosár lekérdezése
-        $carts = Cart::join('products','carts.product_id','products.id')->join('units','products.unit_id','units.id')->where('user_id', Auth::id())->whereNull('payment_id')->get(['products.id','products.name','carts.quantity','units.name AS unit','carts.id AS cart_id']);
+        $carts = Cart::join('products','carts.product_id','products.id')->join('categories AS units','products.unit_id','units.id')->where('user_id', Auth::id())->whereNull('payment_id')->get(['products.id','products.name','carts.quantity','units.name AS unit','carts.id AS cart_id']);
 
         // Fizetendő összeg meghatározása
         $total = 0;
@@ -141,7 +141,7 @@ if (!function_exists('get_pay_history')) {
     function get_pay_history() {
 
         // Kosár lekérdezése
-        $carts = Cart::join('products','carts.product_id','products.id')->join('units','products.unit_id','units.id')->join('payments','carts.payment_id','payments.id')->where('carts.user_id', Auth::id())->whereNotNull('payment_id')->orderBy('payments.updated_at','desc')->get(['products.id','products.name','carts.quantity','units.name AS unit','carts.id AS cart_id','payments.transaction_id','carts.price','payments.updated_at']);
+        $carts = Cart::join('products','carts.product_id','products.id')->join('categories AS units','products.unit_id','units.id')->join('payments','carts.payment_id','payments.id')->where('carts.user_id', Auth::id())->whereNotNull('payment_id')->orderBy('payments.updated_at','desc')->get(['products.id','products.name','carts.quantity','units.name AS unit','carts.id AS cart_id','payments.transaction_id','carts.price','payments.updated_at']);
 
         // További árak meghatározása
         foreach($carts AS $cart) {
@@ -198,10 +198,28 @@ if (!function_exists('get_products')) {
         // Adatok lekérdezése
         $products = $products->get(['products.id','products.name','products.summary','shops.name AS shop','units.name AS unit','products.discount','products.category_id','categories.name AS category','products.quantity']);
 
-        // Bruttó és kedvezményes árak behelyezése
+        
         foreach($products AS $product) {
+
+            // Bruttó és kedvezményes árak behelyezése
             $product->brutto_price = product_prices($product->id)["brutto_ft"];
             $product->discount_price = product_prices($product->id)["discount_ft"];
+
+            // Vezérkép elérhetősége
+            $dir = public_path('images/products/'.$product->id);
+            $file_main = $dir.'/main_image.jpg';
+
+            // Megnézni, hogy van-e vezérkép fájl
+            if (File::exists($file_main)) {
+
+                // Ha van, akkor annak a behelyezése
+                $product->image = 'images/products/'.$product->id.'/main_image.jpg';
+            } else {
+
+                // Ha nincs, akkor a nincs kép fájl alkalmazása
+                $product->image = 'images/noimage.png';
+
+            }
         }
 
         // Visszatérés ezen termékekkel

@@ -27,6 +27,7 @@
             <div class="alert alert-danger d-none" role="alert" id="cart_error"></div>
         </div>
     @endguest
+    @if($images->count()>0)
     <div class="card p-2 mt-2">
         <div class="bg-info bg-gradient text-dark text-center mb-2 fw-bold">Fényképek</div>
         <div class="alert alert-info" role="alert">
@@ -42,4 +43,5 @@
             @endforeach
         </div>
     </div>
+    @endif
 </div>

@@ -6,6 +6,7 @@ use App\Http\Services\UserActivate;
 use App\Http\Services\UserInsert;
 use App\Mail\RegisterMail;
 use App\Models\Cart;
+use App\Models\Category;
 use App\Models\Favourite;
 use App\Models\Image;
 use App\Models\Product;
@@ -35,7 +36,7 @@ class BuyerPublicController extends Controller
     public function product($id) {
 
         // Termék adatainak lekérdezése
-        $product = Product::join('shops','products.shop_id','shops.id')->join('units','products.unit_id','units.id')->join('categories','products.category_id','categories.id')->where('products.id',$id)->get(['products.id','products.name','products.summary','products.body','products.discount','shops.name AS shop_name','shops.id AS shop_id','units.name AS unit','categories.name AS category_name','products.quantity'])->first();
+        $product = Product::join('shops','products.shop_id','shops.id')->join('categories AS units','products.unit_id','units.id')->join('categories','products.category_id','categories.id')->where('products.id',$id)->get(['products.id','products.name','products.summary','products.body','products.discount','shops.name AS shop_name','shops.id AS shop_id','units.name AS unit','categories.name AS category_name','products.quantity'])->first();
 
         // Bruttó ár és a leárazás utáni ár meghatározása
         $product->brutto_price = product_prices($product->id)["brutto_ft"];
@@ -66,12 +67,16 @@ class BuyerPublicController extends Controller
             $is_buyed = null;
         }
 
+        // Értékelések lekérdezése
+        $rating_names = Category::where('category_group_id',3)->orderBy('sequence','desc')->get();
+
         // Felület betöltése
         return view('buyer.product', [
             'product' => $product,
             'images' => $images,
             'is_fav' => $is_fav,
-            'is_buyed' => $is_buyed
+            'is_buyed' => $is_buyed,
+            'rating_names' => $rating_names
         ]);
     }
 

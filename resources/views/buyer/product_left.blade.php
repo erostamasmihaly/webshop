@@ -61,11 +61,9 @@
                     <div class="col-sm-3 fw-bold">Értékelés</div>
                     <div class="col-sm-9">
                         <select id="stars" class="form-control">
-                            <option value="5">5 csillag - Megfelelő</option>
-                            <option value="4">4 csillag - Jó</option>
-                            <option value="3">3 csillag - Átlagos</option>
-                            <option value="2">2 csillag - Rossz</option>
-                            <option value="1">1 csillag - Borzalmas</option>
+                            @foreach($rating_names AS $rating_name)
+                                <option value="{{ $rating_name->sequence}}">{{ $rating_name->sequence }} csillag - {{ $rating_name->name }}</option>
+                            @endforeach
                         </select>
                     </div>
                 </div>

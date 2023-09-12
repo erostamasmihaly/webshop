@@ -13,7 +13,7 @@
                                     <i class="fa-solid fa-arrow-up-right-from-square"></i> {{ $product->name }}
                                 </a>
                             </div>
-							<img src="{{ asset('images/products/'.$product->id.'/main_image.jpg') }}" class="img-thumbnail"/>
+							<img src="{{ $product->image }}" class="img-thumbnail"/>
 							<span class="badge bg-success p-2 mb-2">{{ $product->discount_price }}
 								@if($product->discount)
 									<span class="badge rounded-pill bg-danger">
