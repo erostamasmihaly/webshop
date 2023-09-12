@@ -12,7 +12,6 @@ use App\Models\Category;
 use App\Models\Image;
 use App\Models\Product;
 use App\Models\Shop;
-use App\Models\Unit;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Response;
@@ -29,7 +28,7 @@ class SellerProductController extends Controller
     public function index() {
 
         // Minden olyan bolt lekérdezése, ami a felhasználóhoz hozzá van rendelve
-        $shops = Shop::join('positions','positions.shop_id','shops.id')->join('user_shops','user_shops.position_id','positions.id')->where('user_shops.user_id', Auth::id())->pluck('shops.id')->toArray();
+        $shops = Shop::join('positions','positions.shop_id','shops.id')->join('user_positions','user_positions.position_id','positions.id')->where('user_positions.user_id', Auth::id())->pluck('shops.id')->toArray();
 
         // Oldal meghívása
         return view('seller.product',[
@@ -55,11 +54,11 @@ class SellerProductController extends Controller
             $product = Product::find($id);
         }
 
-        // Kategóriák lekérdezése
-        $categories = Category::where('is_leaf',1)->get();
+        // Termék kategóriák lekérdezése
+        $categories = Category::where('category_group_id',1)->orderBy('sequence')->get();
 
         // Mértékegységek lekérdezése
-        $units = Unit::get();
+        $units = Category::where('category_group_id',2)->orderBy('sequence')->get();
 
         // Üzletek lekérdezése
         $shops = Shop::get();
