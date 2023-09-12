@@ -45,5 +45,24 @@ class ShopSeeder extends Seeder
             "updated_at" => $now
         ]);
 
+
+        // Termék hozzáadása a Centrumhoz
+        DB::table("products")->insertOrIgnore([
+            "id" => 1,
+            "shop_id" => 1,
+            "unit_id" => 1,
+            "category_id" => 14,
+            "name" => "Fekete bőrkabát",
+            "summary" => "<p>Fekete kabát, eredeti bőrből!</p>",
+            "body" => "<p>Anyag: Eredeti bőr</p><p>Szín: Fekete</p>",
+            "price" => 10000,
+            "vat" => 27,
+            "discount" => 10,
+            "active" => 1,
+            "quantity" => 23,
+            "created_at" => $now,
+            "updated_at" => $now
+        ]);        
+
     }
 }
