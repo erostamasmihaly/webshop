@@ -47,7 +47,7 @@ class AdminShopController extends Controller
         }
 
         // Üzlet alkalmazottjainak lekérdezése
-        $users = User::join('user_shops','user_shops.user_id','users.id')->join('positions','user_shops.position_id','positions.id')->where('positions.shop_id',$id)->get(['users.surname','users.forename','positions.name AS position','users.id AS user_id','positions.id AS position_id']);
+        $users = User::join('user_positions','user_positions.user_id','users.id')->join('positions','user_positions.position_id','positions.id')->where('positions.shop_id',$id)->get(['users.surname','users.forename','positions.name AS position','users.id AS user_id','positions.id AS position_id']);
 
         // Oldal meghívása
         return view('admin.shop_edit',[
