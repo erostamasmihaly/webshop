@@ -10,17 +10,14 @@ class CategorySeeder extends Seeder
     public function run(): void
     {
 
-        // Aktuális idő lekérdezése
-        $now = date("Y-m-d H:i:s", time());
-
         // Darab
         DB::table("categories")->insertOrIgnore([
             "id" => 1,
             "name" => "darab",
             "category_group_id" => 2,
             "sequence" => 1,
-            "created_at" => $now,
-            "updated_at" => $now
+            "created_at" => get_now(),
+            "updated_at" => get_now()
         ]);
 
         // Liter
@@ -29,8 +26,8 @@ class CategorySeeder extends Seeder
             "name" => "liter",
             "category_group_id" => 2,
             "sequence" => 2,
-            "created_at" => $now,
-            "updated_at" => $now
+            "created_at" => get_now(),
+            "updated_at" => get_now()
         ]);
 
         // Kilogramm
@@ -39,8 +36,8 @@ class CategorySeeder extends Seeder
             "name" => "kilogramm",
             "category_group_id" => 2,
             "sequence" => 3,
-            "created_at" => $now,
-            "updated_at" => $now
+            "created_at" => get_now(),
+            "updated_at" => get_now()
         ]);
 
         // Méter
@@ -49,8 +46,8 @@ class CategorySeeder extends Seeder
             "name" => "méter",
             "category_group_id" => 2,
             "sequence" => 4,
-            "created_at" => $now,
-            "updated_at" => $now
+            "created_at" => get_now(),
+            "updated_at" => get_now()
         ]);
 
         // Kíváló
@@ -59,8 +56,8 @@ class CategorySeeder extends Seeder
             "name" => "kíváló",
             "category_group_id" => 3,
             "sequence" => 5,
-            "created_at" => $now,
-            "updated_at" => $now
+            "created_at" => get_now(),
+            "updated_at" => get_now()
         ]);
 
         // Jó
@@ -69,8 +66,8 @@ class CategorySeeder extends Seeder
             "name" => "jó",
             "category_group_id" => 3,
             "sequence" => 4,
-            "created_at" => $now,
-            "updated_at" => $now
+            "created_at" => get_now(),
+            "updated_at" => get_now()
         ]);
 
         // Átlagos
@@ -79,8 +76,8 @@ class CategorySeeder extends Seeder
             "name" => "átlagos",
             "category_group_id" => 3,
             "sequence" => 3,
-            "created_at" => $now,
-            "updated_at" => $now
+            "created_at" => get_now(),
+            "updated_at" => get_now()
         ]);
 
         // Rossz
@@ -89,8 +86,8 @@ class CategorySeeder extends Seeder
             "name" => "rossz",
             "category_group_id" => 3,
             "sequence" => 2,
-            "created_at" => $now,
-            "updated_at" => $now
+            "created_at" => get_now(),
+            "updated_at" => get_now()
         ]);
 
         // Borzalmas
@@ -99,8 +96,8 @@ class CategorySeeder extends Seeder
             "name" => "borzalmas",
             "category_group_id" => 3,
             "sequence" => 1,
-            "created_at" => $now,
-            "updated_at" => $now
+            "created_at" => get_now(),
+            "updated_at" => get_now()
         ]);
 
         // Ruha
@@ -109,8 +106,8 @@ class CategorySeeder extends Seeder
             "name" => "ruha",
             "category_group_id" => 1,
             "sequence" => 1,
-            "created_at" => $now,
-            "updated_at" => $now
+            "created_at" => get_now(),
+            "updated_at" => get_now()
         ]);
 
         // Nadrág
@@ -120,8 +117,8 @@ class CategorySeeder extends Seeder
             "category_id" => 10,
             "category_group_id" => 1,
             "sequence" => 2,
-            "created_at" => $now,
-            "updated_at" => $now
+            "created_at" => get_now(),
+            "updated_at" => get_now()
         ]);
 
         // Felső
@@ -131,8 +128,8 @@ class CategorySeeder extends Seeder
             "category_id" => 10,
             "category_group_id" => 1,
             "sequence" => 3,
-            "created_at" => $now,
-            "updated_at" => $now
+            "created_at" => get_now(),
+            "updated_at" => get_now()
         ]);
 
         // Pulóver
@@ -142,8 +139,8 @@ class CategorySeeder extends Seeder
             "category_id" => 12,
             "category_group_id" => 1,
             "sequence" => 4,
-            "created_at" => $now,
-            "updated_at" => $now
+            "created_at" => get_now(),
+            "updated_at" => get_now()
         ]);
 
         // Kabát
@@ -153,8 +150,8 @@ class CategorySeeder extends Seeder
             "category_id" => 12,
             "category_group_id" => 1,
             "sequence" => 5,
-            "created_at" => $now,
-            "updated_at" => $now
+            "created_at" => get_now(),
+            "updated_at" => get_now()
         ]);
 
 

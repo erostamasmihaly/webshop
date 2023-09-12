@@ -11,31 +11,28 @@ class RoleSeeder extends Seeder
     public function run(): void
     {
 
-        // Aktuális idő lekérdezése
-        $now = date("Y-m-d H:i:s", time());
-
         // Admin
         DB::table("roles")->insertOrIgnore([
             "id" => 1,
             "name" => "admin",
-            "created_at" => $now,
-            "updated_at" => $now
+            "created_at" => get_now(),
+            "updated_at" => get_now()
         ]);
 
         // Vásárló
         DB::table("roles")->insertOrIgnore([
             "id" => 2,
             "name" => "buyer",
-            "created_at" => $now,
-            "updated_at" => $now
+            "created_at" => get_now(),
+            "updated_at" => get_now()
         ]);
 
         // Boltos
         DB::table("roles")->insertOrIgnore([
             "id" => 3,
             "name" => "seller",
-            "created_at" => $now,
-            "updated_at" => $now
+            "created_at" => get_now(),
+            "updated_at" => get_now()
         ]);
 
     }

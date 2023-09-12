@@ -10,9 +10,6 @@ class ShopSeeder extends Seeder
     public function run(): void
     {
 
-        // Aktuális idő lekérdezése
-        $now = date("Y-m-d H:i:s", time());
-
         // Centrum
         DB::table("shops")->insertOrIgnore([
             "id" => 1,
@@ -21,8 +18,8 @@ class ShopSeeder extends Seeder
             "address" => "Miskolc, Széchenyi István u. 111.",
             "latitude" => 48.1034,
             "longitude" => 20.7896,
-            "created_at" => $now,
-            "updated_at" => $now
+            "created_at" => get_now(),
+            "updated_at" => get_now()
         ]);
 
         // Boltos pozíció létrehozása
@@ -32,8 +29,8 @@ class ShopSeeder extends Seeder
             "name" => "boltos",
             "summary" => "<p>Bolton belüli szükséges feladatok ellátása</p>",
             "body" => "<p>Feladatok:</p><ul><li>Polcok feltöltése</li><li>Termékek árainak ellenőrzése</li><li>Pénztári feladatok elvégzése</li></ul>",
-            "created_at" => $now,
-            "updated_at" => $now
+            "created_at" => get_now(),
+            "updated_at" => get_now()
         ]);
 
         // Boltos hozzárendelése a Boltos pozícióhoz
@@ -41,8 +38,8 @@ class ShopSeeder extends Seeder
             "id" => 1,
             "user_id" => 3,
             "position_id" => 1,
-            "created_at" => $now,
-            "updated_at" => $now
+            "created_at" => get_now(),
+            "updated_at" => get_now()
         ]);
 
 
@@ -60,8 +57,8 @@ class ShopSeeder extends Seeder
             "discount" => 10,
             "active" => 1,
             "quantity" => 23,
-            "created_at" => $now,
-            "updated_at" => $now
+            "created_at" => get_now(),
+            "updated_at" => get_now()
         ]);        
 
     }

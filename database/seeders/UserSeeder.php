@@ -11,9 +11,6 @@ class UserSeeder extends Seeder
     public function run(): void
     {
 
-        // Aktuális idő lekérdezése
-        $now = date("Y-m-d H:i:s", time());
-
         // Admin
         DB::table("users")->insertOrIgnore([
             "id" => 1,
@@ -23,16 +20,16 @@ class UserSeeder extends Seeder
             "email" => "admin@etm.hu",
             "password" => Hash::make("Admin1234"),
             "active" => 1,
-            "created_at" => $now,
-            "updated_at" => $now
+            "created_at" => get_now(),
+            "updated_at" => get_now()
         ]);
 
         DB::table("user_roles")->insertOrIgnore([
             "id" => 1,
             "user_id" => 1,
             "role_id" => 1,
-            "created_at" => $now,
-            "updated_at" => $now
+            "created_at" => get_now(),
+            "updated_at" => get_now()
         ]);
 
         // Vásárló
@@ -49,16 +46,16 @@ class UserSeeder extends Seeder
             "zip" => 3530,
             "city" => "Miskolc",
             "address" => "Király utca 12. 2/1.",
-            "created_at" => $now,
-            "updated_at" => $now
+            "created_at" => get_now(),
+            "updated_at" => get_now()
         ]);
 
         DB::table("user_roles")->insertOrIgnore([
             "id" => 2,
             "user_id" => 2,
             "role_id" => 2,
-            "created_at" => $now,
-            "updated_at" => $now
+            "created_at" => get_now(),
+            "updated_at" => get_now()
         ]);
 
         // Boltos
@@ -70,16 +67,16 @@ class UserSeeder extends Seeder
             "email" => "seller@etm.hu",
             "password" => Hash::make("Seller1234"),
             "active" => 1,
-            "created_at" => $now,
-            "updated_at" => $now
+            "created_at" => get_now(),
+            "updated_at" => get_now()
         ]);
 
         DB::table("user_roles")->insertOrIgnore([
             "id" => 3,
             "user_id" => 3,
             "role_id" => 3,
-            "created_at" => $now,
-            "updated_at" => $now
+            "created_at" => get_now(),
+            "updated_at" => get_now()
         ]);
 
     }

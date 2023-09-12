@@ -289,3 +289,10 @@ if (!function_exists('get_category_parents')) {
         }
     }
 }
+
+// Aktuális idő lekérdezése
+if (!function_exists('get_now')) {
+    function get_now() {
+        return date('Y-m-d H:i:s', time());
+    }
+}
