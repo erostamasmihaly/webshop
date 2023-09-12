@@ -23,6 +23,18 @@ class InteractionSeeder extends Seeder
         // Termék
         $product = Product::find(1);
 
+        // Vásárló megadja az adatai, hogy tudjon fizetni
+        DB::table("users")->where("id", $buyer->id)->update([
+            "country" => "Magyarország",
+            "state" => "Borsod-Abaúj-Zemplén",
+            "zip" => "3530",
+            "city" => "Miskolc",
+            "address" => "Király utca 12. 2/1."
+        ]);
+
+        // Vásárló frissítése
+        $buyer->refresh();
+
         // Vásárló kedvelte a terméket
         DB::table("favourites")->insertOrIgnore([
             "id" => 1,
@@ -44,11 +56,11 @@ class InteractionSeeder extends Seeder
 
         // Vásárló által megvett termék adatai
         $items_array = [];
-        $cart = Cart::join('products','carts.product_id','products.id')->where('carts.id',1)->get(['products.id AS ref','products.name AS title','carts.quantity AS amount'])->first();
-        $items_array[0]["ref"] = $cart->ref;
-        $items_array[0]["price"] = product_prices($cart->ref)["discount"];
-        $items_array[0]["title"] = $cart->title;
-        $items_array[0]["amount"] = $cart->amount;
+        $cart = Cart::find(1);
+        $items_array[0]["ref"] = $cart->id;
+        $items_array[0]["price"] = product_prices($product->id)["discount"];
+        $items_array[0]["title"] = $product->name;
+        $items_array[0]["amount"] = $product->quantity;
         $items = json_encode($items_array);
 
         // Vásárló elérhetősége
@@ -65,7 +77,7 @@ class InteractionSeeder extends Seeder
         DB::table("payments")->insertOrIgnore([
             "id" => 1,
             "user_id" => $buyer->id,
-            "total" => product_prices($cart->ref)["discount"],
+            "total" => product_prices($cart->product_id)["discount"],
             "items" => $items,
             "invoice" => $invoice,
             "order_ref" => "12700116945005728897",
@@ -78,9 +90,20 @@ class InteractionSeeder extends Seeder
 
         // Kosárba is módosult a termék
         DB::table("carts")->where("id", 1)->update([
-            "price" => product_prices($cart->ref)["discount"],
+            "price" => product_prices($cart->product_id)["discount"],
             "payment_id" => 1
         ]);
+
+        // Kosár frissítése
+        $cart->refresh();
+
+        // Termék mennyisége is csökken eggyel
+        DB::table("products")->where("id", $cart->product_id)->update([
+            "quantity" => $product->quantity-1
+        ]);
+
+        // Termék frissítése
+        $product->refresh();
 
         // Vásárló véleményt mond a termékről
         DB::table("ratings")->insertOrIgnore([

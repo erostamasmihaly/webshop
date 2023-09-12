@@ -41,11 +41,6 @@ class UserSeeder extends Seeder
             "email" => "buyer@etm.hu",
             "password" => Hash::make("Buyer1234"),
             "active" => 1,
-            "country" => "Magyarország",
-            "state" => "Borsod-Abaúj-Zemplén",
-            "zip" => 3530,
-            "city" => "Miskolc",
-            "address" => "Király utca 12. 2/1.",
             "created_at" => get_now(),
             "updated_at" => get_now()
         ]);
