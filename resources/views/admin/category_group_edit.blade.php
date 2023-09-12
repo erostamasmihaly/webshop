@@ -2,11 +2,10 @@
 
 @section('content')
 <div class="container-fluid">
-    <form action="{{ route('admin_category_update') }}" method="POST" enctype="multipart/form-data">
-        <input type="hidden" name="id" value="{{ $category->id }}"/>    
-        <input type="hidden" name="category_group_id" value="{{ $category->category_group_id }}"/>
+    <form action="{{ route('admin_category_group') }}" method="POST" enctype="multipart/form-data">
+        <input type="hidden" name="id" value="{{ $category_group->id }}"/>    
         <h4 class="card-title">
-            @if($category->id==0) Kategória hozzáadása @else Kategória szerkesztése @endif
+            @if($category_group->id==0) Kategória csoport hozzáadása @else Kategória csoport szerkesztése @endif
         </h4>
         @method('PUT')
         @csrf
@@ -16,7 +15,7 @@
                     Név *
                 </div>
                 <div class="col-sm-8">
-                    <input type="text" class="form-control" name="name" value="{{ old('name', $category->name) }}"/>
+                    <input type="text" class="form-control" name="name" value="{{ old('name', $category_group->name) }}"/>
                     @if ($errors->has('name'))
                         <div class="invalid-feedback d-block">{{ $errors->first('name') }}</div>
                     @endif

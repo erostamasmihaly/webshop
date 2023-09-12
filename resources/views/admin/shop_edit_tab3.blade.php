@@ -22,7 +22,7 @@
 			</tbody>
 		</table>
 	@else
-		@include('layouts.empty')
+		@include('empty')
 	@endif
 	<div>
 		<a href="{{ route('admin_shop_user_edit',[$shop->id,0,0]) }}" class="btn btn-primary">Új alkalmazott felvitele</a>

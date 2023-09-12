@@ -33,7 +33,7 @@
                     </tbody>
                 </table>
             @else
-                @include('layouts.empty')
+                @include('empty')
             @endif
         </div>
     </div>

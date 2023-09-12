@@ -8,13 +8,14 @@ use Illuminate\Support\Facades\DB;
 
 class CategoryUpdate
 {
-    public $name;
+    public $name, $category_group_id;
     private $id;
 
     // Adatok lekérdezése
     public function __construct(CategoryUpdateRequest $categoryUpdateRequest)
     {
         $this->id = $categoryUpdateRequest->id;
+        $this->category_group_id = $categoryUpdateRequest->category_group_id;
         $this->name = $categoryUpdateRequest->name;
         $this->updateCategory();
     }

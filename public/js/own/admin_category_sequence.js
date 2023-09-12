@@ -3,6 +3,9 @@ $(function () {
     // Felugró ablak elrejtése
     $("#dialog-confirm").hide();
 
+    // Kategória csoport lekérdezése
+    category_group_id = $("#category_group_id").val();
+
     // Adatok betöltése
     load_sequence();
 
@@ -15,7 +18,7 @@ $(function () {
         // AJAX kérés
         $.ajax({
             dataType: "json",
-            url: "/admin/category/sequence/load",
+            url: "/admin/category/sequence/load/"+category_group_id,
             type: "GET",
             cache: false,
             success: function (data) {

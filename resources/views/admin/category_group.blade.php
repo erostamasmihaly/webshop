@@ -2,13 +2,13 @@
 
 @section('content')
 <div class="container-fluid">
-    <h4 class="card-title">Üzletek kezelése
-        <a href="{{ route('admin_shop_create') }}" class="btn btn-primary">Új üzlet</a>
+    <h4 class="card-title">Kategória csoportok kezelése
+        <a href="{{ route('admin_category_group_create') }}" class="btn btn-primary">Új kategória csoport</a>
     </h4>
     @include('message')
     <div class="card">
         <div class="card-body">
-            @if ($shops->count() !== 0)
+            @if ($category_groups->count() !== 0)
                 @include('waiting')
                 <table class="datatable table table-bordered table-striped table-condensed d-none">
                     <thead>
@@ -18,11 +18,12 @@
                         </tr>
                     </thead>
                     <tbody>
-                       @foreach ($shops as $shop)
+                       @foreach ($category_groups as $category_group)
                         <tr>
-                            <td>{{ $shop->name }}</td>
+                            <td>{{ $category_group->name }}</td>
                             <td>
-                                <a class="btn btn-primary mb-3" href="{{ route('admin_shop_edit',$shop->id) }}">Szerkesztés</a>
+                                <a class="btn btn-primary mb-3" href="{{ route('admin_category_group_edit',$category_group->id) }}">Szerkesztés</a>
+                                <a class="btn btn-primary mb-3" href="{{ route('admin_category',$category_group->id) }}">Kategóriák</a>
                             </td>
                         </tr>
                        @endforeach

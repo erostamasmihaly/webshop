@@ -14,6 +14,6 @@
 @endif
 
 <!-- Kategóriák sorrendje -->
-@if (Request::is('admin/category/sequence'))
+@if (Request::is('admin/category/sequence/*'))
     <link href="{{ asset('css/own/admin_category_sequence.css') }}" rel="stylesheet">
 @endif

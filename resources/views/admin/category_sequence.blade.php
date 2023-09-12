@@ -3,6 +3,7 @@
 @section('content')
 <div class="container-fluid">
     <h4 class="card-title">Kategóriák sorrendje</h4>
+    <input type="hidden" id="category_group_id" value="{{ $category_group_id }}" />
     @include('message')
     <div class="card">
         <div class="card-body">
