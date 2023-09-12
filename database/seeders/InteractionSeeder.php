@@ -23,7 +23,7 @@ class InteractionSeeder extends Seeder
         // Termék
         $product = Product::find(1);
 
-        // Vásárló kedvelt a terméket
+        // Vásárló kedvelte a terméket
         DB::table("favourites")->insertOrIgnore([
             "id" => 1,
             "user_id" => $buyer->id,
@@ -32,7 +32,7 @@ class InteractionSeeder extends Seeder
             "updated_at" => get_now()
         ]);
 
-        // Vásárló berakott a kosárba a terméket
+        // Vásárló berakta a kosárba a terméket
         DB::table("carts")->insertOrIgnore([
             "id" => 1,
             "user_id" => $buyer->id,
@@ -42,7 +42,7 @@ class InteractionSeeder extends Seeder
             "updated_at" => get_now()
         ]);
 
-        // Vásárló által megvett termék
+        // Vásárló által megvett termék adatai
         $items_array = [];
         $cart = Cart::join('products','carts.product_id','products.id')->where('carts.id',1)->get(['products.id AS ref','products.name AS title','carts.quantity AS amount'])->first();
         $items_array[0]["ref"] = $cart->ref;
