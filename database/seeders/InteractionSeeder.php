@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\Cart;
 use App\Models\Product;
+use App\Models\Rating;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
@@ -116,11 +117,17 @@ class InteractionSeeder extends Seeder
             "updated_at" => get_now()  
         ]);
 
+        // Vélemény lekérdezése
+        $rating = Rating::find(1);
+
         // Boltos elfogadta a véleményt
-        DB::table("ratings")->where("id", 1)->update([
+        DB::table("ratings")->where("id", $rating->id)->update([
             "moderated" => 1,
             "updated_at" => get_now()
         ]);
+
+        // Vélemény frissítése
+        $rating->refresh();
 
     }
 }
