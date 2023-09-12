@@ -37,7 +37,7 @@ class UserInsert {
             $user->active = 0;
             $user->surname = $this->surname;
             $user->forename = $this->forename;
-            $user->activation_code = get_activation_code();
+            $user->activation_code = generate_activation_code();
 
             // Felhasználó mentése
             $user->save();

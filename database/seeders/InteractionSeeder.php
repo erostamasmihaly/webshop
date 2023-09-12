@@ -81,7 +81,7 @@ class InteractionSeeder extends Seeder
             "total" => product_prices($cart->product_id)["discount"],
             "items" => $items,
             "invoice" => $invoice,
-            "order_ref" => "12700116945005728897",
+            "order_ref" => generate_order_ref(),
             "transaction_id" => "502925405",
             "result" => "SUCCESS",
             "finished" => 1,

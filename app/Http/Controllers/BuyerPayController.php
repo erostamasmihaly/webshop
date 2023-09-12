@@ -49,7 +49,7 @@ class BuyerPayController extends Controller
         $trx->addConfig($config);
 
         // Fizetés létrehozása
-        $order_ref = str_replace(array('.', ':', '/'), '', @$_SERVER['SERVER_ADDR']) . @date('U', time()) . rand(1000, 9999);
+        $order_ref = generate_order_ref();
 
         // Elemek tömbje
         $items = [];

@@ -101,8 +101,8 @@ if (!function_exists('discount_price')) {
 }
 
 // Aktiváló kód létrehozása
-if (!function_exists('get_activation_code')) {
-    function get_activation_code() {
+if (!function_exists('generate_activation_code')) {
+    function generate_activation_code() {
         return md5(uniqid(mt_rand(), true));
     }
 }
@@ -294,5 +294,12 @@ if (!function_exists('get_category_parents')) {
 if (!function_exists('get_now')) {
     function get_now() {
         return date('Y-m-d H:i:s', time());
+    }
+}
+
+// OrderRef generálása - OTP dokumentáció ajánlása, egy olyan azonosító, ami az OTP rendszerében is egyedi
+if (!function_exists('generate_order_ref')) {
+    function generate_order_ref() {
+        return str_replace(array('.', ':', '/'), '', @$_SERVER['SERVER_ADDR']) . @date('U', time()) . rand(1000, 9999);
     }
 }
