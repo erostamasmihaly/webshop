@@ -10,10 +10,10 @@ Route::group(['prefix' => 'buyer/cart'], function() {
     Route::get('', [App\Http\Controllers\BuyerProtectedController::class, 'cart'])->name('buyer_cart');
     
     // Kosárba tétel
-    Route::post('add', [App\Http\Controllers\BuyerProtectedController::class, 'cart_add'])->name('buyer_cart_add')->withoutMiddleware([VerifyCsrfToken::class]);
+    Route::post('add', [App\Http\Controllers\BuyerProtectedController::class, 'cart_add'])->name('buyer_cart_add');
 
     // Kosár módosítása
-    Route::post('change', [App\Http\Controllers\BuyerProtectedController::class, 'cart_change'])->name('buyer_cart_change')->withoutMiddleware([VerifyCsrfToken::class]);
+    Route::post('change', [App\Http\Controllers\BuyerProtectedController::class, 'cart_change'])->name('buyer_cart_change');
 
 });
 
@@ -21,7 +21,7 @@ Route::group(['prefix' => 'buyer/cart'], function() {
 Route::group(['prefix' => 'buyer/favourite'], function() {
 
     // Kedvelés módosítása
-    Route::post('change', [App\Http\Controllers\BuyerProtectedController::class, 'favourite_change'])->name('buyer_favourite_change')->withoutMiddleware([VerifyCsrfToken::class]);
+    Route::post('change', [App\Http\Controllers\BuyerProtectedController::class, 'favourite_change'])->name('buyer_favourite_change');
 
 });
 
@@ -29,7 +29,7 @@ Route::group(['prefix' => 'buyer/favourite'], function() {
 Route::group(['prefix' => 'buyer/rating'], function() {
 
     // Kedvelés módosítása
-    Route::post('change', [App\Http\Controllers\BuyerProtectedController::class, 'rating_change'])->name('buyer_rating_change')->withoutMiddleware([VerifyCsrfToken::class]);
+    Route::post('change', [App\Http\Controllers\BuyerProtectedController::class, 'rating_change'])->name('buyer_rating_change');
 
 });
 

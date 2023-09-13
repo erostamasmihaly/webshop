@@ -6,6 +6,7 @@
 
 <!-- Saját -->
 <script src="{{ asset('js/own/tables.js') }}" defer></script>
+<script src="{{ asset('js/own/ajax_setup.js') }}" defer></script>
 @if (Request::is('product/*'))
     <script src="{{ asset('js/own/buyer_product.js') }}" defer></script>
 @endif

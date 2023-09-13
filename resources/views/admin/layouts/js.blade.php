@@ -11,6 +11,7 @@
 <script src="{{ asset('js/own/select2.js') }}" defer></script>
 <script src="{{ asset('js/own/selectdate.js') }}" defer></script>
 <script src="{{ asset('js/own/tables.js') }}" defer></script>
+<script src="{{ asset('js/own/ajax_setup.js') }}" defer></script>
 
 <!-- Admin: Üzlet szerkesztése -->
 @if (Request::is('admin/shop/edit/*'))
