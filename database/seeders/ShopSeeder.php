@@ -43,7 +43,7 @@ class ShopSeeder extends Seeder
         ]);
 
 
-        // Termék hozzáadása a Centrumhoz
+        // Fekete bőrkabát hozzáadása a Centrumhoz
         DB::table("products")->insertOrIgnore([
             "id" => 1,
             "shop_id" => 1,
@@ -59,7 +59,43 @@ class ShopSeeder extends Seeder
             "quantity" => 23,
             "created_at" => get_now(),
             "updated_at" => get_now()
-        ]);        
+        ]);  
+        
+        // Fehér téli kabát hozzáadása a Centrumhoz
+        DB::table("products")->insertOrIgnore([
+            "id" => 2,
+            "shop_id" => 1,
+            "unit_id" => 1,
+            "category_id" => 14,
+            "name" => "Fehér téli kabát",
+            "summary" => "<p>Fehér színű kabát, ami télen véd a lehülés ellen!</p>",
+            "body" => "<p>Évszak: Tél</p><p>Szín: Fehér</p>",
+            "price" => 13000,
+            "vat" => 27,
+            "discount" => 5,
+            "active" => 1,
+            "quantity" => 10,
+            "created_at" => get_now(),
+            "updated_at" => get_now()
+        ]);  
+
+        // Futó nadrág hozzáadása a Centrumhoz
+        DB::table("products")->insertOrIgnore([
+            "id" => 3,
+            "shop_id" => 1,
+            "unit_id" => 1,
+            "category_id" => 11,
+            "name" => "Futó nadrág",
+            "summary" => "<p>Melegebb napokra!</p>",
+            "body" => "<p>Tavasztól Őszig ajánlott a használata, avagy amíg kellemes az idő!</p>",
+            "price" => 8500,
+            "vat" => 27,
+            "discount" => 0,
+            "active" => 1,
+            "quantity" => 15,
+            "created_at" => get_now(),
+            "updated_at" => get_now()
+        ]); 
 
     }
 }
