@@ -91,6 +91,7 @@ class BuyerPublicController extends Controller
         $array["recordsTotal"] = $ratings_array["total"][0]["total"];
         $array["draw"] = 1;
         $array["recordsFiltered"] = $array["recordsTotal"];
+        $array["others"] = $ratings_array["total"][0];
 
         // Visszatérés ezen tömbbel
         return Response::json($array);

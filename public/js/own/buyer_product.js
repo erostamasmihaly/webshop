@@ -154,13 +154,17 @@ $(function () {
             data: { 
                 "product_id": product_id // Termék azonosító megadása
             },
-            type: "POST" // POST típusú kérés
+            type: "POST", // POST típusú kérés
+            /*success: function(data) {
+                $("#title_fa_stars").html(data.others.stars);
+                $("#title_total").html(data.others.total);
+            }*/
         },
         // Oszlopok hozzárendelése
         columns: [
             { data: "user_name" },
             { data: "title" },
-            { data: "stars" },
+            { data: "fa_stars" },
             { data: "body" },
             { data: "updated" },
         ],

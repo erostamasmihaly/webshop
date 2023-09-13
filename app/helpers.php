@@ -245,16 +245,48 @@ if (!function_exists('get_ratings')) {
         // Sorrend és mezők megadása
         $ratings = $ratings->orderBy('ratings.updated_at','desc')->get(['users.id AS user_id','users.name AS user_name','ratings.id AS rating_id','ratings.title','ratings.body','ratings.stars','ratings.updated_at','ratings.moderated']);
 
-        // Dátumformátum
+        // További módosítások végzése
         foreach($ratings AS $rating) {
+
+            // Dátumformátum
             $rating->updated = date("Y-m-d H:i", strtotime($rating->updated_at));
+
+            // Üres string létrehozása
+            $fa_stars = '';
+
+            // Végigmenni 1-től 5-ig és addig legyen tömött csillag, ameddig kapta az értékelést
+            for ($i=1; $i<=5; $i++) {
+                if ($i<=$rating->stars) {
+                    $fa_stars .= '<i class="fa-solid fa-star"></i>';
+                } else {
+                    $fa_stars .= '<i class="fa-regular fa-star"></i>';
+                }
+            }
+
+            // Ezen csillagok behelyezése a válaszba
+            $rating->fa_stars = $fa_stars;
         }
 
         // Csillagonkénti statisztika
         $stars = Rating::where('product_id', $product_id)->where('moderated',1)->groupBy('stars')->orderBy('stars','desc')->get(['stars', DB::raw('COUNT(*) AS total')]);
 
         // Összes statisztika
-        $total = Rating::where('product_id', $product_id)->where('moderated',1)->get([DB::raw('AVG(stars) AS stars'), DB::raw('COUNT(*) AS total')]);
+        $total = Rating::where('product_id', $product_id)->where('moderated',1)->get([DB::raw('ROUND(AVG(stars)) AS stars'), DB::raw('COUNT(*) AS total')]);
+
+        // Üres string létrehozása
+        $fa_stars = '';
+
+        // Végigmenni 1-től 5-ig és addig legyen tömött csillag, ameddig kapta az értékelést
+        for ($i=1; $i<=5; $i++) {
+            if ($i<=$rating->stars) {
+                $fa_stars .= '<i class="fa-solid fa-star"></i>';
+            } else {
+                $fa_stars .= '<i class="fa-regular fa-star"></i>';
+            }
+        }
+
+        // Ezen csillagok behelyezése a válaszba
+        $total->fa_stars = $fa_stars;
 
         // Választömb létrehozása
         $result["ratings"] = $ratings;

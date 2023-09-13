@@ -28,7 +28,12 @@
             <div class="col-sm-9">{!! nl2br($product->body) !!}</div>
         </div>
         <div>
-            <div class="bg-info bg-gradient text-dark text-center mb-2 fw-bold">Értékelések</div>
+            <div class="bg-info bg-gradient text-dark text-center mb-2 fw-bold">
+                <div>Értékelések</div>
+                <div>
+                    <span id="title_fa_stars"></span> - Eddigi értékelések száma: <span id="title_total"></span> db
+                </div>
+            </div>
             <div>
                 <table id="ratings" class="table table-bordered table-striped table-condensed">
                     <thead>
