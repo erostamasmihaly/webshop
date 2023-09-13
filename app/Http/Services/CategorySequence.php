@@ -2,22 +2,22 @@
 
 namespace App\Http\Services;
 
-use App\Models\Image;
-use App\Models\Product;
+use App\Models\Category;
+use App\Models\CategoryGroup;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 // Sorrend elmentése
-class ImageSequence {
+class CategorySequence {
 
-    private $images, $product_id;
+    private $categories, $category_group_id;
 
     // Adatok lekérdezése
     function __construct(Request $request) {
-        $this->images = $request->images;
-        $this->product_id = $request->product_id;
+        $this->categories = $request->categories;
+        $this->category_group_id = $request->category_group_id;
         $this->main();
     }
 
@@ -26,24 +26,24 @@ class ImageSequence {
         DB::transaction(function() {
 
             // JSON átalakítása tömbbé
-            $array = json_decode($this->images, TRUE);
+            $array = json_decode($this->categories, TRUE);
 
             // Végigmenni minden egyes képen
             for ($i=0; $i<count($array); $i++) {
                 
                 // Felvinni a képet az új sorrenddel
-                Image::where('id', $array[$i])->update(['sequence' => $i+1]);
+                Category::where('id', $array[$i]['id'])->update(['sequence' => $i+1, 'category_id' => $array[$i]['category_id']]);
             }
 
             // Felhasználó lekérdezése
             $user = User::find(Auth::id());
 
             // Ingatlan lekérdezése
-            $product = Product::find($this->product_id);
+            $category_group = CategoryGroup::find($this->category_group_id);
 
             // Naplózás
-            if ($product!=null) {
-                activity()->causedBy($user)->performedOn($product)->withProperties(['attributes' => $array])->event('image_sequence')->log('image_sequence');
+            if ($category_group!=null) {
+                activity()->causedBy($user)->performedOn($category_group)->withProperties(['attributes' => $array])->event('category_sequence')->log('category_sequence');
             }
 
         });

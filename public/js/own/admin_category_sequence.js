@@ -189,10 +189,7 @@ $(function () {
             // Objektum létrehozása
             obj = new Object();
             obj.id = id;
-            obj.level = level;
-            obj.parent_id = parent_id;
-            obj.name = $("#"+id).find("span").html();
-            obj.parent_name =  $("#"+parent_id).find("span").html();
+            obj.category_id = parent_id;
 
             // Objektum elhelyezése a tömbbe
             array.push(obj);
@@ -207,8 +204,28 @@ $(function () {
 
     // Mentés gomb
     $("body").on("click", "#save", function() {
-        tree = get_tree();
-        console.log(tree);
+
+        // Kategória fa lekérdezése
+        categories = get_tree();
+
+        // AJAX kérés
+        $.ajax({
+            dataType: "json",
+            url: "/admin/category/sequence/save",
+            data: "categories="+categories+"&category_group_id="+category_group_id,
+            type: "POST",
+            cache: false,
+            success: function (data) {
+                if (data.OK == 1) {
+                    alert("OK");
+                } else {
+                    alert("Hiba történt a művdelet során!");
+                }
+            },
+            error: function (error) {
+                alert("Hiba történt a művdelet során!");
+            }
+        });
     });
 
 

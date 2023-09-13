@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Services\CategoryGroupUpdate;
+use App\Http\Services\CategorySequence;
 use App\Http\Services\CategoryUpdate;
 use App\Models\Category;
 use App\Models\CategoryGroup;
@@ -93,8 +94,11 @@ class AdminCategoryController extends Controller
     }
 
     // Sorrend mentése
-    public function sequence_save() {
+    public function sequence_save(CategorySequence $categorySequence) {
 
+        // Válasz küldése
+        $array['OK']=1;
+        return Response::json($array);
     }
 
     // Kategória csoportok listája
