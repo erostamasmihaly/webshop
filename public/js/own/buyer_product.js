@@ -130,6 +130,9 @@ $(function () {
                         $(".fav").removeClass("d-none");
 
                     }
+
+                    // Kedvelések számának módosítása
+                    $(".fav_total").html(data.total);
                 }
             },
             error: function(error) {
@@ -155,10 +158,13 @@ $(function () {
                 "product_id": product_id // Termék azonosító megadása
             },
             type: "POST", // POST típusú kérés
-            /*success: function(data) {
-                $("#title_fa_stars").html(data.others.stars);
-                $("#title_total").html(data.others.total);
-            }*/
+            error: function(error) {
+                console.log(error);
+            }
+        },
+        initComplete: function(settings, json) {
+            $("#title_fa_stars").html(json.others.fa_stars);
+            $("#title_total").html(json.others.total);
         },
         // Oszlopok hozzárendelése
         columns: [
@@ -177,7 +183,7 @@ $(function () {
 
         user_id = $("#user_id").val();
         title = $("#title").val();
-        body = $("#body").val();
+        body = tinymce.get("body").getContent();
         stars = $("#stars").val();
 
         // Adatok átküldése

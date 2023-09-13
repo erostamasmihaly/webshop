@@ -67,8 +67,11 @@ class BuyerPublicController extends Controller
             $is_buyed = null;
         }
 
-        // Értékelések lekérdezése
+        // Értékelések neveinek lekérdezése
         $rating_names = Category::where('category_group_id',3)->orderBy('sequence','desc')->get();
+
+        // Kedvelések száma
+        $fav_total = Favourite::where('product_id', $id)->count();
 
         // Felület betöltése
         return view('buyer.product', [
@@ -76,7 +79,8 @@ class BuyerPublicController extends Controller
             'images' => $images,
             'is_fav' => $is_fav,
             'is_buyed' => $is_buyed,
-            'rating_names' => $rating_names
+            'rating_names' => $rating_names,
+            'fav_total' => $fav_total
         ]);
     }
 

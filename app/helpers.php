@@ -277,16 +277,19 @@ if (!function_exists('get_ratings')) {
         $fa_stars = '';
 
         // Végigmenni 1-től 5-ig és addig legyen tömött csillag, ameddig kapta az értékelést
-        for ($i=1; $i<=5; $i++) {
-            if ($i<=$rating->stars) {
+        for ($i = 1; $i <= 5; $i++) {
+            if ($i <= $total->first()->stars) {
                 $fa_stars .= '<i class="fa-solid fa-star"></i>';
             } else {
                 $fa_stars .= '<i class="fa-regular fa-star"></i>';
             }
         }
 
+
         // Ezen csillagok behelyezése a válaszba
-        $total->fa_stars = $fa_stars;
+        foreach ($total AS $one) {
+            $one->fa_stars = $fa_stars;
+        }
 
         // Választömb létrehozása
         $result["ratings"] = $ratings;

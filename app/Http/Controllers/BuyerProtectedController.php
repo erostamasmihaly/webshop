@@ -81,6 +81,7 @@ class BuyerProtectedController extends Controller
     public function favourite_change(FavouriteUpdate $favouriteUpdate) {
         
         // Válasz küldése
+        $array['total'] = Favourite::where('product_id', $favouriteUpdate->product_id)->count();
         $array['OK'] = 1;
         return Response::json($array);
     }
