@@ -287,9 +287,7 @@ if (!function_exists('get_ratings')) {
 
 
         // Ezen csillagok behelyezése a válaszba
-        foreach ($total AS $one) {
-            $one->fa_stars = $fa_stars;
-        }
+        $total->first()->fa_stars = $fa_stars;
 
         // Választömb létrehozása
         $result["ratings"] = $ratings;
