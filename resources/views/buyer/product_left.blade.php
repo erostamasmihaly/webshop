@@ -54,7 +54,7 @@
                 <div class="row mb-2">
                     <div class="col-sm-3 fw-bold">Szöveg</div>
                     <div class="col-sm-9">
-                        <textarea rows="3" id="body" class="form-control"></textarea>
+                        <textarea id="body" class="form-control tinyeditor"></textarea>
                     </div>
                 </div>
                 <div class="row mb-2">
