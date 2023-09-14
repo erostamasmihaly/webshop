@@ -39,14 +39,13 @@ class BuyerPublicController extends Controller
         // Azon kategóriák lekérdezése, amelyek ehhez vannak hozzárendelve
         $array["categories"] = Category::where('category_id', $category_id)->where('category_group_id', 1)->orderBy('sequence')->get(['id','name']);
 
-        // Nagyszülő kategória lekérdezése
-        $parent = Category::leftjoin('categories AS parents','categories.category_id','parents.id')->where('categories.category_id', $category_id)->get(['parents.category_id'])->first();
-        dd($parent);
-        if ($parent) {
-            $array["grandparent_id"] = $parent->category_id;
+        // Vissza érték lekérdezése
+        if ($category_id!=null) {
+            $parent_id = Category::find($category_id)->category_id;
         } else {
-            $array["grandparent_id"] = null;
+            $parent_id = null;
         }
+        $array["back_id"] = $parent_id;
 
         // Azon termékek lekérdezése, amelyek ehhez vannak hozzárendelve
         $array["products"] = get_products([$category_id]);
