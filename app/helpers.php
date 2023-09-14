@@ -341,3 +341,29 @@ if (!function_exists('generate_order_ref')) {
         return str_replace(array('.', ':', '/'), '', @$_SERVER['SERVER_ADDR']) . @date('U', time()) . rand(1000, 9999);
     }
 }
+
+// Lekérdezni a kategória gyerekei
+if (!function_exists('get_category_children')) {
+    function get_category_children($categories) {
+
+        // Ha null, akkor minden egyes szülő nélküli elem lekérdezése
+        if ($categories==null) {
+            $categories = Category::where('category_group_id',1)->whereNull('category_id')->pluck('id')->toArray();
+        }
+        
+        // Lekérdezni minden olyan elemet, ami a megadott kategóriák gyereke, kivéve olyat, ami már ezen kategóriák között megtalálható
+        $children = Category::whereIn('category_id', $categories)->whereNotIn('id', $categories)->pluck('id')->toArray();
+
+        // Válasz tömb létrehozása ezen két tömb összeolvadásával
+        $return = array_values(array_unique(array_merge($categories, $children)));
+        if (count($children) == 0) {
+            
+            // Ha nincs már gyerek, akkor visszatérés ezen tömbbel
+            return $return;
+        } else {
+
+            // Ha van még gyerek, akkor a függvény rekurzív meghívása ezen válasz tömbbel 
+            return get_category_children($return);
+        }
+    }
+}

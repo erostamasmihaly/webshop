@@ -36,6 +36,13 @@ class BuyerPublicController extends Controller
         // Kategória lekérdezése
         $category_id = ($request->category_id=="null") ? null : $request->category_id;
 
+        // Ebből tömb létrehozása, ha nem üres
+        if ($category_id==null) {
+            $category = null;
+        } else {
+            $category = [$category_id];
+        }
+
         // Azon kategóriák lekérdezése, amelyek ehhez vannak hozzárendelve
         $array["categories"] = Category::where('category_id', $category_id)->where('category_group_id', 1)->orderBy('sequence')->get(['id','name']);
 
@@ -48,7 +55,7 @@ class BuyerPublicController extends Controller
         $array["back_id"] = $parent_id;
 
         // Azon termékek lekérdezése, amelyek ehhez vannak hozzárendelve
-        $array["products"] = get_products([$category_id]);
+        $array["products"] = get_products(get_category_children($category));
 
         // JSON válasz küldése ebből a tömbből
         $array["OK"] = 1;
