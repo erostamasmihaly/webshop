@@ -6,9 +6,9 @@
 		<div class="card">
 			<div class="card-body">
 				<div class="bg-info bg-gradient text-dark text-center mb-2 fw-bold">Kategóriák</div>
-				<div class="row" id="categories"></div>
+				<div class="row mb-2" id="categories"></div>
 				<div class="bg-info bg-gradient text-dark text-center mb-2 fw-bold">Termékek</div>
-				<div class="row" id="products"></div>
+				<div class="row mb-2" id="products"></div>
 			</div>
 		</div>
     </div>

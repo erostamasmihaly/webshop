@@ -27,9 +27,34 @@ class BuyerPublicController extends Controller
     {
 
         // Felület betöltése
-        return view('buyer.index', [
-            'products' => get_products()
-        ]);
+        return view('buyer.index');
+    }
+
+    // Fő oldal - termékek lekérdezése
+    public function products(Request $request) {
+
+        // Kategória lekérdezése
+        $category_id = ($request->category_id=="null") ? null : $request->category_id;
+
+        // Azon kategóriák lekérdezése, amelyek ehhez vannak hozzárendelve
+        $array["categories"] = Category::where('category_id', $category_id)->where('category_group_id', 1)->orderBy('sequence')->get(['id','name']);
+
+        // Nagyszülő kategória lekérdezése
+        $parent = Category::leftjoin('categories AS parents','categories.category_id','parents.id')->where('categories.category_id', $category_id)->get(['parents.category_id'])->first();
+        dd($parent);
+        if ($parent) {
+            $array["grandparent_id"] = $parent->category_id;
+        } else {
+            $array["grandparent_id"] = null;
+        }
+
+        // Azon termékek lekérdezése, amelyek ehhez vannak hozzárendelve
+        $array["products"] = get_products([$category_id]);
+
+        // JSON válasz küldése ebből a tömbből
+        $array["OK"] = 1;
+        return Response::json($array);
+        
     }
 
     // Egy termék adatai

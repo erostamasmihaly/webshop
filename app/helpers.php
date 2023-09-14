@@ -185,19 +185,19 @@ if (!function_exists('product_prices')) {
 
 // Termékek lekérdezése
 if (!function_exists('get_products')) {
-    function get_products($shop_id = null, $category_id = null) {
+    function get_products($category_id = null, $shop_id = null) {
 
         // Összes termék lekérdezése
         $products = Product::join('shops','products.shop_id','shops.id')->join('categories AS units','products.unit_id','units.id')->join('categories','products.category_id','categories.id')->where(function($query) {return $query->where('active', 1)->orWhere('quantity', '>', 0);});
 
         // Ha meg van adva a kategória, akkor ezen kategóriára történő szűrés
         if ($category_id != null) {
-            $products = $products->whereIn('category_id', $category_id);
+            $products = $products->whereIn('products.category_id', $category_id);
         }        
 
         // Ha meg van adva a bolt azonosítója, akkor ezen boltra történő szűrés
         if ($shop_id != null) {
-            $products = $products->whereIn('shop_id', $shop_id);
+            $products = $products->whereIn('products.shop_id', $shop_id);
         }
         
         // Adatok lekérdezése

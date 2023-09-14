@@ -6,6 +6,9 @@ use App\Http\Middleware\VerifyCsrfToken;
 // Fő oldal
 Route::get('/', [App\Http\Controllers\BuyerPublicController::class, 'index'])->name('home');
 
+// Fő oldalon lévő termékek
+Route::get('products', [App\Http\Controllers\BuyerPublicController::class, 'products'])->name('products');
+
 // Termék oldal
 Route::get('product/{id}', [App\Http\Controllers\BuyerPublicController::class, 'product'])->name('product');
 

@@ -9,6 +9,9 @@
 <script src="{{ asset('js/own/tables.js') }}" defer></script>
 <script src="{{ asset('js/own/ajax_setup.js') }}" defer></script>
 <script src="{{ asset('js/own/tinymce.js') }}" defer></script>
+@if (Request::is('/'))
+    <script src="{{ asset('js/own/buyer_index.js') }}" defer></script>
+@endif
 @if (Request::is('product/*'))
     <script src="{{ asset('js/own/buyer_product.js') }}" defer></script>
 @endif
