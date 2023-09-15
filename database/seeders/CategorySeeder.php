@@ -20,8 +20,7 @@ class CategorySeeder extends Seeder
         $c_array = []; // Kategóriák
 
         // Csoport ID-k lekérdezése
-        $category_groups = CategoryGroup::get();
-        foreach ($category_groups AS $category_group) {
+        foreach (CategoryGroup::get() AS $category_group) {
             $cg_array[$category_group->name] = $category_group->id;
         }
 
@@ -153,6 +152,40 @@ class CategorySeeder extends Seeder
             "id" => $id++,
             "name" => "kabát",
             "category_id" => $c_array["felső"],
+            "category_group_id" => $cg_array["Termékcsoportok"],
+            "sequence" => $sequence++,
+            "created_at" => now(),
+            "updated_at" => now()
+        ]);
+
+        // Cipő
+        Category::insertOrIgnore([
+            "id" => $id++,
+            "name" => "cipő",
+            "category_id" => null,
+            "category_group_id" => $cg_array["Termékcsoportok"],
+            "sequence" => $sequence++,
+            "created_at" => now(),
+            "updated_at" => now()
+        ]);
+        $c_array["cipő"] = DB::getPdo()->lastInsertId();
+
+        // Edző cipő
+        Category::insertOrIgnore([
+            "id" => $id++,
+            "name" => "edző cipő",
+            "category_id" => $c_array["cipő"],
+            "category_group_id" => $cg_array["Termékcsoportok"],
+            "sequence" => $sequence++,
+            "created_at" => now(),
+            "updated_at" => now()
+        ]);
+
+        // Bakancs
+        Category::insertOrIgnore([
+            "id" => $id++,
+            "name" => "bakancs",
+            "category_id" => $c_array["cipő"],
             "category_group_id" => $cg_array["Termékcsoportok"],
             "sequence" => $sequence++,
             "created_at" => now(),

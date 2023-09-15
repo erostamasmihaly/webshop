@@ -41,11 +41,11 @@ $(function () {
 
         // Végigmenni minden egyes kategórián és megjeleníteni őket a kijelölt területen
         categories.forEach(function(category) {
-            $("#categories").append('<div class="col-sm-3 categories" category_id="'+category.id+'"><span class="badge bg-primary w-100 p-2">'+category.name+'</span></div>');
+            $("#categories").append('<div class="col-sm-3 categories mb-1" category_id="'+category.id+'"><span class="badge bg-primary w-100 p-2">'+category.name+'</span></div>');
         });
 
         // Vissza gomb behelyezése
-        $("#categories").append('<div class="col-sm-3 categories" category_id="'+back_id+'"><span class="badge bg-secondary w-100 p-2">Vissza</span></div>');
+        $("#categories").append('<div class="col-sm-3 categories mb-2" category_id="'+back_id+'"><span class="badge bg-secondary w-100 p-2">Vissza</span></div>');
     }
 
     // Kategória kiválasztása
@@ -71,7 +71,7 @@ $(function () {
         products.forEach(function(product) {
 
             // HTML elem létrehozása
-            html='<div class="col-sm-3 text-center"><div class="card p-2"><a href="/product/'+product.id+'" class="fw-bold">'+product.name+'<br><img src="'+product.image+'" class="img-fluid">';
+            html='<div class="col-sm-3 text-center"><div class="card p-2 mb-2"><a href="/product/'+product.id+'" class="fw-bold">'+product.name+'<br><img src="'+product.image+'" class="img-fluid">';
 
             if (product.discount>0) {
                 // Ha leárazott, akkor kiemelt árcédulával és a leárazás nagyságának feltűntetésével

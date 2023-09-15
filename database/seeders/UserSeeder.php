@@ -16,8 +16,7 @@ class UserSeeder extends Seeder
 
         // Szerepkörök lekérdezése
         $array = [];
-        $roles = Role::get();
-        foreach ($roles AS $role) {
+        foreach (Role::get() AS $role) {
             $array[$role->name] = $role->id;
         }
 

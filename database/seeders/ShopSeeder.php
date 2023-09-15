@@ -15,9 +15,8 @@ class ShopSeeder extends Seeder
     {
 
         // Felhasználók lekérdezése
-        $users = User::get();
         $u_array = [];
-        foreach ($users AS $user) {
+        foreach (User::get() AS $user) {
             $u_array[$user->name] = $user->id;
         }
 
