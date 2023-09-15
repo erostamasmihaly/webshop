@@ -7,7 +7,6 @@ use App\Models\Shop;
 use App\Models\User;
 use App\Models\UserPosition;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
 
 class ShopSeeder extends Seeder
 {
@@ -15,9 +14,9 @@ class ShopSeeder extends Seeder
     {
 
         // Felhasználók lekérdezése
-        $u_array = [];
+        $users = [];
         foreach (User::get() AS $user) {
-            $u_array[$user->name] = $user->id;
+            $users[$user->name] = $user->id;
         }
 
         // Centrum
@@ -31,25 +30,25 @@ class ShopSeeder extends Seeder
             "created_at" => now(),
             "updated_at" => now()
         ]);
-        $array["Centrum"] = DB::getPdo()->lastInsertId();
+        $shops["Centrum"] = 1;
 
         // Boltos pozíció létrehozása
         Position::insertOrIgnore([
             "id" => 1,
-            "shop_id" => $array["Centrum"],
+            "shop_id" => $shops["Centrum"],
             "name" => "boltos",
             "summary" => "<p>Bolton belüli szükséges feladatok ellátása</p>",
             "body" => "<p>Feladatok:</p><ul><li>Polcok feltöltése</li><li>Termékek árainak ellenőrzése</li><li>Pénztári feladatok elvégzése</li></ul>",
             "created_at" => now(),
             "updated_at" => now()
         ]);
-        $array["boltos"] = DB::getPdo()->lastInsertId();
+        $positions["boltos"] = 1;
 
         // Boltos hozzárendelése a Boltos pozícióhoz
         UserPosition::insertOrIgnore([
             "id" => 1,
-            "user_id" => $u_array["seller"],
-            "position_id" => $array["boltos"],
+            "user_id" => $users["boltos"],
+            "position_id" => $positions["boltos"],
             "created_at" => now(),
             "updated_at" => now()
         ]);

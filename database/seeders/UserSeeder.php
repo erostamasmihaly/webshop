@@ -6,7 +6,6 @@ use App\Models\Role;
 use App\Models\User;
 use App\Models\UserRole;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
 class UserSeeder extends Seeder
@@ -15,9 +14,9 @@ class UserSeeder extends Seeder
     {
 
         // Szerepkörök lekérdezése
-        $array = [];
+        $roles = [];
         foreach (Role::get() AS $role) {
-            $array[$role->name] = $role->id;
+            $roles[$role->name] = $role->id;
         }
 
         // Admin
@@ -32,12 +31,12 @@ class UserSeeder extends Seeder
             "created_at" => now(),
             "updated_at" => now()
         ]);
-        $user_id = DB::getPdo()->lastInsertId();
+        $users["admin"] = 1;
 
         UserRole::insertOrIgnore([
             "id" => 1,
-            "user_id" => $user_id,
-            "role_id" => $array["admin"],
+            "user_id" => $users["admin"],
+            "role_id" => $roles["admin"],
             "created_at" => now(),
             "updated_at" => now()
         ]);
@@ -54,12 +53,12 @@ class UserSeeder extends Seeder
             "created_at" => now(),
             "updated_at" => now()
         ]);
-        $user_id = DB::getPdo()->lastInsertId();
+        $users["vasarlo"] = 2;
 
         UserRole::insertOrIgnore([
             "id" => 2,
-            "user_id" => $user_id,
-            "role_id" => $array["vásárló"],
+            "user_id" => $users["vasarlo"],
+            "role_id" => $roles["vásárló"],
             "created_at" => now(),
             "updated_at" => now()
         ]);
@@ -76,12 +75,12 @@ class UserSeeder extends Seeder
             "created_at" => now(),
             "updated_at" => now()
         ]);
-        $user_id = DB::getPdo()->lastInsertId();
+        $users["boltos"] = 3;
 
         UserRole::insertOrIgnore([
             "id" => 3,
-            "user_id" => $user_id,
-            "role_id" => $array["boltos"],
+            "user_id" => $users["boltos"],
+            "role_id" => $roles["boltos"],
             "created_at" => now(),
             "updated_at" => now()
         ]);

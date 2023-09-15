@@ -16,12 +16,10 @@ class Product extends Model
         'summary',
         'body',
         'price',
-        'category_id',
         'quantity',
         'active',
         'vat',
-        'discount',
-        'unit_id'
+        'discount'
     ];
 
     // Naplózás beállítása
