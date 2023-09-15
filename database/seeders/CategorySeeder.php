@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\CategoryGroup;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
@@ -10,150 +11,153 @@ class CategorySeeder extends Seeder
     public function run(): void
     {
 
-        // Darab
-        DB::table("categories")->insertOrIgnore([
-            "id" => 1,
-            "name" => "darab",
-            "category_group_id" => 2,
-            "sequence" => 1,
-            "created_at" => get_now(),
-            "updated_at" => get_now()
-        ]);
+        // Számláló definiálása
+        $id = 1;
 
-        // Liter
-        DB::table("categories")->insertOrIgnore([
-            "id" => 2,
-            "name" => "liter",
-            "category_group_id" => 2,
-            "sequence" => 2,
-            "created_at" => get_now(),
-            "updated_at" => get_now()
-        ]);
+        // Tömbök definiálása
+        $cg_array = []; // Kategória csoport
+        $c_array = []; // Kategóriák
 
-        // Kilogramm
-        DB::table("categories")->insertOrIgnore([
-            "id" => 3,
-            "name" => "kilogramm",
-            "category_group_id" => 2,
-            "sequence" => 3,
-            "created_at" => get_now(),
-            "updated_at" => get_now()
-        ]);
+        // Csoport ID-k lekérdezése
+        $category_groups = CategoryGroup::get();
+        foreach ($category_groups AS $category_group) {
+            $cg_array[$category_group->name] = $category_group->id;
+        }
 
-        // Méter
-        DB::table("categories")->insertOrIgnore([
-            "id" => 4,
-            "name" => "méter",
-            "category_group_id" => 2,
-            "sequence" => 4,
-            "created_at" => get_now(),
-            "updated_at" => get_now()
-        ]);
+        // Mértékegységek
+        $array = ["darab","liter","kilogramm","méter"];
+        for ($i = 0; $i < count($array); $i++) {
+            DB::table("categories")->insertOrIgnore([
+                "id" => $id++,
+                "name" => $array[$i],
+                "category_group_id" => $cg_array["Mértékegységek"],
+                "sequence" => $i + 1,
+                "created_at" => get_now(),
+                "updated_at" => get_now()
+            ]);
+        }
 
-        // Kíváló
-        DB::table("categories")->insertOrIgnore([
-            "id" => 5,
-            "name" => "kíváló",
-            "category_group_id" => 3,
-            "sequence" => 5,
-            "created_at" => get_now(),
-            "updated_at" => get_now()
-        ]);
+        // Értékelések
+        $array = ["borzalmas","rossz","átlagos","jó","kíváló"];
+        for ($i = 0; $i < count($array); $i++) {
+            DB::table("categories")->insertOrIgnore([
+                "id" => $id++,
+                "name" => $array[$i],
+                "category_group_id" => $cg_array["Értékelések"],
+                "sequence" => $i + 1,
+                "created_at" => get_now(),
+                "updated_at" => get_now()
+            ]);
+        }
 
-        // Jó
-        DB::table("categories")->insertOrIgnore([
-            "id" => 6,
-            "name" => "jó",
-            "category_group_id" => 3,
-            "sequence" => 4,
-            "created_at" => get_now(),
-            "updated_at" => get_now()
-        ]);
-
-        // Átlagos
-        DB::table("categories")->insertOrIgnore([
-            "id" => 7,
-            "name" => "átlagos",
-            "category_group_id" => 3,
-            "sequence" => 3,
-            "created_at" => get_now(),
-            "updated_at" => get_now()
-        ]);
-
-        // Rossz
-        DB::table("categories")->insertOrIgnore([
-            "id" => 8,
-            "name" => "rossz",
-            "category_group_id" => 3,
-            "sequence" => 2,
-            "created_at" => get_now(),
-            "updated_at" => get_now()
-        ]);
-
-        // Borzalmas
-        DB::table("categories")->insertOrIgnore([
-            "id" => 9,
-            "name" => "borzalmas",
-            "category_group_id" => 3,
-            "sequence" => 1,
-            "created_at" => get_now(),
-            "updated_at" => get_now()
-        ]);
+        //// Termék kategóriák
+        $sequence = 1;
 
         // Ruha
         DB::table("categories")->insertOrIgnore([
-            "id" => 10,
+            "id" => $id++,
             "name" => "ruha",
-            "category_group_id" => 1,
-            "sequence" => 1,
+            "category_group_id" => $cg_array["Termék csoportok"],
+            "sequence" => $sequence++,
+            "created_at" => get_now(),
+            "updated_at" => get_now()
+        ]);
+        $c_array["ruha"] = DB::getPdo()->lastInsertId();
+
+        // Nadrág
+        DB::table("categories")->insertOrIgnore([
+            "id" => $id++,
+            "name" => "nadrág",
+            "category_id" => $c_array["ruha"],
+            "category_group_id" => $cg_array["Termék csoportok"],
+            "sequence" => $sequence++,
+            "created_at" => get_now(),
+            "updated_at" => get_now()
+        ]);
+        $c_array["nadrág"] = DB::getPdo()->lastInsertId();
+
+        // Rövid nadrág
+        DB::table("categories")->insertOrIgnore([
+            "id" => $id++,
+            "name" => "rövid nadrág",
+            "category_id" => $c_array["nadrág"],
+            "category_group_id" => $cg_array["Termék csoportok"],
+            "sequence" => $sequence++,
             "created_at" => get_now(),
             "updated_at" => get_now()
         ]);
 
-        // Nadrág
+        // Hosszú nadrág
         DB::table("categories")->insertOrIgnore([
-            "id" => 11,
-            "name" => "nadrág",
-            "category_id" => 10,
-            "category_group_id" => 1,
-            "sequence" => 2,
+            "id" => $id++,
+            "name" => "hosszú nadrág",
+            "category_id" => $c_array["nadrág"],
+            "category_group_id" => $cg_array["Termék csoportok"],
+            "sequence" => $sequence++,
             "created_at" => get_now(),
             "updated_at" => get_now()
         ]);
 
         // Felső
         DB::table("categories")->insertOrIgnore([
-            "id" => 12,
+            "id" => $id++,
             "name" => "felső",
-            "category_id" => 10,
-            "category_group_id" => 1,
-            "sequence" => 3,
+            "category_id" => $c_array["ruha"],
+            "category_group_id" => $cg_array["Termék csoportok"],
+            "sequence" => $sequence++,
             "created_at" => get_now(),
             "updated_at" => get_now()
         ]);
+        $c_array["felső"] = DB::getPdo()->lastInsertId();
 
         // Pulóver
         DB::table("categories")->insertOrIgnore([
-            "id" => 13,
+            "id" => $id++,
             "name" => "pulóver",
-            "category_id" => 12,
-            "category_group_id" => 1,
-            "sequence" => 4,
+            "category_id" => $c_array["felső"],
+            "category_group_id" => $cg_array["Termék csoportok"],
+            "sequence" => $sequence++,
             "created_at" => get_now(),
             "updated_at" => get_now()
         ]);
 
         // Kabát
         DB::table("categories")->insertOrIgnore([
-            "id" => 14,
+            "id" => $id++,
             "name" => "kabát",
-            "category_id" => 12,
-            "category_group_id" => 1,
-            "sequence" => 5,
+            "category_id" => $c_array["felső"],
+            "category_group_id" => $cg_array["Termék csoportok"],
+            "sequence" => $sequence++,
             "created_at" => get_now(),
             "updated_at" => get_now()
         ]);
 
+        //// Méretek
+        // Ruha méretek
+        DB::table("categories")->insertOrIgnore([
+            "id" => $id++,
+            "name" => "ruha méretek",
+            "category_id" => null,
+            "category_group_id" => $cg_array["Méretek"],
+            "sequence" => 1,
+            "created_at" => get_now(),
+            "updated_at" => get_now()
+        ]);
+        $c_array["ruha méretek"] = DB::getPdo()->lastInsertId();
+
+        // Ruha méretek felvitele
+        $array = ["XS","S","M","L","XL","2XL","3XL","4XL"];
+        for ($i=0; $i<count($array); $i++) {
+            DB::table("categories")->insertOrIgnore([
+                "id" => $id++,
+                "name" => $array[$i],
+                "category_id" => $c_array["ruha méretek"],
+                "category_group_id" => $cg_array["Méretek"],
+                "sequence" => $i+2,
+                "created_at" => get_now(),
+                "updated_at" => get_now()
+            ]);
+        }
 
     }
 }

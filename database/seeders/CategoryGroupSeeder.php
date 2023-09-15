@@ -11,28 +11,17 @@ class CategoryGroupSeeder extends Seeder
     public function run(): void
     {
 
-        // Termék csoportok
-        DB::table("category_groups")->insertOrIgnore([
-            "id" => 1,
-            "name" => "Termék csoportok",
-            "created_at" => get_now(),
-            "updated_at" => get_now()
-        ]);
+        // Elemek neveinek megadása egy tömbbe
+        $array = ["Termék csoportok","Mértékegységek","Értékelések","Méretek"];
 
-        // Mértékegységek
-        DB::table("category_groups")->insertOrIgnore([
-            "id" => 2,
-            "name" => "Mértékegységek",
-            "created_at" => get_now(),
-            "updated_at" => get_now()
-        ]);
-
-        // Értékelések
-        DB::table("category_groups")->insertOrIgnore([
-            "id" => 3,
-            "name" => "Értékelések",
-            "created_at" => get_now(),
-            "updated_at" => get_now()
-        ]);
+        // Ezen elemek felvitele az adatbázisba
+        for ($i = 0; $i < count($array); $i++) {
+            DB::table("category_groups")->insertOrIgnore([
+                "id" => $i+1,
+                "name" => $array[$i],
+                "created_at" => get_now(),
+                "updated_at" => get_now()
+            ]);
+        }
     }
 }
