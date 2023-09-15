@@ -32,7 +32,7 @@ class SellerProductController extends Controller
 
         // Oldal meghívása
         return view('seller.product',[
-            'products' => get_products($shops)
+            'products' => get_products(null, $shops)
         ]);
     }    
 

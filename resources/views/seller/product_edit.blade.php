@@ -13,17 +13,19 @@
         <div class="card">
             <ul class="nav nav-tabs">
                 <li class="nav-item"><a class="nav-link active" data-bs-toggle="tab" href="#tab1">Adatok</a></li>
-                <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#tab2">Fényképek</a></li>
+                <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#tab2">Leírások</a></li>
+                <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#tab3">Fényképek</a></li>
                 @if($product->id!=0)
-                    <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#tab3">Értékelések</a></li>
+                    <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#tab4">Értékelések</a></li>
                 @endif
             </ul>
             <div class="card-body">
                 <div class="tab-content">    
                     @include('seller.product_edit_tab1')
                     @include('seller.product_edit_tab2')
+                    @include('seller.product_edit_tab3')
                     @if($product->id!=0)
-                        @include('seller.product_edit_tab3')
+                        @include('seller.product_edit_tab4')
                     @endif
                 </div>
             </div>
