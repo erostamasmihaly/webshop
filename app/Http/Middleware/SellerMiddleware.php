@@ -2,11 +2,8 @@
 
 namespace App\Http\Middleware;
 
-use App\Models\Role;
-use App\Models\UserRole;
 use Closure;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpFoundation\Response;
 
 class SellerMiddleware
@@ -16,7 +13,7 @@ class SellerMiddleware
     {
 
         // Megnézni, hogy van-e eladó szerepköre
-        restrict_role("seller");
+        restrict_role("boltos");
 
         return $next($request);
     }

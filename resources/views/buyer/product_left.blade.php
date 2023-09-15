@@ -3,7 +3,7 @@
         <div class="bg-info bg-gradient text-dark mb-2 p-2">
             <h1 class="float-start">{{ $product->name }}</h1>
             <span class="float-end fw-bold">
-                @if(has_role('buyer'))
+                @if(has_role('vásárló'))
                     <span class="unfav @if(!$is_fav) d-none @endif">
                         <i class="fa-solid fa-thumbs-up fa-2xl"></i>
                     </span>

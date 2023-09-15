@@ -20,10 +20,10 @@
 				@if(has_role('admin'))
 					<a class="dropdown-item" href="{{ route('admin_index') }}">Admin felület</a>
 				@endif
-				@if(has_role('seller'))
+				@if(has_role('boltos'))
 					<a class="dropdown-item" href="{{ route('seller_index') }}">Eladói felület</a> 
 				@endif
-				@if(has_role('buyer'))
+				@if(has_role('vásárló'))
 					<a class="dropdown-item" href="{{ route('buyer_user') }}">Profil adatok</a>
 					<a class="dropdown-item" href="{{ route('buyer_cart') }}">Kosár megtekintése</a> 
 					<a class="dropdown-item" href="{{ route('pay_history') }}">Vásárlási előzmények</a>
