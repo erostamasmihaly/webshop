@@ -17,13 +17,10 @@ class InteractionSeeder extends Seeder
     {
 
         // Vásárló
-        $buyer = User::find(2);
-
-        // Boltos
-        $seller = User::find(3);
+        $buyer = User::where('name','vasarlo')->first();
 
         // Termék
-        $product = Product::find(1);
+        $product = Product::where('name','Fekete bőrkabát')->first();
 
         // Vásárló megadja az adatai, hogy tudjon fizetni
         User::where("id", $buyer->id)->update([

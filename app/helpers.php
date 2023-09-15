@@ -166,7 +166,7 @@ if (!function_exists('product_prices')) {
     function product_prices($id) {
 
         // Termék kikeresése
-        $product = Product::where('products.id', $id)->join('categories AS units','products.unit_id','units.id')->get(['products.*','units.name AS unit'])->first();
+        $product = Product::where('products.id', $id)->join('product_categories','product_categories.product_id','products.id')->join('categories AS units','product_categories.category_id','units.id')->get(['products.*','units.name AS unit'])->first();
 
         // Árak meghatározása
         $brutto_price = brutto_price($product->price, $product->vat);
