@@ -328,13 +328,6 @@ if (!function_exists('get_category_parents')) {
     }
 }
 
-// Aktuális idő lekérdezése
-if (!function_exists('get_now')) {
-    function get_now() {
-        return date('Y-m-d H:i:s', time());
-    }
-}
-
 // OrderRef generálása - OTP dokumentáció ajánlása, egy olyan azonosító, ami az OTP rendszerében is egyedi
 if (!function_exists('generate_order_ref')) {
     function generate_order_ref() {

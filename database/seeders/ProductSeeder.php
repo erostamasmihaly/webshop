@@ -2,8 +2,8 @@
 
 namespace Database\Seeders;
 
+use App\Models\Product;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
 
 class ProductSeeder extends Seeder
 {
@@ -11,7 +11,7 @@ class ProductSeeder extends Seeder
     public function run(): void
     {
         // Fekete bőrkabát hozzáadása a Centrumhoz
-        DB::table("products")->insertOrIgnore([
+        Product::insertOrIgnore([
             "id" => 1,
             "shop_id" => 1,
             "unit_id" => 1,
@@ -24,12 +24,12 @@ class ProductSeeder extends Seeder
             "discount" => 10,
             "active" => 1,
             "quantity" => 23,
-            "created_at" => get_now(),
-            "updated_at" => get_now()
+            "created_at" => now(),
+            "updated_at" => now()
         ]);  
         
         // Fehér téli kabát hozzáadása a Centrumhoz
-        DB::table("products")->insertOrIgnore([
+        Product::insertOrIgnore([
             "id" => 2,
             "shop_id" => 1,
             "unit_id" => 1,
@@ -42,12 +42,12 @@ class ProductSeeder extends Seeder
             "discount" => 5,
             "active" => 1,
             "quantity" => 10,
-            "created_at" => get_now(),
-            "updated_at" => get_now()
+            "created_at" => now(),
+            "updated_at" => now()
         ]);  
 
         // Futó nadrág hozzáadása a Centrumhoz
-        DB::table("products")->insertOrIgnore([
+        Product::insertOrIgnore([
             "id" => 3,
             "shop_id" => 1,
             "unit_id" => 1,
@@ -60,8 +60,8 @@ class ProductSeeder extends Seeder
             "discount" => 0,
             "active" => 1,
             "quantity" => 15,
-            "created_at" => get_now(),
-            "updated_at" => get_now()
+            "created_at" => now(),
+            "updated_at" => now()
         ]); 
     }
 }

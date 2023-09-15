@@ -3,11 +3,12 @@
 namespace Database\Seeders;
 
 use App\Models\Cart;
+use App\Models\Favourite;
+use App\Models\Payment;
 use App\Models\Product;
 use App\Models\Rating;
 use App\Models\User;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
 
 class InteractionSeeder extends Seeder
 {
@@ -25,7 +26,7 @@ class InteractionSeeder extends Seeder
         $product = Product::find(1);
 
         // Vásárló megadja az adatai, hogy tudjon fizetni
-        DB::table("users")->where("id", $buyer->id)->update([
+        User::where("id", $buyer->id)->update([
             "country" => "Magyarország",
             "state" => "Borsod-Abaúj-Zemplén",
             "zip" => "3530",
@@ -37,22 +38,22 @@ class InteractionSeeder extends Seeder
         $buyer->refresh();
 
         // Vásárló kedvelte a terméket
-        DB::table("favourites")->insertOrIgnore([
+        Favourite::insertOrIgnore([
             "id" => 1,
             "user_id" => $buyer->id,
             "product_id" => $product->id,
-            "created_at" => get_now(),
-            "updated_at" => get_now()
+            "created_at" => now(),
+            "updated_at" => now()
         ]);
 
         // Vásárló berakta a kosárba a terméket
-        DB::table("carts")->insertOrIgnore([
+        Cart::insertOrIgnore([
             "id" => 1,
             "user_id" => $buyer->id,
             "product_id" => $product->id,
             "quantity" => 1,
-            "created_at" => get_now(),
-            "updated_at" => get_now()
+            "created_at" => now(),
+            "updated_at" => now()
         ]);
 
         // Vásárló által megvett termék adatai
@@ -75,7 +76,7 @@ class InteractionSeeder extends Seeder
         $invoice = json_encode($invoice_array);
 
         // Vásárló kifizette a terméket
-        DB::table("payments")->insertOrIgnore([
+        Payment::insertOrIgnore([
             "id" => 1,
             "user_id" => $buyer->id,
             "total" => product_prices($cart->product_id)["discount"],
@@ -85,12 +86,12 @@ class InteractionSeeder extends Seeder
             "transaction_id" => "502925405",
             "result" => "SUCCESS",
             "finished" => 1,
-            "created_at" => get_now(),
-            "updated_at" => get_now()   
+            "created_at" => now(),
+            "updated_at" => now()   
         ]);
 
         // Kosárba is módosult a termék
-        DB::table("carts")->where("id", 1)->update([
+        Cart::where("id", 1)->update([
             "price" => product_prices($cart->product_id)["discount"],
             "payment_id" => 1
         ]);
@@ -99,7 +100,7 @@ class InteractionSeeder extends Seeder
         $cart->refresh();
 
         // Termék mennyisége is csökken eggyel
-        DB::table("products")->where("id", $cart->product_id)->update([
+        Product::where("id", $cart->product_id)->update([
             "quantity" => $product->quantity-1
         ]);
 
@@ -107,23 +108,23 @@ class InteractionSeeder extends Seeder
         $product->refresh();
 
         // Vásárló véleményt mond a termékről
-        DB::table("ratings")->insertOrIgnore([
+        Rating::insertOrIgnore([
             "id" => 1,
             "user_id" => $buyer->id,
             "product_id" => $product->id,
             "stars" => 4,
             "title" => "Sajnos egy kicsit szűkös.",
-            "created_at" => get_now(),
-            "updated_at" => get_now()  
+            "created_at" => now(),
+            "updated_at" => now()  
         ]);
 
         // Vélemény lekérdezése
         $rating = Rating::find(1);
 
         // Boltos elfogadta a véleményt
-        DB::table("ratings")->where("id", $rating->id)->update([
+        Rating::where("id", $rating->id)->update([
             "moderated" => 1,
-            "updated_at" => get_now()
+            "updated_at" => now()
         ]);
 
         // Vélemény frissítése

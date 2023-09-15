@@ -2,6 +2,9 @@
 
 namespace Database\Seeders;
 
+use App\Models\Role;
+use App\Models\User;
+use App\Models\UserRole;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
@@ -11,8 +14,15 @@ class UserSeeder extends Seeder
     public function run(): void
     {
 
+        // Szerepkörök lekérdezése
+        $array = [];
+        $roles = Role::get();
+        foreach ($roles AS $role) {
+            $array[$role->name] = $role->id;
+        }
+
         // Admin
-        DB::table("users")->insertOrIgnore([
+        User::insertOrIgnore([
             "id" => 1,
             "name" => "admin",
             "surname" => "Admin",
@@ -20,58 +30,61 @@ class UserSeeder extends Seeder
             "email" => "admin@etm.hu",
             "password" => Hash::make("Admin1234"),
             "active" => 1,
-            "created_at" => get_now(),
-            "updated_at" => get_now()
+            "created_at" => now(),
+            "updated_at" => now()
         ]);
+        $user_id = DB::getPdo()->lastInsertId();
 
-        DB::table("user_roles")->insertOrIgnore([
+        UserRole::insertOrIgnore([
             "id" => 1,
-            "user_id" => 1,
-            "role_id" => 1,
-            "created_at" => get_now(),
-            "updated_at" => get_now()
+            "user_id" => $user_id,
+            "role_id" => $array["admin"],
+            "created_at" => now(),
+            "updated_at" => now()
         ]);
 
         // Vásárló
-        DB::table("users")->insertOrIgnore([
+        User::insertOrIgnore([
             "id" => 2,
-            "name" => "buyer",
+            "name" => "vasarlo",
             "surname" => "Vásárló",
             "forename" => "Felhasználó",
-            "email" => "buyer@etm.hu",
-            "password" => Hash::make("Buyer1234"),
+            "email" => "vasarlo@etm.hu",
+            "password" => Hash::make("Vasarlo1234"),
             "active" => 1,
-            "created_at" => get_now(),
-            "updated_at" => get_now()
+            "created_at" => now(),
+            "updated_at" => now()
         ]);
+        $user_id = DB::getPdo()->lastInsertId();
 
-        DB::table("user_roles")->insertOrIgnore([
+        UserRole::insertOrIgnore([
             "id" => 2,
-            "user_id" => 2,
-            "role_id" => 2,
-            "created_at" => get_now(),
-            "updated_at" => get_now()
+            "user_id" => $user_id,
+            "role_id" => $array["vásárló"],
+            "created_at" => now(),
+            "updated_at" => now()
         ]);
 
         // Boltos
-        DB::table("users")->insertOrIgnore([
+        User::insertOrIgnore([
             "id" => 3,
-            "name" => "seller",
+            "name" => "boltos",
             "surname" => "Boltos",
             "forename" => "Felhasználó",
-            "email" => "seller@etm.hu",
-            "password" => Hash::make("Seller1234"),
+            "email" => "boltos@etm.hu",
+            "password" => Hash::make("Boltos1234"),
             "active" => 1,
-            "created_at" => get_now(),
-            "updated_at" => get_now()
+            "created_at" => now(),
+            "updated_at" => now()
         ]);
+        $user_id = DB::getPdo()->lastInsertId();
 
-        DB::table("user_roles")->insertOrIgnore([
+        UserRole::insertOrIgnore([
             "id" => 3,
-            "user_id" => 3,
-            "role_id" => 3,
-            "created_at" => get_now(),
-            "updated_at" => get_now()
+            "user_id" => $user_id,
+            "role_id" => $array["boltos"],
+            "created_at" => now(),
+            "updated_at" => now()
         ]);
 
     }

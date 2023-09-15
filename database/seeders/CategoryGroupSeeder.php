@@ -2,8 +2,8 @@
 
 namespace Database\Seeders;
 
+use App\Models\CategoryGroup;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
 
 class CategoryGroupSeeder extends Seeder
 {
@@ -11,16 +11,14 @@ class CategoryGroupSeeder extends Seeder
     public function run(): void
     {
 
-        // Elemek neveinek megadása egy tömbbe
-        $array = ["Termék csoportok","Mértékegységek","Értékelések","Méretek"];
-
-        // Ezen elemek felvitele az adatbázisba
+        // Kategória csoportok felvitele
+        $array = ["Termékcsoportok","Mértékegységek","Értékelések","Méretek","Nemek","Korosztályok"];
         for ($i = 0; $i < count($array); $i++) {
-            DB::table("category_groups")->insertOrIgnore([
+            CategoryGroup::insertOrIgnore([
                 "id" => $i+1,
                 "name" => $array[$i],
-                "created_at" => get_now(),
-                "updated_at" => get_now()
+                "created_at" => now(),
+                "updated_at" => now()
             ]);
         }
     }
