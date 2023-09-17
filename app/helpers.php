@@ -188,11 +188,11 @@ if (!function_exists('get_products')) {
     function get_products($category_id = null, $shop_id = null) {
 
         // Összes termék lekérdezése
-        $products = Product::join('shops','products.shop_id','shops.id')->join('categories AS units','products.unit_id','units.id')->join('categories','products.category_id','categories.id')->where(function($query) {return $query->where('active', 1)->orWhere('quantity', '>', 0);});
+        $products = Product::join('shops','products.shop_id','shops.id')->join('product_categories','product_categories.product_id','products.id')->join('categories AS units','product_categories.category_id','units.id')->join('categories','product_categories.category_id','categories.id')->where(function($query) {return $query->where('active', 1)->orWhere('quantity', '>', 0);});
 
         // Ha meg van adva a kategória, akkor ezen kategóriára történő szűrés
         if ($category_id != null) {
-            $products = $products->whereIn('products.category_id', $category_id);
+            $products = $products->whereIn('categories.id', $category_id);
         }        
 
         // Ha meg van adva a bolt azonosítója, akkor ezen boltra történő szűrés
@@ -201,7 +201,7 @@ if (!function_exists('get_products')) {
         }
         
         // Adatok lekérdezése
-        $products = $products->get(['products.id','products.name','products.summary','shops.name AS shop','units.name AS unit','products.discount','products.category_id','categories.name AS category','products.quantity']);
+        $products = $products->get(['products.id','products.name','products.summary','shops.name AS shop','units.name AS unit','products.discount','categories.id AS category_id','categories.name AS category','products.quantity']);
 
         // Végigmenni minden egyes terméken
         foreach($products AS $product) {
