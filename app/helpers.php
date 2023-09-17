@@ -198,7 +198,13 @@ if (!function_exists('product_prices')) {
     function product_prices($id) {
 
         // Termék kikeresése
-        $product = Product::where('products.id', $id)->join('product_categories','product_categories.product_id','products.id')->join('categories AS units','product_categories.category_id','units.id')->get(['products.*','units.name AS unit'])->first();
+        $product = Product::find($id);
+
+        // Termékhez tartozó mértékegység lekérdezése
+        $product_unit = Product::find($product->id)->product_unit;
+
+        // Mértékegység adatainak lekérdezése
+        $unit = ProductCategory::find($product_unit->id)->category;
 
         // Árak meghatározása
         $brutto_price = brutto_price($product->price, $product->vat);
@@ -207,8 +213,8 @@ if (!function_exists('product_prices')) {
         // Ezen árak elmentése egy tömbbe
         $array['brutto'] = $brutto_price;
         $array['discount'] = $discount_price; 
-        $array['brutto_ft'] = numformat_with_unit($brutto_price, 'Ft / '.$product->unit);
-        $array['discount_ft'] = numformat_with_unit($discount_price, 'Ft / '.$product->unit);
+        $array['brutto_ft'] = numformat_with_unit($brutto_price, 'Ft / '.$unit->name);
+        $array['discount_ft'] = numformat_with_unit($discount_price, 'Ft / '.$unit->name);
 
         // Visszatérés ezzel a tömbel
         return $array;
