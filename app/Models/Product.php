@@ -36,4 +36,14 @@ class Product extends Model
         return $this->hasOne(ProductCategory::class)->where('category_group_id', $category_group_id);
     }
 
+    // Egy termékhez tartozó összes értékelések
+    public function ratingsAll(): HasMany {
+        return $this->hasMany(Rating::class)->orderBy('updated_at','desc');
+    }
+
+    // Egy termékhez tartozó moderált értékelések
+    public function ratingsModerated(): HasMany {
+        return $this->hasMany(Rating::class)->where('moderated',1)->orderBy('updated_at','desc');
+    }
+
 }

@@ -276,20 +276,25 @@ if (!function_exists('get_ratings')) {
 
         // Válasz tömb létrehozása
         $result = [];
+
+        // Termék lekérdezése
+        $product = Product::find($product_id);
         
-        // Értékelések lekérdezése
-        $ratings = Rating::join('users','ratings.user_id','users.id')->where('ratings.product_id', $product_id);
-        
-        // Ha csak a moderáltak legyenek benne
+        // Termék értékeléseinek lekérdezése, attól függően, hogy mindegyik kell, vagy csak a moderáltak
         if ($moderated) {
-            $ratings = $ratings->where('ratings.moderated', 1);
+            $ratings = $product->ratingsModerated;
+        } else {
+            $ratings = $product->ratingsAll;
         }
-        
-        // Sorrend és mezők megadása
-        $ratings = $ratings->orderBy('ratings.updated_at','desc')->get(['users.id AS user_id','users.name AS user_name','ratings.id AS rating_id','ratings.title','ratings.body','ratings.stars','ratings.updated_at','ratings.moderated']);
 
         // További módosítások végzése
         foreach($ratings AS $rating) {
+
+            // Értékeléshez tartozó felhasználó lekérdezése
+            $user = Rating::find($rating->id)->user;
+
+            // Ezen felhasználó adatainak felvitele az értékeléshez
+            $rating->user_name = $user->name;
 
             // Dátumformátum
             $rating->updated = date("Y-m-d H:i", strtotime($rating->updated_at));

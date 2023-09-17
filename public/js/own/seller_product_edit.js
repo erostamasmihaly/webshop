@@ -328,9 +328,9 @@ $(function () {
                 data: "moderated",
                 "render": function ( data, type, row, meta ) {
                     if (data == 0) {
-                        html = '<button type="button" class="btn btn-secondary m-1 rating_show" title="Publikálás" rating_id="'+row.rating_id+'"><i class="fa-solid fa-eye"></i>';
+                        html = '<button type="button" class="btn btn-secondary m-1 rating_show" title="Publikálás" rating_id="'+row.id+'"><i class="fa-solid fa-eye"></i>';
                     } else {
-                        html = '<button type="button" class="btn btn-primary m-1 rating_hide" title="Elrejtés" rating_id="'+row.rating_id+'"><i class="fa-solid fa-eye-slash"></i>';
+                        html = '<button type="button" class="btn btn-primary m-1 rating_hide" title="Elrejtés" rating_id="'+row.id+'"><i class="fa-solid fa-eye-slash"></i>';
                     }
                     return html;
                 }
