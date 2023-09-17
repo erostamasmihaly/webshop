@@ -227,7 +227,7 @@ class BuyerPayController extends Controller
 
         // Oldal meghívása
         return view('buyer.pay_history',[
-            'carts' => get_pay_history()
+            'elements' => get_pay_history()
         ]);
     }
 }

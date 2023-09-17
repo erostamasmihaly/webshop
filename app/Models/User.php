@@ -44,9 +44,14 @@ class User extends Authenticatable
         return LogOptions::defaults()->logFillable()->logOnlyDirty();
     }
 
-    // Felhasználó kosarai
+    // Felhasználó kosár elemei
     public function carts(): HasMany {
         return $this->hasMany(Cart::class)->whereNull('payment_id');
+    }
+
+    // Felhasználó kifizetett elemei
+    public function payed(): HasMany {
+        return $this->hasMany(Cart::class)->whereNotNull('payment_id');
     }
 
 }

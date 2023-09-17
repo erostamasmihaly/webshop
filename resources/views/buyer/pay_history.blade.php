@@ -9,7 +9,7 @@
                 <h1>Vásárlási előzmények</h1>
             </div>
             <div class="mb-2">
-            @if ($carts->count() !== 0)
+            @if ($elements->count() !== 0)
                 @include('waiting')
                 <table class="datatable table table-bordered table-striped table-condensed d-none">
                     <thead>
@@ -22,17 +22,17 @@
                         </tr>
                     </thead>
                     <tbody>
-                       @foreach ($carts as $cart)
-                        <tr class="product" product_id="{{ $cart->id }}">
+                       @foreach ($elements as $element)
+                        <tr class="product" product_id="{{ $element->product_id }}">
                             <td>
-                                <a href="{{ route('product',$cart->id) }}">
-                                    <i class="fa-solid fa-arrow-up-right-from-square"></i> {{ $cart->name }}
+                                <a href="{{ route('product',$element->product_id) }}">
+                                    <i class="fa-solid fa-arrow-up-right-from-square"></i> {{ $element->product_name }}
                                 </a> 
                             </td>
-                            <td><span class="quantity">{{ $cart->quantity }}</span> {{ $cart->unit }}</td>
-                            <td>{{ $cart->price_ft }}</td>
-                            <td>{{ $cart->transaction_id }}</td>
-                            <td>{{ $cart->updated_at }}</td>
+                            <td><span class="quantity">{{ $element->quantity }}</span> {{ $element->unit }}</td>
+                            <td>{{ $element->price_ft }}</td>
+                            <td>{{ $element->transaction_id }}</td>
+                            <td>{{ $element->updated_at }}</td>
                         </tr>
                        @endforeach
                     </tbody>

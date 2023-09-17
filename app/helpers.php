@@ -115,6 +115,9 @@ if (!function_exists('get_cart')) {
         // Kosár lekérdezése
         $carts = User::find(Auth::id())->carts;
 
+        // Fizetendő összeg meghatározása
+        $total = 0;
+
         // Végigmenni a kosár minden egyes elemén
         foreach ($carts AS $cart) {
 
@@ -130,13 +133,8 @@ if (!function_exists('get_cart')) {
             // Elem kiegészítése a termék és a mértékegység nevével
             $cart->product_name = $product->name;
             $cart->unit_name = $unit->name;
-        }
 
-        // Fizetendő összeg meghatározása
-        $total = 0;
-
-        // További árak meghatározása
-        foreach($carts AS $cart) {
+            // További árak meghatározása
             $cart->brutto_price = product_prices($cart->product_id)["brutto"];
             $cart->discount_price = product_prices($cart->product_id)["discount"];
             $cart->discount_ft = product_prices($cart->product_id)["discount_ft"];
@@ -158,16 +156,32 @@ if (!function_exists('get_cart')) {
 if (!function_exists('get_pay_history')) {
     function get_pay_history() {
 
-        // Kosár lekérdezése
-        $carts = Cart::join('products','carts.product_id','products.id')->join('categories AS units','products.unit_id','units.id')->join('payments','carts.payment_id','payments.id')->where('carts.user_id', Auth::id())->whereNotNull('payment_id')->orderBy('payments.updated_at','desc')->get(['products.id','products.name','carts.quantity','units.name AS unit','carts.id AS cart_id','payments.transaction_id','carts.price','payments.updated_at']);
+        $elements = User::find(Auth::id())->payed;
+        foreach ($elements AS $element) {
 
-        // További árak meghatározása
-        foreach($carts AS $cart) {
-            $cart->price_ft = numformat_with_unit($cart->price,'Ft');;
+            // Elemhez tartozó termék lekérdezése
+            $product = Cart::find($element->id)->product;
+
+            // Termékhez tartozó mértékegység lekérdezése
+            $product_unit = Product::find($product->id)->product_unit;
+
+            // Mértékegység adatainak lekérdezése
+            $unit = ProductCategory::find($product_unit->id)->category;
+
+            // Elemhez tratozó fizetés
+            $payment = Cart::find($element->id)->payment;
+
+            // Elem kiegészítése a termék és a mértékegység nevével, valamint a tranzakció számmal
+            $element->product_name = $product->name;
+            $element->unit_name = $unit->name;
+            $element->transaction_id = $payment->transaction_id;
+
+            // Ár meghatározása
+            $element->price_ft = numformat_with_unit($element->price,'Ft');
         }
 
         // Visszatérés a tömbbel
-        return $carts;
+        return $elements;
 
     }
 }
