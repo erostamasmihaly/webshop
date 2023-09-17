@@ -3,6 +3,7 @@
 use App\Models\Cart;
 use App\Models\Category;
 use App\Models\Product;
+use App\Models\ProductCategory;
 use App\Models\Rating;
 use App\Models\Role;
 use App\Models\User;
@@ -112,16 +113,33 @@ if (!function_exists('get_cart')) {
     function get_cart() {
 
         // Kosár lekérdezése
-        $carts = Cart::join('products','carts.product_id','products.id')->join('categories AS units','products.unit_id','units.id')->where('user_id', Auth::id())->whereNull('payment_id')->get(['products.id','products.name','carts.quantity','units.name AS unit','carts.id AS cart_id']);
+        $carts = User::find(Auth::id())->carts;
+
+        // Végigmenni a kosár minden egyes elemén
+        foreach ($carts AS $cart) {
+
+            // Elemhez tartozó termék lekérdezése
+            $product = Cart::find($cart->id)->product;
+
+            // Termékhez tartozó mértékegység lekérdezése
+            $product_unit = Product::find($product->id)->product_unit;
+
+            // Mértékegység adatainak lekérdezése
+            $unit = ProductCategory::find($product_unit->id)->category;
+
+            // Elem kiegészítése a termék és a mértékegység nevével
+            $cart->product_name = $product->name;
+            $cart->unit_name = $unit->name;
+        }
 
         // Fizetendő összeg meghatározása
         $total = 0;
 
         // További árak meghatározása
         foreach($carts AS $cart) {
-            $cart->brutto_price = product_prices($cart->id)["brutto"];
-            $cart->discount_price = product_prices($cart->id)["discount"];
-            $cart->discount_ft = product_prices($cart->id)["discount_ft"];
+            $cart->brutto_price = product_prices($cart->product_id)["brutto"];
+            $cart->discount_price = product_prices($cart->product_id)["discount"];
+            $cart->discount_ft = product_prices($cart->product_id)["discount_ft"];
             $total += $cart->discount_price * $cart->quantity;
         }
 

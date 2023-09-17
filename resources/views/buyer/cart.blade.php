@@ -22,13 +22,13 @@
                     </thead>
                     <tbody>
                        @foreach ($carts as $cart)
-                        <tr class="product" product_id="{{ $cart->id }}">
+                        <tr class="product" product_id="{{ $cart->product_id }}">
                             <td>
-                                <a href="{{ route('product',$cart->id) }}">
-                                    <i class="fa-solid fa-arrow-up-right-from-square"></i> {{ $cart->name }}
+                                <a href="{{ route('product',$cart->product_id) }}">
+                                    <i class="fa-solid fa-arrow-up-right-from-square"></i> {{ $cart->product_name }}
                                 </a> 
                             </td>
-                            <td><span class="quantity">{{ $cart->quantity }}</span> {{ $cart->unit }}</td>
+                            <td><span class="quantity">{{ $cart->quantity }}</span> {{ $cart->unit_name }}</td>
                             <td>{{ $cart->discount_ft }}</td>
                             <td>
                                 <button class="btn btn-success plus m-1" title="+1 {{ $cart->unit }} vásárlása"><i class="fa-solid fa-circle-plus"></i></button>  

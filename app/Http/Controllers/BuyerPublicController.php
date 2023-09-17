@@ -67,7 +67,7 @@ class BuyerPublicController extends Controller
     public function product($id) {
 
         // Termék adatainak lekérdezése
-        $product = Product::join('shops','products.shop_id','shops.id')->join('categories AS units','products.unit_id','units.id')->join('categories','products.category_id','categories.id')->where('products.id',$id)->get(['products.id','products.name','products.summary','products.body','products.discount','shops.name AS shop_name','shops.id AS shop_id','units.name AS unit','categories.name AS category_name','products.quantity'])->first();
+        $product = Product::join('shops','products.shop_id','shops.id')->join('product_categories','product_categories.product_id','products.id')->join('categories AS units','product_categories.category_id','units.id')->join('categories','product_categories.category_id','categories.id')->where('products.id',$id)->get(['products.id','products.name','products.summary','products.body','products.discount','shops.name AS shop_name','shops.id AS shop_id','units.name AS unit','categories.name AS category_name','products.quantity'])->first();
 
         // Bruttó ár és a leárazás utáni ár meghatározása
         $product->brutto_price = product_prices($product->id)["brutto_ft"];
