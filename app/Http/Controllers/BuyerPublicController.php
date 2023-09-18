@@ -10,7 +10,6 @@ use App\Models\Category;
 use App\Models\Favourite;
 use App\Models\Image;
 use App\Models\Product;
-use App\Models\ProductCategory;
 use App\Models\Shop;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Response;

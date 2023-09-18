@@ -9,7 +9,6 @@ use App\Models\Rating;
 use App\Models\Role;
 use App\Models\User;
 use App\Models\UserRole;
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
