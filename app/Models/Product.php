@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Spatie\Activitylog\LogOptions;
@@ -21,7 +22,8 @@ class Product extends Model
         'quantity',
         'active',
         'vat',
-        'discount'
+        'discount',
+        'shop_id'
     ];
 
     // Naplózás beállítása
@@ -31,9 +33,28 @@ class Product extends Model
     }
 
     // Egy termék mértékegysége
-    public function product_unit(): HasOne {
-        $category_group_id = CategoryGroup::where('name','Mértékegységek')->first()->id;
-        return $this->hasOne(ProductCategory::class)->where('category_group_id', $category_group_id);
+    public function unit(): HasOne {
+        return $this->hasOne(ProductCategory::class)->where('category_group_id', get_category_group_id('Mértékegységek'));
+    }
+
+    // Egy termék csoportja
+    public function group(): HasOne {
+        return $this->hasOne(ProductCategory::class)->where('category_group_id', get_category_group_id('Termékcsoportok'));
+    }
+
+    // Egy termék mérete
+    public function size(): HasOne {
+        return $this->hasOne(ProductCategory::class)->where('category_group_id', get_category_group_id('Méretek'));
+    }
+
+    // Egy termék nemei
+    public function gender(): HasOne {
+        return $this->hasOne(ProductCategory::class)->where('category_group_id', get_category_group_id('Nemek'));
+    }
+
+    // Egy termék korosztálya
+    public function age(): HasOne {
+        return $this->hasOne(ProductCategory::class)->where('category_group_id', get_category_group_id('Korosztályok'));
     }
 
     // Egy termékhez tartozó összes értékelések
@@ -43,7 +64,12 @@ class Product extends Model
 
     // Egy termékhez tartozó moderált értékelések
     public function ratingsModerated(): HasMany {
-        return $this->hasMany(Rating::class)->where('moderated',1)->orderBy('updated_at','desc');
+        return $this->ratingsAll()->where('moderated',1);
+    }
+
+    // Egy termékhez tartozó bolt
+    public function shop(): BelongsTo {
+        return $this->belongsTo(Shop::class);
     }
 
 }

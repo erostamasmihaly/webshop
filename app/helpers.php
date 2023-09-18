@@ -2,6 +2,7 @@
 
 use App\Models\Cart;
 use App\Models\Category;
+use App\Models\CategoryGroup;
 use App\Models\Product;
 use App\Models\ProductCategory;
 use App\Models\Rating;
@@ -49,6 +50,13 @@ if (!function_exists('get_category_name')) {
     function get_category_name($category_id) {
         return Category::find($category_id)->name;
     }
+}
+
+// Kategóriacsoport esetén a névből az ID meghatározása
+if (!function_exists('get_category_group_id')) {
+    function get_category_group_id($name) {
+        return CategoryGroup::where('name',$name)->first()->id;
+    }   
 }
 
 // Számformátum mértékegységgel
@@ -125,10 +133,10 @@ if (!function_exists('get_cart')) {
             $product = Cart::find($cart->id)->product;
 
             // Termékhez tartozó mértékegység lekérdezése
-            $product_unit = Product::find($product->id)->product_unit;
+            $unit = Product::find($product->id)->unit;
 
             // Mértékegység adatainak lekérdezése
-            $unit = ProductCategory::find($product_unit->id)->category;
+            $unit = ProductCategory::find($unit->id)->category;
 
             // Elem kiegészítése a termék és a mértékegység nevével
             $cart->product_name = $product->name;
@@ -163,10 +171,10 @@ if (!function_exists('get_pay_history')) {
             $product = Cart::find($element->id)->product;
 
             // Termékhez tartozó mértékegység lekérdezése
-            $product_unit = Product::find($product->id)->product_unit;
+            $unit = Product::find($product->id)->unit;
 
             // Mértékegység adatainak lekérdezése
-            $unit = ProductCategory::find($product_unit->id)->category;
+            $unit = ProductCategory::find($unit->id)->category;
 
             // Elemhez tratozó fizetés
             $payment = Cart::find($element->id)->payment;
@@ -201,10 +209,10 @@ if (!function_exists('product_prices')) {
         $product = Product::find($id);
 
         // Termékhez tartozó mértékegység lekérdezése
-        $product_unit = Product::find($product->id)->product_unit;
+        $unit = Product::find($product->id)->unit;
 
         // Mértékegység adatainak lekérdezése
-        $unit = ProductCategory::find($product_unit->id)->category;
+        $unit_category = ProductCategory::find($unit->id)->category;
 
         // Árak meghatározása
         $brutto_price = brutto_price($product->price, $product->vat);
@@ -213,8 +221,8 @@ if (!function_exists('product_prices')) {
         // Ezen árak elmentése egy tömbbe
         $array['brutto'] = $brutto_price;
         $array['discount'] = $discount_price; 
-        $array['brutto_ft'] = numformat_with_unit($brutto_price, 'Ft / '.$unit->name);
-        $array['discount_ft'] = numformat_with_unit($discount_price, 'Ft / '.$unit->name);
+        $array['brutto_ft'] = numformat_with_unit($brutto_price, 'Ft / '.$unit_category->name);
+        $array['discount_ft'] = numformat_with_unit($discount_price, 'Ft / '.$unit_category->name);
 
         // Visszatérés ezzel a tömbel
         return $array;

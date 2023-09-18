@@ -19,12 +19,18 @@
         <div class="row">
             <div class="col-sm-3 fw-bold">Bolt neve</div>
             <div class="col-sm-9">
-                <a href="{{ route('shop',$product->shop_id) }}"><i class="fa-solid fa-arrow-up-right-from-square"></i> {{ $product->shop_name }}</a>
+                <a href="{{ route('shop',$product->shop_id) }}"><i class="fa-solid fa-arrow-up-right-from-square"></i> {{ $product->shop->name }}</a>
             </div>
-            <div class="col-sm-3 fw-bold">Kategória</div>
-            <div class="col-sm-9">{{ $product->category_name }}</div>
+            <div class="col-sm-3 fw-bold">Termékcsoport</div>
+            <div class="col-sm-9">{{ $product->group->category->name }}</div>
+            <div class="col-sm-3 fw-bold">Méret</div>
+            <div class="col-sm-9">{{ $product->size->category->name }}</div>
+            <div class="col-sm-3 fw-bold">Nem</div>
+            <div class="col-sm-9">{{ $product->gender->category->name }}</div>
+            <div class="col-sm-3 fw-bold">Korosztály</div>
+            <div class="col-sm-9">{{ $product->age->category->name }}</div>
             <div class="col-sm-3 fw-bold">Mennyiség</div>
-            <div class="col-sm-9">{{ $product->quantity }} {{ $product->unit }}</div>
+            <div class="col-sm-9">{{ $product->quantity }} {{ $product->unit->category->name }}</div>
             <div class="col-sm-3 fw-bold">Rövid leírás</div>
             <div class="col-sm-9">{!! nl2br($product->summary) !!}</div>
             <div class="col-sm-3 fw-bold">Részletes leírás</div>
