@@ -9,6 +9,7 @@ use App\Models\Rating;
 use App\Models\Role;
 use App\Models\User;
 use App\Models\UserRole;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
@@ -208,12 +209,6 @@ if (!function_exists('product_prices')) {
         // Termék kikeresése
         $product = Product::find($id);
 
-        // Termékhez tartozó mértékegység lekérdezése
-        $unit = Product::find($product->id)->unit;
-
-        // Mértékegység adatainak lekérdezése
-        $unit_category = ProductCategory::find($unit->id)->category;
-
         // Árak meghatározása
         $brutto_price = brutto_price($product->price, $product->vat);
         $discount_price = discount_price($brutto_price, $product->discount);
@@ -221,8 +216,8 @@ if (!function_exists('product_prices')) {
         // Ezen árak elmentése egy tömbbe
         $array['brutto'] = $brutto_price;
         $array['discount'] = $discount_price; 
-        $array['brutto_ft'] = numformat_with_unit($brutto_price, 'Ft / '.$unit_category->name);
-        $array['discount_ft'] = numformat_with_unit($discount_price, 'Ft / '.$unit_category->name);
+        $array['brutto_ft'] = numformat_with_unit($brutto_price, 'Ft / '.$product->unit->category->name);
+        $array['discount_ft'] = numformat_with_unit($discount_price, 'Ft / '.$product->unit->category->name);
 
         // Visszatérés ezzel a tömbel
         return $array;
@@ -231,50 +226,64 @@ if (!function_exists('product_prices')) {
 
 // Termékek lekérdezése
 if (!function_exists('get_products')) {
-    function get_products($category_id = null, $shop_id = null) {
+    function get_products($group_id = null, $shop_id = null) {
 
-        // Összes termék lekérdezése
-        $products = Product::join('shops','products.shop_id','shops.id')->join('product_categories','product_categories.product_id','products.id')->join('categories AS units','product_categories.category_id','units.id')->join('categories','product_categories.category_id','categories.id')->where(function($query) {return $query->where('active', 1)->orWhere('quantity', '>', 0);});
+        // Gyűjtemény készítése
+        $collection = collect();
 
-        // Ha meg van adva a kategória, akkor ezen kategóriára történő szűrés
-        if ($category_id != null) {
-            $products = $products->whereIn('categories.id', $category_id);
-        }        
-
-        // Ha meg van adva a bolt azonosítója, akkor ezen boltra történő szűrés
-        if ($shop_id != null) {
-            $products = $products->whereIn('products.shop_id', $shop_id);
-        }
-        
-        // Adatok lekérdezése
-        $products = $products->get(['products.id','products.name','products.summary','shops.name AS shop','units.name AS unit','products.discount','categories.id AS category_id','categories.name AS category','products.quantity']);
+        // Összes aktív és nem elfogyott termék lekérdezése
+        $products = Product::where(function($query) {return $query->where('active', 1)->orWhere('quantity', '>', 0);})->get();
 
         // Végigmenni minden egyes terméken
         foreach($products AS $product) {
 
-            // Bruttó és kedvezményes árak behelyezése
-            $product->brutto_price = product_prices($product->id)["brutto_ft"];
-            $product->discount_price = product_prices($product->id)["discount_ft"];
+            // Termék megtartása
+            $keep = TRUE;
 
-            // Vezérkép elérhetősége
-            $dir = public_path('images/products/'.$product->id);
-            $file_main = $dir.'/main_image.jpg';
+            // Termékcsoport és bolt ID lekérdezése
+            $product_group_id = $product->group->category->id;
+            $product_shop_id = $product->shop->id;
 
-            // Megnézni, hogy van-e vezérkép fájl
-            if (File::exists($file_main)) {
+            // Ha meg van adva a kategória, akkor ezen kategóriára történő szűrés
+            if (($group_id != null) && (!in_array($product_group_id,$group_id))) {
+                $keep = FALSE;
+            }        
 
-                // Ha van, akkor annak a behelyezése
-                $product->image = 'images/products/'.$product->id.'/main_image.jpg';
-            } else {
+            // Ha meg van adva a bolt azonosítója, akkor ezen boltra történő szűrés
+            if (($shop_id != null) && (!in_array($product_shop_id,$shop_id))) {
+                $keep = FALSE;
+            }     
+            
+            // Ha meg kell tartani
+            if ($keep) {
 
-                // Ha nincs, akkor a nincs kép fájl alkalmazása
-                $product->image = 'images/noimage.png';
+                // Bruttó és kedvezményes árak behelyezése
+                $product->brutto_price = product_prices($product->id)["brutto_ft"];
+                $product->discount_price = product_prices($product->id)["discount_ft"];
 
-            }
+                // Vezérkép elérhetősége
+                $dir = public_path('images/products/'.$product->id);
+                $file_main = $dir.'/main_image.jpg';
+
+                // Megnézni, hogy van-e vezérkép fájl
+                if (File::exists($file_main)) {
+
+                    // Ha van, akkor annak a behelyezése
+                    $product->image = 'images/products/'.$product->id.'/main_image.jpg';
+                } else {
+
+                    // Ha nincs, akkor a nincs kép fájl alkalmazása
+                    $product->image = 'images/noimage.png';
+
+                }
+
+                // Termék behelyezése a gyűjteménybe
+                $collection->push($product);
+            } 
         }
 
-        // Visszatérés ezen termékekkel
-        return $products;
+        // Visszatérés ezen gyűjteménnyel
+        return $collection;
     }
 }
 
