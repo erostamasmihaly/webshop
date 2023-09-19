@@ -27,16 +27,61 @@
 	</div>
 	<div class="row mb-2">
 		<div class="col-sm-3 fw-bold">
-			Kategória *
+			Termékcsoport *
 		</div>
 		<div class="col-sm-9">
-			<select class="form-control select2" name="category_id">
-				@foreach($categories AS $category)
-					<option value="{{ $category->id }}" @selected(old('category_id',$product->category_id)==$category->id)>{{ $category->name }}</option>
+			<select class="form-control select2" name="group_id">
+				@foreach($groups AS $group)
+					<option value="{{ $group->id }}" @selected(old('group_id',$product->group->category->id)==$group->id)>{{ $group->name }}</option>
 				@endforeach
 			</select>
-			@if ($errors->has('category_id'))
-				<div class="invalid-feedback d-block">{{ $errors->first('category_id') }}</div>
+			@if ($errors->has('group_id'))
+				<div class="invalid-feedback d-block">{{ $errors->first('group_id') }}</div>
+			@endif
+		</div> 
+	</div>
+	<div class="row mb-2">
+		<div class="col-sm-3 fw-bold">
+			Méret *
+		</div>
+		<div class="col-sm-9">
+			<select class="form-control select2" name="size_id">
+				@foreach($sizes AS $size)
+					<option value="{{ $size->id }}" @selected(old('size_id',$product->size->category->id)==$size->id)>{{ $size->name }}</option>
+				@endforeach
+			</select>
+			@if ($errors->has('size_id'))
+				<div class="invalid-feedback d-block">{{ $errors->first('size_id') }}</div>
+			@endif
+		</div> 
+	</div>
+	<div class="row mb-2">
+		<div class="col-sm-3 fw-bold">
+			Nem *
+		</div>
+		<div class="col-sm-9">
+			<select class="form-control select2" name="gender_id">
+				@foreach($genders AS $gender)
+					<option value="{{ $gender->id }}" @selected(old('gender_id',$product->gender->category->id)==$gender->id)>{{ $gender->name }}</option>
+				@endforeach
+			</select>
+			@if ($errors->has('gender_id'))
+				<div class="invalid-feedback d-block">{{ $errors->first('gender_id') }}</div>
+			@endif
+		</div> 
+	</div>
+	<div class="row mb-2">
+		<div class="col-sm-3 fw-bold">
+			Korosztály *
+		</div>
+		<div class="col-sm-9">
+			<select class="form-control select2" name="age_id">
+				@foreach($ages AS $age)
+					<option value="{{ $age->id }}" @selected(old('age_id',$product->age->category->id)==$age->id)>{{ $age->name }}</option>
+				@endforeach
+			</select>
+			@if ($errors->has('age_id'))
+				<div class="invalid-feedback d-block">{{ $errors->first('age_id') }}</div>
 			@endif
 		</div> 
 	</div>
@@ -100,11 +145,11 @@
 		<div class="col-sm-9">
 			<select class="form-control select2" name="unit_id">
 				@foreach($units AS $unit)
-					<option value="{{ $unit->id }}" @selected(old('unit_id',$product->unit_id)==$unit->id)>{{ $unit->name }}</option>
+					<option value="{{ $unit->id }}" @selected(old('unit_id',$product->unit->category->id)==$unit->id)>{{ $unit->name }}</option>
 				@endforeach
 			</select>
-			@if ($errors->has('category_id'))
-				<div class="invalid-feedback d-block">{{ $errors->first('category_id') }}</div>
+			@if ($errors->has('unit_id'))
+				<div class="invalid-feedback d-block">{{ $errors->first('unit_id') }}</div>
 			@endif
 		</div> 
 	</div>

@@ -54,23 +54,39 @@ class SellerProductController extends Controller
             $product = Product::find($id);
         }
 
-        // Termék kategóriák lekérdezése
-        $categories = Category::where('category_group_id',1)->orderBy('sequence')->get();
+        // Termékcsoport lekérdezése
+        $groups = Category::where('category_group_id', get_category_group_id('Termékcsoportok'))->orderBy('sequence')->get();
 
         // Mértékegységek lekérdezése
-        $units = Category::where('category_group_id',2)->orderBy('sequence')->get();
+        $units = Category::where('category_group_id', get_category_group_id('Mértékegységek'))->orderBy('sequence')->get();
+
+        // Nemek lekérdezése
+        $genders = Category::where('category_group_id', get_category_group_id('Nemek'))->orderBy('sequence')->get();
+
+        // Méretek lekérdezése
+        $sizes = Category::where('category_group_id', get_category_group_id('Méretek'))->orderBy('sequence')->get();
+
+        // Korosztályok lekérdezése
+        $ages = Category::where('category_group_id', get_category_group_id('Korosztályok'))->orderBy('sequence')->get();
 
         // Üzletek lekérdezése
         $shops = Shop::get();
 
         // Értékelések lekérdezése
-        $ratings = get_ratings($id, false)["ratings"];
+        if ($id==0) {
+            $ratings = null;
+        } else {
+            $ratings = get_ratings($id, false)["ratings"];
+        }
 
         // Oldal meghívása
         return view('seller.product_edit',[
             'product' => $product,
-            'categories' => $categories,
+            'groups' => $groups,
             'units' => $units,
+            'sizes' => $sizes,
+            'genders' => $genders,
+            'ages' => $ages,
             'shops' => $shops,
             'ratings' => $ratings
         ]);

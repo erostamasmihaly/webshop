@@ -44,7 +44,7 @@ class UserUpdateRequest extends FormRequest
             }
 
             // 8 karakter, abból min 1 kis betű, min 1 nagybetű, min 1 szám
-        $rules['password'] = $is_required.'|min:8|regex:/^.*(?=.{8,})(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).*$/';
+            $rules['password'] = $is_required.'|min:8|regex:/^.*(?=.{8,})(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).*$/';
         }
 
         // Visszatérés a szabályokkal

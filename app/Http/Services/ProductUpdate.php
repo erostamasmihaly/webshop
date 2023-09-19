@@ -3,6 +3,7 @@
 namespace App\Http\Services;
 
 use App\Http\Requests\ProductUpdateRequest;
+use App\Models\Category;
 use App\Models\Image;
 use App\Models\Product;
 use Illuminate\Support\Facades\DB;
@@ -10,7 +11,7 @@ use Illuminate\Support\Facades\DB;
 class ProductUpdate
 {
     public $name;
-    private $id, $temporary_id, $summary, $body, $price, $category_id, $quantity, $active, $vat, $discount, $shop_id, $unit_id;
+    private $id, $temporary_id, $summary, $body, $price, $group_id, $age_id, $gender_id, $size_id, $quantity, $active, $vat, $discount, $shop_id, $unit_id;
 
     // Adatok lekérdezése
     public function __construct(ProductUpdateRequest $productUpdateRequest)
@@ -21,7 +22,10 @@ class ProductUpdate
         $this->summary = $productUpdateRequest->summary;
         $this->body = $productUpdateRequest->body;
         $this->price = $productUpdateRequest->price;
-        $this->category_id = $productUpdateRequest->category_id;
+        $this->group_id = $productUpdateRequest->group_id;
+        $this->size_id = $productUpdateRequest->size_id;
+        $this->age_id = $productUpdateRequest->age_id;
+        $this->gender_id = $productUpdateRequest->gender_id;
         $this->quantity = $productUpdateRequest->quantity;
         $this->active = $productUpdateRequest->active;
         $this->vat = $productUpdateRequest->vat;
@@ -50,16 +54,29 @@ class ProductUpdate
             $product->body = $this->body;
             $product->summary = $this->summary;
             $product->price = $this->price;
-            $product->category_id = $this->category_id;
             $product->quantity = $this->quantity;
             $product->active = $this->active;
             $product->vat = $this->vat;
             $product->discount = $this->discount;
             $product->shop_id = $this->shop_id;
-            $product->unit_id = $this->unit_id;
+
+            // Termékcsoport
+            $product->group->category_id = $this->group_id;
+
+            // Méret
+            $product->size->category_id = $this->size_id;
+
+            // Nem
+            $product->gender->category_id = $this->gender_id;
+
+            // Korosztály
+            $product->age->category_id = $this->age_id;
+
+            // Mértékegység 
+            $product->unit->category_id = $this->unit_id;
             
-            // Mentés
-            $product->save();
+            // Termék mentése
+            $product->push();
 
             // Ha új termék lett létrehozva
             if ($new) {
