@@ -13,6 +13,7 @@ use Illuminate\Http\Request;
 use Illuminate\Database\Seeder;
 use Illuminate\Http\File;
 use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Storage;
 
 class ProductSeeder extends Seeder
 {
@@ -100,10 +101,8 @@ class ProductSeeder extends Seeder
             ]);
         }
 
-        // Kép felvitele, ha még nincs kép hozzárendelve
-        if (!Image::where('product_id',1)->first()) {
-            $this->uploadImages(1, ['feketekabat1.png','feketekabat2.png','feketekabat3.png']);
-        }
+        // Előre elmentett képek hozzárendelése
+        $this->uploadSetupImages(1);
 
         // Fehér téli kabát hozzáadása a Centrumhoz
         Product::insertOrIgnore([
@@ -283,34 +282,51 @@ class ProductSeeder extends Seeder
     }
 
     // Setup könyvtárba lévő képek feltöltése a megfelelő termékhez
-    private function uploadImages($product_id, $filenames) {
+    private function uploadSetupImages($product_id) {
+
+        // Könyvtár megadása
+        $dir = "setup/$product_id/";
+
+        // Fájlok lekérdezése
+        $files = Storage::files($dir);
 
         // Képek gyűjtemények
         $collection = collect();
 
         // Végigmenni minden egyes képen
-        foreach ($filenames AS $filename) {
+        foreach ($files AS $file) {
 
-            // Fájl elérhetőség lekérdezése
-            $path = storage_path("app/setup/$filename");
-            
-            // Visszatérés a feltöltött fájl adataival
-            $uploaded_file = new UploadedFile($path, $filename);
+            // Fájlnév meghatározása
+            $filename = str_replace($dir,"",$file);
 
-            // Fájl behelyezése a gyűjteménybe
-            $collection->push($uploaded_file);
+            // Megnézni, hogy az adott fájl már fel van-e töltve
+            if (!Image::where('product_id', $product_id)->where('filename', $filename)->first()) {
+
+                // Fájl elérhetőség lekérdezése
+                $path = storage_path("app/$dir/$filename");
+
+                // Visszatérés a feltöltött fájl adataival
+                $uploaded_file = new UploadedFile($path, $filename);
+
+                // Fájl behelyezése a gyűjteménybe
+                $collection->push($uploaded_file);
+            }
         } 
 
-        // Kérés létrehozása
-        $request = new Request();
-        $request->setMethod('POST');
-        $request->request->add([
-            'product_id' => $product_id,
-            'images' => $collection
-        ]);
+        // Ha van elmenteni való kép
+        if ($collection->count()>0) {
 
-        // Kérés végrehajtása a kép feltöltővel
-        new ImageUpload($request);
+            // Kérés létrehozása
+            $request = new Request();
+            $request->setMethod('POST');
+            $request->request->add([
+                'product_id' => $product_id,
+                'images' => $collection
+            ]);
+
+            // Kérés végrehajtása a kép feltöltővel
+            new ImageUpload($request);
+        }
 
     }
 }
