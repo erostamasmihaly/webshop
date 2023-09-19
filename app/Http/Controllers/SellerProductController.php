@@ -48,10 +48,23 @@ class SellerProductController extends Controller
             $product->quantity = 1;
             $product->discount = 0;
 
+            // Nincs értékelés
+            $ratings = null;
+
+            // Új
+            $new = TRUE;
+
         } else {
         
             // Termék adatainak lekérdezése
             $product = Product::find($id);
+
+            // Értékelések lekérdezése
+            $ratings = get_ratings($id, false)["ratings"];
+
+            // Nem új
+            $new = FALSE;
+            
         }
 
         // Termékcsoport lekérdezése
@@ -72,13 +85,6 @@ class SellerProductController extends Controller
         // Üzletek lekérdezése
         $shops = Shop::get();
 
-        // Értékelések lekérdezése
-        if ($id==0) {
-            $ratings = null;
-        } else {
-            $ratings = get_ratings($id, false)["ratings"];
-        }
-
         // Oldal meghívása
         return view('seller.product_edit',[
             'product' => $product,
@@ -88,7 +94,8 @@ class SellerProductController extends Controller
             'genders' => $genders,
             'ages' => $ages,
             'shops' => $shops,
-            'ratings' => $ratings
+            'ratings' => $ratings,
+            'new' => $new
         ]);
     }
 

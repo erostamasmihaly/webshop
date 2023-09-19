@@ -32,7 +32,7 @@
 		<div class="col-sm-9">
 			<select class="form-control select2" name="group_id">
 				@foreach($groups AS $group)
-					<option value="{{ $group->id }}" @selected(old('group_id',$product->group->category->id)==$group->id)>{{ $group->name }}</option>
+					<option value="{{ $group->id }}" @if($new) @selected(old('group_id')==$group->id) @else @selected(old('group_id',$product->group->category->id)==$group->id) @endif>{{ $group->name }}</option>
 				@endforeach
 			</select>
 			@if ($errors->has('group_id'))
@@ -47,7 +47,7 @@
 		<div class="col-sm-9">
 			<select class="form-control select2" name="size_id">
 				@foreach($sizes AS $size)
-					<option value="{{ $size->id }}" @selected(old('size_id',$product->size->category->id)==$size->id)>{{ $size->name }}</option>
+					<option value="{{ $size->id }}" @if($new) @selected(old('size_id')==$size->id) @else @selected(old('size_id',$product->size->category->id)==$size->id) @endif>{{ $size->name }}</option>
 				@endforeach
 			</select>
 			@if ($errors->has('size_id'))
@@ -62,7 +62,7 @@
 		<div class="col-sm-9">
 			<select class="form-control select2" name="gender_id">
 				@foreach($genders AS $gender)
-					<option value="{{ $gender->id }}" @selected(old('gender_id',$product->gender->category->id)==$gender->id)>{{ $gender->name }}</option>
+					<option value="{{ $gender->id }}" @if($new) @selected(old('gender_id')==$gender->id) @else @selected(old('gender_id',$product->gender->category->id)==$gender->id) @endif>{{ $gender->name }}</option>
 				@endforeach
 			</select>
 			@if ($errors->has('gender_id'))
@@ -77,7 +77,7 @@
 		<div class="col-sm-9">
 			<select class="form-control select2" name="age_id">
 				@foreach($ages AS $age)
-					<option value="{{ $age->id }}" @selected(old('age_id',$product->age->category->id)==$age->id)>{{ $age->name }}</option>
+					<option value="{{ $age->id }}" @if($new) @selected(old('age_id')==$age->id) @else @selected(old('age_id',$product->age->category->id)==$age->id) @endif>{{ $age->name }}</option>
 				@endforeach
 			</select>
 			@if ($errors->has('age_id'))
@@ -145,7 +145,7 @@
 		<div class="col-sm-9">
 			<select class="form-control select2" name="unit_id">
 				@foreach($units AS $unit)
-					<option value="{{ $unit->id }}" @selected(old('unit_id',$product->unit->category->id)==$unit->id)>{{ $unit->name }}</option>
+					<option value="{{ $unit->id }}" @if($new) @selected(old('unit_id')==$unit->id) @else @selected(old('unit_id',$product->unit->category->id)==$unit->id) @endif>{{ $unit->name }}</option>
 				@endforeach
 			</select>
 			@if ($errors->has('unit_id'))
