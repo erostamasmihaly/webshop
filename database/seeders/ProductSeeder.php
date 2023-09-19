@@ -2,12 +2,17 @@
 
 namespace Database\Seeders;
 
+use App\Http\Services\ImageUpload;
 use App\Models\Category;
 use App\Models\CategoryGroup;
+use App\Models\Image;
 use App\Models\Product;
 use App\Models\ProductCategory;
 use App\Models\Shop;
+use Illuminate\Http\Request;
 use Illuminate\Database\Seeder;
+use Illuminate\Http\File;
+use Illuminate\Http\UploadedFile;
 
 class ProductSeeder extends Seeder
 {
@@ -93,6 +98,11 @@ class ProductSeeder extends Seeder
                 "created_at" => now(),
                 "updated_at" => now()
             ]);
+        }
+
+        // Kép felvitele, ha még nincs kép hozzárendelve
+        if (!Image::where('product_id',1)->first()) {
+            $this->uploadImages(1, ['feketekabat1.png','feketekabat2.png','feketekabat3.png']);
         }
 
         // Fehér téli kabát hozzáadása a Centrumhoz
@@ -269,6 +279,38 @@ class ProductSeeder extends Seeder
                 "updated_at" => now()
             ]);
         }
+
+    }
+
+    // Setup könyvtárba lévő képek feltöltése a megfelelő termékhez
+    private function uploadImages($product_id, $filenames) {
+
+        // Képek gyűjtemények
+        $collection = collect();
+
+        // Végigmenni minden egyes képen
+        foreach ($filenames AS $filename) {
+
+            // Fájl elérhetőség lekérdezése
+            $path = storage_path("app/setup/$filename");
+            
+            // Visszatérés a feltöltött fájl adataival
+            $uploaded_file = new UploadedFile($path, $filename);
+
+            // Fájl behelyezése a gyűjteménybe
+            $collection->push($uploaded_file);
+        } 
+
+        // Kérés létrehozása
+        $request = new Request();
+        $request->setMethod('POST');
+        $request->request->add([
+            'product_id' => $product_id,
+            'images' => $collection
+        ]);
+
+        // Kérés végrehajtása a kép feltöltővel
+        new ImageUpload($request);
 
     }
 }
