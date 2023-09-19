@@ -101,7 +101,6 @@ class ProductSeeder extends Seeder
             ]);
         }
 
-        // Előre elmentett képek hozzárendelése
         $this->uploadSetupImages(1);
 
         // Fehér téli kabát hozzáadása a Centrumhoz
@@ -139,6 +138,8 @@ class ProductSeeder extends Seeder
             ]);
         }
 
+        $this->uploadSetupImages(2);
+
         // Futó rövid nadrág hozzáadása a Centrumhoz
         Product::insertOrIgnore([
             "id" => 3,
@@ -173,6 +174,8 @@ class ProductSeeder extends Seeder
                 "updated_at" => now()
             ]);
         }
+
+        $this->uploadSetupImages(3);
 
         // Futó hosszú nadrág hozzáadása a Centrumhoz
         Product::insertOrIgnore([
@@ -209,6 +212,8 @@ class ProductSeeder extends Seeder
             ]);
         }
 
+        $this->uploadSetupImages(4);
+
         // Fekete edző cipő hozzáadása a Centrumhoz
         Product::insertOrIgnore([
             "id" => 5,
@@ -244,6 +249,8 @@ class ProductSeeder extends Seeder
             ]);
         }
 
+        $this->uploadSetupImages(5);
+
         // Kék bakancs hozzáadása a Centrumhoz
         Product::insertOrIgnore([
             "id" => 6,
@@ -278,6 +285,8 @@ class ProductSeeder extends Seeder
                 "updated_at" => now()
             ]);
         }
+
+        $this->uploadSetupImages(6);
 
     }
 
