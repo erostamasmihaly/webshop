@@ -184,7 +184,7 @@ class BuyerPublicController extends Controller
         $shop = Shop::where("id", $id)->first();
 
         // Bolt termékeinek lekérdezése
-        $products = get_products([$id]);
+        $products = get_products(null, [$id]);
 
         // Felület betöltése
         return view('buyer.shop', [

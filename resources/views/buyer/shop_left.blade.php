@@ -43,7 +43,7 @@
                             </td>
                             <td>{{ $product->category }}</td>
                             <td>{!! $product->summary !!}</td>
-                            <td>{{ $product->quantity }} {{ $product->unit }}</td>
+                            <td>{{ $product->quantity }} {{ $product->unit->category->name }}</td>
                             <td>{{ $product->brutto_price }}</td>
                             <td>{{ numformat_with_unit($product->discount,'%') }}</td>
                         </tr>

@@ -18,7 +18,7 @@
             <div class="fw-bold">Ha tetszik a termék, akkor adja megy azt a mennyiséget, amennyit meg szeretne vásárolni és utána helyezze a terméket a kosárba.</div>
             <div class="input-group">
                 <input type="number" class="form-control" id="quantity" value="0" min="0"/>
-				<span class="input-group-text">{{ $product->unit }}</span>
+				<span class="input-group-text">{{ $product->unit->category->name }}</span>
 			</div>
             <div class="mt-2">
                 <button type="button" id="cart_add" class="btn btn-primary w-100">Kosárba helyezés</button>
