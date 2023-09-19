@@ -6,6 +6,7 @@ use App\Http\Requests\ProductUpdateRequest;
 use App\Models\Category;
 use App\Models\Image;
 use App\Models\Product;
+use App\Models\ProductCategory;
 use Illuminate\Support\Facades\DB;
 
 class ProductUpdate
@@ -60,20 +61,64 @@ class ProductUpdate
             $product->discount = $this->discount;
             $product->shop_id = $this->shop_id;
 
-            // Termékcsoport
-            $product->group->category_id = $this->group_id;
+            // Termék mentése
+            $product->save();
 
-            // Méret
-            $product->size->category_id = $this->size_id;
+            if ($new) {
 
-            // Nem
-            $product->gender->category_id = $this->gender_id;
+                // Termékcsoport
+                $product_group = new ProductCategory();
+                $product_group->category_group_id = get_category_group_id('Termékcsoportok');
+                $product_group->category_id = $this->group_id;
+                $product_group->product_id = $product->id;
+                $product_group->save();
+                
+                // Méret
+                $product_group = new ProductCategory();
+                $product_group->category_group_id = get_category_group_id('Méretek');
+                $product_group->category_id = $this->size_id;
+                $product_group->product_id = $product->id;
+                $product_group->save();
 
-            // Korosztály
-            $product->age->category_id = $this->age_id;
+                // Nem
+                $product_group = new ProductCategory();
+                $product_group->category_group_id = get_category_group_id('Nemek');
+                $product_group->category_id = $this->gender_id;
+                $product_group->product_id = $product->id;
+                $product_group->save();
+                
+                // Korosztály
+                $product_group = new ProductCategory();
+                $product_group->category_group_id = get_category_group_id('Korosztályok');
+                $product_group->category_id = $this->age_id;
+                $product_group->product_id = $product->id;
+                $product_group->save();
 
-            // Mértékegység 
-            $product->unit->category_id = $this->unit_id;
+                // Mértékegység
+                $product_group = new ProductCategory();
+                $product_group->category_group_id = get_category_group_id('Mértékegységek');
+                $product_group->category_id = $this->unit_id;
+                $product_group->product_id = $product->id;
+                $product_group->save();
+
+            } else {
+
+                // Termékcsoport
+                $product->group->category_id = $this->group_id;
+
+                // Méret
+                $product->size->category_id = $this->size_id;
+
+                // Nem
+                $product->gender->category_id = $this->gender_id;
+
+                // Korosztály
+                $product->age->category_id = $this->age_id;
+
+                // Mértékegység
+                $product->unit->category_id = $this->unit_id;
+
+            }
             
             // Termék mentése
             $product->push();
@@ -81,17 +126,24 @@ class ProductUpdate
             // Ha új termék lett létrehozva
             if ($new) {
 
-                // Módosítani a hozzárendelt képek termék azonosítóját: ideiglenes > állandó
-                Image::where('product_id', $this->temporary_id)->update(['product_id' => $product->id]);
+                // Lekérdezni a képeket az ideiglenes azonosítóval
+                $image = Image::where('product_id', $this->temporary_id);
 
-                // Régi könyvtár
-                $old_dir = public_path('images/products/'.$this->temporary_id);
+                // Ha vannak ilyen képek
+                if ($image->first()) {
 
-                // Új könyvtár
-                $new_dir = public_path('images/products/'.$product->id);
+                    // Módosítani a hozzárendelt képek termék azonosítóját: ideiglenes > állandó
+                    $image->update(['product_id' => $product->id]);
 
-                // Átnevezni a fájlokat tartalmazó könyvtárat
-                rename($old_dir, $new_dir);
+                    // Régi könyvtár
+                    $old_dir = public_path('images/products/'.$this->temporary_id);
+
+                    // Új könyvtár
+                    $new_dir = public_path('images/products/'.$product->id);
+
+                    // Átnevezni a fájlokat tartalmazó könyvtárat
+                    rename($old_dir, $new_dir);
+                }
                 
             }
 
