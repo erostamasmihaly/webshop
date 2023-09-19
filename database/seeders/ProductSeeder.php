@@ -199,5 +199,76 @@ class ProductSeeder extends Seeder
                 "updated_at" => now()
             ]);
         }
+
+        // Fekete edző cipő hozzáadása a Centrumhoz
+        Product::insertOrIgnore([
+            "id" => 5,
+            "shop_id" => $shop_array["Centrum"],
+            "name" => "Fekete edző cipő",
+            "summary" => "<p>Hideg napokra!</p>",
+            "body" => "<p>Ősztől Tavaszig ajánlott a használata, avagy amikor már zordabb az idő!</p>",
+            "price" => 22000,
+            "vat" => 27,
+            "discount" => 15,
+            "active" => 1,
+            "quantity" => 23,
+            "created_at" => now(),
+            "updated_at" => now()
+        ]); 
+
+        $array = [
+            [ $category_group_array["Mértékegységek"], $unit_array["darab"] ],
+            [ $category_group_array["Termékcsoportok"], $product_group_array["edző cipő"] ],
+            [ $category_group_array["Méretek"], $size_array["46"] ],
+            [ $category_group_array["Nemek"], $gender_array["férfi"] ],
+            [ $category_group_array["Korosztályok"], $age_array["felnőtt"] ]
+        ];
+
+        foreach ($array AS $subarray) {
+            ProductCategory::insertOrIgnore([
+                "id" => $i++,
+                "product_id" => 5,
+                "category_group_id" => $subarray[0],
+                "category_id" => $subarray[1],
+                "created_at" => now(),
+                "updated_at" => now()
+            ]);
+        }
+
+        // Kék bakancs hozzáadása a Centrumhoz
+        Product::insertOrIgnore([
+            "id" => 6,
+            "shop_id" => $shop_array["Centrum"],
+            "name" => "Kék bakancs",
+            "summary" => "<p>Hideg napokra!</p>",
+            "body" => "<p>Ősztől Tavaszig ajánlott a használata, avagy amikor már zordabb az idő!</p>",
+            "price" => 31000,
+            "vat" => 27,
+            "discount" => 10,
+            "active" => 1,
+            "quantity" => 23,
+            "created_at" => now(),
+            "updated_at" => now()
+        ]); 
+
+        $array = [
+            [ $category_group_array["Mértékegységek"], $unit_array["darab"] ],
+            [ $category_group_array["Termékcsoportok"], $product_group_array["bakancs"] ],
+            [ $category_group_array["Méretek"], $size_array["40"] ],
+            [ $category_group_array["Nemek"], $gender_array["nő"] ],
+            [ $category_group_array["Korosztályok"], $age_array["felnőtt"] ]
+        ];
+
+        foreach ($array AS $subarray) {
+            ProductCategory::insertOrIgnore([
+                "id" => $i++,
+                "product_id" => 6,
+                "category_group_id" => $subarray[0],
+                "category_id" => $subarray[1],
+                "created_at" => now(),
+                "updated_at" => now()
+            ]);
+        }
+
     }
 }

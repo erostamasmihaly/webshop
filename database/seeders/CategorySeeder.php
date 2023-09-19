@@ -192,13 +192,15 @@ class CategorySeeder extends Seeder
         ]);
 
         //// Méretek
+        $size = 1;
+
         // Ruha méretek
         Category::insertOrIgnore([
             "id" => $id++,
             "name" => "ruha méretek",
             "category_id" => null,
             "category_group_id" => $category_groups["Méretek"],
-            "sequence" => 1,
+            "sequence" => $size++,
             "created_at" => now(),
             "updated_at" => now()
         ]);
@@ -212,7 +214,32 @@ class CategorySeeder extends Seeder
                 "name" => $array[$i],
                 "category_id" => $categories["ruha méretek"],
                 "category_group_id" => $category_groups["Méretek"],
-                "sequence" => $i+2,
+                "sequence" => $size++,
+                "created_at" => now(),
+                "updated_at" => now()
+            ]);
+        }
+
+        // Cipő méretek
+        Category::insertOrIgnore([
+            "id" => $id++,
+            "name" => "cipő méretek",
+            "category_id" => null,
+            "category_group_id" => $category_groups["Méretek"],
+            "sequence" => $size++,
+            "created_at" => now(),
+            "updated_at" => now()
+        ]);
+        $categories["cipő méretek"] = Category::where('name','cipő méretek')->first()->id;
+
+        // Cipő méretek felvitele
+        for ($i=30; $i<=51; $i++) {
+            Category::insertOrIgnore([
+                "id" => $id++,
+                "name" => $i,
+                "category_id" => $categories["cipő méretek"],
+                "category_group_id" => $category_groups["Méretek"],
+                "sequence" => $size++,
                 "created_at" => now(),
                 "updated_at" => now()
             ]);
