@@ -4,21 +4,21 @@ $(function () {
     function get_products() {
 
         // SessionStorage-ba tárolt kategória lekérdezése
-        var category_id = sessionStorage.getItem('category_id');
+        var group_id = sessionStorage.getItem('group_id');
 
         // Kérés a szerver felé
         $.ajax({
             dataType: "json",
             url: "products",
-            data: "category_id="+category_id,
+            data: "group_id="+group_id,
             type: "GET",
             cache: false,
             success: function (data) {
                 if (data.OK == 1) {
 
                     //// Ha minden rendben volt
-                    // Lekérdezett kategóriák megjelenítése a Vissza gombbal együtt
-                    show_categories(data.categories, data.back_id);
+                    // Lekérdezett termékcsoportok megjelenítése a Vissza gombbal együtt
+                    show_groups(data.groups, data.back_id);
 
                     // Lekérdezett termékek megjelenítése
                     show_products(data.products);
@@ -33,29 +33,29 @@ $(function () {
     }
     get_products();
 
-    // Kategóriák megjelenítése
-    function show_categories(categories, back_id) {
+    // Termékcsoportok megjelenítése
+    function show_groups(groups, back_id) {
 
-        // Kategóriáknak kijelölt terület tisztítása
-        $("#categories").html("");
+        // Termékcsoprotoknak kijelölt terület tisztítása
+        $("#groups").html("");
 
-        // Végigmenni minden egyes kategórián és megjeleníteni őket a kijelölt területen
-        categories.forEach(function(category) {
-            $("#categories").append('<div class="col-lg-3 col-sm-4 col-6 categories mb-1" category_id="'+category.id+'"><span class="badge bg-primary w-100 p-2">'+category.name+'</span></div>');
+        // Végigmenni minden egyes termékcsoporton és megjeleníteni őket a kijelölt területen
+        groups.forEach(function(group) {
+            $("#groups").append('<div class="col-lg-3 col-sm-4 col-6 groups mb-1" group_id="'+group.id+'"><span class="badge bg-primary w-100 p-2">'+group.name+'</span></div>');
         });
 
         // Vissza gomb behelyezése
-        $("#categories").append('<div class="col-lg-3 col-sm-4 col-6 categories mb-2" category_id="'+back_id+'"><span class="badge bg-secondary w-100 p-2">Vissza</span></div>');
+        $("#groups").append('<div class="col-lg-3 col-sm-4 col-6 groups mb-2" group_id="'+back_id+'"><span class="badge bg-secondary w-100 p-2">Vissza</span></div>');
     }
 
     // Kategória kiválasztása
-    $("body").on("click", ".categories", function() {
+    $("body").on("click", ".groups", function() {
 
         // Kijelölt kategória ID lekérdezése
-        category_id = $(this).attr("category_id");
+        group_id = $(this).attr("group_id");
 
         // Ezen ID elmentése
-        sessionStorage.setItem('category_id', category_id);
+        sessionStorage.setItem('group_id', group_id);
 
         // Termékek és kategóriák újbóli lekérdezése
         get_products();

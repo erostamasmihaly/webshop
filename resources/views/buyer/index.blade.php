@@ -44,7 +44,7 @@
 					</div>
 				</div>
 				<div class="bg-info bg-gradient text-dark text-center mb-2 fw-bold">Termékcsoportok</div>
-				<div class="row mb-2" id="categories"></div>
+				<div class="row mb-2" id="groups"></div>
 				<div class="bg-info bg-gradient text-dark text-center mb-2 fw-bold">Termékek</div>
 				<div class="row mb-2" id="products"></div>
 			</div>

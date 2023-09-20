@@ -236,7 +236,20 @@ if (!function_exists('product_prices')) {
 
 // Termékek lekérdezése
 if (!function_exists('get_products')) {
-    function get_products($group_id = null, $shop_id = null) {
+    function get_products($groups, $json = null) {
+
+        // JSON átalakítása tömbbé
+        if ($json!=null) {
+            $array = json_decode($json, TRUE);
+        } else {
+            $array = [];
+        }
+
+        // Szűrők lekérdezése
+        $shops = isset($array["shops"]) ?  $array["shops"] : null;
+        $sizes = isset($array["sizes"]) ?  $array["sizes"] : null;
+        $genders = isset($array["genders"]) ?  $array["genders"] : null;
+        $ages = isset($array["ages"]) ?  $array["ages"] : null;
 
         // Gyűjtemény készítése
         $collection = collect();
@@ -259,12 +272,27 @@ if (!function_exists('get_products')) {
             $product->shop->id;
 
             // Termékcsoportra történő szűrés
-            if (($group_id != null) && (!in_array($product->group->category->id,$group_id))) {
+            if (($groups != null) && (!in_array($product->group->category->id,$groups))) {
                 $keep = FALSE;
-            }        
+            }    
+            
+            // Méretre történő szűrés
+            if (($sizes != null) && (!in_array($product->size->category->id,$sizes))) {
+                $keep = FALSE;
+            }  
+
+            // Nemre történő szűrés
+            if (($genders != null) && (!in_array($product->gender->category->id,$genders))) {
+                $keep = FALSE;
+            }  
+
+            // Korosztályra történő szűrés
+            if (($ages != null) && (!in_array($product->age->category->id,$ages))) {
+                $keep = FALSE;
+            }  
 
             // Boltra történő szűrés
-            if (($shop_id != null) && (!in_array($product->shop->id,$shop_id))) {
+            if (($shops != null) && (!in_array($product->shop->id,$shops))) {
                 $keep = FALSE;
             }     
             
@@ -410,12 +438,12 @@ if (!function_exists('generate_order_ref')) {
 }
 
 // Lekérdezni a kategória gyerekei
-if (!function_exists('get_category_children')) {
-    function get_category_children($categories) {
+if (!function_exists('get_group_children')) {
+    function get_group_children($categories) {
 
         // Ha null, akkor minden egyes szülő nélküli elem lekérdezése
         if ($categories==null) {
-            $categories = Category::where('category_group_id',1)->whereNull('category_id')->pluck('id')->toArray();
+            $categories = Category::where('category_group_id',get_category_group_id('Termékcsoportok'))->whereNull('category_id')->pluck('id')->toArray();
         }
         
         // Lekérdezni minden olyan elemet, ami a megadott kategóriák gyereke, kivéve olyat, ami már ezen kategóriák között megtalálható
@@ -430,7 +458,7 @@ if (!function_exists('get_category_children')) {
         } else {
 
             // Ha van még gyerek, akkor a függvény rekurzív meghívása ezen válasz tömbbel 
-            return get_category_children($return);
+            return get_group_children($return);
         }
     }
 }

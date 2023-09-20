@@ -47,29 +47,31 @@ class BuyerPublicController extends Controller
     // Fő oldal - termékek lekérdezése
     public function products(Request $request) {
 
-        // Kategória lekérdezése
-        $category_id = ($request->category_id=="null") ? null : $request->category_id;
+        // Termékcsoport lekérdezése
+        $group_id = ($request->group_id=="null") ? null : $request->group_id;
+
+        // Szűrők JSON lekérdezése
+        $filter = $request->filter;
+
+        // JSON átalakítása tömbbé
+        $array = json_decode($filter, TRUE);
 
         // Ebből tömb létrehozása, ha nem üres
-        if ($category_id==null) {
-            $category = null;
-        } else {
-            $category = [$category_id];
-        }
+        $groups = ($group_id==null) ? null : [$group_id];
 
         // Azon kategóriák lekérdezése, amelyek ehhez vannak hozzárendelve
-        $array["categories"] = Category::where('category_id', $category_id)->where('category_group_id', 1)->orderBy('sequence')->get(['id','name']);
+        $array["groups"] = Category::where('category_id', $group_id)->where('category_group_id', get_category_group_id('Termékcsoportok'))->orderBy('sequence')->get(['id','name']);
 
         // Vissza érték lekérdezése
-        if ($category_id!=null) {
-            $parent_id = Category::find($category_id)->category_id;
+        if ($group_id!=null) {
+            $parent_id = Category::find($group_id)->category_id;
         } else {
             $parent_id = null;
         }
         $array["back_id"] = $parent_id;
 
         // Azon termékek lekérdezése, amelyek ehhez vannak hozzárendelve
-        $array["products"] = get_products(get_category_children($category));
+        $array["products"] = get_products(get_group_children($groups));
 
         // JSON válasz küldése ebből a tömbből
         $array["OK"] = 1;
