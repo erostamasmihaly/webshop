@@ -250,17 +250,20 @@ if (!function_exists('get_products')) {
             // Termék megtartása
             $keep = TRUE;
 
-            // Termékcsoport és bolt ID lekérdezése
-            $product_group_id = $product->group->category->id;
-            $product_shop_id = $product->shop->id;
+            // Hivatkozás a boltra és kategóriákra
+            // Enélkül ezen elemek nem jelennek meg a JSON-ban! :O
+            $product->shop->id;
+            $product->group->category->id;
+            $product->age->category->id;
+            $product->gender->category->id;
 
             // Ha meg van adva a kategória, akkor ezen kategóriára történő szűrés
-            if (($group_id != null) && (!in_array($product_group_id,$group_id))) {
+            if (($group_id != null) && (!in_array($product->group->category->id,$group_id))) {
                 $keep = FALSE;
             }        
 
             // Ha meg van adva a bolt azonosítója, akkor ezen boltra történő szűrés
-            if (($shop_id != null) && (!in_array($product_shop_id,$shop_id))) {
+            if (($shop_id != null) && (!in_array($product->shop->id,$shop_id))) {
                 $keep = FALSE;
             }     
             

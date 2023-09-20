@@ -71,7 +71,7 @@ $(function () {
         products.forEach(function(product) {
 
             // HTML elem létrehozása
-            html='<div class="col-lg-3 col-sm-4 col-6 text-center"><div class="card p-2 mb-2"><a href="/product/'+product.id+'" class="fw-bold">'+product.name+'<br><img src="'+product.image+'" class="img-fluid">';
+            html='<div class="col-lg-3 col-sm-4 col-6 text-center" group_id="'+product.group.category.id+'" age_id="'+product.age.category.id+'" gender_id="'+product.gender.category.id+'" shop_id="'+product.shop.id+'"><div class="card p-2 mb-2"><a href="/product/'+product.id+'" class="fw-bold">'+product.name+'<br><img src="'+product.image+'" class="img-fluid">';
 
             if (product.discount>0) {
                 // Ha leárazott, akkor kiemelt árcédulával és a leárazás nagyságának feltűntetésével
