@@ -1,4 +1,5 @@
 <!-- Külső -->
+<link href="{{ asset('css/external/select2.min.css') }}" rel="stylesheet">
 <link href="{{ asset('css/external/colorbox.css') }}" rel="stylesheet">
 <link href="{{ asset('css/external/datatables.min.css') }}" rel="stylesheet">
 

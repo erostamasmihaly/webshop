@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Spatie\Activitylog\LogOptions;
 use Spatie\Activitylog\Traits\LogsActivity;
 
@@ -20,4 +21,9 @@ class CategoryGroup extends Model
     {
         return LogOptions::defaults()->logFillable()->logOnlyDirty();
     }
+
+    // Lekérdezni a hozzá tartozó kategóriákat
+    public function categories(): HasMany {
+        return $this->hasMany(Category::class)->orderBy('sequence');
+    } 
 }

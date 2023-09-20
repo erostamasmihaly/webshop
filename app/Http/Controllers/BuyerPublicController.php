@@ -7,6 +7,7 @@ use App\Http\Services\UserInsert;
 use App\Mail\RegisterMail;
 use App\Models\Cart;
 use App\Models\Category;
+use App\Models\CategoryGroup;
 use App\Models\Favourite;
 use App\Models\Image;
 use App\Models\Product;
@@ -26,8 +27,21 @@ class BuyerPublicController extends Controller
     public function index()
     {
 
+        // Kategória csoport elemek lekérdezése
+        $ages = CategoryGroup::find(get_category_group_id('Korosztályok'))->categories;
+        $genders = CategoryGroup::find(get_category_group_id('Nemek'))->categories;  
+        $sizes = CategoryGroup::find(get_category_group_id('Méretek'))->categories; 
+
+        // Boltok lekérdezése
+        $shops = Shop::orderBy('name')->get();
+
         // Felület betöltése
-        return view('buyer.index');
+        return view('buyer.index', [
+            'shops' => $shops,
+            'ages' => $ages,
+            'genders' => $genders,
+            'sizes' => $sizes
+        ]);
     }
 
     // Fő oldal - termékek lekérdezése
