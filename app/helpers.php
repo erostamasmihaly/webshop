@@ -253,16 +253,22 @@ if (!function_exists('get_products')) {
         // Végigmenni minden egyes terméken
         foreach($products AS $product) {
 
+            // Objektum létrehozása
+            $object = new stdClass();
+
+            // Néhány termék tulajdonság hozzárendelése ehhez az objektumhoz
+            $object->id = $product->id;
+            $object->name = $product->name;
+            $object->discount = $product->discount;
+
             // Termék megtartása
             $keep = TRUE;
 
-            // Hivatkozás a kategóriákra
-            // Enélkül ezen elemek nem jelennek meg a JSON-ban! :O
-            $product->group->category->id;
-            $product->age->category->id;
-            $product->gender->category->id;
-            $product->size->category->id;
-            $product->shop->id;
+            // Kategóriák lekérdezése
+            $object->group_id = $product->group->category->id;
+            $object->age_id = $product->age->category->id;
+            $object->gender_id = $product->gender->category->id;
+            $object->size_id = $product->size->category->id;
 
             // Termékcsoportra történő szűrés
             if (($groups != null) && (!in_array($product->group->category->id,$groups))) {
@@ -293,8 +299,8 @@ if (!function_exists('get_products')) {
             if ($keep) {
 
                 // Bruttó és kedvezményes árak behelyezése
-                $product->brutto_price = product_prices($product->id)["brutto_ft"];
-                $product->discount_price = product_prices($product->id)["discount_ft"];
+                $object->brutto_price = product_prices($product->id)["brutto_ft"];
+                $object->discount_price = product_prices($product->id)["discount_ft"];
 
                 // Vezérkép elérhetősége
                 $dir = public_path('images/products/'.$product->id);
@@ -304,16 +310,16 @@ if (!function_exists('get_products')) {
                 if (File::exists($file_main)) {
 
                     // Ha van, akkor annak a behelyezése
-                    $product->image = 'images/products/'.$product->id.'/thumb/main_image.jpg';
+                    $object->image = 'images/products/'.$product->id.'/thumb/main_image.jpg';
                 } else {
 
                     // Ha nincs, akkor a nincs kép fájl alkalmazása
-                    $product->image = 'images/noimage.png';
+                    $object->image = 'images/noimage.png';
 
                 }
 
                 // Termék behelyezése a gyűjteménybe
-                $collection->push($product);
+                $collection->push($object);
             } 
         }
 
