@@ -83,14 +83,14 @@ class ImageUpload {
             $const->aspectRatio();
         })->save($dir.'/'.$name);
 
-        // 100x100-as kép
+        // 150x150-es kép
         $dir = public_path('images/products/'.$product_id.'/thumb');
         $dir_exists = is_dir($dir);
         if (!$dir_exists) {
             mkdir($dir, 0777, true);
         }
         $thumb = ImageMod::make($image);            
-        $thumb->resize(100, 100, function ($const) {
+        $thumb->resize(150, 150, function ($const) {
             $const->aspectRatio();
         })->save($dir.'/'.$name);
     }

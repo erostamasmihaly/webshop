@@ -80,10 +80,15 @@ if (!function_exists('create_main_image')) {
         // Fájlok megadása
         $file = $dir.'/'.$image;
         $file_main = $dir.'/main_image.jpg';
+        $file_main_thumb = $dir.'/thumb/main_image.jpg';
 
         // Megnézni, hogy van-e vezérkép fájl - ha igen, akkor törlés
         if (File::exists($file_main)) {
             File::delete($file_main);
+        }
+
+        if (File::exists($file_main_thumb)) {
+            File::delete($file_main_thumb);
         }
         
         // Vezérkép létrehozása
@@ -91,6 +96,12 @@ if (!function_exists('create_main_image')) {
         $imageMod->resize(800, 600, function ($const) {
             $const->aspectRatio();
         })->save($file_main);
+
+        // Vezérkép létrehozása - kicsi
+        $imageMod = ImageMod::make($file);            
+        $imageMod->resize(200, 200, function ($const) {
+            $const->aspectRatio();
+        })->save($file_main_thumb);
 
     }
 }
@@ -268,7 +279,7 @@ if (!function_exists('get_products')) {
                 if (File::exists($file_main)) {
 
                     // Ha van, akkor annak a behelyezése
-                    $product->image = 'images/products/'.$product->id.'/main_image.jpg';
+                    $product->image = 'images/products/'.$product->id.'/thumb/main_image.jpg';
                 } else {
 
                     // Ha nincs, akkor a nincs kép fájl alkalmazása

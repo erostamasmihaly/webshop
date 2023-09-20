@@ -11,8 +11,8 @@ use App\Models\ProductCategory;
 use App\Models\Shop;
 use Illuminate\Http\Request;
 use Illuminate\Database\Seeder;
-use Illuminate\Http\File;
 use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 
 class ProductSeeder extends Seeder
@@ -214,11 +214,11 @@ class ProductSeeder extends Seeder
 
         $this->uploadSetupImages(4);
 
-        // Fekete edző cipő hozzáadása a Centrumhoz
+        // Edző cipő hozzáadása a Centrumhoz
         Product::insertOrIgnore([
             "id" => 5,
             "shop_id" => $shop_array["Centrum"],
-            "name" => "Fekete edző cipő",
+            "name" => "Edző cipő",
             "summary" => "<p>Hideg napokra!</p>",
             "body" => "<p>Ősztől Tavaszig ajánlott a használata, avagy amikor már zordabb az idő!</p>",
             "price" => 22000,
@@ -294,10 +294,10 @@ class ProductSeeder extends Seeder
     private function uploadSetupImages($product_id) {
 
         // Könyvtár megadása
-        $dir = "setup/$product_id/";
+        $dir = "images/setup/$product_id/";
 
         // Fájlok lekérdezése
-        $files = Storage::files($dir);
+        $files = File::files(public_path($dir));
 
         // Képek gyűjtemények
         $collection = collect();
@@ -306,16 +306,13 @@ class ProductSeeder extends Seeder
         foreach ($files AS $file) {
 
             // Fájlnév meghatározása
-            $filename = str_replace($dir,"",$file);
+            $filename = $file->getBasename();
 
             // Megnézni, hogy az adott fájl már fel van-e töltve
             if (!Image::where('product_id', $product_id)->where('filename', $filename)->first()) {
 
-                // Fájl elérhetőség lekérdezése
-                $path = storage_path("app/$dir/$filename");
-
                 // Visszatérés a feltöltött fájl adataival
-                $uploaded_file = new UploadedFile($path, $filename);
+                $uploaded_file = new UploadedFile($file, $filename);
 
                 // Fájl behelyezése a gyűjteménybe
                 $collection->push($uploaded_file);
