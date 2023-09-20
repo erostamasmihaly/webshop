@@ -236,20 +236,13 @@ if (!function_exists('product_prices')) {
 
 // Termékek lekérdezése
 if (!function_exists('get_products')) {
-    function get_products($groups, $json = null) {
-
-        // JSON átalakítása tömbbé
-        if ($json!=null) {
-            $array = json_decode($json, TRUE);
-        } else {
-            $array = [];
-        }
+    function get_products($groups, $array = null) {
 
         // Szűrők lekérdezése
-        $shops = isset($array["shops"]) ?  $array["shops"] : null;
-        $sizes = isset($array["sizes"]) ?  $array["sizes"] : null;
-        $genders = isset($array["genders"]) ?  $array["genders"] : null;
-        $ages = isset($array["ages"]) ?  $array["ages"] : null;
+        $shops = empty($array["shops"]) ? null : $array["shops"];
+        $sizes = empty($array["sizes"]) ? null : $array["sizes"];
+        $genders = empty($array["genders"]) ? null : $array["genders"];
+        $ages = empty($array["ages"]) ? null : $array["ages"];
 
         // Gyűjtemény készítése
         $collection = collect();

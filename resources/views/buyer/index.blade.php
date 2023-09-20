@@ -8,39 +8,39 @@
 				<div class="bg-info bg-gradient text-dark text-center mb-2 fw-bold">Szűrők</div>
 				<div class="row">
 					<div class="col-lg-3 col-sm-4 col-6 mb-2">
-						<select class="form-control select2" id="filter_shop">
-							<option>Bolt kiválasztása</option>
+						Bolt kiválasztása
+						<select class="form-control select2 filter" id="filter_shop" multiple>
 							@foreach($shops AS $shop)
 								<option value="{{ $shop->id }}">{{ $shop->name }}</option>
 							@endforeach
 						</select>
 					</div>
 					<div class="col-lg-3 col-sm-4 col-6 mb-2">
-						<select class="form-control select2" id="filter_size">
-							<option>Méret kiválasztása</option>
+						Méret kiválasztása
+						<select class="form-control select2 filter" id="filter_size" multiple>
 							@foreach($sizes AS $size)
 								<option value="{{ $size->id }}">{{ $size->name }}</option>
 							@endforeach
 						</select>
 					</div>
 					<div class="col-lg-3 col-sm-4 col-6 mb-2">
-						<select class="form-control select2" id="filter_gender">
-							<option>Nem kiválasztása</option>
+						Nem kiválasztása
+						<select class="form-control select2 filter" id="filter_gender" multiple>
 							@foreach($genders AS $gender)
 								<option value="{{ $gender->id }}">{{ $gender->name }}</option>
 							@endforeach
 						</select>
 					</div>
 					<div class="col-lg-3 col-sm-4 col-6 mb-2">
-						<select class="form-control select2" id="filter_age">
-							<option>Korosztály kiválasztása</option>
+						Korosztály kiválasztása
+						<select class="form-control select2 filter" id="filter_age" multiple>
 							@foreach($ages AS $age)
 								<option value="{{ $age->id }}">{{ $age->name }}</option>
 							@endforeach
 						</select>
 					</div>
 					<div class="col-lg-3 col-sm-4 col-6 mb-2">
-						<button type="button" class="btn btn-primary w-100" id="filter">Szűrés</button>
+						<button type="button" class="btn btn-primary w-100" id="filter_default">Alapállapot</button>
 					</div>
 				</div>
 				<div class="bg-info bg-gradient text-dark text-center mb-2 fw-bold">Termékcsoportok</div>

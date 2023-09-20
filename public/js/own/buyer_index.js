@@ -6,11 +6,24 @@ $(function () {
         // SessionStorage-ba tárolt kategória lekérdezése
         var group_id = sessionStorage.getItem('group_id');
 
+        // Új objektum létrehozása
+        obj = new Object();
+
+        // Szűrők felvitele ebbe az objektumba
+        obj.shops = $("#filter_shop").val();
+        obj.sizes = $("#filter_size").val();
+        obj.genders = $("#filter_gender").val();
+        obj.ages = $("#filter_age").val();
+
+        // JSON létrehozása objektumból
+        filter = JSON.stringify(obj);
+        console.log(filter);
+
         // Kérés a szerver felé
         $.ajax({
             dataType: "json",
             url: "products",
-            data: "group_id="+group_id,
+            data: "group_id="+group_id+"&filter="+filter,
             type: "GET",
             cache: false,
             success: function (data) {
@@ -88,4 +101,25 @@ $(function () {
             $("#products").append(html);
         });
     }
+
+    // Alapállapot visszaállítása
+    $("#filter_default").on("click", function(){
+
+        // Minden szűrő esetén a legleső lehetőség kiválasztása
+        $("#filter_shop").val(null).trigger('change');
+        $("#filter_size").val(null).trigger('change');
+        $("#filter_gender").val(null).trigger('change');
+        $("#filter_age").val(null).trigger('change');
+
+        // Termékek lekérdezése
+        get_products();
+
+    });
+
+    // Szűrő módosítása után
+    $(".filter").on("change", function(){
+
+        // Termékek lekérdezése
+        get_products();
+    });
 });

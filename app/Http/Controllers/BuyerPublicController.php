@@ -54,7 +54,7 @@ class BuyerPublicController extends Controller
         $filter = $request->filter;
 
         // JSON átalakítása tömbbé
-        $array = json_decode($filter, TRUE);
+        $filter_array = json_decode($filter, TRUE);
 
         // Ebből tömb létrehozása, ha nem üres
         $groups = ($group_id==null) ? null : [$group_id];
@@ -71,7 +71,7 @@ class BuyerPublicController extends Controller
         $array["back_id"] = $parent_id;
 
         // Azon termékek lekérdezése, amelyek ehhez vannak hozzárendelve
-        $array["products"] = get_products(get_group_children($groups));
+        $array["products"] = get_products(get_group_children($groups), $filter_array);
 
         // JSON válasz küldése ebből a tömbből
         $array["OK"] = 1;
