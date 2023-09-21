@@ -47,6 +47,12 @@ class BuyerPublicController extends Controller
     // Fő oldal - termékek lekérdezése
     public function products(Request $request) {
 
+        // Oldalszám lekérdezése
+        $page = ($request->page=="null") ? null : $request->page;
+
+        // Egy oldalra jutó elemek számának lekérdezése
+        $limit = ($request->limit=="null") ? null : $request->limit;
+
         // Termékcsoport lekérdezése
         $group_id = ($request->group_id=="null") ? null : $request->group_id;
 
@@ -71,7 +77,7 @@ class BuyerPublicController extends Controller
         $array["back_id"] = $parent_id;
 
         // Azon termékek lekérdezése, amelyek ehhez vannak hozzárendelve
-        $array["products"] = get_products(get_group_children($groups), $filter_array);
+        $array["products"] = get_products(get_group_children($groups), $filter_array, $limit, $page);
 
         // JSON válasz küldése ebből a tömbből
         $array["OK"] = 1;

@@ -236,7 +236,7 @@ if (!function_exists('product_prices')) {
 
 // Termékek lekérdezése
 if (!function_exists('get_products')) {
-    function get_products($groups, $array = null) {
+    function get_products($groups, $array = null, $limit = null, $page = null) {
 
         // Szűrők lekérdezése
         $shops = empty($array["shops"]) ? null : $array["shops"];
@@ -248,7 +248,10 @@ if (!function_exists('get_products')) {
         $collection = collect();
 
         // Összes aktív és nem elfogyott termék lekérdezése
-        $products = Product::where(function($query) {return $query->where('active', 1)->orWhere('quantity', '>', 0);})->get();
+        $products = Product::where(function($query) {return $query->where('active', 1)->orWhere('quantity', '>', 0);});
+        
+        // Lekérdezés végrehajtása
+        $products = $products->get();
 
         // Végigmenni minden egyes terméken
         foreach($products AS $product) {
@@ -321,6 +324,11 @@ if (!function_exists('get_products')) {
                 // Termék behelyezése a gyűjteménybe
                 $collection->push($object);
             } 
+        }
+
+        // Ha lapozni is kell
+        if ($limit!=null && $page!=null) {
+            $collection = $collection->skip($limit*$page)->take($limit)->values();
         }
 
         // Visszatérés ezen gyűjteménnyel

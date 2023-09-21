@@ -17,16 +17,23 @@ $(function () {
 
         // JSON létrehozása objektumból
         filter = JSON.stringify(obj);
-        console.log(filter);
+        page = sessionStorage.getItem('page');
+        if (page==undefined) {
+            page = 0;
+        }
+
+        // Aktuális oldalszám mutatása
+        $("#current").html(parseInt(page)+1);
 
         // Kérés a szerver felé
         $.ajax({
             dataType: "json",
             url: "products",
-            data: "group_id="+group_id+"&filter="+filter,
+            data: "group_id="+group_id+"&filter="+filter+"&page="+page+"&limit=4",
             type: "GET",
             cache: false,
             success: function (data) {
+                console.log(data);
                 if (data.OK == 1) {
 
                     //// Ha minden rendben volt
@@ -54,11 +61,11 @@ $(function () {
 
         // Végigmenni minden egyes termékcsoporton és megjeleníteni őket a kijelölt területen
         groups.forEach(function(group) {
-            $("#groups").append('<div class="col-lg-3 col-sm-4 col-6 groups mb-1" group_id="'+group.id+'"><span class="badge bg-primary w-100 p-2">'+group.name+'</span></div>');
+            $("#groups").append('<div class="col-lg-3 col-sm-4 col-6 groups mb-1" group_id="'+group.id+'"><button class="badge bg-primary w-100 p-2">'+group.name+'</button></div>');
         });
 
         // Vissza gomb behelyezése
-        $("#groups").append('<div class="col-lg-3 col-sm-4 col-6 groups mb-2" group_id="'+back_id+'"><span class="badge bg-secondary w-100 p-2">Vissza</span></div>');
+        $("#groups").append('<div class="col-lg-3 col-sm-4 col-6 groups mb-2" group_id="'+back_id+'"><button class="badge bg-secondary w-100 p-2">Vissza</button></div>');
     }
 
     // Kategória kiválasztása
@@ -69,6 +76,9 @@ $(function () {
 
         // Ezen ID elmentése
         sessionStorage.setItem('group_id', group_id);
+
+        // Visszatérés az első oldalra
+        sessionStorage.setItem('page',0);
 
         // Termékek és kategóriák újbóli lekérdezése
         get_products();
@@ -111,6 +121,9 @@ $(function () {
         $("#filter_gender").val(null).trigger('change');
         $("#filter_age").val(null).trigger('change');
 
+        // Visszatérés az első oldalra
+        sessionStorage.setItem('page',0);
+
         // Termékek lekérdezése
         get_products();
 
@@ -118,6 +131,46 @@ $(function () {
 
     // Szűrő módosítása után
     $(".filter").on("change", function(){
+
+        // Visszatérés az első oldalra
+        sessionStorage.setItem('page',0);
+
+        // Termékek lekérdezése
+        get_products();
+    });
+
+    // Vissza
+    $("#back").on("click", function(){
+
+        // Aktuális oldalszám lekérdezése
+        page = sessionStorage.getItem(page);
+        
+        // Ezen érték csökkentése 1-el
+        page--; 
+
+        // Ha kisebb, mint 0, akkor 0 lesz
+        if (page<0) {
+            page=0;
+        }
+
+        // Ezen érték elmentése
+        sessionStorage.setItem("page", page);
+
+        // Termékek lekérdezése
+        get_products();
+    });
+
+    // Előre
+    $("#next").on("click", function(){
+
+        // Aktuális oldalszám lekérdezése
+        page = sessionStorage.getItem(page);
+        
+        // Ezen érték csökkentése 1-el
+        page++; 
+
+        // Ezen érték elmentése
+        sessionStorage.setItem("page", page);
 
         // Termékek lekérdezése
         get_products();
