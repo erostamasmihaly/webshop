@@ -236,7 +236,7 @@ if (!function_exists('product_prices')) {
 
 // Termékek lekérdezése
 if (!function_exists('get_products')) {
-    function get_products($groups, $array = null, $limit = null, $page = null) {
+    function get_products($groups, $all, $array = null, $limit = null, $page = null) {
 
         // Szűrők lekérdezése
         $shops = empty($array["shops"]) ? null : $array["shops"];
@@ -259,19 +259,27 @@ if (!function_exists('get_products')) {
             // Objektum létrehozása
             $object = new stdClass();
 
-            // Néhány termék tulajdonság hozzárendelése ehhez az objektumhoz
-            $object->id = $product->id;
-            $object->name = $product->name;
-            $object->discount = $product->discount;
+            if ($all) {
+
+                //// Ha minden információ kell
+                // Objektum kapjon meg mindent a terméktől
+                $object = $product;
+
+            } else {
+
+                //// Ha csak nagyon alap adatok kellenek (Főoldal számára)
+                // Néhány termék tulajdonság hozzárendelése ehhez az objektumhoz
+                $object->id = $product->id;
+                $object->name = $product->name;
+                $object->discount = $product->discount;
+                $object->group_id = $product->group->category->id;
+                $object->age_id = $product->age->category->id;
+                $object->gender_id = $product->gender->category->id;
+                $object->size_id = $product->size->category->id;
+            }
 
             // Termék megtartása
             $keep = TRUE;
-
-            // Kategóriák lekérdezése
-            $object->group_id = $product->group->category->id;
-            $object->age_id = $product->age->category->id;
-            $object->gender_id = $product->gender->category->id;
-            $object->size_id = $product->size->category->id;
 
             // Termékcsoportra történő szűrés
             if (($groups != null) && (!in_array($product->group->category->id,$groups))) {

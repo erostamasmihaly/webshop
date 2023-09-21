@@ -77,7 +77,7 @@ class BuyerPublicController extends Controller
         $array["back_id"] = $parent_id;
 
         // Azon termékek lekérdezése, amelyek ehhez vannak hozzárendelve
-        $array["products"] = get_products(get_group_children($groups), $filter_array, $limit, $page);
+        $array["products"] = get_products(get_group_children($groups), false, $filter_array, $limit, $page);
 
         // JSON válasz küldése ebből a tömbből
         $array["OK"] = 1;

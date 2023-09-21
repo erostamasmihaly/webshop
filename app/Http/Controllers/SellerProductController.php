@@ -30,9 +30,15 @@ class SellerProductController extends Controller
         // Minden olyan bolt lekérdezése, ami a felhasználóhoz hozzá van rendelve
         $shops = Shop::join('positions','positions.shop_id','shops.id')->join('user_positions','user_positions.position_id','positions.id')->where('user_positions.user_id', Auth::id())->pluck('shops.id')->toArray();
 
+        // Szűrés miatt ebből egy tömb létrehozása
+        $array["shops"] = $shops;
+
+        // Termékek lekérdezése
+        $products = get_products(null, $array);
+
         // Oldal meghívása
         return view('seller.product',[
-            'products' => get_products(null, $shops)
+            'products' => $products
         ]);
     }    
 

@@ -17,11 +17,12 @@
                             <th scope="col" class="all"></th>
                             <th scope="col" class="all">Termék neve</th>
                             <th scope="col" class="all">Egységár</th>
-                            <th scope="col" class="none">Kategória</th>
-                            <th scope="col" class="none">Rövid leírás</th>
+                            <th scope="col" class="none">Termékcsoport</th>
+                            <th scope="col" class="none">Méret</th>
+                            <th scope="col" class="none">Nem</th>
+                            <th scope="col" class="none">Korosztály</th>
                             <th scope="col" class="none">Elérhető mennyiség</th>
-                            <th scope="col" class="none">Eredeti egységár</th>
-                            <th scope="col" class="none">Kedvezmény nagysága</th>
+                            <th scope="col" class="none">Rövid leírás</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -41,11 +42,12 @@
 									</span>
 								@endif
                             </td>
-                            <td>{{ $product->category }}</td>
-                            <td>{!! $product->summary !!}</td>
+                            <td>{{ $product->group->category->name }}</td>
+                            <td>{{ $product->size->category->name }}</td>
+                            <td>{{ $product->gender->category->name }}</td>
+                            <td>{{ $product->age->category->name }}</td>
                             <td>{{ $product->quantity }} {{ $product->unit->category->name }}</td>
-                            <td>{{ $product->brutto_price }}</td>
-                            <td>{{ numformat_with_unit($product->discount,'%') }}</td>
+                            <td>{!! $product->summary !!}</td>
                         </tr>
                        @endforeach
                     </tbody>
