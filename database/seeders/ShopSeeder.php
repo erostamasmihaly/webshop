@@ -53,5 +53,18 @@ class ShopSeeder extends Seeder
             "updated_at" => now()
         ]);
 
+        // Sportsdirect
+        Shop::insertOrIgnore([
+            "id" => 2,
+            "name" => "Sportsdirect",
+            "summary" => "Ruhák és egyéb lakásban használt eszközök áruháza",
+            "address" => "Miskolc, Szentpéteri kapu 103.",
+            "latitude" => 48.1271,
+            "longitude" => 20.7825,
+            "created_at" => now(),
+            "updated_at" => now()
+        ]);
+        $shops["Sportsdirect"] = 2;
+
     }
 }

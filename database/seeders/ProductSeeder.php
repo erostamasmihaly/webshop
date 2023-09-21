@@ -288,6 +288,43 @@ class ProductSeeder extends Seeder
 
         $this->uploadSetupImages(6);
 
+         // Futó hosszú nadrág hozzáadása a Sportsdirecthez
+         Product::insertOrIgnore([
+            "id" => 7,
+            "shop_id" => $shop_array["Sportsdirect"],
+            "name" => "Futó hosszú nadrág",
+            "summary" => "<p>Melegebb napokra!</p>",
+            "body" => "<p>Tavaszig őszig, amikor még nincs túl meleg!</p>",
+            "price" => 15000,
+            "vat" => 27,
+            "discount" => 15,
+            "active" => 1,
+            "quantity" => 12,
+            "created_at" => now(),
+            "updated_at" => now()
+        ]); 
+
+        $array = [
+            [ $category_group_array["Mértékegységek"], $unit_array["darab"] ],
+            [ $category_group_array["Termékcsoportok"], $product_group_array["hosszú nadrág"] ],
+            [ $category_group_array["Méretek"], $size_array["XL"] ],
+            [ $category_group_array["Nemek"], $gender_array["férfi"] ],
+            [ $category_group_array["Korosztályok"], $age_array["felnőtt"] ]
+        ];
+
+        foreach ($array AS $subarray) {
+            ProductCategory::insertOrIgnore([
+                "id" => $i++,
+                "product_id" => 7,
+                "category_group_id" => $subarray[0],
+                "category_id" => $subarray[1],
+                "created_at" => now(),
+                "updated_at" => now()
+            ]);
+        }
+
+        $this->uploadSetupImages(7);
+
     }
 
     // Setup könyvtárba lévő képek feltöltése a megfelelő termékhez
