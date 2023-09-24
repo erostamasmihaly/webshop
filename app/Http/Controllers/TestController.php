@@ -15,11 +15,8 @@ class TestController extends Controller
 {
     public function index() {
 
-        $return = Product::find(1)->group;
-        dd($return);
-
         // Fizetéshez tartozó kosár bejegyzések lekérdezése
-        /*$carts = Payment::find(1)->carts;
+        $carts = Payment::find(1)->carts;
 
         // Végigmenni minden ilyen bejegyzésen
         foreach ($carts AS $cart) {
@@ -38,9 +35,18 @@ class TestController extends Controller
                 $cart->product->shop->email => $cart->product->shop->name
             ];
 
-            // Értesítés küldése az üzletnek
-            Notification::route('mail', $shop)->notify(new PaymentShop($notification_request));
+            // Értesítés beállítása
+            $payment_shop = new PaymentShop($notification_request);
 
-        }*/
+            // E-mail értesítés küldése az üzletnek
+            Notification::route('mail', $shop)->notify($payment_shop);
+
+            // Üzlet összes alkalmazottjának lekérdezése
+            $users = Shop::find(1)->users();
+
+            // Adatbázis értesítés küldése minden alkalmazottnak
+            Notification::send($users, $payment_shop);
+
+        }
     }
 }
