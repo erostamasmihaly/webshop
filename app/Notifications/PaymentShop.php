@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class PayedSeller extends Notification
+class PaymentShop extends Notification
 {
     use Queueable;
 
@@ -25,7 +25,7 @@ class PayedSeller extends Notification
     // Megadni, hogy milyen formában hozza létre az értesítést
     public function via(object $notifiable): array
     {
-        return ["mail"];
+        return ["mail","database"];
     }
 
     // E-mail értesítés
@@ -44,7 +44,7 @@ class PayedSeller extends Notification
         // Üzenet létrehozása
         return (new MailMessage)
                     ->greeting("Tisztelt $shop_name!")
-                    ->line("Az alábbi ön által árusított termék sikeresen megvásárolásra került:")
+                    ->line("Az alábbi ön által árusított termék sikeresen megvásárolásra került!")
                     ->line("Termék neve: $product_name")
                     ->line("Vásárolt mennyiség: $product_quantity $product_unit")
                     ->line("Egységár a vásárlás során: $product_price")
@@ -55,8 +55,27 @@ class PayedSeller extends Notification
 
     public function toArray(object $notifiable): array
     {
+        // Szükséges adatok lekérdezése
+        $shop_id = $this->shop->id; 
+        $user_name = $this->user->name;
+        $product_name = $this->cart->product->name;
+        $product_quantity = $this->cart->quantity;
+        $product_unit = $this->cart->product->unit->category->name;
+        $product_price =  numformat_with_unit($this->cart->price,"Ft");
+        $product_id = $this->cart->product->id;
+        
+        // Üzenet szövegének összeállítása
+        $body = "<ul><li>Termék neve: $product_name</li>
+        <li>Vásárolt mennyiség: $product_quantity $product_unit</li>
+        <li>Egységár a vásárlás során: $product_price</li>
+        <li>Vásárló felhasználói neve: $user_name</li></ul>";
+
+        // Üzenet mentése
         return [
-            //
+            'shop_id' => $shop_id,
+            'subject' => 'Az alábbi ön által árusított termék sikeresen megvásárolásra került!',
+            'body' => $body,
+            'product_id' => $product_id
         ];
     }
 }

@@ -3,8 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Payment;
+use App\Models\Product;
+use App\Models\Shop;
 use App\Models\User;
-use App\Notifications\PayedSeller;
+use App\Models\UserPosition;
+use App\Notifications\PaymentShop;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Notification;
 
@@ -12,7 +15,13 @@ class TestController extends Controller
 {
     public function index() {
 
-        $carts = Payment::find(1)->carts;
+        $return = Product::find(1)->group;
+        dd($return);
+
+        // Fizetéshez tartozó kosár bejegyzések lekérdezése
+        /*$carts = Payment::find(1)->carts;
+
+        // Végigmenni minden ilyen bejegyzésen
         foreach ($carts AS $cart) {
 
             // Kérés létrehozása az értesítéshez
@@ -30,8 +39,8 @@ class TestController extends Controller
             ];
 
             // Értesítés küldése az üzletnek
-            Notification::route('mail', $shop)->notify(new PayedSeller($notification_request));
+            Notification::route('mail', $shop)->notify(new PaymentShop($notification_request));
 
-        }
+        }*/
     }
 }

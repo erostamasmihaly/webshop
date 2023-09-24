@@ -226,8 +226,8 @@ if (!function_exists('product_prices')) {
         // Ezen árak elmentése egy tömbbe
         $array['brutto'] = $brutto_price;
         $array['discount'] = $discount_price; 
-        $array['brutto_ft'] = numformat_with_unit($brutto_price, 'Ft / '.$product->unit->category->name);
-        $array['discount_ft'] = numformat_with_unit($discount_price, 'Ft / '.$product->unit->category->name);
+        $array['brutto_ft'] = numformat_with_unit($brutto_price, 'Ft / '.$product->unit->name);
+        $array['discount_ft'] = numformat_with_unit($discount_price, 'Ft / '.$product->unit->name);
 
         // Visszatérés ezzel a tömbel
         return $array;
@@ -272,32 +272,32 @@ if (!function_exists('get_products')) {
                 $object->id = $product->id;
                 $object->name = $product->name;
                 $object->discount = $product->discount;
-                $object->group_id = $product->group->category->id;
-                $object->age_id = $product->age->category->id;
-                $object->gender_id = $product->gender->category->id;
-                $object->size_id = $product->size->category->id;
+                $object->group_id = $product->group->id;
+                $object->age_id = $product->age->id;
+                $object->gender_id = $product->gender->id;
+                $object->size_id = $product->size->id;
             }
 
             // Termék megtartása
             $keep = TRUE;
 
             // Termékcsoportra történő szűrés
-            if (($groups != null) && (!in_array($product->group->category->id,$groups))) {
+            if (($groups != null) && (!in_array($product->group->id,$groups))) {
                 $keep = FALSE;
             }    
             
             // Méretre történő szűrés
-            if (($sizes != null) && (!in_array($product->size->category->id,$sizes))) {
+            if (($sizes != null) && (!in_array($product->size->id,$sizes))) {
                 $keep = FALSE;
             }  
 
             // Nemre történő szűrés
-            if (($genders != null) && (!in_array($product->gender->category->id,$genders))) {
+            if (($genders != null) && (!in_array($product->gender->id,$genders))) {
                 $keep = FALSE;
             }  
 
             // Korosztályra történő szűrés
-            if (($ages != null) && (!in_array($product->age->category->id,$ages))) {
+            if (($ages != null) && (!in_array($product->age->id,$ages))) {
                 $keep = FALSE;
             }  
 

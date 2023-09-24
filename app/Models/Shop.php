@@ -2,8 +2,10 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Spatie\Activitylog\LogOptions;
 use Spatie\Activitylog\Traits\LogsActivity;
 
@@ -28,4 +30,10 @@ class Shop extends Model
     {
         return LogOptions::defaults()->logFillable()->logOnlyDirty();
     }
+
+    // Bolthoz tartozó állások
+    public function positions(): HasMany {
+        return $this->hasMany(Position::class);
+    }
+
 }

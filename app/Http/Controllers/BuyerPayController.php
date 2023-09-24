@@ -7,7 +7,7 @@ use App\Models\Cart;
 use App\Models\Payment;
 use App\Models\Product;
 use App\Models\User;
-use App\Notifications\PayedSeller;
+use App\Notifications\PaymentShop;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Notification;
