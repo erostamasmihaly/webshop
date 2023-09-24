@@ -19,8 +19,9 @@ class InteractionSeeder extends Seeder
         // Vásárló
         $buyer = User::where('name','vasarlo')->first();
 
-        // Termék
-        $product = Product::where('name','Fekete bőrkabát')->first();
+        // Termékek
+        $product_1 = Product::where('name','Fekete bőrkabát')->first();
+        $product_2 = Product::where('name','Futó hosszú nadrág')->first();
 
         // Vásárló megadja az adatai, hogy tudjon fizetni
         User::where("id", $buyer->id)->update([
@@ -34,33 +35,51 @@ class InteractionSeeder extends Seeder
         // Vásárló frissítése
         $buyer->refresh();
 
-        // Vásárló kedvelte a terméket
+        // Vásárló kedvelte az első terméket
         Favourite::insertOrIgnore([
             "id" => 1,
             "user_id" => $buyer->id,
-            "product_id" => $product->id,
+            "product_id" => $product_1->id,
             "created_at" => now(),
             "updated_at" => now()
         ]);
 
-        // Vásárló berakta a kosárba a terméket
+        // Vásárló berakta a kosárba az első terméket
         Cart::insertOrIgnore([
             "id" => 1,
             "user_id" => $buyer->id,
-            "product_id" => $product->id,
+            "product_id" => $product_1->id,
             "quantity" => 1,
             "created_at" => now(),
             "updated_at" => now()
         ]);
 
-        // Vásárló által megvett termék adatai
+        // Vásárló berakta a kosárba a második terméket, abból 2 db-ot
+        Cart::insertOrIgnore([
+            "id" => 2,
+            "user_id" => $buyer->id,
+            "product_id" => $product_2->id,
+            "quantity" => 2,
+            "created_at" => now(),
+            "updated_at" => now()
+        ]);
+
+        // Vásárló által megvett termékek adatai
         $items_array = [];
-        $cart = Cart::find(1);
-        $items_array[0]["ref"] = $cart->id;
-        $items_array[0]["price"] = product_prices($product->id)["discount"];
-        $items_array[0]["title"] = $product->name;
-        $items_array[0]["amount"] = $product->quantity;
+        $cart_1 = Cart::find(1);
+        $items_array[0]["ref"] = $cart_1->id;
+        $items_array[0]["price"] = product_prices($product_1->id)["discount"];
+        $items_array[0]["title"] = $product_1->name;
+        $items_array[0]["amount"] = $cart_1->quantity;
+        $cart_2 = Cart::find(2);
+        $items_array[1]["ref"] = $cart_2->id;
+        $items_array[1]["price"] = product_prices($product_2->id)["discount"];
+        $items_array[1]["title"] = $product_2->name;
+        $items_array[1]["amount"] = $cart_2->quantity;
         $items = json_encode($items_array);
+
+        // Összes ár kiszámítása
+        $total = ($items_array[0]["price"] * $items_array[0]["amount"]) + ($items_array[1]["price"] * $items_array[1]["amount"]);
 
         // Vásárló elérhetősége
         $invoice_array = [];
@@ -76,7 +95,7 @@ class InteractionSeeder extends Seeder
         Payment::insertOrIgnore([
             "id" => 1,
             "user_id" => $buyer->id,
-            "total" => product_prices($cart->product_id)["discount"],
+            "total" => $total,
             "items" => $items,
             "invoice" => $invoice,
             "order_ref" => generate_order_ref(),
@@ -87,28 +106,39 @@ class InteractionSeeder extends Seeder
             "updated_at" => now()   
         ]);
 
-        // Kosárba is módosult a termék
-        Cart::where("id", 1)->update([
-            "price" => product_prices($cart->product_id)["discount"],
+        // Kosarakba is módosult a termék
+        Cart::where("id", $cart_1->id)->update([
+            "price" => product_prices($cart_1->product_id)["discount"],
             "payment_id" => 1
         ]);
 
-        // Kosár frissítése
-        $cart->refresh();
-
-        // Termék mennyisége is csökken eggyel
-        Product::where("id", $cart->product_id)->update([
-            "quantity" => $product->quantity-1
+        Cart::where("id", $cart_2->id)->update([
+            "price" => product_prices($cart_2->product_id)["discount"],
+            "payment_id" => 1
         ]);
 
-        // Termék frissítése
-        $product->refresh();
+        // Kosarak frissítése
+        $cart_1->refresh();
+        $cart_2->refresh();
 
-        // Vásárló véleményt mond a termékről
+        // Termékek mennyisége is csökken
+        Product::where("id", $cart_1->product_id)->update([
+            "quantity" => $product_1->quantity-$cart_1->quantity
+        ]);
+
+        Product::where("id", $cart_2->product_id)->update([
+            "quantity" => $product_2->quantity-$cart_2->quantity
+        ]);
+
+        // Termékek frissítése
+        $product_1->refresh();
+        $product_2->refresh();
+
+        // Vásárló véleményt mond az első termékről
         Rating::insertOrIgnore([
             "id" => 1,
             "user_id" => $buyer->id,
-            "product_id" => $product->id,
+            "product_id" => $product_1->id,
             "stars" => 4,
             "title" => "Sajnos egy kicsit szűkös.",
             "created_at" => now(),

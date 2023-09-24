@@ -6,6 +6,9 @@ use Illuminate\Support\Facades\Route;
 // Bejelentkezés oldal
 Auth::routes(['register' => false, 'reset' => false]);
 
+//// Teszt
+Route::get('test', [App\Http\Controllers\TestController::class, 'index'])->name('test_index');
+
 //// Vásárlói szerepkör
 
 // Publikus

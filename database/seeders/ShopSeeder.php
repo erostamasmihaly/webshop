@@ -27,6 +27,7 @@ class ShopSeeder extends Seeder
             "address" => "Miskolc, Széchenyi István u. 111.",
             "latitude" => 48.1034,
             "longitude" => 20.7896,
+            "email" => config("app.test_shop_email_1"), // Mivel az .env-ből közvetlenül nem tud kiolvasni, csak a config-on keresztük közvetetten!
             "created_at" => now(),
             "updated_at" => now()
         ]);
@@ -61,6 +62,7 @@ class ShopSeeder extends Seeder
             "address" => "Miskolc, Szentpéteri kapu 103.",
             "latitude" => 48.1271,
             "longitude" => 20.7825,
+            "email" => config("app.test_shop_email_1"),
             "created_at" => now(),
             "updated_at" => now()
         ]);

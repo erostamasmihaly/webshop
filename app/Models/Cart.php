@@ -36,4 +36,9 @@ class Cart extends Model
     public function payment(): BelongsTo {
         return $this->belongsTo(Payment::class);
     }
+
+    // Kosárhoz tatzozó vásárló
+    public function user(): BelongsTo {
+        return $this->belongsTo(User::class);
+    }
 }

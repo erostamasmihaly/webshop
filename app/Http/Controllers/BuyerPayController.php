@@ -7,8 +7,10 @@ use App\Models\Cart;
 use App\Models\Payment;
 use App\Models\Product;
 use App\Models\User;
+use App\Notifications\PayedSeller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Session;
 
 class BuyerPayController extends Controller
