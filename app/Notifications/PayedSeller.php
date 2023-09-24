@@ -38,7 +38,7 @@ class PayedSeller extends Notification
         $product_name = $this->cart->product->name;
         $product_quantity = $this->cart->quantity;
         $product_unit = $this->cart->product->unit->category->name;
-        $product_price =  $this->cart->price;
+        $product_price =  numformat_with_unit($this->cart->price,"Ft");
         $product_id = $this->cart->product->id;
 
         // Üzenet létrehozása

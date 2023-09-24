@@ -22,10 +22,15 @@ class TestController extends Controller
                 'shop' => $cart->product->shop,
                 'user' => $cart->user,
                 'cart' => $cart
-            ]);  
+            ]);
+
+            // Üzlet e-mail címének és nevének lekérdezése
+            $shop = [
+                $cart->product->shop->email => $cart->product->shop->name
+            ];
 
             // Értesítés küldése az üzletnek
-            Notification::send($cart->product->shop, new PayedSeller($notification_request));
+            Notification::route('mail', $shop)->notify(new PayedSeller($notification_request));
 
         }
     }

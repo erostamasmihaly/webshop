@@ -20,8 +20,8 @@ class InteractionSeeder extends Seeder
         $buyer = User::where('name','vasarlo')->first();
 
         // Termékek
-        $product_1 = Product::where('name','Fekete bőrkabát')->first();
-        $product_2 = Product::where('name','Futó hosszú nadrág')->first();
+        $product_1 = Product::find(1);
+        $product_2 = Product::find(7);
 
         // Vásárló megadja az adatai, hogy tudjon fizetni
         User::where("id", $buyer->id)->update([
