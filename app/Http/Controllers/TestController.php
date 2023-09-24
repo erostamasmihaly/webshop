@@ -42,10 +42,12 @@ class TestController extends Controller
             Notification::route('mail', $shop)->notify($payment_shop);
 
             // Üzlet összes alkalmazottjának lekérdezése
-            $users = Shop::find(1)->users();
+            $users = Shop::find($cart->product->shop->id)->users();
 
             // Adatbázis értesítés küldése minden alkalmazottnak
-            Notification::send($users, $payment_shop);
+            if ($users->count() > 0) {
+                Notification::send($users, $payment_shop);
+            }
 
         }
     }
