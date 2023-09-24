@@ -6,6 +6,7 @@ use App\Http\Services\PaymentFinish;
 use App\Models\Cart;
 use App\Models\Payment;
 use App\Models\Product;
+use App\Models\Shop;
 use App\Models\User;
 use App\Notifications\PaymentShop;
 use Illuminate\Http\Request;
@@ -62,8 +63,8 @@ class BuyerPayController extends Controller
 
         // Kosár elemeinek behelyezése ebbe a tömbbe
         foreach ($carts as $cart) {
-            $items[$i]['ref'] = $cart->cart_id;
-            $items[$i]['title'] = $cart->name;
+            $items[$i]['ref'] = $cart->id;
+            $items[$i]['title'] = $cart->product_name;
             $items[$i]['amount'] = $cart->quantity;
             $items[$i]['price'] = $cart->discount_price;
             $i++;
@@ -211,6 +212,9 @@ class BuyerPayController extends Controller
             // Fizetés befejezése ezen elemekkel
             new PaymentFinish($request);
 
+            // Értesítés kiküldése
+            $this->notifications($payment->id);
+
             // Átirányítás a Vásárlási előzményekhez az üzenettel
             return redirect()->route('pay_history')->withMessage('Sikeres vásárlás! SimplePay tranzakció azonosító: '.$payment->transaction_id);
 
@@ -231,5 +235,45 @@ class BuyerPayController extends Controller
         return view('buyer.pay_history',[
             'elements' => get_pay_history()
         ]);
+    }
+
+    // Értesítések kiküldése
+    public function notifications($id) {
+
+        // Fizetéshez tartozó kosár bejegyzések lekérdezése
+        $carts = Payment::find($id)->carts;
+
+        // Végigmenni minden ilyen bejegyzésen
+        foreach ($carts AS $cart) {
+
+            // Kérés létrehozása az értesítéshez
+            $notification_request = new Request();
+            $notification_request->setMethod('POST');
+            $notification_request->request->add([
+                'shop' => $cart->product->shop,
+                'user' => $cart->user,
+                'cart' => $cart
+            ]);
+
+            // Üzlet e-mail címének és nevének lekérdezése
+            $shop = [
+                $cart->product->shop->email => $cart->product->shop->name
+            ];
+
+            // Értesítés beállítása
+            $payment_shop = new PaymentShop($notification_request);
+
+            // E-mail értesítés küldése az üzletnek
+            Notification::route('mail', $shop)->notify($payment_shop);
+
+            // Üzlet összes alkalmazottjának lekérdezése
+            $users = Shop::find($cart->product->shop->id)->users();
+
+            // Adatbázis értesítés küldése minden alkalmazottnak
+            if ($users->count() > 0) {
+                Notification::send($users, $payment_shop);
+            }
+
+        }
     }
 }
