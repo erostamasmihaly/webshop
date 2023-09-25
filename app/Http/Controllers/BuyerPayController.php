@@ -230,8 +230,21 @@ class BuyerPayController extends Controller
             // Fizetés mentése
             $payment->save();
 
+            // Hiba ok bővebb megfogalmazása
+            switch ($payment->result) {
+                case "FAIL":
+                    $result = "Sikertelen fizetés!";
+                    break;
+                case "CANCEL":
+                    $result = "Felhasználó által visszavonva!";
+                    break;
+                case "TIMEOUT":
+                    $result = "Időtúllépés miatt a fizetés megszakítva!";
+                    break;
+            }
+
             // Visszatérés a kosárba a hibával
-            return redirect()->route('buyer_cart')->withErrors(['Sikertelen művelet! Hiba oka: '.$payment->result]);
+            return redirect()->route('buyer_cart')->withErrors($result);
         }
     }
 

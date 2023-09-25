@@ -30,3 +30,6 @@
 @if (Request::is('pay/transaction_success'))
     <script src="{{ asset('js/own/pay_transaction_success.js') }}" defer></script>
 @endif
+@if (Request::is('pay/confirm'))
+    <script src="{{ asset('js/own/pay_confirm.js') }}" defer></script>
+@endif
