@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\DB;
 
 class FavouriteUpdate
 {
-    public $product_id, $state;
+    public $product_id, $state, $favourite_id;
 
     // Adatok lekérdezése
     public function __construct(Request $request)
@@ -30,6 +30,9 @@ class FavouriteUpdate
                 $favourite->user_id = Auth::id();
                 $favourite->product_id = $this->product_id;
                 $favourite->save(); 
+                
+                // Azonosító elmentése külön
+                $this->favourite_id = $favourite->id;
             } else {
 
                 // Ha kedvelés visszavonása, akkor törlés az adatbázisból

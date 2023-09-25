@@ -13,6 +13,7 @@ use App\Models\ProductCategory;
 use App\Models\Shop;
 use App\Models\User;
 use App\Notifications\FavouriteShop;
+use App\Notifications\UnfavouriteShop;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Notification;
@@ -89,7 +90,9 @@ class BuyerProtectedController extends Controller
 
         // Értesítés küldése állapot függvényében
         if ($favouriteUpdate->state == 1) {
-            $this->favourite_notification($favouriteUpdate->product_id);
+            $this->favourite_notification($favouriteUpdate->favourite_id);
+        } else {
+            $this->unfavourite_notification($favouriteUpdate->product_id, Auth::id());
         }
         
         // Válasz küldése
@@ -138,7 +141,44 @@ class BuyerProtectedController extends Controller
         // Adatbázis értesítés küldése minden alkalmazottnak
         if ($users->count() > 0) {
             Notification::send($users, $favourite_shop);
-         }
+        }
+
+    }
+
+// Értesítések kiküldése
+    public function unfavourite_notification($product_id, $user_id) {
+
+        // Termék és felhasználó lekérdezése
+        $product = Product::find($product_id);
+        $user = User::find($user_id);
+
+        // Kérés létrehozása az értesítéshez
+        $notification_request = new Request();
+        $notification_request->setMethod('POST');
+        $notification_request->request->add([
+            'shop' => $product->shop,
+            'user' => $user,
+            'product' => $product
+        ]);
+
+        // Üzlet e-mail címének és nevének lekérdezése
+        $shop = [
+            $product->shop->email => $product->shop->name
+        ];
+
+        // Értesítés beállítása
+        $unfavourite_shop = new UnfavouriteShop($notification_request);
+
+        // E-mail értesítés küldése az üzletnek
+        Notification::route('mail', $shop)->notify($unfavourite_shop);
+
+        // Üzlet összes alkalmazottjának lekérdezése
+        $users = Shop::find($product->shop->id)->users();
+
+        // Adatbázis értesítés küldése minden alkalmazottnak
+        if ($users->count() > 0) {
+            Notification::send($users, $unfavourite_shop);
+        }
 
     }
 }
