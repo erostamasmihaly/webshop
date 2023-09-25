@@ -16,5 +16,24 @@ class SellerIndexController extends Controller
     {
         return view('seller.index');
     }
+
+    // Értesítések oldal
+    public function notification() {
+
+        // Felhasználóhoz rendelt értesítések lekérdezése és megjelenítése
+        return view('seller.notification', [
+            'notifications' => auth()->user()->notifications
+        ]);
+    }
+
+    // Értesítés bejelölése, hogy látta
+    public function notification_read() {
+
+    }
+
+    // Összes értesítés bejelölése, hogy látta
+    public function notification_readall() {
+        
+    }
     
 }
