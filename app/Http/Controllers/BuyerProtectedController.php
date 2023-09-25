@@ -10,9 +10,11 @@ use App\Models\Cart;
 use App\Models\Favourite;
 use App\Models\Product;
 use App\Models\ProductCategory;
+use App\Models\Rating;
 use App\Models\Shop;
 use App\Models\User;
 use App\Notifications\FavouriteShop;
+use App\Notifications\RatingShop;
 use App\Notifications\UnfavouriteShop;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -103,13 +105,16 @@ class BuyerProtectedController extends Controller
 
     // Értékelés módosítása
     public function rating_change(RatingUpdate $ratingUpdate) {
+
+        // Értesítés küldése
+        $this->rating_notification($ratingUpdate->id);
         
         // Válasz küldése
         $array['OK'] = 1;
         return Response::json($array);
     }
 
-    // Értesítések kiküldése
+    // Értesítések kiküldése - Kedvelés
     public function favourite_notification($id) {
 
         // Kedvelés lekérdezése
@@ -145,7 +150,7 @@ class BuyerProtectedController extends Controller
 
     }
 
-// Értesítések kiküldése
+    // Értesítések kiküldése - Kedvelés visszavonása
     public function unfavourite_notification($product_id, $user_id) {
 
         // Termék és felhasználó lekérdezése
@@ -178,6 +183,33 @@ class BuyerProtectedController extends Controller
         // Adatbázis értesítés küldése minden alkalmazottnak
         if ($users->count() > 0) {
             Notification::send($users, $unfavourite_shop);
+        }
+
+    }
+
+    // Értesítések kiküldése - Kedvelés
+    public function rating_notification($id) {
+
+        // Értékelés lekérdezése
+        $rating = Rating::find($id);
+
+        // Üzlet e-mail címének és nevének lekérdezése
+        $shop = [
+            $rating->product->shop->email => $rating->product->shop->name
+        ];
+
+        // Értesítés beállítása
+        $rating_shop = new RatingShop($rating);
+
+        // E-mail értesítés küldése az üzletnek
+        Notification::route('mail', $shop)->notify($rating_shop);
+
+        // Üzlet összes alkalmazottjának lekérdezése
+        $users = Shop::find($rating->product->shop->id)->users();
+
+        // Adatbázis értesítés küldése minden alkalmazottnak
+        if ($users->count() > 0) {
+            Notification::send($users, $rating_shop);
         }
 
     }

@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\DB;
 
 class RatingUpdate {
 
+    public $id;
     private $user_id, $product_id, $title, $body, $stars;
 
     // Adatok lekérdezése
@@ -42,6 +43,9 @@ class RatingUpdate {
             
             // Értékelés mentése
             $rating->save();
+
+            // Azonosító lekérdezése
+            $this->id = $rating->id;
         });
     }
 

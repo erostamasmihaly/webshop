@@ -31,4 +31,9 @@ class Rating extends Model
     public function user(): BelongsTo {
         return $this->belongsTo(User::class);
     }
+
+    // Értékeléshez tartozó termék
+    public function product(): BelongsTo {
+        return $this->belongsTo(Product::class);
+    }
 }
