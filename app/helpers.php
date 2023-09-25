@@ -477,3 +477,10 @@ if (!function_exists('get_group_children')) {
         }
     }
 }
+
+// Csak a dátum mutatása
+if (!function_exists('show_date')) {
+    function show_date($datetime) {
+        return date("Y.m.d.",strtotime($datetime));
+    }
+}

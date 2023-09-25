@@ -3,7 +3,7 @@
 @section('content')
 <div class="container-fluid">
     <h4 class="card-title">Értesítések
-        <a href="{{ route('seller_product_create') }}" class="btn btn-primary">Összes olvasottnak jelölése</a>
+        <a href="{{ route('seller_notification_readall') }}" class="btn btn-primary">Összes olvasottnak jelölése</a>
     </h4>
     @include('message')
     <div class="card">
@@ -24,18 +24,20 @@
                             <tr>
                                 <td>{{ $notification->data['subject'] }}</td>
                                 <td>{!! $notification->data['body'] !!}</td>
-                                <td>{{ $notification->created_at }}</td>
+                                <td>{{ show_date($notification->created_at) }}</td>
                                 <td>
                                     @if($notification->read_at)
-                                        {{ $notification->read_at }}
+                                        {{ show_date($notification->read_at) }}
                                     @else
-                                        <a class="btn btn-primary"><i class="fa-solid fa-check"></i></a>
+                                        <a class="btn btn-primary" href="{{ route('seller_notification_read',$notification->id) }}"><i class="fa-solid fa-check"></i></a>
                                     @endif
                                 </td>
                             </tr>
                         @endforeach
                     </tbody>
                 </table>
+            @else
+                @include('empty')
             @endif
         </div>
     </div>

@@ -73,7 +73,7 @@ class PaymentShop extends Notification
         // Üzenet mentése
         return [
             'shop_id' => $shop_id,
-            'subject' => 'Az alábbi ön által árusított termék sikeresen megvásárolásra került!',
+            'subject' => 'Sikeres vásárlás történt!',
             'body' => $body,
             'product_id' => $product_id
         ];
