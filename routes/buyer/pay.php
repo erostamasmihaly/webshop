@@ -8,6 +8,9 @@ Route::group(['prefix' => 'pay'], function() {
     // Fizetés megerősítése
     Route::get('confirm', [App\Http\Controllers\BuyerPayController::class, 'confirm'])->name('pay_confirm');
 
+    // Adattovábbítási nyilatkozat
+    Route::get('statement', [App\Http\Controllers\BuyerPayController::class, 'statement'])->name('pay_statement');
+
     // Fizetés elkezdése
     Route::get('start', [App\Http\Controllers\BuyerPayController::class, 'start'])->name('pay_start');
 

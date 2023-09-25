@@ -38,6 +38,13 @@ class BuyerPayController extends Controller
 
     }
 
+    // Adattovábbítási nyilatkozat
+    public function statement() {
+        
+        // Oldal meghívása
+        return view('buyer.pay_statement');
+    }
+
     // Fizetés elindítása
     public function start()
     {

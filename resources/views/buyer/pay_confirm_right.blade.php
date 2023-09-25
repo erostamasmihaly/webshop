@@ -6,9 +6,9 @@
                 <div class="col-sm-6">
                     <div class="card p-1">
                         <p class="fw-bold">
-                            <a href="{{ route('product',$cart->id) }}"><i class="fa-solid fa-arrow-up-right-from-square"></i> {{ $cart->name }}</a>
+                            <a href="{{ route('product',$cart->id) }}"><i class="fa-solid fa-arrow-up-right-from-square"></i> {{ $cart->product->name }}</a>
                             <br>
-                            <small>Mennyiség: {{ $cart->quantity }} {{ $cart->unit }}</small>
+                            <small>Mennyiség: {{ $cart->quantity }} {{ $cart->product->unit->category->name }}</small>
                         </p>
                         <div class="badge bg-success">{{ $cart->discount_ft }}</div>
                     </div>
@@ -28,7 +28,7 @@
                 </a>
             </h5>
             <p>
-                <a href="https://simplepay.hu/vasarlo-aff/" target="_blank">
+                <a href="{{ asset('documents/simplepay.pdf') }}" target="_blank">
                     <img src="{{ asset('images/simplepay.png') }}" class="img-thumbnail"/>
                 </a>
             </p>
@@ -36,15 +36,15 @@
                 <div class="form-check">
                     <input class="form-check-input" type="checkbox" value="" name="accept" id="accept">
                     <label class="form-check-label" for="accept">Elfogadom a 
-                        <a href="https://simplepay.hu/vasarlo-aff/" target="_blank">
-                            <i class="fa-solid fa-arrow-up-right-from-square"></i> Vásárlói általános felhasználási feltételeket
+                        <a href="{{ route('pay_statement') }}" target="_blank">
+                            <i class="fa-solid fa-arrow-up-right-from-square"></i> Adattovábbítási nyilatkozatot
                         </a>
                     </label>
                 </div>
             </p>
         </div>
         <div class="bg-dark p-2">
-            <a href="{{ route('pay_start') }}" class="btn btn-primary float-end">Fizetés megerősítése</a>
+            <a href="{{ route('pay_start') }}" class="btn btn-primary w-100">Fizetés megerősítése</a>
         </div>
     </div>
 </div>
