@@ -3,7 +3,9 @@
 @section('content')
 <div class="container-fluid">
     <h4 class="card-title">Értesítések
-        <a href="{{ route('seller_notification_readall') }}" class="btn btn-primary">Összes olvasottnak jelölése</a>
+        @if(auth()->user()->unreadNotifications->count()>0)
+            <a href="{{ route('seller_notification_readall') }}" class="btn btn-primary">Összes olvasottnak jelölése</a>
+        @endif
     </h4>
     @include('message')
     <div class="card">
@@ -14,6 +16,7 @@
                     <thead>
                         <tr>
                             <th scope="col" class="all">Cím</th>
+                            <th scope="col" class="none">Üzlet</th>
                             <th scope="col" class="none">Leírás</th>
                             <th scope="col" class="all">Dátum</th>
                             <th scope="col" class="all">Látta</th>
@@ -23,6 +26,7 @@
                         @foreach($notifications AS $notification)
                             <tr>
                                 <td>{{ $notification->data['subject'] }}</td>
+                                <td>{{ $notification->data['shop_name'] }}</td>
                                 <td>{!! $notification->data['body'] !!}</td>
                                 <td>{{ show_date($notification->created_at) }}</td>
                                 <td>

@@ -10,8 +10,12 @@ use App\Models\Cart;
 use App\Models\Favourite;
 use App\Models\Product;
 use App\Models\ProductCategory;
+use App\Models\Shop;
 use App\Models\User;
+use App\Notifications\FavouriteShop;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Response;
 
 class BuyerProtectedController extends Controller
@@ -82,6 +86,11 @@ class BuyerProtectedController extends Controller
 
     // Kedvelés módosítása
     public function favourite_change(FavouriteUpdate $favouriteUpdate) {
+
+        // Értesítés küldése állapot függvényében
+        if ($favouriteUpdate->state == 1) {
+            $this->favourite_notification($favouriteUpdate->product_id);
+        }
         
         // Válasz küldése
         $array['total'] = Favourite::where('product_id', $favouriteUpdate->product_id)->count();
@@ -95,5 +104,41 @@ class BuyerProtectedController extends Controller
         // Válasz küldése
         $array['OK'] = 1;
         return Response::json($array);
+    }
+
+    // Értesítések kiküldése
+    public function favourite_notification($id) {
+
+        // Kedvelés lekérdezése
+        $favourite = Favourite::find($id);
+
+        // Kérés létrehozása az értesítéshez
+        $notification_request = new Request();
+        $notification_request->setMethod('POST');
+        $notification_request->request->add([
+            'shop' => $favourite->product->shop,
+            'user' => $favourite->user,
+            'product' => $favourite->product
+        ]);
+
+        // Üzlet e-mail címének és nevének lekérdezése
+        $shop = [
+            $favourite->product->shop->email => $favourite->product->shop->name
+        ];
+
+        // Értesítés beállítása
+        $favourite_shop = new FavouriteShop($notification_request);
+
+        // E-mail értesítés küldése az üzletnek
+        Notification::route('mail', $shop)->notify($favourite_shop);
+
+        // Üzlet összes alkalmazottjának lekérdezése
+        $users = Shop::find($favourite->product->shop->id)->users();
+
+        // Adatbázis értesítés küldése minden alkalmazottnak
+        if ($users->count() > 0) {
+            Notification::send($users, $favourite_shop);
+         }
+
     }
 }

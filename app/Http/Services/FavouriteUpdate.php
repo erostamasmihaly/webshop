@@ -9,8 +9,7 @@ use Illuminate\Support\Facades\DB;
 
 class FavouriteUpdate
 {
-    public $product_id;
-    private $state;
+    public $product_id, $state;
 
     // Adatok lekérdezése
     public function __construct(Request $request)

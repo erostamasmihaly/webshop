@@ -8,18 +8,18 @@ use Illuminate\Http\Request;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class PaymentShop extends Notification
+class FavouriteShop extends Notification
 {
     use Queueable;
 
-    private $shop, $user, $cart;
+    private $shop, $user, $product;
 
     // Adatok lekérdezése a kérésből
     public function __construct(Request $request)
     {
         $this->shop = $request->shop;
         $this->user = $request->user;
-        $this->cart = $request->cart;         
+        $this->product = $request->product;         
     }
 
     // Megadni, hogy milyen formában hozza létre az értesítést
@@ -35,22 +35,17 @@ class PaymentShop extends Notification
         // Szükséges adatok lekérdezése
         $shop_name = $this->shop->name; 
         $user_name = $this->user->name;
-        $product_name = $this->cart->product->name;
-        $product_quantity = $this->cart->quantity;
-        $product_unit = $this->cart->product->unit->category->name;
-        $product_price =  numformat_with_unit($this->cart->price,"Ft");
-        $product_id = $this->cart->product->id;
+        $product_name = $this->product->name;
+        $product_id = $this->product->id;
 
         // Üzenet létrehozása
         return (new MailMessage)
                     ->greeting("Tisztelt $shop_name!")
-                    ->line("Az alábbi ön által árusított termék sikeresen megvásárolásra került!")
+                    ->line("Az alábbi ön által árusított terméket az egyik vásárló kedvencnek jelölte!")
                     ->line("Termék neve: $product_name")
-                    ->line("Vásárolt mennyiség: $product_quantity $product_unit")
-                    ->line("Egységár a vásárlás során: $product_price")
                     ->line("Vásárló felhasználói neve: $user_name")
                     ->action("Termék megtekintése", route("product", $product_id))
-                    ->line("Köszönjük, hogy a termékét a Rendszerünkön keresztül adta el!");
+                    ->line("Köszönjük, hogy a Rendszerünket használja!");
     }
 
     public function toArray(object $notifiable): array
@@ -58,22 +53,17 @@ class PaymentShop extends Notification
         // Szükséges adatok lekérdezése
         $shop_name = $this->shop->name; 
         $user_name = $this->user->name;
-        $product_name = $this->cart->product->name;
-        $product_quantity = $this->cart->quantity;
-        $product_unit = $this->cart->product->unit->category->name;
-        $product_price =  numformat_with_unit($this->cart->price,"Ft");
-        $product_id = $this->cart->product->id;
+        $product_name = $this->product->name;
+        $product_id = $this->product->id;
         
         // Üzenet szövegének összeállítása
         $body = "<ul><li>Termék neve: $product_name</li>
-        <li>Vásárolt mennyiség: $product_quantity $product_unit</li>
-        <li>Egységár a vásárlás során: $product_price</li>
         <li>Vásárló felhasználói neve: $user_name</li></ul>";
 
         // Üzenet mentése
         return [
             'shop_name' => $shop_name,
-            'subject' => 'Sikeres vásárlás történt!',
+            'subject' => 'Termék kedvelve lett!',
             'body' => $body,
             'product_id' => $product_id
         ];
