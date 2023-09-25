@@ -56,26 +56,24 @@ class PaymentShop extends Notification
     public function toArray(object $notifiable): array
     {
         // Szükséges adatok lekérdezése
-        $shop_name = $this->shop->name; 
-        $user_name = $this->user->name;
-        $product_name = $this->cart->product->name;
         $product_quantity = $this->cart->quantity;
         $product_unit = $this->cart->product->unit->category->name;
         $product_price =  numformat_with_unit($this->cart->price,"Ft");
-        $product_id = $this->cart->product->id;
         
         // Üzenet szövegének összeállítása
-        $body = "<ul><li>Termék neve: $product_name</li>
-        <li>Vásárolt mennyiség: $product_quantity $product_unit</li>
-        <li>Egységár a vásárlás során: $product_price</li>
-        <li>Vásárló felhasználói neve: $user_name</li></ul>";
+        $body = "<ul><li>Vásárolt mennyiség: $product_quantity $product_unit</li>
+        <li>Egységár a vásárlás során: $product_price</li></ul>";
 
         // Üzenet mentése
         return [
-            'shop_name' => $shop_name,
+            'shop_id' => $this->shop->id,
+            'shop_name' => $this->shop->name,
             'subject' => 'Sikeres vásárlás történt!',
             'body' => $body,
-            'product_id' => $product_id
+            'product_id' => $this->cart->product->id,
+            'product_name' => $this->cart->product->name,
+            'user_id' => $this->user->id,
+            'user_name' => $this->user->name
         ];
     }
 }

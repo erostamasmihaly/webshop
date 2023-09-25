@@ -16,9 +16,11 @@
                     <thead>
                         <tr>
                             <th scope="col" class="all">Cím</th>
+                            <th scope="col" class="all">Termék</th>
                             <th scope="col" class="none">Üzlet</th>
+                            <th scope="col" class="none">Felhasználó</th>
                             <th scope="col" class="none">Leírás</th>
-                            <th scope="col" class="all">Dátum</th>
+                            <th scope="col" class="desktop">Dátum</th>
                             <th scope="col" class="all">Látta</th>
                         </tr>
                     </thead>
@@ -26,8 +28,18 @@
                         @foreach($notifications AS $notification)
                             <tr>
                                 <td>{{ $notification->data['subject'] }}</td>
-                                <td>{{ $notification->data['shop_name'] }}</td>
-                                <td>{!! $notification->data['body'] !!}</td>
+                                <td>
+                                    <a href="{{ route('seller_product_edit',$notification->data['product_id']) }}"><i class="fa-solid fa-arrow-up-right-from-square"></i> {{ $notification->data['product_name'] }}</a>
+                                </td>
+                                <td>
+                                    <a href="{{ route('shop',$notification->data['shop_id']) }}"><i class="fa-solid fa-arrow-up-right-from-square"></i> {{ $notification->data['shop_name'] }}</a>
+                                </td>
+                                <td>{{ $notification->data['user_name'] }}</td>
+                                <td>
+                                    @if(isset($notification->data['body']))
+                                        {!! $notification->data['body'] !!}
+                                    @endif
+                                </td>
                                 <td>{{ show_date($notification->created_at) }}</td>
                                 <td>
                                     @if($notification->read_at)
