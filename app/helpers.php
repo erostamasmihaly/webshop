@@ -155,9 +155,9 @@ if (!function_exists('get_cart')) {
             $cart->unit_name = $unit->name;
 
             // További árak meghatározása
-            $cart->brutto_price = product_prices($cart->product_id)["brutto"];
-            $cart->discount_price = product_prices($cart->product_id)["discount"];
-            $cart->discount_ft = product_prices($cart->product_id)["discount_ft"];
+            $cart->brutto_price = product_prices($cart->product_id, $cart->size_id)["brutto"];
+            $cart->discount_price = product_prices($cart->product_id, $cart->size_id)["discount"];
+            $cart->discount_ft = product_prices($cart->product_id, $cart->size_id)["discount_ft"];
             $total += $cart->discount_price * $cart->quantity;
         }
 
@@ -215,11 +215,21 @@ if (!function_exists('can_pay')) {
 
 // Termék árainak lekérdezése
 if (!function_exists('product_prices')) {
-    function product_prices($id, $size_id) {
+    function product_prices($id, $size_id = null) {
 
-        // Termék és árának kikeresése
+        // Termék
         $product = Product::find($id);
-        $product_price = ProductPrice::where('product_id', $id)->where('size_id', $size_id)->first();
+
+        // Megnézni, hogy van-e méret megadva
+        if ($size_id==null) {
+
+            // Ha nem, akkor a legnagyobb nettó ár alkalmazása
+            $product_price = ProductPrice::where('product_id', $id)->orderBy('price','desc')->first();
+        } else {
+
+            // Ha igen, akkor az adott mérethez tartozó ár alkalmazása
+            $product_price = ProductPrice::where('product_id', $id)->where('size_id', $size_id)->first();
+        }
 
         // Árak meghatározása
         $brutto_price = brutto_price($product_price->price, $product_price->vat);
@@ -231,7 +241,7 @@ if (!function_exists('product_prices')) {
         $array['brutto_ft'] = numformat_with_unit($brutto_price, 'Ft / '.$product->unit->category->name);
         $array['discount_ft'] = numformat_with_unit($discount_price, 'Ft / '.$product->unit->category->name);
 
-        // Visszatérés ezzel a tömbel
+        // Visszatérés ezzel a tömbbel
         return $array;
     }
 }
@@ -274,7 +284,7 @@ if (!function_exists('get_products')) {
                 $object->group_id = $product->group->category->id;
                 $object->age_id = $product->age->category->id;
                 $object->gender_id = $product->gender->category->id;
-                $object->size_id = $product->size->category->id;
+                $object->sizes = $product->sizes();
             }
 
             // Termék megtartása
@@ -284,9 +294,9 @@ if (!function_exists('get_products')) {
             if (($groups != null) && (!in_array($product->group->category->id,$groups))) {
                 $keep = FALSE;
             }    
-            
+
             // Méretre történő szűrés
-            if (($sizes != null) && (!in_array($product->size->category->id,$sizes))) {
+            if (($sizes != null) && (count(array_intersect($product->sizes()->toArray(),$sizes)))==0) {
                 $keep = FALSE;
             }  
 

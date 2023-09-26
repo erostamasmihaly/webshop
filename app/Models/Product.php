@@ -68,4 +68,33 @@ class Product extends Model
         return $this->hasMany(ProductPrice::class);
     }
 
+    // Egy termékhez tartozó méretek - ID
+    public function sizes() {
+        $this->load('prices');
+        return $this->prices->pluck('size_id');
+    }
+
+    // Egy termékhez tartozó méretek - Név
+    public function size_names() {
+
+        // Árak és méretek betöltése
+        $this->load('prices','prices.size');
+
+        // Üres tömb létrehozása
+        $array = [];
+
+        // Lekérdezni ezen árakat
+        $prices = $this->prices;
+
+        // Végigmenni minden egyes áron
+        foreach ($prices AS $price) {
+
+            // Méret behelyezése a tömbbe
+            $array[] = $price->size->name;
+        }
+
+        // Visszatérés ezen tömbbel
+        return array_values(array_unique($array));
+    }
+
 }
