@@ -16,7 +16,7 @@ class ProductPriceRequest extends FormRequest
 
         // Szabályok megadása
         $rules['price'] = 'required|min:0';
-        $rules['quantity'] = 'required|min:1';
+        $rules['quantity'] = 'required|min:0';
         $rules['vat'] = 'required|min:0';
         $rules['discount'] = 'required|min:0';
 
@@ -28,7 +28,7 @@ class ProductPriceRequest extends FormRequest
     public function messages() {
         return [
            'price' => 'Bruttó ár megadása kötelető és nem lehet kisebb, mint 0!',
-           'quantity' => 'Mennyiség megadása kötelető és nem lehet kisebb, mint 1!',
+           'quantity' => 'Mennyiség megadása kötelető és nem lehet kisebb, mint 0!',
            'vat'=> 'ÁFA megadása kötelező és nem lehet kisebb, mint 0!',
            'discount' => 'Kedvezmény megadása kötelező és nem lehet kisebb, mint 0!'
         ];
