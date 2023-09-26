@@ -39,4 +39,10 @@ Route::group(['prefix' => 'seller/product'], function() {
     // Értékelés moderálásának módosítása
     Route::post('rating/moderation', [App\Http\Controllers\SellerProductController::class, 'product_rating_moderation'])->name('seller_product_rating_moderation');
 
+    // Árak lekérdezése
+    Route::get('price', [App\Http\Controllers\SellerProductController::class, 'product_price'])->name('seller_product_price');
+
+    // Ár módosítása
+    Route::post('price', [App\Http\Controllers\SellerProductController::class, 'product_price_update'])->name('seller_product_price_update');
+
 });

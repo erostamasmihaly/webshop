@@ -38,11 +38,6 @@ class Product extends Model
         return $this->hasOne(ProductCategory::class)->where('category_group_id', get_category_group_id('Termékcsoportok'));
     }
 
-    // Egy termék mérete
-    public function size(): HasOne {
-        return $this->hasOne(ProductCategory::class)->where('category_group_id', get_category_group_id('Méretek'));
-    }
-
     // Egy termék nemei
     public function gender(): HasOne {
         return $this->hasOne(ProductCategory::class)->where('category_group_id', get_category_group_id('Nemek'));
@@ -66,6 +61,11 @@ class Product extends Model
     // Egy termékhez tartozó bolt
     public function shop(): BelongsTo {
         return $this->belongsTo(Shop::class);
+    }
+
+    // Egy termékhez tartozó árak
+    public function prices(): HasMany {
+        return $this->hasMany(ProductPrice::class);
     }
 
 }

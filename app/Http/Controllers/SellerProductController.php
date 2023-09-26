@@ -6,6 +6,7 @@ use App\Http\Services\ImageDelete;
 use App\Http\Services\ImageMain;
 use App\Http\Services\ImageSequence;
 use App\Http\Services\ImageUpload;
+use App\Http\Services\ProductPriceUpdate;
 use App\Http\Services\ProductUpdate;
 use App\Http\Services\RatingModeration;
 use App\Models\Category;
@@ -187,6 +188,27 @@ class SellerProductController extends Controller
     // Értékelés moderálásának módosítása
     public function product_rating_moderation(RatingModeration $ratingModeration) {
         
+        // Válasz küldése
+        $array['OK']=1;
+        return Response::json($array);
+    }
+
+    // Termék árainak lekérdezése
+    public function product_price(Request $request) {
+
+        // Termék árainak lekérdezése
+        $prices = Product::find($request->id)->prices;
+
+        // Válasz küldése
+        $array['OK']=1;
+        $array['prices'] = $prices;
+        return Response::json($array);
+
+    }
+
+    // Termék árának módosítása
+    public function product_price_update(ProductPriceUpdate $productPriceUpdate) {
+            
         // Válasz küldése
         $array['OK']=1;
         return Response::json($array);
