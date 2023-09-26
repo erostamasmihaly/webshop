@@ -8,12 +8,12 @@ use App\Models\CategoryGroup;
 use App\Models\Image;
 use App\Models\Product;
 use App\Models\ProductCategory;
+use App\Models\ProductPrice;
 use App\Models\Shop;
 use Illuminate\Http\Request;
 use Illuminate\Database\Seeder;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\File;
-use Illuminate\Support\Facades\Storage;
 
 class ProductSeeder extends Seeder
 {
@@ -21,8 +21,10 @@ class ProductSeeder extends Seeder
     public function run(): void
     {
 
-        // Számláló definiálása
+        // Számlálók definiálása
         $i = 1;
+        $j = 1;
+        $p = 0;
 
         // Boltok lekérdezése
         $shop_array = [];
@@ -66,26 +68,25 @@ class ProductSeeder extends Seeder
             $age_array[$category->name] = $category->id;
         }  
 
-        // Fekete bőrkabát hozzáadása a Centrumhoz
+        //// Fekete bőrkabát hozzáadása a Centrumhoz
+        $p++;
+        
+        // Termék létrehozása
         Product::insertOrIgnore([
-            "id" => 1,
+            "id" => $p,
             "shop_id" => $shop_array["Centrum"],
             "name" => "Fekete bőrkabát",
             "summary" => "<p>Fekete kabát, eredeti bőrből!</p>",
             "body" => "<p>Anyag: Eredeti bőr</p><p>Szín: Fekete</p>",
-            "price" => 10000,
-            "vat" => 27,
-            "discount" => 10,
             "active" => 1,
-            "quantity" => 23,
             "created_at" => now(),
             "updated_at" => now()
         ]);
 
+        // Kategóriák felvitele
         $array = [
             [ $category_group_array["Mértékegységek"], $unit_array["darab"] ],
             [ $category_group_array["Termékcsoportok"], $product_group_array["kabát"] ],
-            [ $category_group_array["Méretek"], $size_array["L"] ],
             [ $category_group_array["Nemek"], $gender_array["férfi"] ],
             [ $category_group_array["Korosztályok"], $age_array["felnőtt"] ]
         ];
@@ -93,7 +94,7 @@ class ProductSeeder extends Seeder
         foreach ($array AS $subarray) {
             ProductCategory::insertOrIgnore([
                 "id" => $i++,
-                "product_id" => 1,
+                "product_id" => $p,
                 "category_group_id" => $subarray[0],
                 "category_id" => $subarray[1],
                 "created_at" => now(),
@@ -101,28 +102,47 @@ class ProductSeeder extends Seeder
             ]);
         }
 
+        // Méret, árak és mennyiség felvitele
+        $array = [
+            [ $size_array["M"], 3, 10000, 27, 10],
+            [ $size_array["L"], 2, 10000, 27, 10],
+            [ $size_array["XL"], 4, 12000, 27, 10]
+        ];
+
+        foreach ($array AS $subarray) {
+            ProductPrice::insertOrIgnore([
+                "id" => $j++,
+                "product_id" => $p,
+                "size_id" => $subarray[0],
+                "quantity" => $subarray[1],
+                "price" => $subarray[2],
+                "vat" => $subarray[3],
+                "discount" => $subarray[4]
+            ]);
+        }
+
+        // Képek hozzárendelése
         $this->uploadSetupImages(1);
 
-        // Fehér téli kabát hozzáadása a Centrumhoz
+        //// Fehér téli kabát hozzáadása a Centrumhoz
+        $p++;
+
+        // Termék létrehozása
         Product::insertOrIgnore([
-            "id" => 2,
+            "id" => $p,
             "shop_id" => $shop_array["Centrum"],
             "name" => "Fehér téli kabát",
             "summary" => "<p>Fehér színű kabát, ami télen véd a lehülés ellen!</p>",
             "body" => "<p>Évszak: Tél</p><p>Szín: Fehér</p>",
-            "price" => 13000,
-            "vat" => 27,
-            "discount" => 5,
             "active" => 1,
-            "quantity" => 10,
             "created_at" => now(),
             "updated_at" => now()
         ]);  
 
+        // Kategóriák felvitele
         $array = [
             [ $category_group_array["Mértékegységek"], $unit_array["darab"] ],
             [ $category_group_array["Termékcsoportok"], $product_group_array["kabát"] ],
-            [ $category_group_array["Méretek"], $size_array["M"] ],
             [ $category_group_array["Nemek"], $gender_array["nő"] ],
             [ $category_group_array["Korosztályok"], $age_array["ifjú"] ]
         ];
@@ -130,7 +150,7 @@ class ProductSeeder extends Seeder
         foreach ($array AS $subarray) {
             ProductCategory::insertOrIgnore([
                 "id" => $i++,
-                "product_id" => 2,
+                "product_id" => $p,
                 "category_group_id" => $subarray[0],
                 "category_id" => $subarray[1],
                 "created_at" => now(),
@@ -138,28 +158,47 @@ class ProductSeeder extends Seeder
             ]);
         }
 
+        // Méret, árak és mennyiség felvitele
+        $array = [
+            [ $size_array["S"], 7, 13000, 27, 0],
+            [ $size_array["M"], 3, 13000, 27, 0],
+            [ $size_array["L"], 1, 13000, 27, 0]
+        ];
+
+        foreach ($array AS $subarray) {
+            ProductPrice::insertOrIgnore([
+                "id" => $j++,
+                "product_id" => $p,
+                "size_id" => $subarray[0],
+                "quantity" => $subarray[1],
+                "price" => $subarray[2],
+                "vat" => $subarray[3],
+                "discount" => $subarray[4]
+            ]);
+        }
+
+        // Képek hozzárendelése
         $this->uploadSetupImages(2);
 
-        // Futó rövid nadrág hozzáadása a Centrumhoz
+        //// Futó rövid nadrág hozzáadása a Centrumhoz
+        $p++;
+
+        // Termék létrehozása
         Product::insertOrIgnore([
-            "id" => 3,
+            "id" => $p,
             "shop_id" => $shop_array["Centrum"],
             "name" => "Futó rövid nadrág",
             "summary" => "<p>Melegebb napokra!</p>",
             "body" => "<p>Tavasztól Őszig ajánlott a használata, avagy amíg kellemes az idő!</p>",
-            "price" => 8500,
-            "vat" => 27,
-            "discount" => 0,
             "active" => 1,
-            "quantity" => 15,
             "created_at" => now(),
             "updated_at" => now()
         ]); 
 
+        // Kategóriák felvitele
         $array = [
             [ $category_group_array["Mértékegységek"], $unit_array["darab"] ],
             [ $category_group_array["Termékcsoportok"], $product_group_array["rövid nadrág"] ],
-            [ $category_group_array["Méretek"], $size_array["L"] ],
             [ $category_group_array["Nemek"], $gender_array["férfi"] ],
             [ $category_group_array["Korosztályok"], $age_array["felnőtt"] ]
         ];
@@ -167,7 +206,7 @@ class ProductSeeder extends Seeder
         foreach ($array AS $subarray) {
             ProductCategory::insertOrIgnore([
                 "id" => $i++,
-                "product_id" => 3,
+                "product_id" => $p,
                 "category_group_id" => $subarray[0],
                 "category_id" => $subarray[1],
                 "created_at" => now(),
@@ -175,28 +214,46 @@ class ProductSeeder extends Seeder
             ]);
         }
 
+        // Méret, árak és mennyiség felvitele
+        $array = [
+            [ $size_array["L"], 2, 9000, 27, 0],
+            [ $size_array["XL"], 4, 10000, 27, 0]
+        ];
+
+        foreach ($array AS $subarray) {
+            ProductPrice::insertOrIgnore([
+                "id" => $j++,
+                "product_id" => $p,
+                "size_id" => $subarray[0],
+                "quantity" => $subarray[1],
+                "price" => $subarray[2],
+                "vat" => $subarray[3],
+                "discount" => $subarray[4]
+            ]);
+        }
+
+        // Képek hozzárendelése
         $this->uploadSetupImages(3);
 
-        // Futó hosszú nadrág hozzáadása a Centrumhoz
+        //// Futó hosszú nadrág hozzáadása a Centrumhoz
+        $p++;
+
+        // Termék létrehozása
         Product::insertOrIgnore([
-            "id" => 4,
+            "id" => $p,
             "shop_id" => $shop_array["Centrum"],
             "name" => "Futó hosszú nadrág",
             "summary" => "<p>Hideg napokra!</p>",
             "body" => "<p>Ősztől Tavaszig ajánlott a használata, avagy amikor már zordabb az idő!</p>",
-            "price" => 11000,
-            "vat" => 27,
-            "discount" => 10,
             "active" => 1,
-            "quantity" => 10,
             "created_at" => now(),
             "updated_at" => now()
         ]); 
 
+        // Kategóriák felvitele
         $array = [
             [ $category_group_array["Mértékegységek"], $unit_array["darab"] ],
             [ $category_group_array["Termékcsoportok"], $product_group_array["hosszú nadrág"] ],
-            [ $category_group_array["Méretek"], $size_array["XL"] ],
             [ $category_group_array["Nemek"], $gender_array["nő"] ],
             [ $category_group_array["Korosztályok"], $age_array["felnőtt"] ]
         ];
@@ -204,7 +261,7 @@ class ProductSeeder extends Seeder
         foreach ($array AS $subarray) {
             ProductCategory::insertOrIgnore([
                 "id" => $i++,
-                "product_id" => 4,
+                "product_id" => $p,
                 "category_group_id" => $subarray[0],
                 "category_id" => $subarray[1],
                 "created_at" => now(),
@@ -212,28 +269,46 @@ class ProductSeeder extends Seeder
             ]);
         }
 
+        // Méret, árak és mennyiség felvitele
+        $array = [
+            [ $size_array["M"], 3, 20000, 27, 15],
+            [ $size_array["L"], 1, 20000, 27, 15]
+        ];
+
+        foreach ($array AS $subarray) {
+            ProductPrice::insertOrIgnore([
+                "id" => $j++,
+                "product_id" => $p,
+                "size_id" => $subarray[0],
+                "quantity" => $subarray[1],
+                "price" => $subarray[2],
+                "vat" => $subarray[3],
+                "discount" => $subarray[4]
+            ]);
+        }
+
+        // Képek hozzárendelése
         $this->uploadSetupImages(4);
 
-        // Edző cipő hozzáadása a Centrumhoz
+        //// Edző cipő hozzáadása a Centrumhoz
+        $p++;
+
+        // Termék létrehozása
         Product::insertOrIgnore([
-            "id" => 5,
+            "id" => $p,
             "shop_id" => $shop_array["Centrum"],
             "name" => "Edző cipő",
             "summary" => "<p>Hideg napokra!</p>",
             "body" => "<p>Ősztől Tavaszig ajánlott a használata, avagy amikor már zordabb az idő!</p>",
-            "price" => 22000,
-            "vat" => 27,
-            "discount" => 15,
             "active" => 1,
-            "quantity" => 23,
             "created_at" => now(),
             "updated_at" => now()
         ]); 
 
+        // Kategóriák felvitele
         $array = [
             [ $category_group_array["Mértékegységek"], $unit_array["darab"] ],
             [ $category_group_array["Termékcsoportok"], $product_group_array["edző cipő"] ],
-            [ $category_group_array["Méretek"], $size_array["46"] ],
             [ $category_group_array["Nemek"], $gender_array["férfi"] ],
             [ $category_group_array["Korosztályok"], $age_array["felnőtt"] ]
         ];
@@ -241,7 +316,7 @@ class ProductSeeder extends Seeder
         foreach ($array AS $subarray) {
             ProductCategory::insertOrIgnore([
                 "id" => $i++,
-                "product_id" => 5,
+                "product_id" => $p,
                 "category_group_id" => $subarray[0],
                 "category_id" => $subarray[1],
                 "created_at" => now(),
@@ -249,28 +324,47 @@ class ProductSeeder extends Seeder
             ]);
         }
 
+        // Méret, árak és mennyiség felvitele
+        $array = [
+            [ $size_array["44"], 2, 20000, 27, 5],
+            [ $size_array["45"], 3, 20000, 27, 5],
+            [ $size_array["46"], 3, 20000, 27, 5]
+        ];
+
+        foreach ($array AS $subarray) {
+            ProductPrice::insertOrIgnore([
+                "id" => $j++,
+                "product_id" => $p,
+                "size_id" => $subarray[0],
+                "quantity" => $subarray[1],
+                "price" => $subarray[2],
+                "vat" => $subarray[3],
+                "discount" => $subarray[4]
+            ]);
+        }
+
+        // Képek hozzárendelése
         $this->uploadSetupImages(5);
 
-        // Kék bakancs hozzáadása a Centrumhoz
+        //// Kék bakancs hozzáadása a Centrumhoz
+        $p++;
+
+        // Termék létrehozása
         Product::insertOrIgnore([
-            "id" => 6,
+            "id" => $p,
             "shop_id" => $shop_array["Centrum"],
             "name" => "Kék bakancs",
             "summary" => "<p>Hideg napokra!</p>",
             "body" => "<p>Ősztől Tavaszig ajánlott a használata, avagy amikor már zordabb az idő!</p>",
-            "price" => 31000,
-            "vat" => 27,
-            "discount" => 10,
             "active" => 1,
-            "quantity" => 23,
             "created_at" => now(),
             "updated_at" => now()
         ]); 
 
+        // Kategóriák felvitele
         $array = [
             [ $category_group_array["Mértékegységek"], $unit_array["darab"] ],
             [ $category_group_array["Termékcsoportok"], $product_group_array["bakancs"] ],
-            [ $category_group_array["Méretek"], $size_array["40"] ],
             [ $category_group_array["Nemek"], $gender_array["nő"] ],
             [ $category_group_array["Korosztályok"], $age_array["felnőtt"] ]
         ];
@@ -278,7 +372,7 @@ class ProductSeeder extends Seeder
         foreach ($array AS $subarray) {
             ProductCategory::insertOrIgnore([
                 "id" => $i++,
-                "product_id" => 6,
+                "product_id" => $p,
                 "category_group_id" => $subarray[0],
                 "category_id" => $subarray[1],
                 "created_at" => now(),
@@ -286,28 +380,46 @@ class ProductSeeder extends Seeder
             ]);
         }
 
+        // Méret, árak és mennyiség felvitele
+        $array = [
+            [ $size_array["40"], 7, 15000, 27, 0],
+            [ $size_array["41"], 3, 15000, 27, 0],
+        ];
+
+        foreach ($array AS $subarray) {
+            ProductPrice::insertOrIgnore([
+                "id" => $j++,
+                "product_id" => $p,
+                "size_id" => $subarray[0],
+                "quantity" => $subarray[1],
+                "price" => $subarray[2],
+                "vat" => $subarray[3],
+                "discount" => $subarray[4]
+            ]);
+        }
+
+        // Képek hozzárendelése
         $this->uploadSetupImages(6);
 
-         // Futó hosszú nadrág hozzáadása a Sportsdirecthez
-         Product::insertOrIgnore([
-            "id" => 7,
+        //// Futó hosszú nadrág hozzáadása a Sportsdirecthez
+        $p++;
+
+        // Termék létrehozása
+        Product::insertOrIgnore([
+            "id" => $p,
             "shop_id" => $shop_array["Sportsdirect"],
             "name" => "Futó hosszú nadrág",
             "summary" => "<p>Melegebb napokra!</p>",
             "body" => "<p>Tavaszig őszig, amikor még nincs túl meleg!</p>",
-            "price" => 15000,
-            "vat" => 27,
-            "discount" => 15,
             "active" => 1,
-            "quantity" => 12,
             "created_at" => now(),
             "updated_at" => now()
         ]); 
 
+        // Kategóriák felvitele
         $array = [
             [ $category_group_array["Mértékegységek"], $unit_array["darab"] ],
             [ $category_group_array["Termékcsoportok"], $product_group_array["hosszú nadrág"] ],
-            [ $category_group_array["Méretek"], $size_array["XL"] ],
             [ $category_group_array["Nemek"], $gender_array["férfi"] ],
             [ $category_group_array["Korosztályok"], $age_array["felnőtt"] ]
         ];
@@ -315,7 +427,7 @@ class ProductSeeder extends Seeder
         foreach ($array AS $subarray) {
             ProductCategory::insertOrIgnore([
                 "id" => $i++,
-                "product_id" => 7,
+                "product_id" => $p,
                 "category_group_id" => $subarray[0],
                 "category_id" => $subarray[1],
                 "created_at" => now(),
@@ -323,6 +435,25 @@ class ProductSeeder extends Seeder
             ]);
         }
 
+        // Méret, árak és mennyiség felvitele
+        $array = [
+            [ $size_array["L"], 4, 13000, 27, 10],
+            [ $size_array["XL"], 2, 13000, 27, 10],
+        ];
+
+        foreach ($array AS $subarray) {
+            ProductPrice::insertOrIgnore([
+                "id" => $j++,
+                "product_id" => $p,
+                "size_id" => $subarray[0],
+                "quantity" => $subarray[1],
+                "price" => $subarray[2],
+                "vat" => $subarray[3],
+                "discount" => $subarray[4]
+            ]);
+        }
+
+        // Képek hozzárendelése
         $this->uploadSetupImages(7);
 
     }

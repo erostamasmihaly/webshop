@@ -5,6 +5,7 @@ use App\Models\Category;
 use App\Models\CategoryGroup;
 use App\Models\Product;
 use App\Models\ProductCategory;
+use App\Models\ProductPrice;
 use App\Models\Rating;
 use App\Models\Role;
 use App\Models\User;
@@ -214,14 +215,15 @@ if (!function_exists('can_pay')) {
 
 // Termék árainak lekérdezése
 if (!function_exists('product_prices')) {
-    function product_prices($id) {
+    function product_prices($id, $size_id) {
 
-        // Termék kikeresése
+        // Termék és árának kikeresése
         $product = Product::find($id);
+        $product_price = ProductPrice::where('product_id', $id)->where('size_id', $size_id)->first();
 
         // Árak meghatározása
-        $brutto_price = brutto_price($product->price, $product->vat);
-        $discount_price = discount_price($brutto_price, $product->discount);
+        $brutto_price = brutto_price($product_price->price, $product_price->vat);
+        $discount_price = discount_price($brutto_price, $product_price->discount);
 
         // Ezen árak elmentése egy tömbbe
         $array['brutto'] = $brutto_price;

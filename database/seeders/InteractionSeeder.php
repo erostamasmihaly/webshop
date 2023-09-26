@@ -3,9 +3,11 @@
 namespace Database\Seeders;
 
 use App\Models\Cart;
+use App\Models\Category;
 use App\Models\Favourite;
 use App\Models\Payment;
 use App\Models\Product;
+use App\Models\ProductPrice;
 use App\Models\Rating;
 use App\Models\User;
 use Illuminate\Database\Seeder;
@@ -22,6 +24,9 @@ class InteractionSeeder extends Seeder
         // Termékek
         $product_1 = Product::find(1);
         $product_2 = Product::find(7);
+
+        // Méret
+        $size = Category::where('name', 'XL')->first();
 
         // Vásárló megadja az adatai, hogy tudjon fizetni
         User::where("id", $buyer->id)->update([
@@ -49,6 +54,7 @@ class InteractionSeeder extends Seeder
             "id" => 1,
             "user_id" => $buyer->id,
             "product_id" => $product_1->id,
+            "size_id" => $size->id,
             "quantity" => 1,
             "created_at" => now(),
             "updated_at" => now()
@@ -59,6 +65,7 @@ class InteractionSeeder extends Seeder
             "id" => 2,
             "user_id" => $buyer->id,
             "product_id" => $product_2->id,
+            "size_id" => $size->id,
             "quantity" => 2,
             "created_at" => now(),
             "updated_at" => now()
@@ -68,13 +75,13 @@ class InteractionSeeder extends Seeder
         $items_array = [];
         $cart_1 = Cart::find(1);
         $items_array[0]["ref"] = $cart_1->id;
-        $items_array[0]["price"] = product_prices($product_1->id)["discount"];
-        $items_array[0]["title"] = $product_1->name;
+        $items_array[0]["price"] = product_prices($product_1->id, $size->id)["discount"];
+        $items_array[0]["title"] = $product_1->name.": ".$size->name;
         $items_array[0]["amount"] = $cart_1->quantity;
         $cart_2 = Cart::find(2);
         $items_array[1]["ref"] = $cart_2->id;
-        $items_array[1]["price"] = product_prices($product_2->id)["discount"];
-        $items_array[1]["title"] = $product_2->name;
+        $items_array[1]["price"] = product_prices($product_2->id, $size->id)["discount"];
+        $items_array[1]["title"] = $product_2->name.": ".$size->name;
         $items_array[1]["amount"] = $cart_2->quantity;
         $items = json_encode($items_array);
 
@@ -108,12 +115,12 @@ class InteractionSeeder extends Seeder
 
         // Kosarakba is módosult a termék
         Cart::where("id", $cart_1->id)->update([
-            "price" => product_prices($cart_1->product_id)["discount"],
+            "price" => product_prices($cart_1->product_id, $size->id)["discount"],
             "payment_id" => 1
         ]);
 
         Cart::where("id", $cart_2->id)->update([
-            "price" => product_prices($cart_2->product_id)["discount"],
+            "price" => product_prices($cart_2->product_id, $size->id)["discount"],
             "payment_id" => 1
         ]);
 
@@ -122,17 +129,13 @@ class InteractionSeeder extends Seeder
         $cart_2->refresh();
 
         // Termékek mennyisége is csökken
-        Product::where("id", $cart_1->product_id)->update([
+        ProductPrice::where("id", $cart_1->product_id)->where("size_id", $size->id)->update([
             "quantity" => $product_1->quantity-$cart_1->quantity
         ]);
 
-        Product::where("id", $cart_2->product_id)->update([
+        ProductPrice::where("id", $cart_2->product_id)->where("size_id", $size->id)->update([
             "quantity" => $product_2->quantity-$cart_2->quantity
         ]);
-
-        // Termékek frissítése
-        $product_1->refresh();
-        $product_2->refresh();
 
         // Vásárló véleményt mond az első termékről
         Rating::insertOrIgnore([
