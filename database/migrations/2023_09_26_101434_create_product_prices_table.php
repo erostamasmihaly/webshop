@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Product;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -11,6 +12,7 @@ return new class extends Migration
     {
         Schema::create('product_prices', function (Blueprint $table) {
             $table->id();
+            $table->foreignIdFor(Product::class); // Termék
             $table->foreignId('size_id')->constrained(Category::class)->nullable(); // Méret
             $table->integer('quantity'); // Mennyiség
             $table->integer('price'); // Ár

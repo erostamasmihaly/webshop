@@ -18,11 +18,7 @@ class Product extends Model
         'name',
         'summary',
         'body',
-        'price',
-        'quantity',
         'active',
-        'vat',
-        'discount',
         'shop_id'
     ];
 

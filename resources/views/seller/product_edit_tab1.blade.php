@@ -1,4 +1,15 @@
 <div id="tab1" class="tab-pane in active">
+	<div class="row mb-2">
+		<div class="col-sm-3 fw-bold">
+			Név *
+		</div>
+		<div class="col-sm-9">
+			<input type="text" class="form-control" name="name" value="{{ old('name', $product->name) }}"/>
+			@if ($errors->has('name'))
+				<div class="invalid-feedback d-block">{{ $errors->first('name') }}</div>
+			@endif
+		</div>
+	</div>
     <div class="row mb-2">
 		<div class="col-sm-3 fw-bold">
 			Üzlet *
@@ -16,17 +27,6 @@
 	</div>
 	<div class="row mb-2">
 		<div class="col-sm-3 fw-bold">
-			Név *
-		</div>
-		<div class="col-sm-9">
-			<input type="text" class="form-control" name="name" value="{{ old('name', $product->name) }}"/>
-			@if ($errors->has('name'))
-				<div class="invalid-feedback d-block">{{ $errors->first('name') }}</div>
-			@endif
-		</div>
-	</div>
-	<div class="row mb-2">
-		<div class="col-sm-3 fw-bold">
 			Termékcsoport *
 		</div>
 		<div class="col-sm-9">
@@ -37,21 +37,6 @@
 			</select>
 			@if ($errors->has('group_id'))
 				<div class="invalid-feedback d-block">{{ $errors->first('group_id') }}</div>
-			@endif
-		</div> 
-	</div>
-	<div class="row mb-2">
-		<div class="col-sm-3 fw-bold">
-			Méret *
-		</div>
-		<div class="col-sm-9">
-			<select class="form-control select2" name="size_id">
-				@foreach($sizes AS $size)
-					<option value="{{ $size->id }}" @if($new) @selected(old('size_id')==$size->id) @else @selected(old('size_id',$product->size->category->id)==$size->id) @endif>{{ $size->name }}</option>
-				@endforeach
-			</select>
-			@if ($errors->has('size_id'))
-				<div class="invalid-feedback d-block">{{ $errors->first('size_id') }}</div>
 			@endif
 		</div> 
 	</div>
@@ -87,59 +72,6 @@
 	</div>
 	<div class="row mb-2">
 		<div class="col-sm-3 fw-bold">
-			Nettó ár *
-		</div>
-		<div class="col-sm-9">
-			<div class="input-group">
-				<input type="number" class="form-control" name="price" value="{{ old('price', $product->price) }}"/>
-				<span class="input-group-text">Ft</span>
-			</div>
-			@if ($errors->has('price'))
-				<div class="invalid-feedback d-block">{{ $errors->first('price') }}</div>
-			@endif
-		</div>
-	</div>
-	<div class="row mb-2">
-		<div class="col-sm-3 fw-bold">
-			ÁFA *
-		</div>
-		<div class="col-sm-9">
-			<div class="input-group">
-				<input type="number" class="form-control" name="vat" value="{{ old('vat', $product->vat) }}"/>
-				<span class="input-group-text">%</span>
-			</div>
-			@if ($errors->has('vat'))
-				<div class="invalid-feedback d-block">{{ $errors->first('vat') }}</div>
-			@endif
-		</div>
-	</div>
-	<div class="row mb-2">
-		<div class="col-sm-3 fw-bold">
-			Kedvezmény *
-		</div>
-		<div class="col-sm-9">
-			<div class="input-group">
-				<input type="number" class="form-control" name="discount" value="{{ old('discount', $product->discount) }}"/>
-				<span class="input-group-text">%</span>
-			</div>
-			@if ($errors->has('discount'))
-				<div class="invalid-feedback d-block">{{ $errors->first('discount') }}</div>
-			@endif
-		</div>
-	</div>
-	<div class="row mb-2">
-		<div class="col-sm-3 fw-bold">
-			Mennyiség *
-		</div>
-		<div class="col-sm-9">
-			<input type="number" class="form-control" name="quantity" value="{{ old('quantity', $product->quantity) }}"/>
-			@if ($errors->has('quantity'))
-				<div class="invalid-feedback d-block">{{ $errors->first('quantity') }}</div>
-			@endif
-		</div>
-	</div>
-	<div class="row mb-2">
-		<div class="col-sm-3 fw-bold">
 			Mértékegység *
 		</div>
 		<div class="col-sm-9">
@@ -152,16 +84,5 @@
 				<div class="invalid-feedback d-block">{{ $errors->first('unit_id') }}</div>
 			@endif
 		</div> 
-	</div>
-	<div class="row mb-2">
-		<div class="col-sm-3 fw-bold mb-3">
-			Aktív *
-		</div>
-		<div class="col-sm-9">
-			<select name="active" class="form-control">
-				<option value="0" @selected(old('active',$product->active)==0)>Nem</option>
-				<option value="1" @selected(old('active',$product->active)==1)>Igen</option>
-			</select>
-		</div>
 	</div>
 </div>

@@ -247,11 +247,8 @@ if (!function_exists('get_products')) {
         // Gyűjtemény készítése
         $collection = collect();
 
-        // Összes aktív és nem elfogyott termék lekérdezése
-        $products = Product::where(function($query) {return $query->where('active', 1)->orWhere('quantity', '>', 0);});
-        
-        // Lekérdezés végrehajtása
-        $products = $products->get();
+        // Összes aktív termék lekérdezése
+        $products = Product::where('active', 1)->get();
 
         // Végigmenni minden egyes terméken
         foreach($products AS $product) {
