@@ -9,6 +9,8 @@
                             <a href="{{ route('product',$cart->id) }}"><i class="fa-solid fa-arrow-up-right-from-square"></i> {{ $cart->product->name }}</a>
                             <br>
                             <small>Mennyiség: {{ $cart->quantity }} {{ $cart->product->unit->category->name }}</small>
+                            <br>
+                            <small>Méret: {{ $cart->size_name }}</small>
                         </p>
                         <div class="badge bg-success">{{ $cart->discount_ft }}</div>
                     </div>

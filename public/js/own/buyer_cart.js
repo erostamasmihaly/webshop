@@ -65,8 +65,12 @@ $(function () {
 
                 if (data.OK==1) {
 
+                    //// Ha minden rendben volt
+
+                    // Módosult mennyiség megállapítása
                     new_quantity = parseInt(quantity) + parseInt(quantity_old);
 
+                    // Megnézni, hogy van-e még belőle
                     if (new_quantity > 0) {
 
                         // Ha még mindig van belőle, akkor mennyiség módosítása
@@ -79,22 +83,27 @@ $(function () {
 
                     }
 
-                    if (data.total>0) {
+                    // Megnézni, hogy mekkora a fizetendő összeg 
+                    if (data.total!="0 Ft") {
 
-                        // Fizetendő összeg frissítése
+                        // Fizetendő összeg frissítése, ha nem 0 Ft
                         $("#total").html(data.total);
                     } else {
 
-                        // Felület frissítése
+                        // Felület frissítése, ha 0 Ft
                         window.location.href = window.location.href;
                     }
                     
 
                 } else {
+
+                    // Ha rendellenes válasz jött
                     console.log(data);
                 }
             },
             error: function(error) {
+
+                // Ha valami hiba történt
                 console.log(error);
             }
         });

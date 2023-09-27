@@ -31,9 +31,9 @@
                             <td><span class="quantity">{{ $cart->quantity }}</span> {{ $cart->unit_name }} @if($cart->size_name) ({{ $cart->size_name }}) @endif</td>
                             <td>{{ $cart->discount_ft }}</td>
                             <td>
-                                <button class="btn btn-success plus m-1" title="+1 {{ $cart->unit }} vásárlása"><i class="fa-solid fa-circle-plus"></i></button>  
-                                <button class="btn btn-danger minus m-1" title="-1 {{ $cart->unit }} vásárlása"><i class="fa-solid fa-circle-minus"></i></button> 
-                                <button class="btn btn-secondary delete m-1" title="Termék törlése"><i class="fa-solid fa-trash"></i></button> 
+                                <button type="button" class="btn btn-success plus m-1" title="+1 {{ $cart->unit }} vásárlása"><i class="fa-solid fa-circle-plus"></i></button>  
+                                <button type="button" class="btn btn-danger minus m-1" title="-1 {{ $cart->unit }} vásárlása"><i class="fa-solid fa-circle-minus"></i></button> 
+                                <button type="button" class="btn btn-secondary delete m-1" title="Termék törlése"><i class="fa-solid fa-trash"></i></button> 
                             </td>
                         </tr>
                        @endforeach
