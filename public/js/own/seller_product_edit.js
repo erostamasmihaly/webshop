@@ -408,8 +408,8 @@ $(function () {
         },
         // Oszlopok hozzárendelése
         columns: [
-            { data: "quantity" },
             { data: "size_name" },
+            { data: "quantity" },
             { data: "netto_price" },
             { data: "vat" },
             { data: "brutto_price" },
@@ -418,5 +418,54 @@ $(function () {
         ],
         processing: true,
         serverSide: false // Ez legyen FALSE, hogy az ajax.reload() működjön
+    });
+
+    // Új árazás felvitele
+    $("#insert_price").on("click", function(){
+
+        // Adatok lekérdezése
+        size_id = $("#size_id").val();
+        price = $("#price").val();
+        vat = $("#vat").val();
+        discount = $("#discount").val();
+        quantity = $("#quantity").val();
+
+        // Adat összeállítás
+        data = "product_id="+product_id+"&size_id="+size_id+"&price="+price+"&vat="+vat+"&discount="+discount+"&quantity="+quantity;
+
+        // Adatok elküldése a szervernek
+        $.ajax({
+            dataType: "json",
+            url: "/seller/product/price",
+            type: "POST",
+            data: data,
+            cache: false,
+            success: function (data) {
+
+                if (data.OK == 1) {
+                    
+                    // Ha minden rendben volt, akkor táblázat frissítése
+                    $("#prices").DataTable().ajax.reload();
+
+                    // Mezők visszaállítása
+                    $("#price").val(0);
+                    $("#discount").val(0);
+                    $("#vat").val(27);
+                    $("#quantity").val(0);
+
+                    // Jelezni, hogy sikeres volt a művelet
+                    $("#success").removeClass("d-none");
+                    $("#insert_price").addClass("d-none");
+                    setTimeout(function(){
+                        $("#success").addClass("d-none");
+                        $("#insert_price").removeClass("d-none");
+                    },3000);
+
+                }
+            },
+            error: function(error) {
+                console.log(error);
+            }
+        });
     });
 });

@@ -37,20 +37,16 @@ class ProductPriceUpdate
                 $product_price->product_id = $this->product_id;
             }
 
-            // Megnézni, hogy milyen mennyiséget kell felvinni
-            if ($this->quantity==0) {
-                
-                // Ha 0 a mennyiség, akkor törlés
-                $product_price->delete();
-            } else {
-                
-                // Ha nem 0, akkor módosítás
-                $product_price->price = $this->price;
-                $product_price->vat = $this->vat;
-                $product_price->discount = $this->discount;
+            // Csak akkor legyen mennyiség módosítva, ha nem 0
+            if ($this->quantity>0) {
                 $product_price->quantity = $this->quantity;
-                $product_price->save();
             }
+
+            // Minden más módosítása
+            $product_price->price = $this->price;
+            $product_price->vat = $this->vat;
+            $product_price->discount = $this->discount;
+            $product_price->save();
             
 
         });

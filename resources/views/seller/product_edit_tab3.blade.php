@@ -2,16 +2,19 @@
     <table id="prices" class="table table-bordered table-striped table-condensed w-100">
         <thead>
             <tr>
-                <th scope="col" class="all">Darab</th>
                 <th scope="col" class="all">Méret</th>
+                <th scope="col" class="all">Mennyiség</th>
                 <th scope="col" class="all">Nettó ár</th>
-                <th scope="col" class="none">ÁFA</th>
+                <th scope="col" class="all">ÁFA</th>
                 <th scope="col" class="none">Bruttó ár</th>
-                <th scope="col" class="none">Kedvezmény</th>
-                <th scope="col" class="none">Kedvezményezett ár</th>
+                <th scope="col" class="all">Kedvezmény</th>
+                <th scope="col" class="none">Kedvezményes ár</th>
             </tr>
         </thead>
     </table>
+	<div class="alert alert-primary" role="alert">
+		Abban az esetben, ha a mennyiségnek 0 van megadva, akkor a mennyiségen kívül minden más érték módosulni fog!
+	</div>
     <div class="row mb-2">
 		<div class="col-sm-3 fw-bold">
 			Méret *
@@ -33,7 +36,7 @@
 		</div>
 		<div class="col-sm-9">
 			<div class="input-group">
-				<input type="number" class="form-control" id="price" value="{{ old('price', $product->price) }}"/>
+				<input type="number" class="form-control" id="price" value="{{ old('price', 0) }}"/>
 				<span class="input-group-text">Ft</span>
 			</div>
 			@if ($errors->has('price'))
@@ -47,7 +50,7 @@
 		</div>
 		<div class="col-sm-9">
 			<div class="input-group">
-				<input type="number" class="form-control" id="vat" value="{{ old('vat', $product->vat) }}"/>
+				<input type="number" class="form-control" id="vat" value="{{ old('vat', 27) }}"/>
 				<span class="input-group-text">%</span>
 			</div>
 			@if ($errors->has('vat'))
@@ -61,7 +64,7 @@
 		</div>
 		<div class="col-sm-9">
 			<div class="input-group">
-				<input type="number" class="form-control" id="discount" value="{{ old('discount', $product->discount) }}"/>
+				<input type="number" class="form-control" id="discount" value="{{ old('discount', 0) }}"/>
 				<span class="input-group-text">%</span>
 			</div>
 			@if ($errors->has('discount'))
@@ -74,13 +77,16 @@
 			Mennyiség *
 		</div>
 		<div class="col-sm-9">
-			<input type="number" class="form-control" id="quantity" value="{{ old('quantity', $product->quantity) }}"/>
+			<input type="number" class="form-control" id="quantity" value="{{ old('quantity', 0) }}"/>
 			@if ($errors->has('quantity'))
 				<div class="invalid-feedback d-block">{{ $errors->first('quantity') }}</div>
 			@endif
 		</div>
 	</div>
     <div>
-        <button class="btn btn-primary" id="insert_price">Ár felvitele</button>
+        <button type="button" class="btn btn-primary" id="insert_price">Ár felvitele</button>
+		<div class="alert alert-success d-none" id="success" role="alert">
+  			Sikeres művelet!
+		</div>
     </div>
 </div>
