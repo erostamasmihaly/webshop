@@ -455,6 +455,7 @@ $(function () {
 
                     // Jelezni, hogy sikeres volt a művelet
                     $("#success").removeClass("d-none");
+                    $("#error").addClass("d-none");
                     $("#insert_price").addClass("d-none");
                     setTimeout(function(){
                         $("#success").addClass("d-none");
@@ -464,7 +465,26 @@ $(function () {
                 }
             },
             error: function(error) {
-                console.log(error);
+
+                // Hibaüzenetek lekérdezése
+                errors = error.responseJSON.errors;
+
+                // Hibaüzenet helyének ürítése
+                $("#error").html("");
+
+                // Végigmenni minden egyes hibán és berakni erre a helyre
+                $.each(errors, function(key, value) {
+                    $("#error").append("<p>"+value+"</p>");
+                });
+
+                // Jelezni a hibát 
+                $("#success").addClass("d-none");
+                $("#error").removeClass("d-none");
+                $("#insert_price").addClass("d-none");
+                setTimeout(function(){
+                    $("#error").addClass("d-none");
+                    $("#insert_price").removeClass("d-none");
+                },3000);
             }
         });
     });

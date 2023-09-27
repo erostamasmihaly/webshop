@@ -88,5 +88,6 @@
 		<div class="alert alert-success d-none" id="success" role="alert">
   			Sikeres művelet!
 		</div>
+		<div class="alert alert-danger d-none" id="error" role="alert"></div>
     </div>
 </div>
