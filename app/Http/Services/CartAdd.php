@@ -11,13 +11,14 @@ class CartAdd
 {
 
     // Privát adatok
-    private $product_id, $quantity;
+    private $product_id, $quantity, $size_id;
 
     // Adatok lekérdezése
     public function __construct(Request $request)
     {
         $this->product_id = $request->product_id;
         $this->quantity = $request->quantity;
+        $this->size_id = $request->size_id;
         $this->addToCart();
     }
 
@@ -27,7 +28,7 @@ class CartAdd
         DB::transaction(function () {
 
             // Megnézni, hogy már ezen termék benne van-e a kosásrban
-            $cart = Cart::where("user_id", Auth::id())->where("product_id", $this->product_id)->whereNull("payment_id")->first();
+            $cart = Cart::where("user_id", Auth::id())->where("product_id", $this->product_id)->where("size_id",$this->size_id)->whereNull("payment_id")->first();
 
             if (!$cart) {
 
@@ -36,6 +37,7 @@ class CartAdd
                 $cart->user_id = Auth::id();
                 $cart->product_id = $this->product_id;
                 $cart->quantity = $this->quantity;
+                $cart->size_id = $this->size_id;
                 $cart->save();
             
             } else {

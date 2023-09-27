@@ -75,7 +75,7 @@ class Product extends Model
     }
 
     // Egy termékhez tartozó méretek - Név
-    public function size_names() {
+    public function sizes_array() {
 
         // Árak és méretek betöltése
         $this->load('prices','prices.size');
@@ -89,12 +89,15 @@ class Product extends Model
         // Végigmenni minden egyes áron
         foreach ($prices AS $price) {
 
+            // Mennyiség behelyezése a mérethez
+            $price->size->quantity = $price->quantity;
+
             // Méret behelyezése a tömbbe
-            $array[] = $price->size->name;
+            $array[] = $price->size;
         }
 
         // Visszatérés ezen tömbbel
-        return array_values(array_unique($array));
+        return $array;
     }
 
 }

@@ -23,8 +23,6 @@
             </div>
             <div class="col-sm-3 fw-bold">Termékcsoport</div>
             <div class="col-sm-9">{{ $product->group->category->name }}</div>
-            <div class="col-sm-3 fw-bold">Méretek</div>
-            <div class="col-sm-9">{{ implode(', ',$product->size_names()) }}</div>
             <div class="col-sm-3 fw-bold">Nem</div>
             <div class="col-sm-9">{{ $product->gender->category->name }}</div>
             <div class="col-sm-3 fw-bold">Korosztály</div>

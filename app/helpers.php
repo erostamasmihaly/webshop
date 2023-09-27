@@ -150,9 +150,13 @@ if (!function_exists('get_cart')) {
             // Mértékegység adatainak lekérdezése
             $unit = ProductCategory::find($unit->id)->category;
 
+            // Méret adatainak lekérdezése
+            $size = Category::find($cart->size_id);
+
             // Elem kiegészítése a termék és a mértékegység nevével
             $cart->product_name = $product->name;
             $cart->unit_name = $unit->name;
+            $cart->size_name = $size->name;
 
             // További árak meghatározása
             $cart->brutto_price = product_prices($cart->product_id, $cart->size_id)["brutto"];

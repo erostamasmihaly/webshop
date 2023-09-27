@@ -13,49 +13,60 @@ $(function () {
     // Kosárba helyezés
     $("#cart_add").on("click", function() {
 
-        // Mennyiség lekérdezése
+        // Adatok lekérdezése
         quantity = $("#quantity").val();
+        size_id = $("#size").val();
+        max = $("#size :selected").attr("max");
 
         // Megnézni, hogy van-e mennyiség megadva
         if (quantity > 0) {
 
-            // Adatok átküldése
-            $.ajax({
-                dataType: "json",
-                url: "/buyer/cart/add",
-                data: "product_id="+product_id+"&quantity="+quantity,
-                type: "POST",
-                cache: false,
-                success: function (data) {
+            response = true;
 
-                    if (data.OK==1) {
+            if (quantity > max) {
+                response = confirm("A jelenleg elérhető mennyiségnél több lett megadva. Fizetéskor csak azon mennyiség lesz kifizetve, amennyi épp a fizetés során volt elérhető! Folytatja tovább a kosárba helyezést?")
+            }
 
-                        // Ha sikeres volt, akkor a hozzá tartozó üzenet megjelenítése
-                        $("#cart_success").removeClass("d-none").html("Sikeres művelet!");
+            if (response) {
 
-                        // Visszaállítani 0-ra a mező értékét
-                        $("#quantity").val(0);
+                // Adatok átküldése
+                $.ajax({
+                    dataType: "json",
+                    url: "/buyer/cart/add",
+                    data: "product_id="+product_id+"&quantity="+quantity+"&size_id="+size_id,
+                    type: "POST",
+                    cache: false,
+                    success: function (data) {
 
-                    } else {
+                        if (data.OK==1) {
 
-                        // Ha nem sikerült, akkor a hibaüzenet megjelenítése
+                            // Ha sikeres volt, akkor a hozzá tartozó üzenet megjelenítése
+                            $("#cart_success").removeClass("d-none").html("Sikeres művelet!");
+
+                            // Visszaállítani 0-ra a mező értékét
+                            $("#quantity").val(0);
+
+                        } else {
+
+                            // Ha nem sikerült, akkor a hibaüzenet megjelenítése
+                            $("#cart_error").removeClass("d-none").html("Sikertelen művelet!");
+
+                        }
+
+                        // Kosárba rakás gomb elrejtése
+                        cart_add_hide();
+
+                    },
+                    error: function (error) {
+
+                        // Ha hiba volt, akkor a hibaüzenet megjelenítése
                         $("#cart_error").removeClass("d-none").html("Sikertelen művelet!");
 
+                        // Kosárba rakás gomb elrejtése
+                        cart_add_hide();
                     }
-
-                    // Kosárba rakás gomb elrejtése
-                    cart_add_hide();
-
-                },
-                error: function (error) {
-
-                    // Ha hiba volt, akkor a hibaüzenet megjelenítése
-                    $("#cart_error").removeClass("d-none").html("Sikertelen művelet!");
-
-                    // Kosárba rakás gomb elrejtése
-                    cart_add_hide();
-                }
-            });
+                });
+            }
         } else {
 
             // Ha hiba volt, akkor a hibaüzenet megjelenítése

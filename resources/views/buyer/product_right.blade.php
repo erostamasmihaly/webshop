@@ -16,10 +16,23 @@
     @else
         <div class="card p-2 text-center">
             <div class="fw-bold">Ha tetszik a termék, akkor adja megy azt a mennyiséget, amennyit meg szeretne vásárolni és utána helyezze a terméket a kosárba.</div>
-            <div class="input-group">
-                <input type="number" class="form-control" id="quantity" value="0" min="0"/>
-				<span class="input-group-text">{{ $product->unit->category->name }}</span>
-			</div>
+            <div class="row">
+                <div class="col-sm-6">
+                    <select class="form-control" id="size">
+                        @foreach($product->sizes_array() AS $size)
+                            <option value="{{ $size->id }}" max="{{ $size->quantity }}">
+                                {{ $size->name }} ({{ $size->quantity }} {{ $product->unit->category->name }})
+                            </option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="col-sm-6">
+                    <div class="input-group">
+                        <input type="number" class="form-control" id="quantity" value="0" min="0"/>
+                        <span class="input-group-text">{{ $product->unit->category->name }}</span>
+                    </div>
+                </div>
+            </div>
             <div class="mt-2">
                 <button type="button" id="cart_add" class="btn btn-primary w-100">Kosárba helyezés</button>
             </div>
