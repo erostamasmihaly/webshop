@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Services\PaymentFinish;
 use App\Models\Cart;
+use App\Models\Category;
 use App\Models\Payment;
 use App\Models\Product;
 use App\Models\Shop;
@@ -71,7 +72,11 @@ class BuyerPayController extends Controller
         // Kosár elemeinek behelyezése ebbe a tömbbe
         foreach ($carts as $cart) {
             $items[$i]['ref'] = $cart->id;
-            $items[$i]['title'] = $cart->product_name;
+            if ($cart->size_name!="") {
+                $items[$i]['title'] = $cart->product_name." (".$cart->size_name.")";    
+            } else {
+                $items[$i]['title'] = $cart->product_name;
+            }
             $items[$i]['amount'] = $cart->quantity;
             $items[$i]['price'] = $cart->discount_price;
             $i++;

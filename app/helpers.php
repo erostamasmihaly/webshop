@@ -192,12 +192,16 @@ if (!function_exists('get_pay_history')) {
             // Mértékegység adatainak lekérdezése
             $unit = ProductCategory::find($unit->id)->category;
 
+            // Méret adatainak lekérdezése
+            $size = Category::find($element->size_id);
+
             // Elemhez tratozó fizetés
             $payment = Cart::find($element->id)->payment;
 
             // Elem kiegészítése a termék és a mértékegység nevével, valamint a tranzakció számmal
             $element->product_name = $product->name;
             $element->unit_name = $unit->name;
+            $element->size_name = $size->name;
             $element->transaction_id = $payment->transaction_id;
 
             // Ár meghatározása

@@ -27,8 +27,6 @@
             <div class="col-sm-9">{{ $product->gender->category->name }}</div>
             <div class="col-sm-3 fw-bold">Korosztály</div>
             <div class="col-sm-9">{{ $product->age->category->name }}</div>
-            <div class="col-sm-3 fw-bold">Mennyiség</div>
-            <div class="col-sm-9">{{ $product->quantity }} {{ $product->unit->category->name }}</div>
             <div class="col-sm-3 fw-bold">Rövid leírás</div>
             <div class="col-sm-9">{!! nl2br($product->summary) !!}</div>
             <div class="col-sm-3 fw-bold">Részletes leírás</div>

@@ -15,6 +15,7 @@
                     <thead>
                         <tr>
                             <th scope="col" class="all">Termék neve</th>
+                            <th scope="col" class="desktop">Méret</th>
                             <th scope="col" class="desktop">Mennyiség</th>
                             <th scope="col" class="desktop">Egységár</th>
                             <th scope="col" class="all">Műveletek</th>
@@ -28,7 +29,8 @@
                                     <i class="fa-solid fa-arrow-up-right-from-square"></i> {{ $cart->product_name }}
                                 </a> 
                             </td>
-                            <td><span class="quantity">{{ $cart->quantity }}</span> {{ $cart->unit_name }} @if($cart->size_name) ({{ $cart->size_name }}) @endif</td>
+                            <td>{{ $cart->size_name }}</td>
+                            <td><span class="quantity">{{ $cart->quantity }}</span> {{ $cart->unit_name }}</td>
                             <td>{{ $cart->discount_ft }}</td>
                             <td>
                                 <button type="button" class="btn btn-success plus m-1" title="+1 {{ $cart->unit }} vásárlása"><i class="fa-solid fa-circle-plus"></i></button>  

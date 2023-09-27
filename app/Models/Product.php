@@ -84,7 +84,7 @@ class Product extends Model
         $array = [];
 
         // Lekérdezni ezen árakat
-        $prices = $this->prices;
+        $prices = $this->prices->where('quantity','>',0);
 
         // Végigmenni minden egyes áron
         foreach ($prices AS $price) {

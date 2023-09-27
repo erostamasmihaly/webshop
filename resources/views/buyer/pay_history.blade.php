@@ -15,6 +15,7 @@
                     <thead>
                         <tr>
                             <th scope="col" class="all">Termék neve</th>
+                            <th scope="col" class="desktop">Méret</th>
                             <th scope="col" class="desktop">Mennyiség</th>
                             <th scope="col" class="desktop">Egységár</th>
                             <th scope="col" class="desktop">Tranzakció ID</th>
@@ -29,7 +30,8 @@
                                     <i class="fa-solid fa-arrow-up-right-from-square"></i> {{ $element->product_name }}
                                 </a> 
                             </td>
-                            <td><span class="quantity">{{ $element->quantity }}</span> {{ $element->unit }}</td>
+                            <td>{{ $element->size_name }}</td>
+                            <td><span class="quantity">{{ $element->quantity }}</span> {{ $element->unit_name }}</td></td>
                             <td>{{ $element->price_ft }}</td>
                             <td>{{ $element->transaction_id }}</td>
                             <td>{{ $element->updated_at }}</td>

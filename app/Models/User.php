@@ -51,7 +51,7 @@ class User extends Authenticatable
 
     // Felhasználó kifizetett elemei
     public function payed(): HasMany {
-        return $this->hasMany(Cart::class)->whereNotNull('payment_id');
+        return $this->hasMany(Cart::class)->whereNotNull('payment_id')->orderBy('updated_at','desc');
     }
 
 }
