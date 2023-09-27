@@ -74,7 +74,7 @@ class Product extends Model
         return $this->prices->pluck('size_id');
     }
 
-    // Egy termékhez tartozó méretek - Név
+    // Egy termékhez tartozó méretek - Tömb
     public function sizes_array() {
 
         // Árak és méretek betöltése
@@ -98,6 +98,23 @@ class Product extends Model
 
         // Visszatérés ezen tömbbel
         return $array;
+    }
+
+    // Egy termékhez tartozó méretek - Lista
+    public function sizes_list() {
+
+        // Tömb létrehozása
+        $name = [];
+
+        // Végigmenni minden egyes méreten
+        foreach ($this->sizes_array() AS $size) {
+
+            // Méret nevének elmentése a tömbbe
+            $name[] = $size->name;
+        }
+
+        // Visszatérés a tömbből létrehozott listával
+        return implode(", ", $name);
     }
 
 }

@@ -398,5 +398,25 @@ $(function () {
         stateSave: true, // Visszatérés esetén az eredeti állapot megtartása
         stateDuration:-1, // Visszatérés eredeti állapotba új fül megnyitásakor
         order:[],
+        // AJAX forrás megadása
+        ajax: {
+            url: "/seller/product/price", // Elérhetőség
+            data: { 
+                "id": product_id // Termék azonosító megadása
+            },
+            type: "GET" // GET típusú kérés
+        },
+        // Oszlopok hozzárendelése
+        columns: [
+            { data: "quantity" },
+            { data: "size_name" },
+            { data: "netto_price" },
+            { data: "vat" },
+            { data: "brutto_price" },
+            { data: "discount" },
+            { data: "discount_price" },
+        ],
+        processing: true,
+        serverSide: false // Ez legyen FALSE, hogy az ajax.reload() működjön
     });
 });

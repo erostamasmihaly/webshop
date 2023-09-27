@@ -199,9 +199,22 @@ class SellerProductController extends Controller
         // Termék árainak lekérdezése
         $prices = Product::find($request->id)->prices;
 
+        foreach($prices AS $price) {
+            $price->vat = numformat_with_unit($price->vat,"%");
+            $price->discount = numformat_with_unit($price->discount,"%");
+            $price->netto_price = product_prices($request->id, $price->size_id)["netto_ft"]; 
+            $price->brutto_price = product_prices($request->id, $price->size_id)["brutto_ft"];
+            $price->discount_price = product_prices($request->id, $price->size_id)["discount_ft"];
+            $price->size_name = Category::find($price->size_id)->name;
+        }
+
+        // Adatok lekérdezése és behelyezése egy tömbbe
+        $array["data"] = $prices;
+        $array["recordsTotal"] = $prices->count();
+        $array["draw"] = 1;
+        $array["recordsFiltered"] = $prices->count();
+
         // Válasz küldése
-        $array['OK']=1;
-        $array['prices'] = $prices;
         return Response::json($array);
 
     }

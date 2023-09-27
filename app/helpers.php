@@ -240,12 +240,16 @@ if (!function_exists('product_prices')) {
         }
 
         // Árak meghatározása
+        $netto_price = $product_price->price;
         $brutto_price = brutto_price($product_price->price, $product_price->vat);
         $discount_price = discount_price($brutto_price, $product_price->discount);
 
         // Ezen árak elmentése egy tömbbe
+        $array['netto'] = $netto_price;
         $array['brutto'] = $brutto_price;
         $array['discount'] = $discount_price; 
+
+        $array['netto_ft'] = numformat_with_unit($netto_price, 'Ft / '.$product->unit->category->name);
         $array['brutto_ft'] = numformat_with_unit($brutto_price, 'Ft / '.$product->unit->category->name);
         $array['discount_ft'] = numformat_with_unit($discount_price, 'Ft / '.$product->unit->category->name);
 

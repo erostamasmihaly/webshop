@@ -17,7 +17,7 @@
                             <th scope="col" class="all">Termék neve</th>
                             <th scope="col" class="desktop">Termékcsoport</th>
                             <th scope="col" class="all">Egységár</th>
-                            <th scope="col" class="none">Méret</th>
+                            <th scope="col" class="none">Méretek</th>
                             <th scope="col" class="none">Nem</th>
                             <th scope="col" class="none">Korosztály</th>
                             <th scope="col" class="none">Rövid leírás</th>
@@ -44,7 +44,7 @@
 									</span>
 								@endif
                             </td>
-                            <td>{{ $product->size->category->name }}</td>
+                            <td>{{ $product->sizes_list() }}</td>
                             <td>{{ $product->gender->category->name }}</td>
                             <td>{{ $product->age->category->name }}</td>
                             <td>{!! $product->summary !!}</td>

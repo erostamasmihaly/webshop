@@ -9,7 +9,6 @@
                 <th scope="col" class="none">Bruttó ár</th>
                 <th scope="col" class="none">Kedvezmény</th>
                 <th scope="col" class="none">Kedvezményezett ár</th>
-                <th scope="col" class="none">Művelet</th>
             </tr>
         </thead>
     </table>
@@ -20,7 +19,7 @@
 		<div class="col-sm-9">
 			<select class="form-control" id="size_id">
 				@foreach($sizes AS $size)
-					<option value="{{ $size->id }}" @if($new) @selected(old('size_id')==$size->id) @else @selected(old('size_id',$product->size->category->id)==$size->id) @endif>{{ $size->name }}</option>
+					<option value="{{ $size->id }}" @selected(old('size_id')==$size->id)>{{ $size->name }}</option>
 				@endforeach
 			</select>
 			@if ($errors->has('size_id'))
