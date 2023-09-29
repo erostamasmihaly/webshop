@@ -13,23 +13,18 @@
                 <table class="datatable table table-bordered table-striped table-condensed d-none">
                     <thead>
                         <tr>
-                            <th scope="col" class="all"></th>
                             <th scope="col" class="all">Termék neve</th>
                             <th scope="col" class="desktop">Termékcsoport</th>
-                            <th scope="col" class="all">Egységár</th>
+                            <th scope="col" class="all">Legnagyobb egységár</th>
                             <th scope="col" class="none">Méretek</th>
                             <th scope="col" class="none">Nem</th>
                             <th scope="col" class="none">Korosztály</th>
                             <th scope="col" class="none">Rövid leírás</th>
-                            <th scope="col" class="none">Elérhető mennyiség</th>
-                            <th scope="col" class="none">Eredeti egységár</th>
-                            <th scope="col" class="none">Kedvezmény nagysága</th>
                         </tr>
                     </thead>
                     <tbody>
                        @foreach ($products as $product)
                         <tr class="product" product_id="{{ $product->id }}">
-                            <td></td>
                             <td>
                                 <a href="{{ route('seller_product_edit',$product->id) }}">
                                     <i class="fa-solid fa-arrow-up-right-from-square"></i> {{ $product->name }}
@@ -48,9 +43,6 @@
                             <td>{{ $product->gender->category->name }}</td>
                             <td>{{ $product->age->category->name }}</td>
                             <td>{!! $product->summary !!}</td>
-                            <td>{{ $product->quantity }} {{ $product->unit->category->name }}</td>
-                            <td>{{ $product->brutto_price }}</td>
-                            <td>{{ numformat_with_unit($product->discount,'%') }}</td>
                         </tr>
                        @endforeach
                     </tbody>
