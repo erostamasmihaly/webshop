@@ -5,10 +5,10 @@
                 <th scope="col" class="all">Méret</th>
                 <th scope="col" class="all">Mennyiség</th>
                 <th scope="col" class="all">Nettó ár</th>
-                <th scope="col" class="all">ÁFA</th>
+                <th scope="col" class="desktop">ÁFA</th>
                 <th scope="col" class="none">Bruttó ár</th>
-                <th scope="col" class="all">Kedvezmény</th>
-                <th scope="col" class="none">Kedvezményes ár</th>
+                <th scope="col" class="desktop">Kedvezmény</th>
+                <th scope="col" class="desktop">Kedvezményes ár</th>
             </tr>
         </thead>
     </table>

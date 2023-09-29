@@ -20,8 +20,8 @@ class RegisterMail extends Mailable
     {
 
         // Adatok elmentése
-        $this->from_email = env('WEBSHOP_EMAIL');
-        $this->from_name = env('WEBSHOP_NAME');
+        $this->from_email = config("app.webshop_email");
+        $this->from_name = config("app.webshop_name");
         $this->subject = "Regisztráció véglegesítése";
         $this->view = "mail.register";
         $this->to_email = $user->email;

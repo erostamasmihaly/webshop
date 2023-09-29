@@ -198,8 +198,8 @@ if (!function_exists('get_cart')) {
             $cart->size_name = $size->name;
 
             // További árak meghatározása
-            $cart->brutto_price = product_prices($cart->product_id, $cart->size_id)["brutto"];
-            $cart->discount_price = product_prices($cart->product_id, $cart->size_id)["discount"];
+            $cart->brutto_price = product_prices($cart->product_id, $cart->size_id)["brutto_price"];
+            $cart->discount_price = product_prices($cart->product_id, $cart->size_id)["discount_price"];
             $cart->discount_ft = product_prices($cart->product_id, $cart->size_id)["discount_ft"];
             $total += $cart->discount_price * $cart->quantity;
         }

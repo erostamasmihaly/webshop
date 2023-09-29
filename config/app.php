@@ -189,5 +189,7 @@ return [
     // Egyéb adatok megadása
     'test_shop_email_1' => env('TEST_SHOP_EMAIL_1'),
     'test_shop_email_2' => env('TEST_SHOP_EMAIL_2'),
+    'webshop_email' => env('WEBSHOP_EMAIL'),
+    'webshop_name' => env('WEBSHOP_NAME')
 
 ];

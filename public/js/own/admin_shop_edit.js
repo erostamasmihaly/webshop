@@ -43,21 +43,23 @@ $(function () {
     
         // Google Térképnek a cím elküldése
 		var googleAPI = "https://maps.googleapis.com/maps/api/geocode/json?";
-		$.getJSON(googleAPI, {
-			address: address,
-			sensor: "false",
-			key: "AIzaSyDsDnKkPmP5LxA_CL0-d2WiywXjZPiMPKw"
-		})
-		.done(function(data) {
+		$.ajax(googleAPI, {
+            data: {
+                address: address,
+                sensor: "false",
+                key: "AIzaSyDsDnKkPmP5LxA_CL0-d2WiywXjZPiMPKw"
+            },
+            headers: null,
+            dataType: "json",
+		    success: function(data) {
 
-            console.log(data);
+                // Koordináták lekérdezése a válaszból
+                var latitude = data.results[0].geometry.location.lat;
+                var longitude = data.results[0].geometry.location.lng;
 
-			// Koordináták lekérdezése a válaszból
-			var latitude = data.results[0].geometry.location.lat;
-			var longitude = data.results[0].geometry.location.lng;
-
-			// Térkép és a hozzá kapcsolódó mezők módosítása
-			changeMap(latitude, longitude);
+                // Térkép és a hozzá kapcsolódó mezők módosítása
+                changeMap(latitude, longitude);
+            }
 		});
     });
 
