@@ -20,16 +20,13 @@
                             <th scope="col" class="none">Nem</th>
                             <th scope="col" class="none">Korosztály</th>
                             <th scope="col" class="none">Rövid leírás</th>
+                            <th scope="col" class="all">Művelet</th>
                         </tr>
                     </thead>
                     <tbody>
                        @foreach ($products as $product)
                         <tr class="product" product_id="{{ $product->id }}">
-                            <td>
-                                <a href="{{ route('seller_product_edit',$product->id) }}">
-                                    <i class="fa-solid fa-arrow-up-right-from-square"></i> {{ $product->name }}
-                                </a> 
-                            </td>
+                            <td>{{ $product->name }}</td>
                             <td>{{ $product->group->category->name }}</td>
                             <td>
                                 {{ $product->discount_price }}
@@ -43,6 +40,11 @@
                             <td>{{ $product->gender->category->name }}</td>
                             <td>{{ $product->age->category->name }}</td>
                             <td>{!! $product->summary !!}</td>
+                            <td>
+                                <a href="{{ route('seller_product_edit',$product->id) }}">
+                                    <i class="fa-solid fa-arrow-up-right-from-square"></i> Szerkesztés
+                                </a> 
+                            </td>
                         </tr>
                        @endforeach
                     </tbody>

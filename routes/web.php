@@ -39,5 +39,8 @@ require 'admin/shop.php';
 // Vezérlőpult
 require 'seller/index.php';
 
+// Értesítések
+require 'seller/notification.php';
+
 // Termékek
 require 'seller/product.php';

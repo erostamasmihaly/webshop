@@ -17,19 +17,17 @@
                             <th scope="col" class="all">Termék neve</th>
                             <th scope="col" class="all">Legnagyobb egységár</th>
                             <th scope="col" class="none">Termékcsoport</th>
+                            <th scope="col" class="none">Méretek</th> 
                             <th scope="col" class="none">Nem</th>
                             <th scope="col" class="none">Korosztály</th>
                             <th scope="col" class="none">Rövid leírás</th>
+                            <th scope="col" class="all">Művelet</th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach ($products as $product)
                         <tr class="product" product_id="{{ $product->id }}">
-                            <td>
-                                <a href="{{ route('product',$product->id) }}">
-                                    <i class="fa-solid fa-arrow-up-right-from-square"></i> {{ $product->name }}
-                                </a> 
-                            </td>
+                            <td>{{ $product->name }}</td>
                             <td>
                                 {{ $product->discount_price }}
                                 @if($product->discount)
@@ -39,9 +37,15 @@
 								@endif
                             </td>
                             <td>{{ $product->group->category->name }}</td>
+                            <td>{{ $product->sizes_list() }}</td>
                             <td>{{ $product->gender->category->name }}</td>
                             <td>{{ $product->age->category->name }}</td>
-                            <td>{!! $product->summary !!}</td>
+                            <td>{{ $product->summary }}</td>
+                            <td>
+                                <a href="{{ route('product',$product->id) }}">
+                                    <i class="fa-solid fa-arrow-up-right-from-square"></i> Megtekintés
+                                </a> 
+                            </td>
                         </tr>
                        @endforeach
                     </tbody>
