@@ -18,7 +18,9 @@ class ProductPrice extends Model
         'quantity',
         'price',
         'vat',
-        'discount'
+        'discount',
+        'brutto_price',
+        'discount_price'
     ];
 
     // Naplózás beállítása

@@ -46,6 +46,8 @@ class ProductPriceUpdate
             $product_price->price = $this->price;
             $product_price->vat = $this->vat;
             $product_price->discount = $this->discount;
+            $product_price->brutto_price = brutto_price($this->price, $this->vat);
+            $product_price->discount_price = discount_price($product_price->brutto_price, $this->discount);
             $product_price->save();
             
 

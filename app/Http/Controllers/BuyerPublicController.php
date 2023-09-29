@@ -90,10 +90,6 @@ class BuyerPublicController extends Controller
 
         // Termék kikeresése
         $product = Product::find($id);
-
-        // Bruttó ár és a leárazás utáni ár meghatározása
-        $product->brutto_price = product_prices($product->id)["brutto_ft"];
-        $product->discount_price = product_prices($product->id)["discount_ft"];
         
         // Képek lekérdezése
         $images = Image::where('product_id', $id)->orderBy('sequence')->get();

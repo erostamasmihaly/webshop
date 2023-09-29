@@ -1,12 +1,18 @@
 <div class="col-sm-4">
-    @if($product->discount)
-        <div class="card p-2 bg-danger text-white text-center mb-2">
-            <div class="text-decoration-line-through">{{ $product->brutto_price }}</div>
-            <div class="fw-bold">{{ numformat_with_unit($product->discount,'%') }} kedvezmény!</div>
+    <div class="mb-2 card">
+        <div class="m-2 text-white text-center">
+            @foreach($product->sizes_prices() AS $size => $price)
+                <div class="row mb-2 m-2 p-1 bg-success fw-bold">
+                    <div class="col-sm-2">{{ $size }}</div>
+                    <div class="col-sm-7">{{ $price['discount_ft'] }}</div>
+                    <div class="col-sm-3">
+                        @if($price['discount']>0)
+                            <span class="badge bg-danger mr-2">{{ $price['discount'] }} %</span>
+                        @endif
+                    </div>
+                </div>
+            @endforeach
         </div>
-    @endif
-    <div class="card p-2 bg-success text-white text-center mb-2">
-        <div class="fw-bold">{{ $product->discount_price }}</div>
     </div>
     @guest
         <div class="card p-2 bg-danger text-white text-center">

@@ -117,4 +117,21 @@ class Product extends Model
         return implode(", ", $name);
     }
 
+    // Egy termékhez tartozó méretek és árak
+    public function sizes_prices() {
+                
+        // Tömb létrehozása
+        $array = [];
+
+        // Végigmenni minden egyes méreten
+        foreach ($this->sizes_array() AS $size) {
+
+            // Méret nevének elmentése a tömbbe
+            $array[$size->name] = product_prices($this->id, $size->id);
+        }
+
+        // Visszatérés a tömbből létrehozott listával
+        return $array;
+    }
+
 }

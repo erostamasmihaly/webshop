@@ -280,27 +280,24 @@ if (!function_exists('product_prices')) {
         // Megnézni, hogy van-e méret megadva
         if ($size_id==null) {
 
-            // Ha nem, akkor a legnagyobb nettó ár alkalmazása
-            $product_price = ProductPrice::where('product_id', $product_id)->orderBy('price','desc')->first();
+            // Ha nem, akkor a legnagyobb kedvezményes ár alkalmazása
+            $product_price = ProductPrice::where('product_id', $product_id)->orderBy('discount_price','desc')->first();
         } else {
 
             // Ha igen, akkor az adott mérethez tartozó ár alkalmazása
             $product_price = ProductPrice::where('product_id', $product_id)->where('size_id', $size_id)->first();
         }
 
-        // Árak meghatározása
-        $netto_price = $product_price->price;
-        $brutto_price = brutto_price($product_price->price, $product_price->vat);
-        $discount_price = discount_price($brutto_price, $product_price->discount);
+        // Ezen árak lekérdezése és elmentése egy tömbbe
+        $array['vat'] = $product_price->vat;
+        $array['discount'] = $product_price->discount;
+        $array['netto_price'] = $product_price->price;
+        $array['brutto_price'] = $product_price->brutto_price;
+        $array['discount_price'] = $product_price->discount_price;
 
-        // Ezen árak elmentése egy tömbbe
-        $array['netto'] = $netto_price;
-        $array['brutto'] = $brutto_price;
-        $array['discount'] = $discount_price; 
-
-        $array['netto_ft'] = numformat_with_unit($netto_price, 'Ft / '.$product->unit->category->name);
-        $array['brutto_ft'] = numformat_with_unit($brutto_price, 'Ft / '.$product->unit->category->name);
-        $array['discount_ft'] = numformat_with_unit($discount_price, 'Ft / '.$product->unit->category->name);
+        $array['netto_ft'] = numformat_with_unit($array['netto_price'], 'Ft / '.$product->unit->category->name);
+        $array['brutto_ft'] = numformat_with_unit($array['brutto_price'], 'Ft / '.$product->unit->category->name);
+        $array['discount_ft'] = numformat_with_unit($array['discount_price'], 'Ft / '.$product->unit->category->name);
 
         // Visszatérés ezzel a tömbbel
         return $array;

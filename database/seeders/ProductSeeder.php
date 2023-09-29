@@ -110,6 +110,8 @@ class ProductSeeder extends Seeder
         ];
 
         foreach ($array AS $subarray) {
+            $brutto_price = brutto_price($subarray[2], $subarray[3]);
+            $discount_price = discount_price($brutto_price, $subarray[4]);
             ProductPrice::insertOrIgnore([
                 "id" => $j++,
                 "product_id" => $p,
@@ -117,7 +119,9 @@ class ProductSeeder extends Seeder
                 "quantity" => $subarray[1],
                 "price" => $subarray[2],
                 "vat" => $subarray[3],
-                "discount" => $subarray[4]
+                "discount" => $subarray[4],
+                "brutto_price" => $brutto_price,
+                "discount_price" => $discount_price
             ]);
         }
 
@@ -166,6 +170,8 @@ class ProductSeeder extends Seeder
         ];
 
         foreach ($array AS $subarray) {
+            $brutto_price = brutto_price($subarray[2], $subarray[3]);
+            $discount_price = discount_price($brutto_price, $subarray[4]);
             ProductPrice::insertOrIgnore([
                 "id" => $j++,
                 "product_id" => $p,
@@ -173,7 +179,9 @@ class ProductSeeder extends Seeder
                 "quantity" => $subarray[1],
                 "price" => $subarray[2],
                 "vat" => $subarray[3],
-                "discount" => $subarray[4]
+                "discount" => $subarray[4],
+                "brutto_price" => $brutto_price,
+                "discount_price" => $discount_price
             ]);
         }
 
@@ -221,6 +229,8 @@ class ProductSeeder extends Seeder
         ];
 
         foreach ($array AS $subarray) {
+            $brutto_price = brutto_price($subarray[2], $subarray[3]);
+            $discount_price = discount_price($brutto_price, $subarray[4]);
             ProductPrice::insertOrIgnore([
                 "id" => $j++,
                 "product_id" => $p,
@@ -228,7 +238,9 @@ class ProductSeeder extends Seeder
                 "quantity" => $subarray[1],
                 "price" => $subarray[2],
                 "vat" => $subarray[3],
-                "discount" => $subarray[4]
+                "discount" => $subarray[4],
+                "brutto_price" => $brutto_price,
+                "discount_price" => $discount_price
             ]);
         }
 
@@ -276,6 +288,8 @@ class ProductSeeder extends Seeder
         ];
 
         foreach ($array AS $subarray) {
+            $brutto_price = brutto_price($subarray[2], $subarray[3]);
+            $discount_price = discount_price($brutto_price, $subarray[4]);
             ProductPrice::insertOrIgnore([
                 "id" => $j++,
                 "product_id" => $p,
@@ -283,7 +297,9 @@ class ProductSeeder extends Seeder
                 "quantity" => $subarray[1],
                 "price" => $subarray[2],
                 "vat" => $subarray[3],
-                "discount" => $subarray[4]
+                "discount" => $subarray[4],
+                "brutto_price" => $brutto_price,
+                "discount_price" => $discount_price
             ]);
         }
 
@@ -332,6 +348,8 @@ class ProductSeeder extends Seeder
         ];
 
         foreach ($array AS $subarray) {
+            $brutto_price = brutto_price($subarray[2], $subarray[3]);
+            $discount_price = discount_price($brutto_price, $subarray[4]);
             ProductPrice::insertOrIgnore([
                 "id" => $j++,
                 "product_id" => $p,
@@ -339,7 +357,9 @@ class ProductSeeder extends Seeder
                 "quantity" => $subarray[1],
                 "price" => $subarray[2],
                 "vat" => $subarray[3],
-                "discount" => $subarray[4]
+                "discount" => $subarray[4],
+                "brutto_price" => $brutto_price,
+                "discount_price" => $discount_price
             ]);
         }
 
@@ -387,6 +407,8 @@ class ProductSeeder extends Seeder
         ];
 
         foreach ($array AS $subarray) {
+            $brutto_price = brutto_price($subarray[2], $subarray[3]);
+            $discount_price = discount_price($brutto_price, $subarray[4]);
             ProductPrice::insertOrIgnore([
                 "id" => $j++,
                 "product_id" => $p,
@@ -394,7 +416,9 @@ class ProductSeeder extends Seeder
                 "quantity" => $subarray[1],
                 "price" => $subarray[2],
                 "vat" => $subarray[3],
-                "discount" => $subarray[4]
+                "discount" => $subarray[4],
+                "brutto_price" => $brutto_price,
+                "discount_price" => $discount_price
             ]);
         }
 
@@ -442,6 +466,8 @@ class ProductSeeder extends Seeder
         ];
 
         foreach ($array AS $subarray) {
+            $brutto_price = brutto_price($subarray[2], $subarray[3]);
+            $discount_price = discount_price($brutto_price, $subarray[4]);
             ProductPrice::insertOrIgnore([
                 "id" => $j++,
                 "product_id" => $p,
@@ -449,7 +475,9 @@ class ProductSeeder extends Seeder
                 "quantity" => $subarray[1],
                 "price" => $subarray[2],
                 "vat" => $subarray[3],
-                "discount" => $subarray[4]
+                "discount" => $subarray[4],
+                "brutto_price" => $brutto_price,
+                "discount_price" => $discount_price
             ]);
         }
 
