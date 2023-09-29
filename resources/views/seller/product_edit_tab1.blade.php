@@ -85,15 +85,4 @@
 			@endif
 		</div> 
 	</div>
-	<div class="row mb-2">
-		<div class="col-sm-3 fw-bold mb-3">
-			Aktív *
-		</div>
-		<div class="col-sm-9">
-			<select name="active" class="form-control">
-				<option value="0" @selected(old('active',$product->active)==0)>Nem</option>
-				<option value="1" @selected(old('active',$product->active)==1)>Igen</option>
-			</select>
-		</div>
-	</div>
 </div>

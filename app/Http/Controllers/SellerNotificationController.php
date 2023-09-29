@@ -13,9 +13,32 @@ class SellerNotificationController extends Controller
         $this->middleware('seller');
     }
 
-    // Értesítések
-    public function index()
-    {
-        return view('seller.notification');
+    // Értesítések oldal
+    public function index() {
+
+        // Felhasználóhoz rendelt értesítések lekérdezése és megjelenítése
+        return view('seller.notification', [
+            'notifications' => auth()->user()->notifications
+        ]);
+    }
+
+    // Értesítés bejelölése, hogy látta
+    public function read($id) {
+
+        // Bejelölni, hogy látta az értesítést
+        auth()->user()->unreadNotifications->where('id', $id)->markAsRead();
+
+        // Visszatérni az előző oldalra
+        return redirect()->back();
+    }
+
+    // Összes értesítés bejelölése, hogy látta
+    public function readall() {
+        
+        // Bejelölni, hogy látta az összes értesítést
+        auth()->user()->unreadNotifications->markAsRead();
+
+        // Visszatérni az előző oldalra
+        return redirect()->back();
     }
 }

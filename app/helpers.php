@@ -288,16 +288,29 @@ if (!function_exists('product_prices')) {
             $product_price = ProductPrice::where('product_id', $product_id)->where('size_id', $size_id)->first();
         }
 
-        // Ezen árak lekérdezése és elmentése egy tömbbe
-        $array['vat'] = $product_price->vat;
-        $array['discount'] = $product_price->discount;
-        $array['netto_price'] = $product_price->price;
-        $array['brutto_price'] = $product_price->brutto_price;
-        $array['discount_price'] = $product_price->discount_price;
+        if ($product_price) {
 
-        $array['netto_ft'] = numformat_with_unit($array['netto_price'], 'Ft / '.$product->unit->category->name);
-        $array['brutto_ft'] = numformat_with_unit($array['brutto_price'], 'Ft / '.$product->unit->category->name);
-        $array['discount_ft'] = numformat_with_unit($array['discount_price'], 'Ft / '.$product->unit->category->name);
+            // Ezen árak lekérdezése és elmentése egy tömbbe
+            $array['vat'] = $product_price->vat;
+            $array['discount'] = $product_price->discount;
+            $array['netto_price'] = $product_price->price;
+            $array['brutto_price'] = $product_price->brutto_price;
+            $array['discount_price'] = $product_price->discount_price;
+        } else {
+
+            // Üres árak elmentése egy tömbbe
+            $array['vat'] = 0;
+            $array['discount'] = 0;
+            $array['netto_price'] = 0;
+            $array['brutto_price'] = 0;
+            $array['discount_price'] = 0;
+            
+        }
+
+        // Árak forintban és megfelelően formázva
+        $array['netto_ft'] = numformat_with_unit($array['netto_price'], 'Ft / ' . $product->unit->category->name);
+        $array['brutto_ft'] = numformat_with_unit($array['brutto_price'], 'Ft / ' . $product->unit->category->name);
+        $array['discount_ft'] = numformat_with_unit($array['discount_price'], 'Ft / ' . $product->unit->category->name);
 
         // Visszatérés ezzel a tömbbel
         return $array;
@@ -307,13 +320,14 @@ if (!function_exists('product_prices')) {
 // Termékek lekérdezése
 // Bemenet:
 //      $groups: Termékcsoportok tömbje
-//      $all: Minden információt tartalmazzon a válasz, vagy csak a szükségeset
+//      $more_info: Minden információt tartalmazzon a válasz, vagy csak a szükségeset
 //      $filters: Egyéb szűrőket tartalmazó tömb
 //      $limit: Mennyi elemnek kell egy oldal megjelennie
 //      $page: Melyik oldal tartalmát kell mutatni
+//      $only_active: Csak az aktív termékeket kell-e lekérdezni?
 // Kimenet: Az adott feltételeknek megfelelő termékek
 if (!function_exists('get_products')) {
-    function get_products($groups, $all, $filters = null, $limit = null, $page = null) {
+    function get_products($groups, $more_info, $filters = null, $limit = null, $page = null, $only_active = true) {
 
         // Szűrők lekérdezése
         $shops = empty($filters["shops"]) ? null : $filters["shops"];
@@ -324,8 +338,13 @@ if (!function_exists('get_products')) {
         // Gyűjtemény készítése
         $collection = collect();
 
-        // Összes aktív termék lekérdezése
-        $products = Product::where('active', 1)->get();
+        // Összes termék lekérdezése, függően attól, hogy mindenre vagy csak aktívakra van-e szükség
+        if ($only_active) {
+            $products = Product::where('active', 1)->get();
+        } else {
+            $products = Product::get();
+        }
+        
 
         // Végigmenni minden egyes terméken
         foreach($products AS $product) {
@@ -333,7 +352,7 @@ if (!function_exists('get_products')) {
             // Objektum létrehozása
             $object = new stdClass();
 
-            if ($all) {
+            if ($more_info) {
 
                 //// Ha minden információ kell
                 // Objektum kapjon meg mindent a terméktől
@@ -345,7 +364,7 @@ if (!function_exists('get_products')) {
                 // Néhány termék tulajdonság hozzárendelése ehhez az objektumhoz
                 $object->id = $product->id;
                 $object->name = $product->name;
-                $object->discount = $product->discount;
+                $object->active = $product->active;
                 $object->group_id = $product->group->category->id;
                 $object->age_id = $product->age->category->id;
                 $object->gender_id = $product->gender->category->id;

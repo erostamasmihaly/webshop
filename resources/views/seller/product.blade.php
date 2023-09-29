@@ -26,7 +26,12 @@
                     <tbody>
                        @foreach ($products as $product)
                         <tr class="product" product_id="{{ $product->id }}">
-                            <td>{{ $product->name }}</td>
+                            <td>
+                                {{ $product->name }}
+                                @if($product->active==0)
+                                    <i class="fa-solid fa-eye-slash"></i> 
+                                @endif
+                            </td>
                             <td>{{ $product->group->category->name }}</td>
                             <td>
                                 {{ $product->discount_price }}

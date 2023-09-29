@@ -6,12 +6,12 @@ use Illuminate\Support\Facades\Route;
 Route::group(['prefix' => 'seller/notification'], function() {
 
     // Értesítések
-    Route::get('', [App\Http\Controllers\SellerIndexController::class, 'notification'])->name('seller_notification');
+    Route::get('', [App\Http\Controllers\SellerNotificationController::class, 'index'])->name('seller_notification');
 
     // Értesítést látta
-    Route::get('read/{id}', [App\Http\Controllers\SellerIndexController::class, 'notification_read'])->name('seller_notification_read');
+    Route::get('read/{id}', [App\Http\Controllers\SellerNotificationController::class, 'read'])->name('seller_notification_read');
 
     // Összes értesítést látta
-    Route::get('readall', [App\Http\Controllers\SellerIndexController::class, 'notification_readall'])->name('seller_notification_readall');
+    Route::get('readall', [App\Http\Controllers\SellerNotificationController::class, 'readall'])->name('seller_notification_readall');
 
 });

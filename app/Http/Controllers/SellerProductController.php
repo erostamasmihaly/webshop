@@ -35,7 +35,7 @@ class SellerProductController extends Controller
         $array["shops"] = $shops;
 
         // Termékek lekérdezése
-        $products = get_products(null, $array);
+        $products = get_products(null, true, $array, null, null, false);
 
         // Oldal meghívása
         return view('seller.product',[
