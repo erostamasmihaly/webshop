@@ -6,6 +6,7 @@ use App\Http\Services\ImageDelete;
 use App\Http\Services\ImageMain;
 use App\Http\Services\ImageSequence;
 use App\Http\Services\ImageUpload;
+use App\Http\Services\ProductActiveChange;
 use App\Http\Services\ProductPriceUpdate;
 use App\Http\Services\ProductUpdate;
 use App\Http\Services\RatingModeration;
@@ -225,5 +226,34 @@ class SellerProductController extends Controller
         // Válasz küldése
         $array['OK']=1;
         return Response::json($array);
+    }
+
+    // Termék aktív állapotának módosítása
+    public function active($product_id) {
+
+        // Termék állapotának módosítása
+        $productActivePrice = new ProductActiveChange($product_id);
+
+        if ($productActivePrice->error) {
+
+            //// Ha volt hiba
+            // Visszatérés a hibával
+            return redirect()->back()->withErrors([
+                "prices" => "Még nincs beárazva a termék, így nem lehet publikálni!"
+            ]);
+        } else {
+
+            //// Ha minden rendben volt
+            // Állapotfüggő üzenet
+            if ($productActivePrice->active == 1) {
+                $message = "Termék sikeresen publikálva lett!";
+            } else {
+                $message = "Termék sikeresen el lett rejtve!";
+            }
+
+            // Visszatérés az üzenettel
+            return redirect()->back()->withMessage($message);
+        }
+
     }
 }

@@ -2,6 +2,10 @@
 
 @section('content')
 <div class="container-fluid">
+    @include('has_message')
+    @if ($errors->has('prices'))
+        <div class="alert alert-danger" role="alert">{{ $errors->first('prices') }}</div>
+    @endif
     <form action="{{ route('seller_product') }}" method="POST" enctype="multipart/form-data">
         <input type="hidden" name="id" id="product_id" value="{{ $product->id }}"/>  
         <h4 class="card-title">
@@ -32,7 +36,12 @@
             </div>
             <div class="bg-dark p-3">
                 <div class="submit">
-                    <button type="submit" class="btn btn-primary">Mentés</button>            
+                    <button type="submit" class="btn btn-primary">Mentés</button>  
+                    @if($product->id!=0) 
+                        <a class="btn btn-primary" href="{{ route('seller_product_active',$product->id) }}">
+                            @if($product->active==0) Publikál @else Elrejt @endif
+                        </a>
+                    @endif          
                 </div>
             </div>
         </div>
