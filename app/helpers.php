@@ -15,6 +15,11 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 
 // Megnézni, hogy az adott szerepkörrel rendelkezik-e a felhasználó
+// Bemeneti érték: 
+//      $role_name: Szerepkör neve
+// Kimeneti érték: 
+//      TRUE, ha az éppen bejelentkezett felhasználóhoz az adott szerepkör is hozzá van rendelve
+//      FALSE, ha vagy nincs hozzárendelve a szerepkör, vagy nincs bejelentkezve
 if (!function_exists('has_role')) {
     function has_role($role_name) {
 
@@ -36,6 +41,11 @@ if (!function_exists('has_role')) {
 }
 
 // Ha az adott szerepkörrel nem rendelkezik a felhasználó, akkor 403-as hiba
+// Bemenet: 
+//      $role_name: Szerepkör neve
+// Kimenet: 
+//      403-as hiba akkor, ha az éppen bejelentkezett felhasználóhoz nincs hozzárendelve a megadott szerepkör vagy még nincs bejelentkezve
+//      Semmi nem történik akkor, ha a bejelentkezett felhasználó rendelkezik az megadott szerepkörrel
 if (!function_exists('restrict_role')) {
     function restrict_role($role_name) {
 
@@ -47,6 +57,9 @@ if (!function_exists('restrict_role')) {
 }
 
 // Kategória ID esetén a név meghatározása
+// Bemenet: 
+//      $category_id: Kategória azonosítója
+// Kimenet: Kategória neve
 if (!function_exists('get_category_name')) {
     function get_category_name($category_id) {
         return Category::find($category_id)->name;
@@ -54,13 +67,20 @@ if (!function_exists('get_category_name')) {
 }
 
 // Kategóriacsoport esetén a névből az ID meghatározása
+// Bemenet: 
+//      $category_group_name: Kategóriacsoport neve
+// Kimenet: Kategóriacsoport azonosítója
 if (!function_exists('get_category_group_id')) {
-    function get_category_group_id($name) {
-        return CategoryGroup::where('name',$name)->first()->id;
+    function get_category_group_id($category_group_name) {
+        return CategoryGroup::where('name',$category_group_name)->first()->id;
     }   
 }
 
 // Számformátum mértékegységgel
+// Bemenet:
+//      $number: Szám
+//      $unit: Mértékegység
+// Kimenet: Magyarországon használt számformátum, a végén az opcionális mértékegységgel
 if (!function_exists('numformat_with_unit')) {
     function numformat_with_unit($number, $unit = "") {
         return trim(number_format($number, 0, ',', ' ').' '.$unit);
@@ -68,8 +88,12 @@ if (!function_exists('numformat_with_unit')) {
 }
 
 // Vezérkép létrehozása
+// Bemenet:
+//      $product_id: Termék azonosítója
+//      $image_file_name: Azon kép, amelyből a vezérképet létre akarjuk hozni
+// Kimenet: Vezérkép két méretben, amely képek a megadott kép átméretezett másolatai
 if (!function_exists('create_main_image')) {
-    function create_main_image($product_id, $image) {
+    function create_main_image($product_id, $image_file_name) {
 
         // Könyvtár
         $dir = public_path('images/products/'.$product_id);
@@ -79,7 +103,7 @@ if (!function_exists('create_main_image')) {
         }
 
         // Fájlok megadása
-        $file = $dir.'/'.$image;
+        $file = $dir.'/'.$image_file_name;
         $file_main = $dir.'/main_image.jpg';
         $file_main_thumb = $dir.'/thumb/main_image.jpg';
 
@@ -108,6 +132,10 @@ if (!function_exists('create_main_image')) {
 }
 
 // Bruttó ár kiszámítása
+// Bemenet:
+//      $price: Ár
+//      $vat: ÁFA
+// Kimenet: Bruttó ár, ami a bemeneti értékekből számolódik ki
 if (!function_exists('brutto_price')) {
     function brutto_price($price, $vat) {
         return (int)($price + ($price * ($vat / 100)));
@@ -115,6 +143,10 @@ if (!function_exists('brutto_price')) {
 }
 
 // Kedvezményes ár kiszámítása
+// Bemenet:
+//      $brutto: Bruttó ár
+//      $discount: Kedvezmény nagysága
+// Kimenet: Kedvezményes ár, ami a bemeneti értékekből számolódik ki
 if (!function_exists('discount_price')) {
     function discount_price($brutto, $discount) {
         return (int)($brutto - ($brutto * ($discount / 100)));
@@ -122,6 +154,8 @@ if (!function_exists('discount_price')) {
 }
 
 // Aktiváló kód létrehozása
+// Bemenet: Nincsen
+// Kimenet: Random azonosító MD5-ben HASH-elve
 if (!function_exists('generate_activation_code')) {
     function generate_activation_code() {
         return md5(uniqid(mt_rand(), true));
@@ -129,6 +163,11 @@ if (!function_exists('generate_activation_code')) {
 }
 
 // Kosár lekérdezése
+// Bemenet: Nincsen - az éppen bejelentkezett felhasználó kosara lesz mindig lekérdezve
+// Kimenet: 
+//      carts: Kosár azon tartalmai, amiket még nem fizetett ki
+//      total: Kosárban lévő tartalmak árainak összege - formázatlanul
+//      total_ft: Kosárban lévő tartalmak árainak összege - formázottan
 if (!function_exists('get_cart')) {
     function get_cart() {
 
@@ -177,6 +216,8 @@ if (!function_exists('get_cart')) {
 }
 
 // Kifizetett termékek lekérdezése
+// Bemenet: Nincsen - az éppen bejelentkezett felhasználó kosara lesz mindig lekérdezve
+// Kimenet: Kosár azon tartalmai, amiket már kifizetett
 if (!function_exists('get_pay_history')) {
     function get_pay_history() {
 
@@ -215,6 +256,8 @@ if (!function_exists('get_pay_history')) {
 }
 
 // Tud fizetni a felhasználó - vagyis megvan minden adata ahhoz, hogy fizessen?
+// Bemenet: Nincsen - Mindig az aktuális felhasználó lesz figyelembe véve
+// Kimenet: TRUE akkor, ha mindig fizetéshez szükséges személyes adatot megadott, különben pedig FALSE
 if (!function_exists('can_pay')) {
     function can_pay() {
         return User::where('id', Auth::id())->whereNotNull(['country','state','zip','city','address'])->first();
@@ -222,21 +265,27 @@ if (!function_exists('can_pay')) {
 }
 
 // Termék árainak lekérdezése
+// Bemenet:
+//      $product_id: Termék azonosítója
+//      $size_id: Méret azonosítója
+// Kimenet:
+// - Ha van méret megadva, akkor az adott mérethez tartozó bruttó ár
+// - Ha nincs méret megadva, akkor a legnagyobb nettó árhoz tartozó bruttó ár
 if (!function_exists('product_prices')) {
-    function product_prices($id, $size_id = null) {
+    function product_prices($product_id, $size_id = null) {
 
         // Termék
-        $product = Product::find($id);
+        $product = Product::find($product_id);
 
         // Megnézni, hogy van-e méret megadva
         if ($size_id==null) {
 
             // Ha nem, akkor a legnagyobb nettó ár alkalmazása
-            $product_price = ProductPrice::where('product_id', $id)->orderBy('price','desc')->first();
+            $product_price = ProductPrice::where('product_id', $product_id)->orderBy('price','desc')->first();
         } else {
 
             // Ha igen, akkor az adott mérethez tartozó ár alkalmazása
-            $product_price = ProductPrice::where('product_id', $id)->where('size_id', $size_id)->first();
+            $product_price = ProductPrice::where('product_id', $product_id)->where('size_id', $size_id)->first();
         }
 
         // Árak meghatározása
@@ -259,14 +308,21 @@ if (!function_exists('product_prices')) {
 }
 
 // Termékek lekérdezése
+// Bemenet:
+//      $groups: Termékcsoportok tömbje
+//      $all: Minden információt tartalmazzon a válasz, vagy csak a szükségeset
+//      $filters: Egyéb szűrőket tartalmazó tömb
+//      $limit: Mennyi elemnek kell egy oldal megjelennie
+//      $page: Melyik oldal tartalmát kell mutatni
+// Kimenet: Az adott feltételeknek megfelelő termékek
 if (!function_exists('get_products')) {
-    function get_products($groups, $all, $array = null, $limit = null, $page = null) {
+    function get_products($groups, $all, $filters = null, $limit = null, $page = null) {
 
         // Szűrők lekérdezése
-        $shops = empty($array["shops"]) ? null : $array["shops"];
-        $sizes = empty($array["sizes"]) ? null : $array["sizes"];
-        $genders = empty($array["genders"]) ? null : $array["genders"];
-        $ages = empty($array["ages"]) ? null : $array["ages"];
+        $shops = empty($filters["shops"]) ? null : $filters["shops"];
+        $sizes = empty($filters["sizes"]) ? null : $filters["sizes"];
+        $genders = empty($filters["genders"]) ? null : $filters["genders"];
+        $ages = empty($filters["ages"]) ? null : $filters["ages"];
 
         // Gyűjtemény készítése
         $collection = collect();
@@ -366,6 +422,14 @@ if (!function_exists('get_products')) {
 }
 
 // Értékelések lekérdezése
+// Bemenet:
+//      $product_id: Termék azonosítója
+//      $moderated: Csak a moderáltakat kell-e lekérdezni?
+// Kimenet: 
+//      ratings: Egy termékhez tartozó összes vagy moderált értékelések
+//      stars: Minden egyes csillagértékhez tartozó elemszám*
+//      total: Összes eddigi értékelés száma*
+// * csak a moderált értékelések lesznek figyelembe véve, mert ezek már publikus adatok
 if (!function_exists('get_ratings')) {
     function get_ratings($product_id, $moderated = true) {
 
@@ -442,7 +506,20 @@ if (!function_exists('get_ratings')) {
     }
 }
 
+// OrderRef generálása
+// Bemenet: Nincsen
+// Kimenet: Egy olyan azonosító, ami nagy valószínűséggel az OTP Simple rendszerben sem található -- IP-cím, dátumidő és random számokból állítódik össze, ami az OTP javaslata
+if (!function_exists('generate_order_ref')) {
+    function generate_order_ref() {
+        return str_replace(array('.', ':', '/'), '', @$_SERVER['SERVER_ADDR']) . @date('U', time()) . rand(1000, 9999);
+    }
+}
+
 // Kategória szülők lekérdezése
+// Bemenet:
+//      $category_id: Kategória azonosító
+//      $array: Egy tömb, ami a rekurziók eredményét tartalmazza
+// Kimenet: Minden olyan kategória azonosító, ami a megadott kategória elődei 
 if (!function_exists('get_category_parents')) {
     function get_category_parents($category_id, $array = []) {
 
@@ -466,14 +543,10 @@ if (!function_exists('get_category_parents')) {
     }
 }
 
-// OrderRef generálása - OTP dokumentáció ajánlása, egy olyan azonosító, ami az OTP rendszerében is egyedi
-if (!function_exists('generate_order_ref')) {
-    function generate_order_ref() {
-        return str_replace(array('.', ':', '/'), '', @$_SERVER['SERVER_ADDR']) . @date('U', time()) . rand(1000, 9999);
-    }
-}
-
 // Lekérdezni a kategória gyerekei
+// Bemenet:
+//      $categories: Olyan kategóriák tömbje, amiknek a gyerekeire szükségünk van - minden egyes rekurzió során bővül
+// Kimenet: A megadott kategóriák gyerekei
 if (!function_exists('get_group_children')) {
     function get_group_children($categories) {
 
@@ -500,6 +573,9 @@ if (!function_exists('get_group_children')) {
 }
 
 // Csak a dátum mutatása
+// Bemenet:
+//      $datetime: Dátumidő érték
+// Kimenet: ÉÉÉÉ.HH.NN. formátumban a megadott dátum
 if (!function_exists('show_date')) {
     function show_date($datetime) {
         return date("Y.m.d.",strtotime($datetime));
