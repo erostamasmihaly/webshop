@@ -38,7 +38,7 @@ class ShopSeeder extends Seeder
             "id" => 1,
             "shop_id" => $shops["Centrum"],
             "name" => "boltos",
-            "summary" => "<p>Bolton belüli szükséges feladatok ellátása</p>",
+            "summary" => "Bolton belüli szükséges feladatok ellátása",
             "body" => "<p>Feladatok:</p><ul><li>Polcok feltöltése</li><li>Termékek árainak ellenőrzése</li><li>Pénztári feladatok elvégzése</li></ul>",
             "created_at" => now(),
             "updated_at" => now()
