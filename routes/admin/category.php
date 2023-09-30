@@ -15,7 +15,7 @@ Route::group(['prefix' => 'admin/category'], function() {
     Route::put('', [App\Http\Controllers\AdminCategoryController::class, 'update'])->name('admin_category_update');   
 
     // Létrehozás
-    Route::get('create', [App\Http\Controllers\AdminCategoryController::class, 'create'])->name('admin_category_create');
+    Route::get('create/{groupId}', [App\Http\Controllers\AdminCategoryController::class, 'create'])->name('admin_category_create');
 
     // Sorrend felület
     Route::get('sequence/{groupId}', [App\Http\Controllers\AdminCategoryController::class, 'sequence'])->name('admin_category_sequence');

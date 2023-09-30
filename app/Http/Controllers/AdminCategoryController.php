@@ -8,6 +8,7 @@ use App\Http\Services\CategoryUpdate;
 use App\Models\Category;
 use App\Models\CategoryGroup;
 use Illuminate\Support\Facades\Response;
+use Illuminate\Support\Facades\Session;
 
 class AdminCategoryController extends Controller
 {
@@ -34,10 +35,14 @@ class AdminCategoryController extends Controller
     public function edit($id) {
 
         if ($id==0) {
+
+            // Kategória csoport ID lekérdezése Session-ből
+            $category_group_id = Session::get('category_group_id');
             
             // Új kategória
             $category = new Category();
             $category->id = 0;
+            $category->category_group_id = $category_group_id;
 
         } else {
         
@@ -61,7 +66,10 @@ class AdminCategoryController extends Controller
     }
 
     // Új kategória létrehozása
-    public function create() {
+    public function create($category_group_id) {
+
+        // Kategória csoport ID elmentése Session-be
+        Session::put('category_group_id', $category_group_id);
 
         // Ugrás a Szerkesztő oldalra
         return redirect()->route('admin_category_edit', 0);

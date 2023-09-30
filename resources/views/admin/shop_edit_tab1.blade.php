@@ -15,7 +15,7 @@
 			Rövid leírás *
 		</div>
 		<div class="col-sm-8">
-			<textarea type="text" class="form-control tinyeditor" name="summary">{{ old('summary', $shop->summary) }}</textarea>
+			<textarea type="text" class="form-control" name="summary" rows="2">{{ old('summary', $shop->summary) }}</textarea>
 			@if ($errors->has('summary'))
 				<div class="invalid-feedback d-block">{{ $errors->first('summary') }}</div>
 			@endif

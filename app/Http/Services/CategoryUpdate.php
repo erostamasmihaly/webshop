@@ -45,6 +45,7 @@ class CategoryUpdate
             }
 
             // További adatok módosítása
+            $category->category_group_id = $this->category_group_id;
             $category->name = $this->name;
             $category->sequence = $sequence;
             

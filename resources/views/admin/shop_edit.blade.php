@@ -13,13 +13,17 @@
             <ul class="nav nav-tabs">
                 <li class="nav-item"><a class="nav-link active" data-bs-toggle="tab" href="#tab1">Adatok</a></li>
                 <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#tab2">Elérhetőség</a></li>
-                <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#tab3">Alkalmazottak</a></li>
+                @if($shop->id!=0)
+                    <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#tab3">Alkalmazottak</a></li>
+                @endif
             </ul>
             <div class="card-body">
                 <div class="tab-content">    
                     @include('admin.shop_edit_tab1')
                     @include('admin.shop_edit_tab2')
-                    @include('admin.shop_edit_tab3')
+                    @if($shop->id!=0)
+                        @include('admin.shop_edit_tab3')
+                    @endif
                 </div>
             </div>
             <div class="bg-dark p-3">
