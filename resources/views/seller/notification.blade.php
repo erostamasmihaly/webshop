@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="container-fluid">
-    <h4 class="card-title">Értesítések
+    <h4 class="card-title">Értesítések kezelése
         @if(auth()->user()->unreadNotifications->count()>0)
             <a href="{{ route('seller_notification_readall') }}" class="btn btn-primary">Összes olvasottnak jelölése</a>
         @endif
