@@ -44,3 +44,6 @@ require 'seller/notification.php';
 
 // Termékek
 require 'seller/product.php';
+
+// Munkakörök
+require 'seller/position.php';

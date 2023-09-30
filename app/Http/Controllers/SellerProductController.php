@@ -14,6 +14,7 @@ use App\Models\Category;
 use App\Models\Image;
 use App\Models\Product;
 use App\Models\Shop;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Response;
@@ -30,10 +31,7 @@ class SellerProductController extends Controller
     public function index() {
 
         // Minden olyan bolt lekérdezése, ami a felhasználóhoz hozzá van rendelve
-        $shops = Shop::join('positions','positions.shop_id','shops.id')->join('user_positions','user_positions.position_id','positions.id')->where('user_positions.user_id', Auth::id())->pluck('shops.id')->toArray();
-
-        // Szűrés miatt ebből egy tömb létrehozása
-        $array["shops"] = $shops;
+        $array["shops"] = User::find(Auth::id())->shops()->pluck('id')->toArray();
 
         // Termékek lekérdezése
         $products = get_products(null, true, $array, null, null, false);
