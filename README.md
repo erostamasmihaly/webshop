@@ -44,4 +44,6 @@
     <li><b>.env.example</b> tartalmazza az otthoni gépemen használt <b>.env</b> fájl aktuális tartalmát.</li>
 </ul>
 <h4>Készítette: Erős Tamás Mihály</h4>
-<h5>Lakóhely: Miskolc-Avas, III. ütem</h5>
+<ul>
+    <li>Lakóhely: Miskolc-Avas, III. ütem</li>
+</ul>
