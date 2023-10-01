@@ -17,7 +17,7 @@
 <h4>Alkalmazott felhasználók:</h4>
 <ul>
     <li>Külön adminisztrációs oldallal is rendelkeznek.</li>
-    <li>Egy boltos egyszerre több üzletnek is dolgozhat.</li>
+    <li>Egy alkalmazott egyszerre több üzletnek is dolgozhat.</li>
     <li>Értesítéseket meg tudják nézni.</li>
     <li>Termékeket és munkaköröket létre tudnak hozni és ezeket tudják szerkeszteni.</li>
 </ul>

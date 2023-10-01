@@ -12,7 +12,7 @@ class RoleSeeder extends Seeder
     {
 
         // Szerepkörök felvitele
-        $array = ["admin","vásárló","boltos"];
+        $array = ["admin","vásárló","alkalmazott"];
         for ($i=0; $i<count($array); $i++) {
             Role::insertOrIgnore([
                 "id" => $i + 1,

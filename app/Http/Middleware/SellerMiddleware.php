@@ -8,12 +8,12 @@ use Symfony\Component\HttpFoundation\Response;
 
 class SellerMiddleware
 {
-    // Belépés csak Eladóknak
+    // Belépés csak Alkalmazottaknak
     public function handle(Request $request, Closure $next): Response
     {
 
-        // Megnézni, hogy van-e eladó szerepköre
-        restrict_role("boltos");
+        // Megnézni, hogy van-e Alkalmazott szerepköre
+        restrict_role("alkalmazott");
 
         return $next($request);
     }

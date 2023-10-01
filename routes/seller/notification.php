@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 
-// Eladói felület
+// Alkalmazotti felület
 Route::group(['prefix' => 'seller/notification'], function() {
 
     // Értesítések

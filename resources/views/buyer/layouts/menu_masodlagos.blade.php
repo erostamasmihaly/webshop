@@ -20,8 +20,8 @@
 				@if(has_role('admin'))
 					<a class="dropdown-item" href="{{ route('admin_index') }}">Admin felület</a>
 				@endif
-				@if(has_role('boltos'))
-					<a class="dropdown-item" href="{{ route('seller_index') }}">Eladói felület</a> 
+				@if(has_role('alkalmazott'))
+					<a class="dropdown-item" href="{{ route('seller_index') }}">Alkalmazotti felület</a> 
 				@endif
 				@if(has_role('vásárló'))
 					<a class="dropdown-item" href="{{ route('buyer_user') }}">Profil adatok</a>

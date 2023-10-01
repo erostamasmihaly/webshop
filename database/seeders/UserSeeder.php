@@ -63,24 +63,24 @@ class UserSeeder extends Seeder
             "updated_at" => now()
         ]);
 
-        // Boltos
+        // Alkalmazott
         User::insertOrIgnore([
             "id" => 3,
-            "name" => "boltos",
-            "surname" => "Boltos",
+            "name" => "alkalmazott",
+            "surname" => "Alkalmazott",
             "forename" => "Felhasználó",
-            "email" => "boltos@etm.hu",
-            "password" => Hash::make("Boltos1234"),
+            "email" => "alkalmazott@etm.hu",
+            "password" => Hash::make("Alkalmazott1234"),
             "active" => 1,
             "created_at" => now(),
             "updated_at" => now()
         ]);
-        $users["boltos"] = 3;
+        $users["alkalmazott"] = 3;
 
         UserRole::insertOrIgnore([
             "id" => 3,
-            "user_id" => $users["boltos"],
-            "role_id" => $roles["boltos"],
+            "user_id" => $users["alkalmazott"],
+            "role_id" => $roles["alkalmazott"],
             "created_at" => now(),
             "updated_at" => now()
         ]);

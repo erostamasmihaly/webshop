@@ -151,7 +151,7 @@ class InteractionSeeder extends Seeder
         // Vélemény lekérdezése
         $rating = Rating::find(1);
 
-        // Boltos elfogadta a véleményt
+        // Alkalmazott elfogadta a véleményt
         Rating::where("id", $rating->id)->update([
             "moderated" => 1,
             "updated_at" => now()

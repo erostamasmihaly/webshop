@@ -33,23 +33,23 @@ class ShopSeeder extends Seeder
         ]);
         $shops["Centrum"] = 1;
 
-        // Boltos pozíció létrehozása
+        // Alkalmazott pozíció létrehozása
         Position::insertOrIgnore([
             "id" => 1,
             "shop_id" => $shops["Centrum"],
-            "name" => "boltos",
+            "name" => "alkalmazott",
             "summary" => "Bolton belüli szükséges feladatok ellátása",
             "body" => "<p>Feladatok:</p><ul><li>Polcok feltöltése</li><li>Termékek árainak ellenőrzése</li><li>Pénztári feladatok elvégzése</li></ul>",
             "created_at" => now(),
             "updated_at" => now()
         ]);
-        $positions["boltos"] = 1;
+        $positions["alkalmazott"] = 1;
 
-        // Boltos hozzárendelése a Boltos pozícióhoz
+        // Alkalmazott hozzárendelése a Alkalmazott pozícióhoz
         UserPosition::insertOrIgnore([
             "id" => 1,
-            "user_id" => $users["boltos"],
-            "position_id" => $positions["boltos"],
+            "user_id" => $users["alkalmazott"],
+            "position_id" => $positions["alkalmazott"],
             "created_at" => now(),
             "updated_at" => now()
         ]);

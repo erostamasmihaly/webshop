@@ -18,7 +18,7 @@ class SellerPositionController extends Controller
     // Munkakörök listája
     public function index() {
 
-        // Minden olyan munkakör lekérdezése, amit a boltoshoz is hozzá lehet rendelni
+        // Minden olyan munkakör lekérdezése, amit a alkalmazotthoz is hozzá lehet rendelni
         $positions = User::find(Auth::id())->possible_positions();
 
         // Oldal meghívása
@@ -43,7 +43,7 @@ class SellerPositionController extends Controller
             
         }
         
-        // Boltoshoz tartozó üzletek lekérdezése
+        // Alkalmazotthoz tartozó üzletek lekérdezése
         $shops = User::find(Auth::id())->shops();
 
         // Oldal meghívása

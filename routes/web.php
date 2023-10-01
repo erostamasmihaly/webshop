@@ -34,7 +34,7 @@ require 'admin/category.php';
 // Üzletek
 require 'admin/shop.php';
 
-//// Eladói szerepkör
+//// Alkalmazotti szerepkör
 
 // Vezérlőpult
 require 'seller/index.php';
