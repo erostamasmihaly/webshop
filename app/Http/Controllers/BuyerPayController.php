@@ -8,6 +8,7 @@ use App\Models\Category;
 use App\Models\Payment;
 use App\Models\Product;
 use App\Models\Shop;
+use App\Models\SimplePayError;
 use App\Models\User;
 use App\Notifications\PaymentShop;
 use Illuminate\Http\Request;
@@ -165,12 +166,15 @@ class BuyerPayController extends Controller
         // Fizetési azonosító lekérdezése
         $payment_id = Session::get('payment_id');
 
-        // Hibakód lekérdezése
-        $error = Payment::find($payment_id)->error;
+        // Hibakód tömb lekérdezése
+        $array = json_decode(Payment::find($payment_id)->error,TRUE);
+
+        // Ezen tömbhöz tartozó hibák lekérdezése
+        $errors = SimplePayError::whereIn('id',$array)->get();
 
         // Felület megnyitása
         return view('buyer.pay_transaction_failed', [
-            'error' => $error
+            'errors' => $errors
         ]);
     }
 

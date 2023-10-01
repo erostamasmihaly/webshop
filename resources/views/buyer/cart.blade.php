@@ -8,6 +8,9 @@
             <div class="bg-info bg-gradient text-dark text-center mb-2">
                 <h1>Kosár</h1>
             </div>
+            <div class="alert alert-info" role="alert">
+                Abban az esetben, ha nagyobb mennyiségben történne a vásárlás, mint amennyi a fizetés során elérhető, akkor csak annyi mennyiség lesz kifizetve, amennyi épp elérhető, a többi mennyiség marad a kosárban. Ha már fizetés során nem elérhető az adott termék az adott méretben, akkor a fizetés tranzakció hibával meg lesz szakítva!
+            </div>
             <div class="mb-2">
             @if ($carts->count() !== 0)
                 @include('waiting')
