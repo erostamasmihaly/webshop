@@ -34,11 +34,11 @@
     <li>Alap adatokat a Seeder tartalmaz, így a <b>php artisan db:seed</b> elindításakor felhasználók, boltok, termékek, stb... is létrejönnek.</li>
     <li>Termékek esetén a <b>public\images\setup</b> tartalmazza azon képeket, amelyek a termékekhez hozzá fog tartozni. A Seeder lefuttatásakor ezen képek kerülnek át átméretezetten a megfelelő termékekhez.</li>
     <li>Minden egyes szerepkörhöz tartozik egy-egy felhasználó a Seeder lefuttatása után:
-        <ol>
+        <ul>
             <li>Vásárló - e-mail: vasarlo@etm.hu / jelszó: Vasarlo1234</li>
             <li>Alkalmazott - e-mail: alkalmazott@etm.hu / jelszó: Alkalmazott1234</li>
             <li>Admin - e-mail: admin@etm.hu / jelszó: Admin1234</li>
-        </ol>
+        </ul>
     </li>
     <li>E-mail küldés esetén a Google fiókom e-mail címe és az alkalmazás specifikus jelszava van megadva.</li>
     <li><b>.env.example</b> tartalmazza az otthoni gépemen használt <b>.env</b> fájl aktuális tartalmát.</li>
