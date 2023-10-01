@@ -6,7 +6,7 @@
                 <div class="col-sm-6">
                     <div class="card p-1">
                         <p class="fw-bold">
-                            <a href="{{ route('product',$cart->id) }}"><i class="fa-solid fa-arrow-up-right-from-square"></i> {{ $cart->product->name }}</a>
+                            <a href="{{ route('product',$cart->product_id) }}"><i class="fa-solid fa-arrow-up-right-from-square"></i> {{ $cart->product->name }}</a>
                             <br>
                             <small>Mennyiség: {{ $cart->quantity }} {{ $cart->product->unit->category->name }}</small>
                             <br>
