@@ -12,7 +12,7 @@ class TestController extends Controller
 {
     public function index() {
         $cart = Cart::find(3); 
-        $new_quantity = cart_quantity_split($cart);
-        dd($new_quantity);
+        //cart_quantity_split($cart);
+        cart_quantity_join($cart);
     }
 }

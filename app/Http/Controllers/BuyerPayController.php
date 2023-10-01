@@ -70,8 +70,8 @@ class BuyerPayController extends Controller
         $carts = get_cart()["carts"];
 
         // Kosár elemeinek behelyezése ebbe a tömbbe
-        foreach ($carts as $cart) {
-            $quantity = cart_quantity_split($cart);
+        foreach ($carts AS $cart) {
+            $quantity = cart_quantity_split(Cart::find($cart->id));
             $items[$i]['ref'] = $cart->id;
             if ($cart->size_name!="") {
                 $items[$i]['title'] = $cart->product_name." (".$cart->size_name.")";    
@@ -130,6 +130,11 @@ class BuyerPayController extends Controller
         if (isset($returnData['errorCodes'])) {
 
             //// Ha hiba történt
+            // Visszaegyesíteni a kosarakat, ha kell
+            foreach ($carts AS $cart) {
+                cart_quantity_join(Cart::find($cart->id));
+            }
+
             // Fizetésnél felvinni, hogy hiba volt és mellékelni a hibakódokat
             $payment->error = json_encode($returnData['errorCodes']);
             $payment->save();
@@ -154,6 +159,7 @@ class BuyerPayController extends Controller
 
     }
 
+    // Sikertelen tranzakció
     public function transaction_failed() {
 
         // Fizetési azonosító lekérdezése
@@ -168,6 +174,7 @@ class BuyerPayController extends Controller
         ]);
     }
 
+    // Sikeres tranzakció
     public function transaction_success() {
 
         // URL lekérdezése
@@ -247,6 +254,14 @@ class BuyerPayController extends Controller
                 case "TIMEOUT":
                     $result = "Időtúllépés miatt a fizetés megszakítva!";
                     break;
+            }
+
+            // Kosár lekérdezése
+            $carts = get_cart()["carts"];
+
+            // Visszaegyesíteni a kosarakat, ha kell
+            foreach ($carts AS $cart) {
+                cart_quantity_join(Cart::find($cart->id));
             }
 
             // Visszatérés a kosárba a hibával

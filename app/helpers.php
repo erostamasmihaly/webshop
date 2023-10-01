@@ -650,5 +650,24 @@ if (!function_exists('cart_quantity_split')) {
 if (!function_exists('cart_quantity_join')) {
     function cart_quantity_join($cart) {
 
+        // Ha még létezik a kosár
+        if ($cart) {
+
+            // Megnézni, hogy van-e olyan kosár, ami ennek a szétszedésével jött létre
+            $other_cart = Cart::where('id','!=',$cart->id)->where('user_id', $cart->user_id)->where('product_id',$cart->product_id)->where('size_id', $cart->size_id)->whereNull('payment_id')->first();
+
+            // Ha van
+            if ($other_cart) {
+
+                // Eredeti kosárban lévő mennyiség visszakerül az újból
+                $cart->quantity = $cart->quantity + $other_cart->quantity;
+                $cart->save();
+
+                // Ezen utóbbi kosár pedig törlésre kerül
+                $other_cart->delete();
+            }
+        }
+
+       
     }
 }

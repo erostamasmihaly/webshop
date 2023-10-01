@@ -36,7 +36,6 @@
     <li>OTP SimplePay esetén a fejlesztői verzió van alkalmazva és a végén az IPN visszaigazolás még hiányzik.</li>
     <li>E-mail küldés esetén a Google fiókom e-mail címe és az alkalmazás specifikus jelszava van megadva.</li>
     <li><b>.env.example</b> tartalmazza az otthoni gépemen használt <b>.env</b> fájl aktuális tartalmát.</li>
-    <li>Fizetéskor még a meglévő mennyiségnél többet is meg lehet vásárolni, de később majd le lesz kezelve.</li>
     <li>Alap adatokat a Seeder tartalmaz, így a <b>php artisan db:seed</b> elindításakor felhasználók, boltok, termékek, stb... is létrejönnek.</li>
     <li>Termékek esetén a <b>public\images\setup</b> tartalmazza azon képeket, amelyek a termékekhez hozzá fog tartozni. A Seeder lefuttatásakor ezen képek kerülnek át átméretezetten a megfelelő termékekhez.</li>
     <li>Minden egyes szerepkörhöz tartozik egy-egy felhasználó a Seeder lefuttatása után:
