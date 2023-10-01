@@ -71,13 +71,14 @@ class BuyerPayController extends Controller
 
         // Kosár elemeinek behelyezése ebbe a tömbbe
         foreach ($carts as $cart) {
+            $quantity = cart_quantity_split($cart);
             $items[$i]['ref'] = $cart->id;
             if ($cart->size_name!="") {
                 $items[$i]['title'] = $cart->product_name." (".$cart->size_name.")";    
             } else {
                 $items[$i]['title'] = $cart->product_name;
             }
-            $items[$i]['amount'] = $cart->quantity;
+            $items[$i]['amount'] = $quantity;
             $items[$i]['price'] = $cart->discount_price;
             $i++;
         }

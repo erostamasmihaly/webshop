@@ -597,3 +597,58 @@ if (!function_exists('show_date')) {
         return date("Y.m.d.",strtotime($datetime));
     }
 }
+
+// Ha szükséges, akkor kettészedni a kosárban lévő bejegyzést a fizetés előtt, ha esetleg több lenne a kosárba, mint amit éppen lehet megvásárolni
+// Bemenet:
+//      $cart: Kosár bejegyzés, amit esetleg ketté kell szedni
+// Kimenet: Azon mennyiség, amennyit a vásárló akar a termékből megvenni, de nem nagyobb, mint amennyit ténylegesen meg lehet venni belőle
+if (!function_exists('cart_quantity_split')) {
+    function cart_quantity_split($cart) {
+
+        // Megvett termék méretének lekérdezése
+        $size_id = $cart->size_id;
+
+        // Adott mérethez tartozó maximális megvehető mennyiség lekérdezése
+        $max_quantity = $cart->product->prices->where('size_id',$size_id)->first()->quantity;
+        
+        // Megvásárolni kívánt mennyiség lekérdezése
+        $cart_quantity = $cart->quantity;
+
+        // Megnézni, hogy többet akar-e megvenni, mint amennyi elérhető
+        if ($cart_quantity <= $max_quantity) {
+
+            //// Ha nem
+            // Visszatérni azon mennyiséggel, amelyet eleve meg akart vásárolni
+            return $cart_quantity;
+        } else {
+
+            //// Ha igen
+            // Meghatározni, hogy mennyi nem vehet meg 
+            $new_quantity = $cart_quantity - $max_quantity;
+
+            // Egy hasonló kosárbejegyzés létrehozása, ami ezen épp meg nem vehető mennyiséget
+            $new_cart = new Cart();
+            $new_cart->user_id = $cart->user_id;
+            $new_cart->product_id = $cart->product_id;
+            $new_cart->size_id = $cart->size_id;
+            $new_cart->quantity = $new_quantity;
+            $new_cart->save();
+
+            // Az eredeti kosárban a mennyiség csökkentése a jelenleg elérhető maximálisra
+            $cart->quantity = $max_quantity;
+            $cart->save();
+
+            // Visszatérni ezen maximális értékkel
+            return $max_quantity;
+        }
+    }
+}
+
+// Sikertelen fizetés esetén újra egyesíteni a kettészedett kosár bejegyzést
+// Bemenet:
+//      $cart: Kosár bejegyzés, ami ketté lett szedve
+if (!function_exists('cart_quantity_join')) {
+    function cart_quantity_join($cart) {
+
+    }
+}
