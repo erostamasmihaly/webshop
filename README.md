@@ -28,4 +28,4 @@
     <li>Üzletek létrehozása, szerkesztése és alkalmazottak hozzárendelése az üzletekhez.</li>
 </ul>
 <h4>Készítette: Erős Tamás Mihály</h4>
-<h3>Lakóhely: Miskolc-Avas, III. ütem</h3>
+<h5>Lakóhely: Miskolc-Avas, III. ütem</h5>
