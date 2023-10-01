@@ -29,7 +29,13 @@
 </ul>
 <h4>Megjegyzések:</h4>
 <ul>
+    <li>Megjelenítés esetén a BLADE-t alkalmazom. De ha kell, akkor át tudok térni esetleg másra.</li>
+    <li>JavaScript esetén már megszoktam a jQuery használatát, bár az alap JavaScripttel kapcsolatban már egy tanfolyamom is volt.</li>
+    <li>Térképészeti megjelenítéshez a Leaflet van alkalmazva és az OpenStreetMap van megjelenítve.</li>
+    <li>Cím alapján a koordináta meghatározása a Google Geocoding API által történik.</li>  
     <li>OTP SimplePay esetén a fejlesztői verzió van alkalmazva és a végén az IPN visszaigazolás még hiányzik.</li>
+    <li>E-mail küldés esetén a Google fiókom e-mail címe és az alkalmazás specifikus jelszava van megadva.</li>
+    <li><b>.env.example</b> tartalmazza az otthoni gépemen használt <b>.env</b> fájl aktuális tartalmát.</li>
     <li>Fizetéskor még a meglévő mennyiségnél többet is meg lehet vásárolni, de később majd le lesz kezelve.</li>
     <li>Alap adatokat a Seeder tartalmaz, így a <b>php artisan db:seed</b> elindításakor felhasználók, boltok, termékek, stb... is létrejönnek.</li>
     <li>Termékek esetén a <b>public\images\setup</b> tartalmazza azon képeket, amelyek a termékekhez hozzá fog tartozni. A Seeder lefuttatásakor ezen képek kerülnek át átméretezetten a megfelelő termékekhez.</li>
@@ -40,8 +46,7 @@
             <li>Admin - e-mail: admin@etm.hu / jelszó: Admin1234</li>
         </ul>
     </li>
-    <li>E-mail küldés esetén a Google fiókom e-mail címe és az alkalmazás specifikus jelszava van megadva.</li>
-    <li><b>.env.example</b> tartalmazza az otthoni gépemen használt <b>.env</b> fájl aktuális tartalmát.</li>
+    <li>A kategória sorbarendező még kicsit "furán" működik, de ezt később szerintem módosítom és esetleg egy másik JS kiegészítőre fogok áttérni.</li>
 </ul>
 <h4>Készítette: Erős Tamás Mihály</h4>
 <ul>
