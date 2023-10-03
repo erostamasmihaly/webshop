@@ -1,3 +1,4 @@
+<h1>Mivel sok helyen a jQuery-t átírom JavaScript-re, így sok minden ideiglenes jelleggel nem működik!</h1>
 <h3>ETM Webshop</h3>
 <p>Egy olyan kis magán projekt, amin keresztül meg lehet tekinteni, hogy nagyjából milyen webes alkalmazásokat tudok jelenleg fejleszteni.</p>
 <p>Egy webáruház, ahol különféle szerepkörökre bontva lehet alap feladatokat elvégezni.</p>
