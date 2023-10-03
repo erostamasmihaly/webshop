@@ -1,7 +1,7 @@
 $(function () {
 
     // Plusz gomb megnyomása
-    document.getElementsByClassName("plus").addEventListener("click", function() {
+    document.querySelectorAll("."plus").addEventListener("click", function() {
         
         // Termék azonosító és méret azonosító lekérdezése
         product_id = this.closest(".product").getAttribute("product_id");
@@ -13,7 +13,7 @@ $(function () {
     });
 
     // Plusz gomb megnyomása
-    document.getElementsByClassName("minus").addEventListener("click", function() {
+    document.querySelectorAll("."minus").addEventListener("click", function() {
         
         // Termék azonosító és méret azonosító lekérdezése
         product_id = this.closest(".product").getAttribute("product_id");
@@ -32,7 +32,7 @@ $(function () {
     });
 
     // Törlés gomb megnyomása
-    document.getElementsByClassName("delete").addEventListener("click", function() {
+    document.querySelectorAll("."delete").addEventListener("click", function() {
         
         // Termék azonosító és méret azonosító lekérdezése
         product_id = this.closest(".product").getAttribute("product_id");
@@ -52,7 +52,7 @@ $(function () {
     function send_change(product_id, size_id, quantity) {
 
         // Mennyiség lekérdezése
-        quantity_old = document.getElementsByClassName("product[product_id="+product_id+"][size_id="+size_id+"] .quantity").html();
+        quantity_old = document.querySelectorAll("."product[product_id="+product_id+"][size_id="+size_id+"] .quantity").html();
         
         // Adatok átküldése
         $.ajax({
@@ -74,12 +74,12 @@ $(function () {
                     if (new_quantity > 0) {
 
                         // Ha még mindig van belőle, akkor mennyiség módosítása
-                        document.getElementsByClassName("product[product_id="+product_id+"][size_id="+size_id+"] .quantity").html(new_quantity);
+                        document.querySelectorAll("."product[product_id="+product_id+"][size_id="+size_id+"] .quantity").html(new_quantity);
 
                     } else {
 
                         // Adott sor törlése és a táblázat frissítése
-                        document.getElementsByClassName("datatable").DataTable().rows(".product[product_id="+product_id+"][size_id="+size_id+"]").remove().draw();
+                        document.querySelectorAll("."datatable").DataTable().rows(".product[product_id="+product_id+"][size_id="+size_id+"]").remove().draw();
 
                     }
 
@@ -87,7 +87,7 @@ $(function () {
                     if (data.total!="0 Ft") {
 
                         // Fizetendő összeg frissítése, ha nem 0 Ft
-                        document.getElementById("total").html(data.total);
+                        document.querySelector("#total").html(data.total);
                     } else {
 
                         // Felület frissítése, ha 0 Ft

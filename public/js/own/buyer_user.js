@@ -1,7 +1,7 @@
 $(function () {
 
     // Visszavonás gomb megnyomása
-    document.getElementsByClassName("undo").addEventListener("click", function() {
+    document.querySelectorAll("."undo").addEventListener("click", function() {
 
         // Termék azonosítójának lekérdezése
         product_id = this.closest(".fav").getAttribute("product_id");
@@ -25,16 +25,16 @@ $(function () {
                     $(this_fav).closest(".fav").remove();
 
                     // Megszámolni, hogy mennyi kedvenc van még hátra
-                    count = document.getElementsByClassName("fav").length;
+                    count = document.querySelectorAll("."fav").length;
 
                     // Ha már nincs kedvenc
                     if (count==0) {
 
                         // Kedvencek blokk elrejtése
-                        document.getElementsByClassName("favs").classList.add("d-none");
+                        document.querySelectorAll("."favs").classList.add("d-none");
 
                         // Ürességet jelző blokk mutatása
-                        document.getElementsByClassName("empty").classList.remove("d-none");
+                        document.querySelectorAll("."empty").classList.remove("d-none");
                     }
                 }
             },

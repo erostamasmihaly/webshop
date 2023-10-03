@@ -37,7 +37,7 @@ $(function () {
       });
 
       // Koordináta keresése cím alapján
-      document.getElementById("google").addEventListener("click", function() {
+      document.querySelector("#google").addEventListener("click", function() {
 
         address = $("input[name='address']").value;
     
@@ -86,7 +86,7 @@ $(function () {
     }
 
     // Térképes hiba javítása
-    document.getElementsByClassName("nav-tabs .nav-link").addEventListener("click", function() {
+    document.querySelectorAll("."nav-tabs .nav-link").addEventListener("click", function() {
         setTimeout(function() {
             map.invalidateSize();
         }, 500);

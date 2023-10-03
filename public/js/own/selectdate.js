@@ -1,5 +1,5 @@
 $(function () {
-    document.getElementsByClassName("datepicker").datepicker({
+    $(".datepicker").datepicker({
         changeMonth: true, // Hónap kiválasztása naptár fejlécben
    		changeYear: true, // Év kiválasztása a naptár fejlécben
 		dateFormat: 'yy-mm-dd', // Dátum formátum

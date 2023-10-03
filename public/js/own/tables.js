@@ -10,8 +10,12 @@ $(function () {
         stateDuration:-1, // Visszatérés eredeti állapotba új fül megnyitásakor
         order: [], // Betöltéskor még ne legyen sorrend alkalmazva
         initComplete: function(settings, json) {
-            document.getElementsByClassName("datatable").classList.remove("d-none").classList.add("d-table"); // Tábla megjelenítése
-            document.getElementById("waiting").classList.add("d-none"); // Folyamatban szöveg törlése
+            datatable = document.querySelectorAll(".datatable");
+            for (var i=0; i<datatable.length; i++) {
+                datatable[i].classList.remove("d-none");
+                datatable[i].classList.add("d-table");
+            }
+            document.querySelector("#waiting").classList.add("d-none"); // Folyamatban szöveg törlése
         }
     });   
 });

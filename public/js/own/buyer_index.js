@@ -9,11 +9,11 @@ $(function () {
         // Új objektum létrehozása
         obj = new Object();
 
-        // Szűrők felvitele ebbe az objektumba
-        obj.shops = document.getElementById("filter_shop").value;
-        obj.sizes = document.getElementById("filter_size").value;
-        obj.genders = document.getElementById("filter_gender").value;
-        obj.ages = document.getElementById("filter_age").value;
+        // Szűrők felvitele ebbe az objektumba - Select2 miatt jQuery alkalmazása
+        obj.shops = $("#filter_shop").val();
+        obj.sizes = $("#filter_size").val();
+        obj.genders = $("#filter_gender").val();
+        obj.ages = $("#filter_age").val();
 
         // JSON létrehozása objektumból
         filter = JSON.stringify(obj);
@@ -23,7 +23,7 @@ $(function () {
         }
 
         // Aktuális oldalszám mutatása
-        document.getElementById("current").innerHTML = parseInt(page)+1;
+        document.querySelector("#current").innerHTML = parseInt(page)+1;
 
         // Kérés a szerver felé
         $.ajax({
@@ -57,15 +57,15 @@ $(function () {
     function show_groups(groups, back_id) {
 
         // Termékcsoprotoknak kijelölt terület tisztítása
-        document.getElementById("groups").innerHTML = "";
+        document.querySelector("#groups").innerHTML = "";
 
         // Végigmenni minden egyes termékcsoporton és megjeleníteni őket a kijelölt területen
         groups.forEach(function(group) {
-            document.getElementById("groups").innerHTML += '<div class="col-lg-3 col-sm-4 col-6 groups mb-1" group_id="'+group.id+'"><button class="badge bg-primary w-100 p-2">'+group.name+'</button></div>';
+            document.querySelector("#groups").innerHTML += '<div class="col-lg-3 col-sm-4 col-6 groups mb-1" group_id="'+group.id+'"><button class="badge bg-primary w-100 p-2">'+group.name+'</button></div>';
         });
 
         // Vissza gomb behelyezése
-        document.getElementById("groups").innerHTML +='<div class="col-lg-3 col-sm-4 col-6 groups mb-2" group_id="'+back_id+'"><button class="badge bg-secondary w-100 p-2">Vissza</button></div>';
+        document.querySelector("#groups").innerHTML +='<div class="col-lg-3 col-sm-4 col-6 groups mb-2" group_id="'+back_id+'"><button class="badge bg-secondary w-100 p-2">Vissza</button></div>';
     }
 
     // Kategória kiválasztása
@@ -93,7 +93,7 @@ $(function () {
     function show_products(products) {
 
         // Termékeknek kijelölt terület tisztítása
-        document.getElementById("products").innerHTML = "";
+        document.querySelector("#products").innerHTML = "";
 
         // Végigmenni minden egyes terméken
         products.forEach(function(product) {
@@ -113,22 +113,22 @@ $(function () {
             html+='</a></div></div>';
 
             // HTML elem megjelenítése a termékeknek kijelölt helyen
-            document.getElementById("products").innerHTML += html;
+            document.querySelector("#products").innerHTML += html;
         });
     }
 
     // Alapállapot visszaállítása
-    document.getElementById("filter_default").addEventListener("click", function(){
+    document.querySelector("#filter_default").addEventListener("click", function(){
 
         // Minden szűrő esetén a legleső lehetőség kiválasztása
-        document.getElementById("filter_shop").value = null;
-        document.getElementById("filter_shop").trigger('change');
-        document.getElementById("filter_size").value = null;
-        document.getElementById("filter_size").trigger('change');
-        document.getElementById("filter_gender").value = null;
-        document.getElementById("filter_gender").trigger('change');
-        document.getElementById("filter_age").value = null;
-        document.getElementById("filter_age").trigger('change');
+        document.querySelector("#filter_shop").value = null;
+        document.querySelector("#filter_shop").trigger('change');
+        document.querySelector("#filter_size").value = null;
+        document.querySelector("#filter_size").trigger('change');
+        document.querySelector("#filter_gender").value = null;
+        document.querySelector("#filter_gender").trigger('change');
+        document.querySelector("#filter_age").value = null;
+        document.querySelector("#filter_age").trigger('change');
 
         // Visszatérés az első oldalra
         sessionStorage.setItem('page',0);
@@ -138,21 +138,18 @@ $(function () {
 
     });
 
-    // Szűrő módosítása után
-    var filters = document.getElementsByClassName("filter");
-    for (var i = 0; i < filters.length; i++) {
-        filters[i].addEventListener("change", function(){
+    // Szűrő módosítása után - Mivel Select2-s mező, így az addEventListener nem működik!
+    $(".filter").on("change", function(){
 
-            // Visszatérés az első oldalra
-            sessionStorage.setItem('page',0);
+        // Visszatérés az első oldalra
+        sessionStorage.setItem('page',0);
     
-            // Termékek lekérdezése
-            get_products();
-        });
-    }
+        // Termékek lekérdezése
+        get_products();
+    });
 
     // Vissza
-    document.getElementById("back").addEventListener("click", function(){
+    document.querySelector("#back").addEventListener("click", function(){
 
         // Aktuális oldalszám lekérdezése
         page = sessionStorage.getItem(page);
@@ -173,7 +170,7 @@ $(function () {
     });
 
     // Előre
-    document.getElementById("next").addEventListener("click", function(){
+    document.querySelector("#next").addEventListener("click", function(){
 
         // Aktuális oldalszám lekérdezése
         page = sessionStorage.getItem(page);
