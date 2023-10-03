@@ -33,7 +33,7 @@ $(function () {
         document.getElementsByClassName("image").each(function(e) {
                 
             // Aktuális kép azonosítójának lekérdezése
-            image_id = $(this).getAttribute("image_id");
+            image_id = this.getAttribute("image_id");
 
             // Kép behelyezése a tömbbe
             images_array.push(image_id);
@@ -146,7 +146,7 @@ $(function () {
         if (is_main) {
 
             // Aktuális kép azonosítójának lekérdezése
-            image_id = $(this).getAttribute("image_id");
+            image_id = this.getAttribute("image_id");
 
             // Új vezérkép átküldése a szervernek
             $.ajax({
@@ -194,7 +194,7 @@ $(function () {
         if (is_delete) {
             
             // Aktuális kép azonosítójának lekérdezése
-            image_id = $(this).getAttribute("image_id");            
+            image_id = this.getAttribute("image_id");            
 
             // Törlendő kép átküldése
             $.ajax({
@@ -344,7 +344,7 @@ $(function () {
     $("body").addEventListener("click", ".rating_show", function() {
 
         // Azonosító lekérdezése
-        id = $(this).getAttribute("rating_id");
+        id = this.getAttribute("rating_id");
 
         // Publikálás
         rating_moderation(id, 1);
@@ -354,7 +354,7 @@ $(function () {
     $("body").addEventListener("click", ".rating_hide", function() {
         
         // Azonosító lekérdezése
-        id = $(this).getAttribute("rating_id");
+        id = this.getAttribute("rating_id");
 
         // Elrejtés
         rating_moderation(id, 0);

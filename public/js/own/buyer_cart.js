@@ -4,8 +4,8 @@ $(function () {
     document.getElementsByClassName("plus").addEventListener("click", function() {
         
         // Termék azonosító és méret azonosító lekérdezése
-        product_id = $(this).closest(".product").getAttribute("product_id");
-        size_id = $(this).closest(".product").getAttribute("size_id");
+        product_id = this.closest(".product").getAttribute("product_id");
+        size_id = this.closest(".product").getAttribute("size_id");
 
         // Módosítás elküldése
         send_change(product_id, size_id, 1);
@@ -16,11 +16,11 @@ $(function () {
     document.getElementsByClassName("minus").addEventListener("click", function() {
         
         // Termék azonosító és méret azonosító lekérdezése
-        product_id = $(this).closest(".product").getAttribute("product_id");
-        size_id = $(this).closest(".product").getAttribute("size_id");
+        product_id = this.closest(".product").getAttribute("product_id");
+        size_id = this.closest(".product").getAttribute("size_id");
 
         // Mennyiség lekérdezése
-        quantity = $(this).closest(".product").find(".quantity").html();
+        quantity = this.closest(".product").find(".quantity").html();
 
         // Ha még nem 0
         if (quantity > 0) {
@@ -35,11 +35,11 @@ $(function () {
     document.getElementsByClassName("delete").addEventListener("click", function() {
         
         // Termék azonosító és méret azonosító lekérdezése
-        product_id = $(this).closest(".product").getAttribute("product_id");
-        size_id = $(this).closest(".product").getAttribute("size_id");
+        product_id = this.closest(".product").getAttribute("product_id");
+        size_id = this.closest(".product").getAttribute("size_id");
 
         // Mennyiség lekérdezése
-        quantity = $(this).closest(".product").find(".quantity").html();
+        quantity = this.closest(".product").find(".quantity").html();
 
         // Módosítás elküldése
         send_change(product_id, size_id, -1*quantity);

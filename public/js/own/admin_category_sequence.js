@@ -55,19 +55,19 @@ $(function () {
 
                 // Előző szinten legyen
                 "<<": function() {
-                    $(this).dialog("close");
+                    this.dialog("close");
                     change(id, -1);
                 },
 
                 // Megegyező szinten legyen
                 "--": function() {
-                    $(this).dialog("close");
+                    this.dialog("close");
                     change(id, 0);
                 },
 
                 // Következő szinten legyen
                 ">>": function() {
-                    $(this).dialog("close");
+                    this.dialog("close");
                     change(id, 1);
                 }
             }
@@ -178,10 +178,10 @@ $(function () {
         document.getElementById("sortable li").each(function() {
             
             // Lekérdezni az azonosítóját
-            id = $(this).getAttribute("id")
+            id = this.getAttribute("id")
 
             // Lekérdezni a szintjét
-            level = $(this).getAttribute("level");
+            level = this.getAttribute("level");
 
             // Lekérdezni a szülőjét
             parent_id = get_parent(id, level);

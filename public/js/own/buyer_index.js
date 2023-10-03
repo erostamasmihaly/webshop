@@ -4,7 +4,7 @@ $(function () {
     function get_products() {
 
         // SessionStorage-ba tárolt kategória lekérdezése
-        var group_id = sessionStorage.getItem('group_id');
+        var group_id = sessionStorage.getItem("group_id");
 
         // Új objektum létrehozása
         obj = new Object();
@@ -23,7 +23,7 @@ $(function () {
         }
 
         // Aktuális oldalszám mutatása
-        document.getElementById("current").html(parseInt(page)+1);
+        document.getElementById("current").innerHTML = parseInt(page)+1;
 
         // Kérés a szerver felé
         $.ajax({
@@ -33,7 +33,7 @@ $(function () {
             type: "GET",
             cache: false,
             success: function (data) {
-                console.log(data);
+
                 if (data.OK == 1) {
 
                     //// Ha minden rendben volt
@@ -57,38 +57,43 @@ $(function () {
     function show_groups(groups, back_id) {
 
         // Termékcsoprotoknak kijelölt terület tisztítása
-        document.getElementById("groups").innerHTML("");
+        document.getElementById("groups").innerHTML = "";
 
         // Végigmenni minden egyes termékcsoporton és megjeleníteni őket a kijelölt területen
         groups.forEach(function(group) {
-            document.getElementById("groups").append('<div class="col-lg-3 col-sm-4 col-6 groups mb-1" group_id="'+group.id+'"><button class="badge bg-primary w-100 p-2">'+group.name+'</button></div>');
+            document.getElementById("groups").innerHTML += '<div class="col-lg-3 col-sm-4 col-6 groups mb-1" group_id="'+group.id+'"><button class="badge bg-primary w-100 p-2">'+group.name+'</button></div>';
         });
 
         // Vissza gomb behelyezése
-        document.getElementById("groups").append('<div class="col-lg-3 col-sm-4 col-6 groups mb-2" group_id="'+back_id+'"><button class="badge bg-secondary w-100 p-2">Vissza</button></div>');
+        document.getElementById("groups").innerHTML +='<div class="col-lg-3 col-sm-4 col-6 groups mb-2" group_id="'+back_id+'"><button class="badge bg-secondary w-100 p-2">Vissza</button></div>';
     }
 
     // Kategória kiválasztása
-    $("body").addEventListener("click", ".groups", function() {
+    document.addEventListener("click", function(e){
 
-        // Kijelölt kategória ID lekérdezése
-        group_id = $(this).getAttribute("group_id");
+        // Ha kategóriára lett kattitnva
+        const groups = e.target.closest(".groups");
+        if(groups){
 
-        // Ezen ID elmentése
-        sessionStorage.setItem('group_id', group_id);
+            // Kijelölt kategória ID lekérdezése
+            group_id = groups.getAttribute("group_id");
 
-        // Visszatérés az első oldalra
-        sessionStorage.setItem('page',0);
+            // Ezen ID elmentése
+            sessionStorage.setItem('group_id', group_id);
 
-        // Termékek és kategóriák újbóli lekérdezése
-        get_products();
+            // Visszatérés az első oldalra
+            sessionStorage.setItem('page',0);
+
+            // Termékek és kategóriák újbóli lekérdezése
+            get_products();
+        }
     });
 
     // Termékek megjelenítése
     function show_products(products) {
 
         // Termékeknek kijelölt terület tisztítása
-        document.getElementById("products").innerHTML("");
+        document.getElementById("products").innerHTML = "";
 
         // Végigmenni minden egyes terméken
         products.forEach(function(product) {
@@ -108,7 +113,7 @@ $(function () {
             html+='</a></div></div>';
 
             // HTML elem megjelenítése a termékeknek kijelölt helyen
-            document.getElementById("products").append(html);
+            document.getElementById("products").innerHTML += html;
         });
     }
 
@@ -116,10 +121,14 @@ $(function () {
     document.getElementById("filter_default").addEventListener("click", function(){
 
         // Minden szűrő esetén a legleső lehetőség kiválasztása
-        document.getElementById("filter_shop").val(null).trigger('change');
-        document.getElementById("filter_size").val(null).trigger('change');
-        document.getElementById("filter_gender").val(null).trigger('change');
-        document.getElementById("filter_age").val(null).trigger('change');
+        document.getElementById("filter_shop").value = null;
+        document.getElementById("filter_shop").trigger('change');
+        document.getElementById("filter_size").value = null;
+        document.getElementById("filter_size").trigger('change');
+        document.getElementById("filter_gender").value = null;
+        document.getElementById("filter_gender").trigger('change');
+        document.getElementById("filter_age").value = null;
+        document.getElementById("filter_age").trigger('change');
 
         // Visszatérés az első oldalra
         sessionStorage.setItem('page',0);
@@ -130,14 +139,17 @@ $(function () {
     });
 
     // Szűrő módosítása után
-    document.getElementsByClassName("filter").on("change", function(){
+    var filters = document.getElementsByClassName("filter");
+    for (var i = 0; i < filters.length; i++) {
+        filters[i].addEventListener("change", function(){
 
-        // Visszatérés az első oldalra
-        sessionStorage.setItem('page',0);
-
-        // Termékek lekérdezése
-        get_products();
-    });
+            // Visszatérés az első oldalra
+            sessionStorage.setItem('page',0);
+    
+            // Termékek lekérdezése
+            get_products();
+        });
+    }
 
     // Vissza
     document.getElementById("back").addEventListener("click", function(){

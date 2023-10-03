@@ -1,6 +1,6 @@
 $(function () {
        
-    table = document.getElementsByClassName("datatable").DataTable({
+    table = $(".datatable").DataTable({
         responsive: true, // Reszponzív
         language: { 
             url: "/js/own/hu.json"

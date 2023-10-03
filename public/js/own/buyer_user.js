@@ -4,10 +4,10 @@ $(function () {
     document.getElementsByClassName("undo").addEventListener("click", function() {
 
         // Termék azonosítójának lekérdezése
-        product_id = $(this).closest(".fav").getAttribute("product_id");
+        product_id = this.closest(".fav").getAttribute("product_id");
 
         // Aktuális termék elmentése
-        this_fav = $(this);
+        this_fav = this;
 
         // Adatok átküldése
         $.ajax({
