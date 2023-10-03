@@ -31,10 +31,10 @@ $(function () {
                     if (count==0) {
 
                         // Kedvencek blokk elrejtése
-                        document.getElementsByClassName("favs").addClass("d-none");
+                        document.getElementsByClassName("favs").classList.add("d-none");
 
                         // Ürességet jelző blokk mutatása
-                        document.getElementsByClassName("empty").removeClass("d-none");
+                        document.getElementsByClassName("empty").classList.remove("d-none");
                     }
                 }
             },

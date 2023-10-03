@@ -10,8 +10,8 @@ $(function () {
         stateDuration:-1, // Visszatérés eredeti állapotba új fül megnyitásakor
         order: [], // Betöltéskor még ne legyen sorrend alkalmazva
         initComplete: function(settings, json) {
-            document.getElementsByClassName("datatable").removeClass("d-none").addClass("d-table"); // Tábla megjelenítése
-            document.getElementById("waiting").addClass("d-none"); // Folyamatban szöveg törlése
+            document.getElementsByClassName("datatable").classList.remove("d-none").classList.add("d-table"); // Tábla megjelenítése
+            document.getElementById("waiting").classList.add("d-none"); // Folyamatban szöveg törlése
         }
     });   
 });

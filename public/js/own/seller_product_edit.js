@@ -55,7 +55,7 @@ $(function () {
                 if (data.OK!=1) {
 
                     // Hiba jelzése a felhasználónak
-                    document.getElementById("gallery-error").removeClass("d-none").innerHTML("Hiba történt sorrend módosítása során!");
+                    document.getElementById("gallery-error").classList.remove("d-none").innerHTML("Hiba történt sorrend módosítása során!");
 
                     // Hibaszöveg megjelenítése a consolon
                     console.log(data);
@@ -68,7 +68,7 @@ $(function () {
             error: function (error) {
                 
                 // Hiba jelzése a felhasználónak
-                document.getElementById("gallery-error").removeClass("d-none").innerHTML("Hiba történt kép törlése során!");
+                document.getElementById("gallery-error").classList.remove("d-none").innerHTML("Hiba történt kép törlése során!");
 
                 // Hibaszöveg megjelenítése a consolon
                 console.log(error);
@@ -82,7 +82,7 @@ $(function () {
     function refreshImages() {
 
         // Hibaüzenet elrejtése
-        document.getElementById("gallery-error").addClass("d-none");
+        document.getElementById("gallery-error").classList.add("d-none");
 
         // Képek lekérdezése
         $.ajax({
@@ -117,7 +117,7 @@ $(function () {
 
                     //// Ha nem volt sikeres a lekérdezése
                     // Hiba jelzése a felhasználónak
-                    document.getElementById("gallery-error").removeClass("d-none").innerHTML("Hiba történt a képek lekérdezése során!");
+                    document.getElementById("gallery-error").classList.remove("d-none").innerHTML("Hiba történt a képek lekérdezése során!");
 
                     // Hibaszöveg megjelenítése a consolon
                     console.log(data);
@@ -127,7 +127,7 @@ $(function () {
             error: function (error) {
                 
                 // Hiba jelzése a felhasználónak
-                document.getElementById("gallery-error").removeClass("d-none").innerHTML("Hiba történt a képek lekérdezése során!");
+                document.getElementById("gallery-error").classList.remove("d-none").innerHTML("Hiba történt a képek lekérdezése során!");
 
                 // Hibaszöveg megjelenítése a consolon
                 console.log(error);
@@ -166,7 +166,7 @@ $(function () {
                     } else {
 
                         // Hiba jelzése a felhasználónak
-                        document.getElementById("gallery-error").removeClass("d-none").innerHTML("Hiba történt a vezérkép módosítása során!");
+                        document.getElementById("gallery-error").classList.remove("d-none").innerHTML("Hiba történt a vezérkép módosítása során!");
 
                         // Hibaszöveg megjelenítése a consolon
                         console.log(data);
@@ -175,7 +175,7 @@ $(function () {
                 error: function(error) {
                     
                     // Hiba jelzése a felhasználónak
-                    document.getElementById("gallery-error").removeClass("d-none").innerHTML("Hiba történt a vezérkép módosítása során!");
+                    document.getElementById("gallery-error").classList.remove("d-none").innerHTML("Hiba történt a vezérkép módosítása során!");
 
                     // Hibaszöveg megjelenítése a consolon
                     console.log(error);
@@ -209,7 +209,7 @@ $(function () {
                     if (data.OK!=1) {
 
                         // Hiba jelzése a felhasználónak
-                        document.getElementById("gallery-error").removeClass("d-none").innerHTML("Hiba történt kép törlése során!");
+                        document.getElementById("gallery-error").classList.remove("d-none").innerHTML("Hiba történt kép törlése során!");
 
                         // Hibaszöveg megjelenítése a consolon
                         console.log(data);
@@ -224,7 +224,7 @@ $(function () {
                 error: function (error) {
 
                     // Hiba jelzése a felhasználónak
-                    document.getElementById("gallery-error").removeClass("d-none").innerHTML("Hiba történt kép törlése során!");
+                    document.getElementById("gallery-error").classList.remove("d-none").innerHTML("Hiba történt kép törlése során!");
 
                     // Hibaszöveg megjelenítése a consolon
                     console.log(error);
@@ -242,7 +242,7 @@ $(function () {
         if(file.files[0] == undefined) {
 
             // Ha nincs, akkor hibaüzenet megjelenítése
-            document.getElementById("upload-error").removeClass("d-none").innerHTML("Nincsenek képek megadva!");
+            document.getElementById("upload-error").classList.remove("d-none").innerHTML("Nincsenek képek megadva!");
 
         } else {
 
@@ -273,12 +273,12 @@ $(function () {
                         document.getElementById("file").val(null);
 
                         // Hibaüzenet elrejtése
-                        document.getElementById("upload-error").addClass("d-none");
+                        document.getElementById("upload-error").classList.add("d-none");
 
                     } else {
 
                         // Hiba jelzése a felhasználónak
-                        document.getElementById("upload-error").removeClass("d-none").innerHTML("Hiba történt a képek feltöltése során!");
+                        document.getElementById("upload-error").classList.remove("d-none").innerHTML("Hiba történt a képek feltöltése során!");
 
                         // Hibaszöveg megjelenítése a consolon
                         console.log(data);
@@ -288,7 +288,7 @@ $(function () {
                 error: function (error) {
                     
                     // Hiba jelzése a felhasználónak
-                    document.getElementById("upload-error").removeClass("d-none").innerHTML("Hiba történt a képek feltöltése során!");
+                    document.getElementById("upload-error").classList.remove("d-none").innerHTML("Hiba történt a képek feltöltése során!");
 
                     // Hibaszöveg megjelenítése a consolon
                     console.log(error);
@@ -454,12 +454,12 @@ $(function () {
                     document.getElementById("quantity").val(0);
 
                     // Jelezni, hogy sikeres volt a művelet
-                    document.getElementById("success").removeClass("d-none");
-                    document.getElementById("error").addClass("d-none");
-                    document.getElementById("insert_price").addClass("d-none");
+                    document.getElementById("success").classList.remove("d-none");
+                    document.getElementById("error").classList.add("d-none");
+                    document.getElementById("insert_price").classList.add("d-none");
                     setTimeout(function(){
-                        document.getElementById("success").addClass("d-none");
-                        document.getElementById("insert_price").removeClass("d-none");
+                        document.getElementById("success").classList.add("d-none");
+                        document.getElementById("insert_price").classList.remove("d-none");
                     },3000);
 
                 }
@@ -478,12 +478,12 @@ $(function () {
                 });
 
                 // Jelezni a hibát 
-                document.getElementById("success").addClass("d-none");
-                document.getElementById("error").removeClass("d-none");
-                document.getElementById("insert_price").addClass("d-none");
+                document.getElementById("success").classList.add("d-none");
+                document.getElementById("error").classList.remove("d-none");
+                document.getElementById("insert_price").classList.add("d-none");
                 setTimeout(function(){
-                    document.getElementById("error").addClass("d-none");
-                    document.getElementById("insert_price").removeClass("d-none");
+                    document.getElementById("error").classList.add("d-none");
+                    document.getElementById("insert_price").classList.remove("d-none");
                 },3000);
             }
         });

@@ -18,7 +18,8 @@ $(function () {
             // Adatok lekérdezése
             quantity = document.getElementById("quantity").value;
             size_id = document.getElementById("size").value;
-            max = document.getElementById("size :selected").getAttribute("max");
+            size_element = document.getElementById("size");
+            max = size_element.options[size_element.selectedIndex].getAttribute("max");
 
             // Megnézni, hogy van-e mennyiség megadva
             if (quantity > 0) {
@@ -43,15 +44,17 @@ $(function () {
                             if (data.OK==1) {
 
                                 // Ha sikeres volt, akkor a hozzá tartozó üzenet megjelenítése
-                                document.getElementById("cart_success").removeClass("d-none").innerHTML("Sikeres művelet!");
+                                document.getElementById("cart_success").classList.remove("d-none");
+                                document.getElementById("cart_success").innerHTML = "Sikeres művelet!";
 
                                 // Visszaállítani 0-ra a mező értékét
-                                document.getElementById("quantity").val(0);
+                                document.getElementById("quantity").value = 0;
 
                             } else {
 
                                 // Ha nem sikerült, akkor a hibaüzenet megjelenítése
-                                document.getElementById("cart_error").removeClass("d-none").innerHTML("Sikertelen művelet!");
+                                document.getElementById("cart_error").classList.remove("d-none");
+                                document.getElementById("cart_error").innerHTML = "Sikertelen művelet!";
 
                             }
 
@@ -62,7 +65,7 @@ $(function () {
                         error: function (error) {
 
                             // Ha hiba volt, akkor a hibaüzenet megjelenítése
-                            document.getElementById("cart_error").removeClass("d-none").innerHTML("Sikertelen művelet!");
+                            document.getElementById("cart_error").classList.remove("d-none");document.getElementById("cart_error").innerHTML = "Sikertelen művelet!";
 
                             // Kosárba rakás gomb elrejtése
                             cart_add_hide();
@@ -72,7 +75,8 @@ $(function () {
             } else {
 
                 // Ha hiba volt, akkor a hibaüzenet megjelenítése
-                document.getElementById("cart_error").removeClass("d-none").innerHTML("Nincs mennyiség megadva!");
+                document.getElementById("cart_error").classList.remove("d-none");
+                document.getElementById("cart_error").innerHTML = "Nincs mennyiség megadva!";
 
                 // Kosárba rakás gomb elrejtése
                 cart_add_hide();
@@ -86,16 +90,17 @@ $(function () {
     function cart_add_hide() {
 
         // Kosárba rakás gomb elrejtése
-        document.getElementById("cart_add").addClass("d-none");
+        document.getElementById("cart_add").classList.add("d-none");
 
         // 5 másodperc után
         setTimeout(function() {
 
             // Kosárral kapcsolatos üzenetek elrejtése
-            document.getElementById("cart_success, #cart_error").addClass("d-none");
+            document.getElementById("cart_success").classList.add("d-none");
+            document.getElementById("cart_error").classList.add("d-none");
 
             // Kosárba rakás gomb visszahozása
-            document.getElementById("cart_add").removeClass("d-none");
+            document.getElementById("cart_add").classList.remove("d-none");
 
         }, 5000);
     }
@@ -135,24 +140,36 @@ $(function () {
                         
                         //// Ha kedvelés volt
                         // Kedvelés gomb elrejtése
-                        document.getElementsByClassName("fav").addClass("d-none");
+                        var favs = document.getElementsByClassName("fav");
+                        for (var i = 0; i < favs.length; i++) {
+                            favs[i].classList.add("d-none");
+                        }
 
                         // Kedvelés visszavonása gomb megjelenítése
-                        document.getElementsByClassName("unfav").removeClass("d-none");
+                        var unfavs = document.getElementsByClassName("unfav");
+                        for (var i = 0; i < unfavs.length; i++) {
+                            unfavs[i].classList.remove("d-none");
+                        }
 
                     } else {
 
                         //// Ha kedvelés visszavonása volt
                         // Kedvelés visszavonása gomb elrejtése
-                        document.getElementsByClassName("unfav").addClass("d-none");
+                        var unfavs = document.getElementsByClassName("unfav");
+                        for (var i = 0; i < unfavs.length; i++) {
+                            unfavs[i].classList.add("d-none");
+                        }
 
                         // Kedvelés gomb megjelenítése
-                        document.getElementsByClassName("fav").removeClass("d-none");
+                        var favs = document.getElementsByClassName("fav");
+                        for (var i = 0; i < favs.length; i++) {
+                            favs[i].classList.remove("d-none");
+                        }
 
                     }
 
                     // Kedvelések számának módosítása
-                    document.getElementsByClassName("fav_total").html(data.total);
+                    document.getElementById("fav_total").innerHTML = data.total;
                 }
             },
             error: function(error) {
@@ -183,8 +200,8 @@ $(function () {
             }
         },
         initComplete: function(settings, json) {
-            $("#title_fa_stars").html(json.others.fa_stars);
-            $("#title_total").html(json.others.total);
+            document.getElementById("title_fa_stars").innerHTML = json.others.fa_stars;
+            document.getElementById("title_total").innerHTML = json.others.total;
         },
         // Oszlopok hozzárendelése
         columns: [
@@ -221,19 +238,19 @@ $(function () {
                         
                         //// Ha minden rendben volt
                         // Értékelések frissítése
-                        document.getElementById("ratings").DataTable().ajax.reload();
+                        $("#ratings").DataTable().ajax.reload();
 
                         // Mezők értékeinek törlése
-                        document.getElementById("title").val("");
-                        document.getElementById("body").val("");
+                        document.getElementById("title").value = "";
+                        document.getElementById("body").value = "";
 
                         // Sikeresség üzenet megjelenítése
-                        document.getElementById("rating_success").removeClass("d-none");
+                        document.getElementById("rating_success").classList.remove("d-none");
 
                     } else {
 
                         // Sikertelenség üzenet megjelenítése
-                        document.getElementById("rating_error").removeClass("d-none");                    
+                        document.getElementById("rating_error").classList.remove("d-none");                    
 
                     }
 
@@ -244,7 +261,7 @@ $(function () {
                 error: function(error) {
 
                     // Sikertelenség üzenet megjelenítése
-                    document.getElementById("error").removeClass("d-none");
+                    document.getElementById("error").classList.remove("d-none");
 
                     // Értékelés gomb elrejtése
                     send_rating_hide();
@@ -253,23 +270,24 @@ $(function () {
             });
         });
     }
+        
 
     // Értékelés gomb elrejtése
     function send_rating_hide() {
 
         // Értékelés gomb elrejtése
-        document.getElementById("send_rating").addClass("d-none");
+        document.getElementById("send_rating").classList.add("d-none");
 
         // 5 másodperc után
         setTimeout(function() {
 
             // Értékeléssek kapcsolatos üzenetek elrejtése
-            document.getElementById("rating_success, #rating_error").addClass("d-none");
+            document.getElementById("rating_success").classList.add("d-none");
+            document.getElementById("rating_error").classList.add("d-none");
 
             // Értékelés gomb visszahozása
-            document.getElementById("send_rating").removeClass("d-none");
+            document.getElementById("send_rating").classList.remove("d-none");
 
         }, 5000);
     }
-
 });

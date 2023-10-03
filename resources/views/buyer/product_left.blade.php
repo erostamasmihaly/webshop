@@ -13,7 +13,7 @@
                 @else
                     <i class="fa-solid fa-thumbs-up fa-2xl text-secondary"></i> 
                 @endif
-                <br><span class="fav_total">{{ $fav_total }}</span> db
+                <br><span id="fav_total">{{ $fav_total }}</span> db
             </span>
         </div>
         <div class="row">
