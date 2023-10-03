@@ -1,25 +1,25 @@
 $(function () {
 
     // Ingatlan azonosító lekérdezése - vagy ha 0, akkor az ideiglenes random azonosító
-    product_id = ($("#product_id").val() == 0) ? $("#temporary_id").val() : $("#product_id").val();
+    product_id = (document.getElementById("product_id").val() == 0) ? document.getElementById("temporary_id").val() : document.getElementById("product_id").value;
 
     // Képek betöltése
     refreshImages();
 
     // Képek feltöltése
-    $("#upload").on("click", function() {
+    document.getElementById("upload").addEventListener("click", function() {
         upload_images();
     });
 
     // Sorrend mentése
-    $("#sequence").on("click", function() {
+    document.getElementById("sequence").addEventListener("click", function() {
         
         // Képek frissítése
         saveSequence();
     });
 
     // Sorbarendezés engedélyezése
-    $(".sortable").sortable({
+    document.getElementsByClassName("sortable").sortable({
         cursor: "move"
     });
 
@@ -30,10 +30,10 @@ $(function () {
         images_array = [];
             
         // Végigmenni minden egyes képen
-        $(".image").each(function(e) {
+        document.getElementsByClassName("image").each(function(e) {
                 
             // Aktuális kép azonosítójának lekérdezése
-            image_id = $(this).attr("image_id");
+            image_id = $(this).getAttribute("image_id");
 
             // Kép behelyezése a tömbbe
             images_array.push(image_id);
@@ -55,7 +55,7 @@ $(function () {
                 if (data.OK!=1) {
 
                     // Hiba jelzése a felhasználónak
-                    $("#gallery-error").removeClass("d-none").html("Hiba történt sorrend módosítása során!");
+                    document.getElementById("gallery-error").removeClass("d-none").innerHTML("Hiba történt sorrend módosítása során!");
 
                     // Hibaszöveg megjelenítése a consolon
                     console.log(data);
@@ -68,7 +68,7 @@ $(function () {
             error: function (error) {
                 
                 // Hiba jelzése a felhasználónak
-                $("#gallery-error").removeClass("d-none").html("Hiba történt kép törlése során!");
+                document.getElementById("gallery-error").removeClass("d-none").innerHTML("Hiba történt kép törlése során!");
 
                 // Hibaszöveg megjelenítése a consolon
                 console.log(error);
@@ -82,7 +82,7 @@ $(function () {
     function refreshImages() {
 
         // Hibaüzenet elrejtése
-        $("#gallery-error").addClass("d-none");
+        document.getElementById("gallery-error").addClass("d-none");
 
         // Képek lekérdezése
         $.ajax({
@@ -101,7 +101,7 @@ $(function () {
                     dir = data.dir;
 
                     // Előző képek törlése
-                    $("#gallery").html(null);
+                    document.getElementById("gallery").html(null);
 
                     // Végigmenni minden egyes képen
                     $.each(data.images, function (key, val) {
@@ -110,14 +110,14 @@ $(function () {
                         main_image = (val.is_main==1) ? "text-success" : "text-secondary";
 
                         // Kép elhelyezése
-                        $("#gallery").append("<li class='col-sm-3'><div class='image' image_id='"+val.id+"'><image src='"+dir+"/thumb/"+val.filename+"' alt='"+val.filename+"' title='"+val.filename+"' class='mb-3 img-fluid w-90 object-fit-cover h-100'><div class='float-end'><div class='main' image_id='"+val.id+"'><i class='fa-sharp fa-solid fa-thumbtack "+main_image+"'></i></div><div class='delete' image_id='"+val.id+"'><i class='fa-solid fa-trash text-danger'></i></div></div></div></li>");
+                        document.getElementById("gallery").append("<li class='col-sm-3'><div class='image' image_id='"+val.id+"'><image src='"+dir+"/thumb/"+val.filename+"' alt='"+val.filename+"' title='"+val.filename+"' class='mb-3 img-fluid w-90 object-fit-cover h-100'><div class='float-end'><div class='main' image_id='"+val.id+"'><i class='fa-sharp fa-solid fa-thumbtack "+main_image+"'></i></div><div class='delete' image_id='"+val.id+"'><i class='fa-solid fa-trash text-danger'></i></div></div></div></li>");
                     });
         
                 } else {
 
                     //// Ha nem volt sikeres a lekérdezése
                     // Hiba jelzése a felhasználónak
-                    $("#gallery-error").removeClass("d-none").html("Hiba történt a képek lekérdezése során!");
+                    document.getElementById("gallery-error").removeClass("d-none").innerHTML("Hiba történt a képek lekérdezése során!");
 
                     // Hibaszöveg megjelenítése a consolon
                     console.log(data);
@@ -127,7 +127,7 @@ $(function () {
             error: function (error) {
                 
                 // Hiba jelzése a felhasználónak
-                $("#gallery-error").removeClass("d-none").html("Hiba történt a képek lekérdezése során!");
+                document.getElementById("gallery-error").removeClass("d-none").innerHTML("Hiba történt a képek lekérdezése során!");
 
                 // Hibaszöveg megjelenítése a consolon
                 console.log(error);
@@ -137,7 +137,7 @@ $(function () {
     }
 
     // Vezérkép kiválasztása
-    $("body").on("click", ".main", function(){
+    $("body").addEventListener("click", ".main", function(){
 
         // Felugró ablak megjelenítése
         is_main = confirm("Biztos, hogy ezt a képet szeretné vezérképnek beállítani?");
@@ -146,7 +146,7 @@ $(function () {
         if (is_main) {
 
             // Aktuális kép azonosítójának lekérdezése
-            image_id = $(this).attr("image_id");
+            image_id = $(this).getAttribute("image_id");
 
             // Új vezérkép átküldése a szervernek
             $.ajax({
@@ -166,7 +166,7 @@ $(function () {
                     } else {
 
                         // Hiba jelzése a felhasználónak
-                        $("#gallery-error").removeClass("d-none").html("Hiba történt a vezérkép módosítása során!");
+                        document.getElementById("gallery-error").removeClass("d-none").innerHTML("Hiba történt a vezérkép módosítása során!");
 
                         // Hibaszöveg megjelenítése a consolon
                         console.log(data);
@@ -175,7 +175,7 @@ $(function () {
                 error: function(error) {
                     
                     // Hiba jelzése a felhasználónak
-                    $("#gallery-error").removeClass("d-none").html("Hiba történt a vezérkép módosítása során!");
+                    document.getElementById("gallery-error").removeClass("d-none").innerHTML("Hiba történt a vezérkép módosítása során!");
 
                     // Hibaszöveg megjelenítése a consolon
                     console.log(error);
@@ -185,7 +185,7 @@ $(function () {
     });
 
     // Kép törlése
-    $("body").on("click", ".delete", function(){
+    $("body").addEventListener("click", ".delete", function(){
 
         // Felugró ablak megjelenítése
         is_delete = confirm("Biztos, hogy törölni szeretné a képet?");
@@ -194,7 +194,7 @@ $(function () {
         if (is_delete) {
             
             // Aktuális kép azonosítójának lekérdezése
-            image_id = $(this).attr("image_id");            
+            image_id = $(this).getAttribute("image_id");            
 
             // Törlendő kép átküldése
             $.ajax({
@@ -209,7 +209,7 @@ $(function () {
                     if (data.OK!=1) {
 
                         // Hiba jelzése a felhasználónak
-                        $("#gallery-error").removeClass("d-none").html("Hiba történt kép törlése során!");
+                        document.getElementById("gallery-error").removeClass("d-none").innerHTML("Hiba történt kép törlése során!");
 
                         // Hibaszöveg megjelenítése a consolon
                         console.log(data);
@@ -217,14 +217,14 @@ $(function () {
                     } else {
 
                         // Kép törlése a felületen
-                        $(".image[image_id="+image_id+"]").parent("li").remove();
+                        document.getElementsByClassName("image[image_id="+image_id+"]").parent("li").remove();
                     }
                     
                 },
                 error: function (error) {
 
                     // Hiba jelzése a felhasználónak
-                    $("#gallery-error").removeClass("d-none").html("Hiba történt kép törlése során!");
+                    document.getElementById("gallery-error").removeClass("d-none").innerHTML("Hiba történt kép törlése során!");
 
                     // Hibaszöveg megjelenítése a consolon
                     console.log(error);
@@ -242,7 +242,7 @@ $(function () {
         if(file.files[0] == undefined) {
 
             // Ha nincs, akkor hibaüzenet megjelenítése
-            $("#upload-error").removeClass("d-none").html("Nincsenek képek megadva!");
+            document.getElementById("upload-error").removeClass("d-none").innerHTML("Nincsenek képek megadva!");
 
         } else {
 
@@ -270,15 +270,15 @@ $(function () {
                         refreshImages();
 
                         // Fájl mező alapállapotba állítása
-                        $("#file").val(null);
+                        document.getElementById("file").val(null);
 
                         // Hibaüzenet elrejtése
-                        $("#upload-error").addClass("d-none");
+                        document.getElementById("upload-error").addClass("d-none");
 
                     } else {
 
                         // Hiba jelzése a felhasználónak
-                        $("#upload-error").removeClass("d-none").html("Hiba történt a képek feltöltése során!");
+                        document.getElementById("upload-error").removeClass("d-none").innerHTML("Hiba történt a képek feltöltése során!");
 
                         // Hibaszöveg megjelenítése a consolon
                         console.log(data);
@@ -288,7 +288,7 @@ $(function () {
                 error: function (error) {
                     
                     // Hiba jelzése a felhasználónak
-                    $("#upload-error").removeClass("d-none").html("Hiba történt a képek feltöltése során!");
+                    document.getElementById("upload-error").removeClass("d-none").innerHTML("Hiba történt a képek feltöltése során!");
 
                     // Hibaszöveg megjelenítése a consolon
                     console.log(error);
@@ -300,7 +300,7 @@ $(function () {
     } 
 
     // Értékelések
-    $("#ratings").DataTable({
+    document.getElementById("ratings").DataTable({
         responsive: true, // Reszponzív
         language: { 
             url: "/js/own/hu.json"
@@ -341,20 +341,20 @@ $(function () {
     });
 
     // Jelenítse meg az értékelést
-    $("body").on("click", ".rating_show", function() {
+    $("body").addEventListener("click", ".rating_show", function() {
 
         // Azonosító lekérdezése
-        id = $(this).attr("rating_id");
+        id = $(this).getAttribute("rating_id");
 
         // Publikálás
         rating_moderation(id, 1);
     });
 
     // Rejtse el az értékelést
-    $("body").on("click", ".rating_hide", function() {
+    $("body").addEventListener("click", ".rating_hide", function() {
         
         // Azonosító lekérdezése
-        id = $(this).attr("rating_id");
+        id = $(this).getAttribute("rating_id");
 
         // Elrejtés
         rating_moderation(id, 0);
@@ -378,7 +378,7 @@ $(function () {
                 if (data.OK == 1) {
                     
                     // Ha minden rendben volt, akkor táblázat frissítése
-                    $("#ratings").DataTable().ajax.reload();
+                    document.getElementById("ratings").DataTable().ajax.reload();
 
                 }
             },
@@ -389,7 +389,7 @@ $(function () {
     }
 
     // Árazás
-    $("#prices").DataTable({
+    document.getElementById("prices").DataTable({
         responsive: true, // Reszponzív
         language: { 
             url: "/js/own/hu.json"
@@ -421,14 +421,14 @@ $(function () {
     });
 
     // Új árazás felvitele
-    $("#insert_price").on("click", function(){
+    document.getElementById("insert_price").addEventListener("click", function(){
 
         // Adatok lekérdezése
-        size_id = $("#size_id").val();
-        price = $("#price").val();
-        vat = $("#vat").val();
-        discount = $("#discount").val();
-        quantity = $("#quantity").val();
+        size_id = document.getElementById("size_id").value;
+        price = document.getElementById("price").value;
+        vat = document.getElementById("vat").value;
+        discount = document.getElementById("discount").value;
+        quantity = document.getElementById("quantity").value;
 
         // Adat összeállítás
         data = "product_id="+product_id+"&size_id="+size_id+"&price="+price+"&vat="+vat+"&discount="+discount+"&quantity="+quantity;
@@ -445,21 +445,21 @@ $(function () {
                 if (data.OK == 1) {
                     
                     // Ha minden rendben volt, akkor táblázat frissítése
-                    $("#prices").DataTable().ajax.reload();
+                    document.getElementById("prices").DataTable().ajax.reload();
 
                     // Mezők visszaállítása
-                    $("#price").val(0);
-                    $("#discount").val(0);
-                    $("#vat").val(27);
-                    $("#quantity").val(0);
+                    document.getElementById("price").val(0);
+                    document.getElementById("discount").val(0);
+                    document.getElementById("vat").val(27);
+                    document.getElementById("quantity").val(0);
 
                     // Jelezni, hogy sikeres volt a művelet
-                    $("#success").removeClass("d-none");
-                    $("#error").addClass("d-none");
-                    $("#insert_price").addClass("d-none");
+                    document.getElementById("success").removeClass("d-none");
+                    document.getElementById("error").addClass("d-none");
+                    document.getElementById("insert_price").addClass("d-none");
                     setTimeout(function(){
-                        $("#success").addClass("d-none");
-                        $("#insert_price").removeClass("d-none");
+                        document.getElementById("success").addClass("d-none");
+                        document.getElementById("insert_price").removeClass("d-none");
                     },3000);
 
                 }
@@ -470,20 +470,20 @@ $(function () {
                 errors = error.responseJSON.errors;
 
                 // Hibaüzenet helyének ürítése
-                $("#error").html("");
+                document.getElementById("error").innerHTML("");
 
                 // Végigmenni minden egyes hibán és berakni erre a helyre
                 $.each(errors, function(key, value) {
-                    $("#error").append("<p>"+value+"</p>");
+                    document.getElementById("error").append("<p>"+value+"</p>");
                 });
 
                 // Jelezni a hibát 
-                $("#success").addClass("d-none");
-                $("#error").removeClass("d-none");
-                $("#insert_price").addClass("d-none");
+                document.getElementById("success").addClass("d-none");
+                document.getElementById("error").removeClass("d-none");
+                document.getElementById("insert_price").addClass("d-none");
                 setTimeout(function(){
-                    $("#error").addClass("d-none");
-                    $("#insert_price").removeClass("d-none");
+                    document.getElementById("error").addClass("d-none");
+                    document.getElementById("insert_price").removeClass("d-none");
                 },3000);
             }
         });

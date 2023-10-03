@@ -1,7 +1,7 @@
 $(function () {
     
     // URL lekérdezése
-    url = $("#url").val();
+    url = document.getElementById("url").value;
 
     // Kis idő után ezen URL betöltése
     setTimeout(function() {

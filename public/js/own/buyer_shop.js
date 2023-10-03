@@ -1,8 +1,8 @@
 $(function () {
     
     // Koordináták lekérdezése
-    latitude = $("#latitude").val();
-    longitude = $("#longitude").val();
+    latitude = document.getElementById("latitude").value;
+    longitude = document.getElementById("longitude").value;
     
     // Leaflet pont létrehozása ezen két koordinátából
     var point = L.latLng(latitude, longitude);

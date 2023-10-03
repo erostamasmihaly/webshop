@@ -1,6 +1,6 @@
 $(function () {
        
-    table = $(".datatable").DataTable({
+    table = document.getElementsByClassName("datatable").DataTable({
         responsive: true, // Reszponzív
         language: { 
             url: "/js/own/hu.json"
@@ -10,8 +10,8 @@ $(function () {
         stateDuration:-1, // Visszatérés eredeti állapotba új fül megnyitásakor
         order: [], // Betöltéskor még ne legyen sorrend alkalmazva
         initComplete: function(settings, json) {
-            $(".datatable").removeClass("d-none").addClass("d-table"); // Tábla megjelenítése
-            $("#waiting").addClass("d-none"); // Folyamatban szöveg törlése
+            document.getElementsByClassName("datatable").removeClass("d-none").addClass("d-table"); // Tábla megjelenítése
+            document.getElementById("waiting").addClass("d-none"); // Folyamatban szöveg törlése
         }
     });   
 });
