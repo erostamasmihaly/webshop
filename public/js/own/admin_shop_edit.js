@@ -86,7 +86,7 @@ $(function () {
     }
 
     // Térképes hiba javítása
-    document.querySelectorAll("."nav-tabs .nav-link").addEventListener("click", function() {
+    document.querySelectorAll(".nav-tabs .nav-link").addEventListener("click", function() {
         setTimeout(function() {
             map.invalidateSize();
         }, 500);

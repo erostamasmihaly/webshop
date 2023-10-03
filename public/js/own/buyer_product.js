@@ -106,20 +106,14 @@ $(function () {
     }
 
     // Kedvelés
-    var favs = document.querySelectorAll(".fav");
-    for (var i = 0; i < favs.length; i++) {
-        favs[i].addEventListener("click", function() {
-            send_favourites(1);
-        });
-    }
+    document.querySelector("#fav").addEventListener("click", function() {
+        send_favourites(0);
+    });
 
     // Kedvelés visszavonása
-    var unfavs = document.querySelectorAll(".unfav");
-    for (var i = 0; i < unfavs.length; i++) {
-        unfavs[i].addEventListener("click", function() {
-            send_favourites(0);
-        });
-    }
+    document.querySelector("#unfav").addEventListener("click", function() {
+        send_favourites(1);
+    });
 
     // Változás elküldése a kedveléssel kapcsolatban
     function send_favourites(state) {
@@ -136,35 +130,23 @@ $(function () {
                 // Ha minsen rendben volt
                 if (data.OK==1) {
 
-                    if (state==1) {
+                    if (state==0) {
                         
                         //// Ha kedvelés volt
                         // Kedvelés gomb elrejtése
-                        var favs = document.querySelectorAll(".fav");
-                        for (var i = 0; i < favs.length; i++) {
-                            favs[i].classList.add("d-none");
-                        }
+                        document.querySelector("#fav").classList.add("d-none");
 
                         // Kedvelés visszavonása gomb megjelenítése
-                        var unfavs = document.querySelectorAll(".unfav");
-                        for (var i = 0; i < unfavs.length; i++) {
-                            unfavs[i].classList.remove("d-none");
-                        }
+                        document.querySelector("#unfav").classList.remove("d-none");
 
                     } else {
 
                         //// Ha kedvelés visszavonása volt
                         // Kedvelés visszavonása gomb elrejtése
-                        var unfavs = document.querySelectorAll(".unfav");
-                        for (var i = 0; i < unfavs.length; i++) {
-                            unfavs[i].classList.add("d-none");
-                        }
+                        document.querySelector("#unfav").classList.add("d-none");
 
                         // Kedvelés gomb megjelenítése
-                        var favs = document.querySelectorAll(".fav");
-                        for (var i = 0; i < favs.length; i++) {
-                            favs[i].classList.remove("d-none");
-                        }
+                        document.querySelector("#fav").classList.remove("d-none");
 
                     }
 

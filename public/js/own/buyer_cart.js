@@ -1,58 +1,71 @@
 $(function () {
 
     // Plusz gomb megnyomása
-    document.querySelectorAll("."plus").addEventListener("click", function() {
+    plus_buttons = document.querySelectorAll(".plus");
+    if (plus_buttons!=null) {
+        for (var i=0; i<plus_buttons.length; i++) {
+            plus_buttons[i].addEventListener("click", function() {
         
-        // Termék azonosító és méret azonosító lekérdezése
-        product_id = this.closest(".product").getAttribute("product_id");
-        size_id = this.closest(".product").getAttribute("size_id");
-
-        // Módosítás elküldése
-        send_change(product_id, size_id, 1);
-   
-    });
-
-    // Plusz gomb megnyomása
-    document.querySelectorAll("."minus").addEventListener("click", function() {
+                // Termék azonosító és méret azonosító lekérdezése
+                product_id = this.closest(".product").getAttribute("product_id");
+                size_id = this.closest(".product").getAttribute("size_id");
         
-        // Termék azonosító és méret azonosító lekérdezése
-        product_id = this.closest(".product").getAttribute("product_id");
-        size_id = this.closest(".product").getAttribute("size_id");
-
-        // Mennyiség lekérdezése
-        quantity = this.closest(".product").find(".quantity").html();
-
-        // Ha még nem 0
-        if (quantity > 0) {
-
-            // Módosítás elküldése
-            send_change(product_id, size_id, -1);
+                // Módosítás elküldése
+                send_change(product_id, size_id, 1);
+           
+            });
         }
-   
-    });
+    }
+
+    // Minusz gomb megnyomása
+    minus_buttons = document.querySelectorAll(".minus");
+    if (minus_buttons!=null) {
+        for (var i=0; i<minus_buttons.length; i++) {
+            minus_buttons[i].addEventListener("click", function() {
+        
+                // Termék azonosító és méret azonosító lekérdezése
+                product_id = this.closest(".product").getAttribute("product_id");
+                size_id = this.closest(".product").getAttribute("size_id");
+
+                // Mennyiség lekérdezése
+                quantity = $(this).closest(".product").find(".quantity").html();
+
+                // Ha még nem 0
+                if (quantity > 0) {
+
+                    // Módosítás elküldése
+                    send_change(product_id, size_id, -1);
+                }
+           
+            });
+        }
+    }
 
     // Törlés gomb megnyomása
-    document.querySelectorAll("."delete").addEventListener("click", function() {
+    delete_buttons = document.querySelectorAll(".delete");
+    if (delete_buttons!=null) {
+        for (var i=0; i<delete_buttons.length; i++) {
+            delete_buttons[i].addEventListener("click", function() {
         
-        // Termék azonosító és méret azonosító lekérdezése
-        product_id = this.closest(".product").getAttribute("product_id");
-        size_id = this.closest(".product").getAttribute("size_id");
+                // Termék azonosító és méret azonosító lekérdezése
+                product_id = this.closest(".product").getAttribute("product_id");
+                size_id = this.closest(".product").getAttribute("size_id");
 
-        // Mennyiség lekérdezése
-        quantity = this.closest(".product").find(".quantity").html();
+                // Mennyiség lekérdezése
+                quantity = $(this).closest(".product").find(".quantity").html();
 
-        // Módosítás elküldése
-        send_change(product_id, size_id, -1*quantity);
-   
-    });
-
-
+                // Módosítás elküldése
+                send_change(product_id, size_id, -1*quantity);
+                
+            });
+        }
+    }
 
     // Módosítás elküldése
     function send_change(product_id, size_id, quantity) {
 
         // Mennyiség lekérdezése
-        quantity_old = document.querySelectorAll("."product[product_id="+product_id+"][size_id="+size_id+"] .quantity").html();
+        quantity_old = $(".product[product_id="+product_id+"][size_id="+size_id+"] .quantity").html();
         
         // Adatok átküldése
         $.ajax({
@@ -74,12 +87,12 @@ $(function () {
                     if (new_quantity > 0) {
 
                         // Ha még mindig van belőle, akkor mennyiség módosítása
-                        document.querySelectorAll("."product[product_id="+product_id+"][size_id="+size_id+"] .quantity").html(new_quantity);
+                        $(".product[product_id="+product_id+"][size_id="+size_id+"] .quantity").html(new_quantity);
 
                     } else {
 
                         // Adott sor törlése és a táblázat frissítése
-                        document.querySelectorAll("."datatable").DataTable().rows(".product[product_id="+product_id+"][size_id="+size_id+"]").remove().draw();
+                        $(".datatable").DataTable().rows(".product[product_id="+product_id+"][size_id="+size_id+"]").remove().draw();
 
                     }
 
@@ -87,7 +100,7 @@ $(function () {
                     if (data.total!="0 Ft") {
 
                         // Fizetendő összeg frissítése, ha nem 0 Ft
-                        document.querySelector("#total").html(data.total);
+                        document.querySelector("#total").innerHTML = data.total;
                     } else {
 
                         // Felület frissítése, ha 0 Ft

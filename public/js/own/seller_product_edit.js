@@ -19,7 +19,7 @@ $(function () {
     });
 
     // Sorbarendezés engedélyezése
-    document.querySelectorAll("."sortable").sortable({
+    document.querySelectorAll(".sortable").sortable({
         cursor: "move"
     });
 
@@ -30,7 +30,7 @@ $(function () {
         images_array = [];
             
         // Végigmenni minden egyes képen
-        document.querySelectorAll("."image").each(function(e) {
+        document.querySelectorAll(".image").each(function(e) {
                 
             // Aktuális kép azonosítójának lekérdezése
             image_id = this.getAttribute("image_id");
@@ -217,7 +217,7 @@ $(function () {
                     } else {
 
                         // Kép törlése a felületen
-                        document.querySelectorAll("."image[image_id="+image_id+"]").parent("li").remove();
+                        document.querySelectorAll(".image[image_id="+image_id+"]").parent("li").remove();
                     }
                     
                 },
