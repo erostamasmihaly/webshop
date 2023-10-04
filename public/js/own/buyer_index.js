@@ -9,7 +9,8 @@ $(function () {
         // Új objektum létrehozása
         obj = new Object();
 
-        // Szűrők felvitele ebbe az objektumba - Select2 miatt jQuery alkalmazása
+        // Szűrők felvitele ebbe az objektumba
+        // !!! Select2 miatt jQuery alkalmazása !!!
         obj.shops = $("#filter_shop").val();
         obj.sizes = $("#filter_size").val();
         obj.genders = $("#filter_gender").val();
@@ -26,30 +27,29 @@ $(function () {
         document.querySelector("#current").innerHTML = parseInt(page)+1;
 
         // Kérés a szerver felé
-        $.ajax({
-            dataType: "json",
-            url: "products",
-            data: "group_id="+group_id+"&filter="+filter+"&page="+page+"&limit=4",
-            type: "GET",
-            cache: false,
-            success: function (data) {
+        fetch("products?group_id="+group_id+"&filter="+filter+"&page="+page+"&limit=4", {
+            method: "GET",
+            cache: "no-cache"
+        }).then(response => response.text()).then(data => {
 
-                if (data.OK == 1) {
+            data = JSON.parse(data);
+            
+            if (data.OK == 1) {
 
-                    //// Ha minden rendben volt
-                    // Lekérdezett termékcsoportok megjelenítése a Vissza gombbal együtt
-                    show_groups(data.groups, data.back_id);
+                //// Ha minden rendben volt
+                // Lekérdezett termékcsoportok megjelenítése a Vissza gombbal együtt
+                show_groups(data.groups, data.back_id);
 
-                    // Lekérdezett termékek megjelenítése
-                    show_products(data.products);
-                } else {
-                    console.log(data);
-                }
-            },
-            error: function (error) {
-                console.log(error);
+                // Lekérdezett termékek megjelenítése
+                show_products(data.products);
+            } else {
+                console.log(data);
             }
+        })
+        .catch(error => {
+            console.log(error);
         });
+        
     }
     get_products();
 
