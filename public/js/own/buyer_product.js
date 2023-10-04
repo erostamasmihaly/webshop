@@ -32,45 +32,56 @@ $(function () {
 
                 if (response) {
 
-                    // Adatok átküldése
-                    $.ajax({
-                        dataType: "json",
-                        url: "/buyer/cart/add",
-                        data: "product_id="+product_id+"&quantity="+quantity+"&size_id="+size_id,
-                        type: "POST",
-                        cache: false,
-                        success: function (data) {
-
-                            if (data.OK==1) {
-
-                                // Ha sikeres volt, akkor a hozzá tartozó üzenet megjelenítése
-                                document.querySelector("#cart_success").classList.remove("d-none");
-                                document.querySelector("#cart_success").innerHTML = "Sikeres művelet!";
-
-                                // Visszaállítani 0-ra a mező értékét
-                                document.querySelector("#quantity").value = 0;
-
-                            } else {
-
-                                // Ha nem sikerült, akkor a hibaüzenet megjelenítése
-                                document.querySelector("#cart_error").classList.remove("d-none");
-                                document.querySelector("#cart_error").innerHTML = "Sikertelen művelet!";
-
-                            }
-
-                            // Kosárba rakás gomb elrejtése
-                            cart_add_hide();
-
-                        },
-                        error: function (error) {
-
-                            // Ha hiba volt, akkor a hibaüzenet megjelenítése
-                            document.querySelector("#cart_error").classList.remove("d-none");document.querySelector("#cart_error").innerHTML = "Sikertelen művelet!";
-
-                            // Kosárba rakás gomb elrejtése
-                            cart_add_hide();
-                        }
+                    // Átküldendő értékek összegyűjtése
+                    body = JSON.stringify({
+                        product_id: product_id,
+                        quantity: quantity,
+                        size_id: size_id
                     });
+
+                    // Kérés küldése a szerver felé
+                    fetch("/buyer/cart/add", {
+                        body: body,
+                        method: "POST",
+                        cache: "no-cache",
+                        headers: {
+                            "Content-Type": "application/json",
+                            "X-CSRF-TOKEN": document.querySelector("meta[name='csrf-token']").getAttribute("content")
+                        }
+                    }).then(response => response.text()).then(text => {
+                
+                        // Válasz átalakítása JSON-ná
+                        data = JSON.parse(text);
+                
+                        if (data.OK==1) {
+
+                            // Ha sikeres volt, akkor a hozzá tartozó üzenet megjelenítése
+                            document.querySelector("#cart_success").classList.remove("d-none");
+                            document.querySelector("#cart_success").innerHTML = "Sikeres művelet!";
+
+                            // Visszaállítani 0-ra a mező értékét
+                            document.querySelector("#quantity").value = 0;
+
+                        } else {
+
+                            // Ha nem sikerült, akkor a hibaüzenet megjelenítése
+                            document.querySelector("#cart_error").classList.remove("d-none");
+                            document.querySelector("#cart_error").innerHTML = "Sikertelen művelet!";
+
+                        }
+
+                        // Kosárba rakás gomb elrejtése
+                        cart_add_hide();
+                    })
+                    .catch(error => {
+
+                        // Ha hiba volt, akkor a hibaüzenet megjelenítése
+                        document.querySelector("#cart_error").classList.remove("d-none");document.querySelector("#cart_error").innerHTML = "Sikertelen művelet!";
+
+                        // Kosárba rakás gomb elrejtése
+                        cart_add_hide();
+                    });
+
                 }
             } else {
 
@@ -118,45 +129,55 @@ $(function () {
     // Változás elküldése a kedveléssel kapcsolatban
     function send_favourites(state) {
 
-        // Adatok átküldése
-        $.ajax({
-            dataType: "json",
-            url: "/buyer/favourite/change",
-            data: "product_id="+product_id+"&state="+state,
-            type: "POST",
-            cache: false,
-            success: function (data) {
+        // Átküldendő értékek összegyűjtése
+        body = JSON.stringify({
+            product_id: product_id,
+            state: state
+        });
 
-                // Ha minsen rendben volt
-                if (data.OK==1) {
-
-                    if (state==0) {
-                        
-                        //// Ha kedvelés volt
-                        // Kedvelés gomb elrejtése
-                        document.querySelector("#fav").classList.add("d-none");
-
-                        // Kedvelés visszavonása gomb megjelenítése
-                        document.querySelector("#unfav").classList.remove("d-none");
-
-                    } else {
-
-                        //// Ha kedvelés visszavonása volt
-                        // Kedvelés visszavonása gomb elrejtése
-                        document.querySelector("#unfav").classList.add("d-none");
-
-                        // Kedvelés gomb megjelenítése
-                        document.querySelector("#fav").classList.remove("d-none");
-
-                    }
-
-                    // Kedvelések számának módosítása
-                    document.querySelector("#fav_total").innerHTML = data.total;
-                }
-            },
-            error: function(error) {
-                console.log(error);
+        // Kérés küldése a szerver felé
+        fetch("/buyer/favourite/change", {
+            body: body,
+            method: "POST",
+            cache: "no-cache",
+            headers: {
+                "Content-Type": "application/json",
+                "X-CSRF-TOKEN": document.querySelector("meta[name='csrf-token']").getAttribute("content")
             }
+        }).then(response => response.text()).then(text => {
+    
+            // Válasz átalakítása JSON-ná
+            data = JSON.parse(text);
+    
+            // Ha minden rendben volt
+            if (data.OK==1) {
+
+                if (state==0) {
+                    
+                    //// Ha kedvelés volt
+                    // Kedvelés gomb elrejtése
+                    document.querySelector("#fav").classList.add("d-none");
+
+                    // Kedvelés visszavonása gomb megjelenítése
+                    document.querySelector("#unfav").classList.remove("d-none");
+
+                } else {
+
+                    //// Ha kedvelés visszavonása volt
+                    // Kedvelés visszavonása gomb elrejtése
+                    document.querySelector("#unfav").classList.add("d-none");
+
+                    // Kedvelés gomb megjelenítése
+                    document.querySelector("#fav").classList.remove("d-none");
+
+                }
+
+                // Kedvelések számának módosítása
+                document.querySelector("#fav_total").innerHTML = data.total;
+            }
+        })
+        .catch(error => {
+            console.log(error);
         });
     }
 
@@ -179,6 +200,9 @@ $(function () {
             type: "POST", // POST típusú kérés
             error: function(error) {
                 console.log(error);
+            },
+            headers: { // CSRF token átküldése
+                "X-CSRF-TOKEN": document.querySelector("meta[name='csrf-token']").getAttribute("content")
             }
         },
         initComplete: function(settings, json) {
@@ -207,49 +231,62 @@ $(function () {
             body = tinymce.get("body").getContent();
             stars = document.querySelector("#stars").value;
 
-            // Adatok átküldése
-            $.ajax({
-                dataType: "json",
-                url: "/buyer/rating/change",
-                data: "product_id="+product_id+"&user_id="+user_id+"&title="+title+"&body="+body+"&stars="+stars,
-                type: "POST",
-                cache: false,
-                success: function (data) {
+            // Átküldendő értékek összegyűjtése
+            body = JSON.stringify({
+                product_id: product_id,
+                user_id: user_id,
+                title: title,
+                body: body,
+                stars: stars
+            });
 
-                    if (data.OK==1) {
+            // Kérés küldése a szerver felé
+            fetch("/buyer/rating/change", {
+                body: body,
+                method: "POST",
+                cache: "no-cache",
+                headers: {
+                    "Content-Type": "application/json",
+                    "X-CSRF-TOKEN": document.querySelector("meta[name='csrf-token']").getAttribute("content")
+                }
+            }).then(response => response.text()).then(text => {
+        
+                // Válasz átalakítása JSON-ná
+                data = JSON.parse(text);
+
+                if (data.OK==1) {
                         
-                        //// Ha minden rendben volt
-                        // Értékelések frissítése
-                        $("#ratings").DataTable().ajax.reload();
+                    //// Ha minden rendben volt
+                    // Értékelések frissítése
+                    $("#ratings").DataTable().ajax.reload();
 
-                        // Mezők értékeinek törlése
-                        document.querySelector("#title").value = "";
-                        document.querySelector("#body").value = "";
+                    // Mezők értékeinek törlése
+                    document.querySelector("#title").value = "";
+                    document.querySelector("#body").value = "";
 
-                        // Sikeresség üzenet megjelenítése
-                        document.querySelector("#rating_success").classList.remove("d-none");
+                    // Sikeresség üzenet megjelenítése
+                    document.querySelector("#rating_success").classList.remove("d-none");
 
-                    } else {
-
-                        // Sikertelenség üzenet megjelenítése
-                        document.querySelector("#rating_error").classList.remove("d-none");                    
-
-                    }
-
-                    // Értékelés gomb elrejtése
-                    send_rating_hide();
-
-                },
-                error: function(error) {
+                } else {
 
                     // Sikertelenség üzenet megjelenítése
-                    document.querySelector("#error").classList.remove("d-none");
-
-                    // Értékelés gomb elrejtése
-                    send_rating_hide();
+                    document.querySelector("#rating_error").classList.remove("d-none");                    
 
                 }
+
+                // Értékelés gomb elrejtése
+                send_rating_hide();
+
+            })
+            .catch(error => {
+
+                // Sikertelenség üzenet megjelenítése
+                document.querySelector("#error").classList.remove("d-none");
+
+                // Értékelés gomb elrejtése
+                send_rating_hide();
             });
+
         });
     }
         

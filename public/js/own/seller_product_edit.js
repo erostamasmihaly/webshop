@@ -360,7 +360,10 @@ $(function () {
             data: { 
                 "product_id": product_id // Termék azonosító megadása
             },
-            type: "POST" // POST típusú kérés
+            type: "POST", // POST típusú kérés
+            headers: { // CSRF token átküldése
+                "X-CSRF-TOKEN": document.querySelector("meta[name='csrf-token']").getAttribute("content")
+            }
         },
         // Oszlopok hozzárendelése
         columns: [
@@ -429,7 +432,10 @@ $(function () {
             data: { 
                 "id": product_id // Termék azonosító megadása
             },
-            type: "GET" // GET típusú kérés
+            type: "GET", // GET típusú kérés
+            headers: { // CSRF token átküldése
+                "X-CSRF-TOKEN": document.querySelector("meta[name='csrf-token']").getAttribute("content")
+            }
         },
         // Oszlopok hozzárendelése
         columns: [

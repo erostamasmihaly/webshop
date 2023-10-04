@@ -8,7 +8,6 @@
 
 <!-- Saját -->
 <script src="{{ asset('js/own/tables.js') }}" defer></script>
-<script src="{{ asset('js/own/ajax_setup.js') }}" defer></script>
 <script src="{{ asset('js/own/tinymce.js') }}" defer></script>
 <script src="{{ asset('js/own/select2.js') }}" defer></script>
 @if (Request::is('/'))

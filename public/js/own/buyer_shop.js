@@ -1,4 +1,5 @@
-$(function () {
+// LEAFLET miatt DOMContentLoaded megvárása!
+document.addEventListener("DOMContentLoaded", function(){
     
     // Koordináták lekérdezése
     latitude = document.querySelector("#latitude").value;
@@ -16,5 +17,5 @@ $(function () {
     }).addTo(map);
 
     // Jelölő létrehozása
-    var marker = L.marker(point).addTo(map);
+    L.marker(point).addTo(map);
 });
