@@ -92,57 +92,67 @@ $(function () {
         // Hibaüzenet elrejtése
         gallery_error?.classList.add("d-none");
 
-        // Képek lekérdezése
-        $.ajax({
-            dataType: "json",
-            url: "/seller/product/image/list",
-            data: "product_id="+product_id,
-            type: "POST",
-            cache: false,
-            success: function (data) {
+           		// Átküldendő értékek összegyűjtése
+		body = JSON.stringify({
+			product_id: product_id
+		});
 
-                if (data.OK==1) {
+		// Kérés küldése a szerver felé
+		fetch("/seller/product/image/list", {
+			body: body,
+			method: "POST",
+			cache: "no-cache",
+			headers: {
+				"Content-Type": "application/json",
+				"X-CSRF-TOKEN": document.querySelector("meta[name='csrf-token']").getAttribute("content")
+			}
+		}).then(response => response.text()).then(text => {
+	
+			// Válasz átalakítása JSON-ná
+			data = JSON.parse(text);
 
-                    //// Ha sikeres volt a lekérdezése
-                    
-                    // Könyvtár lekérdezése
-                    dir = data.dir;
+			if (data.OK==1) {
 
-                    // Előző képek törlése
-                    document.querySelector("#gallery").innerHTML = null;
-
-                    // Végigmenni minden egyes képen
-                    $.each(data.images, function (key, val) {
-
-                        // Megnézni, hogy vezérképről van-e szó
-                        main_image = (val.is_main==1) ? "text-success" : "text-secondary";
-
-                        // Kép elhelyezése
-                        document.querySelector("#gallery").innerHTML += "<li class='col-sm-3'><div class='image' image_id='"+val.id+"'><image src='"+dir+"/thumb/"+val.filename+"' alt='"+val.filename+"' title='"+val.filename+"' class='mb-3 img-fluid w-90 object-fit-cover h-100'><div class='float-end'><div class='main' image_id='"+val.id+"'><i class='fa-sharp fa-solid fa-thumbtack "+main_image+"'></i></div><div class='delete' image_id='"+val.id+"'><i class='fa-solid fa-trash text-danger'></i></div></div></div></li>";
-                    });
-        
-                } else {
-
-                    //// Ha nem volt sikeres a lekérdezése
-                    // Hiba jelzése a felhasználónak
-                    gallery_error.classList.remove("d-none");
-                    gallery_error.innerHTML = "Hiba történt a képek lekérdezése során!";
-
-                    // Hibaszöveg megjelenítése a consolon
-                    console.log(data);
-                    
-                }                    
-            },
-            error: function (error) {
+                //// Ha sikeres volt a lekérdezése
                 
+                // Könyvtár lekérdezése
+                dir = data.dir;
+
+                // Előző képek törlése
+                document.querySelector("#gallery").innerHTML = null;
+
+                // Végigmenni minden egyes képen
+                $.each(data.images, function (key, val) {
+
+                    // Megnézni, hogy vezérképről van-e szó
+                    main_image = (val.is_main==1) ? "text-success" : "text-secondary";
+
+                    // Kép elhelyezése
+                    document.querySelector("#gallery").innerHTML += "<li class='col-sm-3'><div class='image' image_id='"+val.id+"'><image src='"+dir+"/thumb/"+val.filename+"' alt='"+val.filename+"' title='"+val.filename+"' class='mb-3 img-fluid w-90 object-fit-cover h-100'><div class='float-end'><div class='main' image_id='"+val.id+"'><i class='fa-sharp fa-solid fa-thumbtack "+main_image+"'></i></div><div class='delete' image_id='"+val.id+"'><i class='fa-solid fa-trash text-danger'></i></div></div></div></li>";
+                });
+    
+            } else {
+
+                //// Ha nem volt sikeres a lekérdezése
                 // Hiba jelzése a felhasználónak
                 gallery_error.classList.remove("d-none");
                 gallery_error.innerHTML = "Hiba történt a képek lekérdezése során!";
 
                 // Hibaszöveg megjelenítése a consolon
-                console.log(error);
-            }
-        });
+                console.log(data);
+                
+            } 
+
+		})
+		.catch(error => {
+
+			// Hiba jelzése a felhasználónak
+            gallery_error.classList.remove("d-none");
+            gallery_error.innerHTML = "Hiba történt a képek lekérdezése során!";
+
+            // Hibaszöveg megjelenítése a consolon
+            console.log(error);
+		});
 
     }
 
@@ -394,25 +404,38 @@ $(function () {
         // Adat összeállítás
         data = "id="+id+"&moderated="+moderated;
 
-        // Adatok elküldése a szervernek
-        $.ajax({
-            dataType: "json",
-            url: "/seller/product/rating/moderation",
-            type: "POST",
-            data: data,
-            cache: false,
-            success: function (data) {
 
-                if (data.OK == 1) {
-                    
-                    // Ha minden rendben volt, akkor táblázat frissítése
-                    $("#ratings").DataTable().ajax.reload();
+        // Átküldendő értékek összegyűjtése
+        body = JSON.stringify({
+            id: id,
+            moderated: moderated
+        });
 
-                }
-            },
-            error: function(error) {
-                console.log(error);
+        // Kérés küldése a szerver felé
+        fetch("/seller/product/rating/moderation", {
+            body: body,
+            method: "POST",
+            cache: "no-cache",
+            headers: {
+                "Content-Type": "application/json",
+                "X-CSRF-TOKEN": document.querySelector("meta[name='csrf-token']").getAttribute("content")
             }
+        }).then(response => response.text()).then(text => {
+    
+            // Válasz átalakítása JSON-ná
+            data = JSON.parse(text);
+
+            // Ha minden rendben volt
+            if (data.OK == 1) {
+                    
+                // Táblázat frissítése
+                $("#ratings").DataTable().ajax.reload();
+
+            }
+        
+        })
+        .catch(error => {
+            console.log(error);
         });
     }
 
