@@ -1,7 +1,7 @@
 $(function () {
 
     // Felugró ablak elrejtése
-    document.querySelector("#dialog-confirm").hide();
+    document.querySelector("#dialog-confirm").style.display = "none";
 
     // Kategória csoport lekérdezése
     category_group_id = document.querySelector("#category_group_id").value;
@@ -10,43 +10,51 @@ $(function () {
     load_sequence();
 
     // Sortable bekapcsolása
-    document.querySelector("#sortable").sortable();
+    $("#sortable").sortable();
 
     // Adatok beküldése
     function load_sequence() {
-        
-        // AJAX kérés
-        $.ajax({
-            dataType: "json",
-            url: "/admin/category/sequence/load/"+category_group_id,
-            type: "GET",
-            cache: false,
-            success: function (data) {
-
-                // Lista űrítése
-                document.querySelector("#sortable").innerHTML("");
-
-                // Végigmenni minden egyes elemen
-                $.each(data, function (key, val) {
-
-                    // Elem megfelelő megjelenítése
-                    document.querySelector("#sortable").append("<li id='"+val.id+"' level='"+val.level+"' class='mb-2'><span class='badge bg-info text-dark' style='margin-left: "+val.level*30+"px;'>"+val.name+"</span></li>");
-                });
-            },
-            error: function (error) {
-                console.log(error);
+		
+		// Kérés küldése a szerver felé
+        fetch("/admin/category/sequence/load/"+category_group_id, {
+            method: "GET",
+            cache: "no-cache",
+            headers: {
+                "Content-Type": "application/json",
+                "Accept": "application/json",
+                "X-Requested-With": "XMLHttpRequest",
+                "X-CSRF-TOKEN": document.querySelector("meta[name='csrf-token']").getAttribute("content")
             }
+        }).then(response => response.text()).then(text => {
+    
+            // Válasz átalakítása JSON-ná
+            data = JSON.parse(text);
+
+            // Lista űrítése
+            document.querySelector("#sortable").innerHTML = "";
+
+            // Végigmenni minden egyes elemen
+            [...Object.values(data)].map(value => {
+
+                // Elem megfelelő megjelenítése
+                document.querySelector("#sortable").innerHTML += "<li id='"+value.id+"' level='"+value.level+"' class='mb-2'><span class='badge bg-info text-dark' style='margin-left: "+value.level*30+"px;'>"+value.name+"</span></li>";
+            });
+        
+        })
+        .catch(error => {
+            console.log(error);
         });
+        
     }
 
     // Elem elmozgatása befejeződött
-    document.querySelector("#sortable").on("sortstop", function(event, ui) {
+    $("#sortable").on("sortstop", function(event, ui) {
 
         // Aktuális elem ID lekérdezése
-        id = ui.item.getAttribute("id");
+        id = ui.item.attr("id");
         
         // Felugró ablak megjelenítése
-        document.querySelector("#dialog-confirm").dialog({
+        $("#dialog-confirm").dialog({
             resizable: false,
             height: "auto",
             width: 400,
@@ -55,19 +63,19 @@ $(function () {
 
                 // Előző szinten legyen
                 "<<": function() {
-                    this.dialog("close");
+                    $(this).dialog("close");
                     change(id, -1);
                 },
 
                 // Megegyező szinten legyen
                 "--": function() {
-                    this.dialog("close");
+                    $(this).dialog("close");
                     change(id, 0);
                 },
 
                 // Következő szinten legyen
                 ">>": function() {
-                    this.dialog("close");
+                    $(this).dialog("close");
                     change(id, 1);
                 }
             }
@@ -76,12 +84,12 @@ $(function () {
 
     // Előző elem ID lekérdezése
     function get_previous(id) {
-        return document.querySelector("#"+id).prev().getAttribute("id");
+        return $("#"+id).prev().attr("id");
     }
 
     // Következő elem ID lekérdezése
     function get_next(id) {
-        return document.querySelector("#"+id).next().getAttribute("id");
+        return $("#"+id).next().attr("id");
     }
 
     // Módosítás
@@ -95,7 +103,7 @@ $(function () {
         if (prev_id != undefined) {
 
             // Lekérdezni, hogy milyen szinten van
-            prev_level = parseInt(document.querySelector("#"+prev_id).getAttribute("level"));
+            prev_level = parseInt($("#"+prev_id).attr("level"));
 
             // Mostani elem szintje ettől legyen a megadott eltéréssel
             level = prev_level + where;
@@ -107,7 +115,7 @@ $(function () {
             if (next_id != undefined) {
 
                 // Lekérdezni, hogy annak mi a szintje
-                next_level = parseInt(document.querySelector("#"+next_id).getAttribute("level"));
+                next_level = parseInt($("#"+next_id).attr("level"));
 
                 // Két elem közti szintkülönbség lekérdezése
                 dist_level = next_level - level;
@@ -121,11 +129,11 @@ $(function () {
             }
 
             // Ezen új értékek szerint beállítani
-            document.querySelector("#"+id).getAttribute("level", level).find("span").css("margin-left", level*30+"px");
+            $("#"+id).attr("level", level).find("span").css("margin-left", level*30+"px");
         } else {
 
             // Beállítani, mint 0 szintű elemet
-            document.querySelector("#"+id).getAttribute("level", 0).find("span").css("margin-left", "0px");
+            $("#"+id).attr("level", 0).find("span").css("margin-left", "0px");
         }
     }
 
@@ -135,7 +143,7 @@ $(function () {
     function get_parent(current_id, max_level) {
 
         // Mostani elem szintjének lekérdezése
-        current_level = document.querySelector("#"+current_id).getAttribute("level");
+        current_level = $("#"+current_id).attr("level");
 
         if (current_level==0) {
             
@@ -148,7 +156,8 @@ $(function () {
             prev_id = get_previous(current_id);
 
             // Előző elem szintjének lekérdezése
-            prev_level = document.querySelector("#"+prev_id).getAttribute("level");
+            prev_level = $("#"+prev_id).attr("level");
+
 
             if (prev_level >= current_level) {
 
@@ -175,16 +184,18 @@ $(function () {
         array = [];
 
         // Végigmenni minden egyes elemen
-        document.querySelector("#sortable li").each(function() {
+        [...document.querySelectorAll("#sortable li")].map(element => {
             
             // Lekérdezni az azonosítóját
-            id = this.getAttribute("id")
+            id = element.getAttribute("id");
 
             // Lekérdezni a szintjét
-            level = this.getAttribute("level");
+            level = element.getAttribute("level");
 
             // Lekérdezni a szülőjét
             parent_id = get_parent(id, level);
+
+            console.log(id, level, parent_id);
 
             // Objektum létrehozása
             obj = new Object();
@@ -203,30 +214,48 @@ $(function () {
     }
 
     // Mentés gomb
-    $("body").addEventListener("click", "#save", function() {
-
+    document.querySelector("#save").addEventListener("click", function(e){
+        
         // Kategória fa lekérdezése
         categories = get_tree();
 
-        // AJAX kérés
-        $.ajax({
-            dataType: "json",
-            url: "/admin/category/sequence/save",
-            data: "categories="+categories+"&category_group_id="+category_group_id,
-            type: "POST",
-            cache: false,
-            success: function (data) {
-                if (data.OK == 1) {
-                    alert("OK");
-                } else {
-                    alert("Hiba történt a művdelet során!");
-                }
-            },
-            error: function (error) {
-                alert("Hiba történt a művdelet során!");
-            }
-        });
-    });
+        console.log(categories)
 
+        // Átküldendő értékek összegyűjtése
+		body = JSON.stringify({
+			categories: categories,
+            category_group_id: category_group_id
+		});
+		
+		// Kérés küldése a szerver felé
+        fetch("/admin/category/sequence/save", {
+            body: body,
+            method: "POST",
+            cache: "no-cache",
+            headers: {
+                "Content-Type": "application/json",
+                "Accept": "application/json",
+                "X-Requested-With": "XMLHttpRequest",
+                "X-CSRF-TOKEN": document.querySelector("meta[name='csrf-token']").getAttribute("content")
+            }
+        }).then(response => response.text()).then(text => {
+    
+            // Válasz átalakítása JSON-ná
+            data = JSON.parse(text);
+
+            // Ha minden rendben volt
+            if (data.OK == 1) {
+                alert("OK");
+            } else {
+                alert("Hiba történt a művelet során!");
+            }
+        
+        })
+        .catch(error => {
+            alert("Hiba történt a művdelet során!");
+            console.log(error);
+        });
+
+    });
 
 });

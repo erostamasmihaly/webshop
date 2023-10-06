@@ -3,9 +3,6 @@ $(function () {
     // Feltöltési hiba szöveg helye
     const upload_error = document.querySelector("#upload-error");
 
-    // Galéria hiba szöveg helye
-    const gallery_error = document.querySelector("#gallery-error");
-
     // Ingatlan azonosító lekérdezése - vagy ha 0, akkor az ideiglenes random azonosító
     const product_id = document.querySelector("#product_id").value;
 
@@ -74,8 +71,8 @@ $(function () {
             if (data.OK!=1) {
 
                 // Hiba jelzése a felhasználónak
-                gallery_error.classList.remove("d-none");
-                gallery_error.innerHTML = "Hiba történt sorrend módosítása során!";
+                upload_error.classList.remove("d-none");
+                upload_error.innerHTML = "Hiba történt sorrend módosítása során!";
 
                 // Hibaszöveg megjelenítése a consolon
                 console.log(data);
@@ -89,8 +86,8 @@ $(function () {
         .catch(error => {
 
             // Hiba jelzése a felhasználónak
-            gallery_error.classList.remove("d-none");
-            gallery_error.innerHTML = "Hiba történt kép törlése során!";
+            upload_error.classList.remove("d-none");
+            upload_error.innerHTML = "Hiba történt kép törlése során!";
 
             // Hibaszöveg megjelenítése a consolon
             console.log(error);
@@ -101,7 +98,7 @@ $(function () {
     function refreshImages() {
 
         // Hibaüzenet elrejtése
-        gallery_error?.classList.add("d-none");
+        upload_error?.classList.add("d-none");
 
         // Átküldendő értékek összegyűjtése
 		body = JSON.stringify({
@@ -135,21 +132,21 @@ $(function () {
                 document.querySelector("#gallery").innerHTML = null;
 
                 // Végigmenni minden egyes képen
-                $.each(data.images, function (key, val) {
+                [...Object.values(data.images)].map(value => {
 
                     // Megnézni, hogy vezérképről van-e szó
-                    main_image = (val.is_main==1) ? "text-success" : "text-secondary";
+                    main_image = (value.is_main==1) ? "text-success" : "text-secondary";
 
                     // Kép elhelyezése
-                    document.querySelector("#gallery").innerHTML += "<li class='col-sm-3'><div class='image' image_id='"+val.id+"'><image src='"+dir+"/thumb/"+val.filename+"' alt='"+val.filename+"' title='"+val.filename+"' class='mb-3 img-fluid w-90 object-fit-cover h-100'><div class='float-end'><div class='main' image_id='"+val.id+"'><i class='fa-sharp fa-solid fa-thumbtack "+main_image+"'></i></div><div class='delete' image_id='"+val.id+"'><i class='fa-solid fa-trash text-danger'></i></div></div></div></li>";
+                    document.querySelector("#gallery").innerHTML += "<li class='col-sm-3'><div class='image' image_id='"+value.id+"'><image src='"+dir+"/thumb/"+value.filename+"' alt='"+value.filename+"' title='"+value.filename+"' class='mb-3 img-fluid w-90 object-fit-cover h-100'><div class='float-end'><div class='main' image_id='"+value.id+"'><i class='fa-sharp fa-solid fa-thumbtack "+main_image+"'></i></div><div class='delete' image_id='"+value.id+"'><i class='fa-solid fa-trash text-danger'></i></div></div></div></li>";
                 });
     
             } else {
 
                 //// Ha nem volt sikeres a lekérdezése
                 // Hiba jelzése a felhasználónak
-                gallery_error.classList.remove("d-none");
-                gallery_error.innerHTML = "Hiba történt a képek lekérdezése során!";
+                upload_error.classList.remove("d-none");
+                upload_error.innerHTML = "Hiba történt a képek lekérdezése során!";
 
                 // Hibaszöveg megjelenítése a consolon
                 console.log(data);
@@ -160,8 +157,8 @@ $(function () {
 		.catch(error => {
 
 			// Hiba jelzése a felhasználónak
-            gallery_error.classList.remove("d-none");
-            gallery_error.innerHTML = "Hiba történt a képek lekérdezése során!";
+            upload_error.classList.remove("d-none");
+            upload_error.innerHTML = "Hiba történt a képek lekérdezése során!";
 
             // Hibaszöveg megjelenítése a consolon
             console.log(error);
@@ -216,8 +213,8 @@ $(function () {
                     } else {
 
                         // Hiba jelzése a felhasználónak
-                        gallery_error.classList.remove("d-none");
-                        gallery_error.innerHTML = "Hiba történt a vezérkép módosítása során!";
+                        upload_error.classList.remove("d-none");
+                        upload_error.innerHTML = "Hiba történt a vezérkép módosítása során!";
 
                         // Hibaszöveg megjelenítése a consolon
                         console.log(data);
@@ -227,8 +224,8 @@ $(function () {
                 .catch(error => {
 
                     // Hiba jelzése a felhasználónak
-                    gallery_error.classList.remove("d-none");
-                    gallery_error.innerHTML = "Hiba történt a vezérkép módosítása során!";
+                    upload_error.classList.remove("d-none");
+                    upload_error.innerHTML = "Hiba történt a vezérkép módosítása során!";
 
                     // Hibaszöveg megjelenítése a consolon
                     console.log(error);
@@ -275,8 +272,8 @@ $(function () {
                     if (data.OK!=1) {
 
                         // Hiba jelzése a felhasználónak
-                        gallery_error.classList.remove("d-none");
-                        gallery_error.innerHTML = "Hiba történt kép törlése során!";
+                        upload_error.classList.remove("d-none");
+                        upload_error.innerHTML = "Hiba történt kép törlése során!";
 
                         // Hibaszöveg megjelenítése a consolon
                         console.log(data);
@@ -290,8 +287,8 @@ $(function () {
                 .catch(error => {
 
                     // Hiba jelzése a felhasználónak
-                    gallery_error.classList.remove("d-none");
-                    gallery_error.innerHTML = "Hiba történt kép törlése során!";
+                    upload_error.classList.remove("d-none");
+                    upload_error.innerHTML = "Hiba történt kép törlése során!";
 
                     // Hibaszöveg megjelenítése a consolon
                     console.log(error);
@@ -527,9 +524,6 @@ $(function () {
         vat = document.querySelector("#vat").value;
         discount = document.querySelector("#discount").value;
         quantity = document.querySelector("#quantity").value;
-
-        // Adat összeállítás
-        //data = "product_id="+product_id+"&size_id="+size_id+"&price="+price+"&vat="+vat+"&discount="+discount+"&quantity="+quantity;
 
         // Átküldendő értékek összegyűjtése
 		body = JSON.stringify({
