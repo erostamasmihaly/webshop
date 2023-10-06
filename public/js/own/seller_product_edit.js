@@ -337,56 +337,61 @@ $(function () {
         } else {
 
             // Adatok összegyűjtése
-            var data = new FormData();
-            data.append('product_id', product_id);                        
+            var body = new FormData();
+            body.append('product_id', product_id);                      
             for (i=0; i<file.files.length; i++) {
-                data.append('images[]', file.files[i]);
+                body.append('images[]', file.files[i]);
             }
+            
+            // Kérés küldése a szerver felé
+            fetch("/seller/product/image/upload", {
+                body: body,
+                method: "POST",
+                cache: "no-cache",
+                headers: {
+                    "Accept": "application/json",
+                    "X-Requested-With": "XMLHttpRequest",
+                    "X-CSRF-TOKEN": document.querySelector("meta[name='csrf-token']").getAttribute("content")
+                }
+            }).then(response => response.text()).then(text => {
+        
+                // Válasz átalakítása JSON-ná
+                data = JSON.parse(text);
 
-            // Adatok elküldése a szervernek
-            $.ajax({
-                dataType: "json",
-                url: "/seller/product/image/upload",
-                type: "POST",
-                data: data,
-                cache: false,
-                contentType: false,
-                processData: false,
-                success: function (data) {
+                // Ha minden rendben volt
+                if (data.OK == 1) {
 
-                    if (data.OK == 1) {
+                    // Képek frissítése
+                    refreshImages();
 
-                        // Képek frissítése
-                        refreshImages();
+                    // Fájl mező alapállapotba állítása
+                    document.querySelector("#file").value = null;
 
-                        // Fájl mező alapállapotba állítása
-                        document.querySelector("#file").value = null;
+                    // Hibaüzenet elrejtése
+                    upload_error.classList.add("d-none");
 
-                        // Hibaüzenet elrejtése
-                        upload_error.classList.add("d-none");
+                } else {
 
-                    } else {
-
-                        // Hiba jelzése a felhasználónak
-                        upload_error.classList.remove("d-none");
-                        upload_error.innerHTML = "Hiba történt a képek feltöltése során!";
-
-                        // Hibaszöveg megjelenítése a consolon
-                        console.log(data);
-
-                    }
-                },
-                error: function (error) {
-                    
                     // Hiba jelzése a felhasználónak
                     upload_error.classList.remove("d-none");
                     upload_error.innerHTML = "Hiba történt a képek feltöltése során!";
 
                     // Hibaszöveg megjelenítése a consolon
-                    console.log(error);
+                    console.log(data);
 
                 }
+            
+            })
+            .catch(error => {
+
+                // Hiba jelzése a felhasználónak
+                upload_error.classList.remove("d-none");
+                upload_error.innerHTML = "Hiba történt a képek feltöltése során!";
+
+                // Hibaszöveg megjelenítése a consolon
+                console.log(error);
             });
+
         }
 
     } 
