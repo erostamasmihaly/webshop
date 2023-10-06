@@ -43,7 +43,7 @@ Route::group(['prefix' => 'seller/product'], function() {
     Route::get('price', [App\Http\Controllers\SellerProductController::class, 'product_price'])->name('seller_product_price');
 
     // Ár módosítása
-    Route::post('price', [App\Http\Controllers\SellerProductController::class, 'product_price_update'])->name('seller_product_price_update');
+    Route::post('price/update', [App\Http\Controllers\SellerProductController::class, 'product_price_update'])->name('seller_product_price_update');
 
     // Aktív állapot módosítása
     Route::get('active/{id}', [App\Http\Controllers\SellerProductController::class, 'active'])->name('seller_product_active');   
