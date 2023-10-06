@@ -4,7 +4,7 @@
 			Cím
 		</div>
 		<div class="col-sm-8">
-			<input type="text" class="form-control" name="address" value="{{ old('address', $shop->address) }}"/>
+			<input type="text" class="form-control" id="address" name="address" value="{{ old('address', $shop->address) }}"/>
 			@if ($errors->has('adress'))
 				<div class="invalid-feedback d-block">{{ $errors->first('address') }}</div>
 			@endif
@@ -48,7 +48,7 @@
 			GPS szélesség
 		</div>
 		<div class="col-sm-8">
-			<input type="text" class="form-control" name="latitude" value="{{ old('latitude', $shop->latitude) }}"/>
+			<input type="text" class="form-control" id="latitude" name="latitude" value="{{ old('latitude', $shop->latitude) }}"/>
 			@if ($errors->has('latitude'))
 				<div class="invalid-feedback d-block">{{ $errors->first('latitude') }}</div>
 			@endif
@@ -59,7 +59,7 @@
 			GPS hosszúság
 		</div>
 		<div class="col-sm-8">
-			<input type="text" class="form-control" name="longitude" value="{{ old('longitude', $shop->longitude) }}"/>
+			<input type="text" class="form-control" id="longitude" name="longitude" value="{{ old('longitude', $shop->longitude) }}"/>
 			@if ($errors->has('longitude'))
 				<div class="invalid-feedback d-block">{{ $errors->first('longitude') }}</div>
 			@endif

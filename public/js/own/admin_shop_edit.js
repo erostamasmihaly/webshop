@@ -1,8 +1,9 @@
-$(function () {
+// LEAFLET miatt DOMContentLoaded megvárása!
+document.addEventListener("DOMContentLoaded", function(){
 
     // GPS szélesség és hosszúság lekérdezése
-    var latitude = $("input[name='latitude']").value;
-    var longitude = $("input[name='longitude']").value;
+    var latitude = document.querySelector("#latitude").value;
+    var longitude = document.querySelector("#longitude").value;
 
     // Leaflet pont létrehozása ezen két koordinátából
     var point = L.latLng(latitude, longitude);
@@ -34,33 +35,37 @@ $(function () {
         // Térkép és a hozzá kapcsolódó mezők módosítása
 		changeMap(latitude, longitude);
         
-      });
+    });
 
-      // Koordináta keresése cím alapján
-      document.querySelector("#google").addEventListener("click", function() {
+    // Koordináta keresése cím alapján
+    document.querySelector("#google").addEventListener("click", function() {
 
-        address = $("input[name='address']").value;
+        address = document.querySelector("#address").value;
+
+        // Átküldendő értékek összegyűjtése
+        data = "address="+address+"&sendor=false&key=AIzaSyDsDnKkPmP5LxA_CL0-d2WiywXjZPiMPKw";
+		
+		// Kérés küldése a szerver felé
+        fetch("https://maps.googleapis.com/maps/api/geocode/json?"+data, {
+            method: "GET",
+            cache: "no-cache"
+        }).then(response => response.text()).then(text => {
     
-        // Google Térképnek a cím elküldése
-		var googleAPI = "https://maps.googleapis.com/maps/api/geocode/json?";
-		$.ajax(googleAPI, {
-            data: {
-                address: address,
-                sensor: "false",
-                key: "AIzaSyDsDnKkPmP5LxA_CL0-d2WiywXjZPiMPKw"
-            },
-            headers: null,
-            dataType: "json",
-		    success: function(data) {
+            // Válasz átalakítása JSON-ná
+            data = JSON.parse(text);
 
-                // Koordináták lekérdezése a válaszból
-                var latitude = data.results[0].geometry.location.lat;
-                var longitude = data.results[0].geometry.location.lng;
+            // Koordináták lekérdezése a válaszból
+            var latitude = data.results[0].geometry.location.lat;
+            var longitude = data.results[0].geometry.location.lng;
 
-                // Térkép és a hozzá kapcsolódó mezők módosítása
-                changeMap(latitude, longitude);
-            }
-		});
+            // Térkép és a hozzá kapcsolódó mezők módosítása
+            changeMap(latitude, longitude);
+        
+        })
+        .catch(error => {
+            console.log(error);
+        });
+
     });
 
     // Térkép és a hozzá kapcsolódó mezők módosítása
@@ -71,8 +76,8 @@ $(function () {
         longitude = longitude.toFixed(4);
 
         // Beviteli mezők módosítása
-        $("input[name='latitude']").val(latitude);
-        $("input[name='longitude']").val(longitude);
+        document.querySelector("#latitude").value = latitude;
+        document.querySelector("#longitude").value = longitude;
 
         // Új pont létrehozása
         var point = L.latLng(latitude, longitude); 
@@ -86,10 +91,12 @@ $(function () {
     }
 
     // Térképes hiba javítása
-    document.querySelectorAll(".nav-tabs .nav-link").addEventListener("click", function() {
-        setTimeout(function() {
-            map.invalidateSize();
-        }, 500);
+    [...document.querySelectorAll(".nav-tabs .nav-link")].map(element => { 
+        element.addEventListener("click", function() {
+            setTimeout(function() {
+                map.invalidateSize();
+            }, 500);
+        });
     });
 
 });
