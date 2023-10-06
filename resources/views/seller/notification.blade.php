@@ -12,7 +12,7 @@
         <div class="card-body">
             @if ($notifications->count() !== 0)
                 @include('waiting')
-                <table class="datatable table table-bordered table-striped table-condensed d-none">
+                <table id="datatable" class=" table table-bordered table-striped table-condensed d-none">
                     <thead>
                         <tr>
                             <th scope="col" class="all">Cím</th>

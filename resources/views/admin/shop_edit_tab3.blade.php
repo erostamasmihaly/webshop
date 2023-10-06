@@ -1,7 +1,7 @@
 <div id="tab3" class="tab-pane fade">
     @if ($users->count() !== 0)
 		@include('waiting')
-		<table class="datatable table table-bordered table-striped table-condensed w-100 d-none">
+		<table id="datatable" class=" table table-bordered table-striped table-condensed w-100 d-none">
 			<thead>
 				<tr>
 					<th scope="col" class="all">Név</th>
