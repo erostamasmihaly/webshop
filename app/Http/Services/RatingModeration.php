@@ -8,9 +8,12 @@ use Illuminate\Support\Facades\DB;
 
 class RatingModeration
 {
+    
+    // Publikus adat
+    public $id;
 
-    // Privát adatok
-    private $id, $moderated;
+    // Privát adat
+    private $moderated;
 
     // Adatok lekérdezése
     public function __construct(Request $request)

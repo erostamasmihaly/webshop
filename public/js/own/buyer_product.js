@@ -218,6 +218,17 @@ $("#ratings").DataTable({
 		{ data: "fa_stars" },
 		{ data: "body" },
 		{ data: "updated" },
+		{   
+			data: "moderated",
+			"render": function ( data, type, row, meta ) {
+				if (data == 0) {
+					html = '<i class="fa-solid fa-circle-exclamation" title="Moderálás alatt"></i>';
+				} else {
+					html = '<i class="fa-regular fa-circle-check" title="Elfogadva"></i>';
+				}
+				return html;
+			}
+		}
 	],
 	processing: true,
 	serverSide: false // Ez legyen FALSE, hogy az ajax.reload() működjön

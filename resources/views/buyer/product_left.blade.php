@@ -48,6 +48,7 @@
                             <th scope="col" class="all">Értékelés</th>
                             <th scope="col" class="none">Értékelés szövege</th>
                             <th scope="col" class="none">Dátum</th>
+                            <th scope="col" class="all">Státusz</th>
                         </tr>
                     </thead>
                 </table>

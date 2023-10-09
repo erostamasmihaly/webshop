@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Support\Facades\Auth;
 use Spatie\Activitylog\LogOptions;
 use Spatie\Activitylog\Traits\LogsActivity;
 
@@ -54,9 +55,11 @@ class Product extends Model
         return $this->hasMany(Rating::class)->orderBy('updated_at','desc');
     }
 
-    // Egy termékhez tartozó moderált értékelések
+    // Egy termékhez tartozó moderált értékelések vagy az adott felhasználó értékelései
     public function ratingsModerated(): HasMany {
-        return $this->ratingsAll()->where('moderated',1);
+        return $this->ratingsAll()->where(function ($q) {
+            $q->where('moderated',1)->orWhere('user_id', Auth::id());
+        });
     }
 
     // Egy termékhez tartozó üzlet

@@ -466,6 +466,8 @@ $(function () {
             // Válasz átalakítása JSON-ná
             data = JSON.parse(text);
 
+            console.log(data);
+
             // Ha minden rendben volt
             if (data.OK == 1) {
                     

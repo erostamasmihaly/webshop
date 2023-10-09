@@ -13,10 +13,13 @@ use App\Http\Services\RatingModeration;
 use App\Models\Category;
 use App\Models\Image;
 use App\Models\Product;
+use App\Models\Rating;
 use App\Models\Shop;
 use App\Models\User;
+use App\Notifications\RatingUser;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Response;
 
 class SellerProductController extends Controller
@@ -186,6 +189,9 @@ class SellerProductController extends Controller
 
     // Értékelés moderálásának módosítása
     public function product_rating_moderation(RatingModeration $ratingModeration) {
+
+        // Értesítés küldése a felhasználó felé
+        $this->rating_notification($ratingModeration->id);
         
         // Válasz küldése
         $array['OK']=1;
@@ -252,6 +258,36 @@ class SellerProductController extends Controller
             // Visszatérés az üzenettel
             return redirect()->back()->withMessage($message);
         }
+
+    }
+
+    // Értesítések kiküldése - Értékelés elfogadása
+    public function rating_notification($id) {
+
+        // Kedvelés lekérdezése
+        $rating = Rating::find($id);
+
+        // Kérés létrehozása az értesítéshez
+        $notification_request = new Request();
+        $notification_request->setMethod('POST');
+        $notification_request->request->add([
+            'user' => $rating->user,
+            'product' => $rating->product
+        ]);
+
+        // Felhasználó e-mail címének és nevének lekérdezése
+        $user = [
+            $rating->user->email => $rating->user->surname." ".$rating->user->forename
+        ];
+
+        // Értesítés beállítása
+        $rating_user = new RatingUser($notification_request);
+
+        // E-mail értesítés küldése a felhasználónak
+        Notification::route('mail', $user)->notify($rating_user);
+
+        // Normál értesítés küldése a felhasználónak
+        Notification::send($rating->user, $rating_user);
 
     }
 }
