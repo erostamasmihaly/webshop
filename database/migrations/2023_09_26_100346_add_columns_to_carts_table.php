@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('carts', function (Blueprint $table) {
-            $table->foreignId('size_id')->constrained(Category::class)->nullable();
+            $table->foreignId('size_id')->constrained('categories')->nullable();
         });
     }
 

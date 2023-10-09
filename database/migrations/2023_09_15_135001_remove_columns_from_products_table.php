@@ -20,7 +20,7 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('products', function (Blueprint $table) {
-            $table->foreignId('unit_id')->constrained(Category::class);
+            $table->foreignId('unit_id')->constrained('categories');
             $table->foreignIdFor(Category::class);
         });
     }
