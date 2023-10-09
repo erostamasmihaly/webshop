@@ -18,7 +18,8 @@ class RatingUser extends Notification
     public function __construct(Request $request)
     {
         $this->user = $request->user;
-        $this->product = $request->product;         
+        $this->product = $request->product;  
+        $this->moderated = $request->moderated;       
     }
 
     // Megadni, hogy milyen formában hozza létre az értesítést
@@ -35,8 +36,7 @@ class RatingUser extends Notification
         $user_name = $this->user->name;
         $product_name = $this->product->name;
         $product_id = $this->product->id;
-        $moderated = $this->moderated;
-        $message = ($moderated==1) ? "Az alábbi termék esetén elfogadták az ön által megadott értékelést!" : "Az alábbi termék esetén elutasították az ön által megadott értékelést!";
+        $message = ($this->moderated==1) ? "Az alábbi termék esetén elfogadták az ön által megadott értékelést!" : "Az alábbi termék esetén elutasították az ön által megadott értékelést!";
 
         // Üzenet létrehozása
         return (new MailMessage)

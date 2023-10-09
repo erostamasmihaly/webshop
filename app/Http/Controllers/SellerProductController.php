@@ -272,21 +272,14 @@ class SellerProductController extends Controller
         $notification_request->setMethod('POST');
         $notification_request->request->add([
             'user' => $rating->user,
-            'product' => $rating->product
+            'product' => $rating->product,
+            'moderated' => $rating->moderated
         ]);
-
-        // Felhasználó e-mail címének és nevének lekérdezése
-        $user = [
-            $rating->user->email => $rating->user->surname." ".$rating->user->forename
-        ];
 
         // Értesítés beállítása
         $rating_user = new RatingUser($notification_request);
 
-        // E-mail értesítés küldése a felhasználónak
-        Notification::route('mail', $user)->notify($rating_user);
-
-        // Normál értesítés küldése a felhasználónak
+        // Normál és e-mailes értesítés küldése a felhasználónak
         Notification::send($rating->user, $rating_user);
 
     }
