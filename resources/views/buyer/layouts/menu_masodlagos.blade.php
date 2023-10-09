@@ -24,6 +24,13 @@
 					<a class="dropdown-item" href="{{ route('seller_index') }}">Alkalmazotti felület</a> 
 				@endif
 				@if(has_role('vásárló'))
+					<a class="dropdown-item" href="{{ route('buyer_notification') }}">Értesítések
+					@if(auth()->user()->unreadNotifications->count()>0)
+						<span class="w-100">
+							<span class="badge bg-danger float-end">{{ auth()->user()->unreadNotifications->count() }}</span>
+						</span>
+					@endif
+					</a>
 					<a class="dropdown-item" href="{{ route('buyer_user') }}">Profil adatok</a>
 					<a class="dropdown-item" href="{{ route('buyer_cart') }}">Kosár megtekintése</a> 
 					<a class="dropdown-item" href="{{ route('pay_history') }}">Vásárlási előzmények</a>

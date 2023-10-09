@@ -43,3 +43,17 @@ Route::group(['prefix' => 'buyer/user'], function() {
     Route::put('/', [App\Http\Controllers\BuyerProtectedController::class, 'user_update'])->name('buyer_user_update');
 
 });
+
+// Értesítés felület
+Route::group(['prefix' => 'buyer/notification'], function() {
+
+    // Értesítések
+    Route::get('', [App\Http\Controllers\BuyerNotificationController::class, 'index'])->name('buyer_notification');
+
+    // Értesítést látta
+    Route::get('read/{id}', [App\Http\Controllers\BuyerNotificationController::class, 'read'])->name('buyer_notification_read');
+
+    // Összes értesítést látta
+    Route::get('readall', [App\Http\Controllers\BuyerNotificationController::class, 'readall'])->name('buyer_notification_readall');
+
+});
