@@ -8,12 +8,13 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Spatie\Activitylog\LogOptions;
 use Spatie\Activitylog\Traits\LogsActivity;
 
+// Azon kategória csoportok, amelyek olyan kategóriákat tartalmaznak, amiket hozzá lehet rendelni a termékekhez és az adott terméket jellemzik, továbbá ezek által a termékeket például szűrni is lehet
 class CategoryGroup extends Model
 {
     use HasFactory, LogsActivity;
 
     protected $fillable = [
-        'name'
+        'name' // Kategória csoport neve
     ];
 
     // Naplózás beállítása

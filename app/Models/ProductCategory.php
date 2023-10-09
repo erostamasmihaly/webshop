@@ -8,14 +8,15 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Spatie\Activitylog\LogOptions;
 use Spatie\Activitylog\Traits\LogsActivity;
 
+// Termék hozzárendelése különféle kategóriákhoz
 class ProductCategory extends Model
 {
     use HasFactory, LogsActivity;
 
     protected $fillable = [
-        'product_id',
-        'category_group_id',
-        'category_id'
+        'product_id', // Termék azonosítója
+        'category_id', // Termékhez rendelt kategória azonosítója
+        'category_group_id' // Azon kategória csoport, ami a kategóriához tartozik (Ez inkább a könnyebb keresés és gyorsabb lekérdezés miatt van itt eltárolva)
     ];
 
     // Naplózás beállítása
@@ -24,7 +25,7 @@ class ProductCategory extends Model
         return LogOptions::defaults()->logFillable()->logOnlyDirty();
     }
 
-    // Kategóriák lekérdezése
+    // Kategóriák lekérdezése, ami a termékhez tarozik
     public function category():BelongsTo {
         return $this->belongsTo(Category::class);
     } 

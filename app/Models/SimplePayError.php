@@ -7,12 +7,13 @@ use Illuminate\Database\Eloquent\Model;
 use Spatie\Activitylog\LogOptions;
 use Spatie\Activitylog\Traits\LogsActivity;
 
+// OTP tranzakció hibák - az OTP dokumentációjából kimásolva!
 class SimplePayError extends Model
 {
     use HasFactory, LogsActivity;
 
     protected $fillable = [
-        'name'
+        'message' // Tranzakciós hibakódhoz tartozó üzenet
     ];
 
     // Naplózás beállítása

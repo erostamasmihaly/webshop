@@ -10,16 +10,17 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 use Spatie\Activitylog\LogOptions;
 use Spatie\Activitylog\Traits\LogsActivity;
 
+// Termékek adatai
 class Product extends Model
 {
     use HasFactory, LogsActivity;
 
     protected $fillable = [
-        'name',
-        'summary',
-        'body',
-        'active',
-        'shop_id'
+        'name', // Termék neve
+        'summary', // Termék rövid leírása
+        'body', // Termék részletes leírása
+        'active', // Ha 1, akkor a termék publikus, így meg lehet vásárolni
+        'shop_id' // Terméket forgalmazó üzlet azonosítója
     ];
 
     // Naplózás beállítása
@@ -58,7 +59,7 @@ class Product extends Model
         return $this->ratingsAll()->where('moderated',1);
     }
 
-    // Egy termékhez tartozó bolt
+    // Egy termékhez tartozó üzlet
     public function shop(): BelongsTo {
         return $this->belongsTo(Shop::class);
     }

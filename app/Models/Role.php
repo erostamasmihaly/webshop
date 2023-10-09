@@ -7,12 +7,13 @@ use Illuminate\Database\Eloquent\Model;
 use Spatie\Activitylog\LogOptions;
 use Spatie\Activitylog\Traits\LogsActivity;
 
+// Szerepkör, amit a felhasználóhoz hozzá lehet rendelni
 class Role extends Model
 {
     use HasFactory, LogsActivity;
 
     protected $fillable = [
-        'name'
+        'name' // Szerepkör neve
     ];
 
     // Naplózás beállítása

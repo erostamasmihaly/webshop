@@ -8,20 +8,21 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Spatie\Activitylog\LogOptions;
 use Spatie\Activitylog\Traits\LogsActivity;
 
+// Egy vásárló által történt fizetés vagy annak kísérlete
 class Payment extends Model
 {
     use HasFactory, LogsActivity;
 
     protected $fillable = [
-        'user_id',
-        'total',
-        'items',
-        'invoice',
-        'order_ref',
-        'transaction_id',
-        'error',
-        'result',
-        'finished'
+        'user_id', // Melyik vásárló fizetett
+        'total', // Összesen mennyit kellett fizetnie
+        'items', // Mely termékeket vásárolta meg
+        'invoice', // Vásárló személyes adatai, ami a vásárlás azonosításához szükséges
+        'order_ref', // Egy olyan egyedi azonosító, ami az OTP rendszerében is egyedi
+        'transaction_id', // OTP által visszaküldött tranzakció azonosító
+        'error', // Tranzakció során történő hibák esetén ezen hibák azonosítója
+        'result', // Fizetés eredménye (SUCCESS, ERROR, TIMEOUT, CANCEL)
+        'finished' // Ha véglegesen lezárult a fizetés és sikeres volt, akkor 1 az eredménye
     ];
 
     // Naplózás beállítása

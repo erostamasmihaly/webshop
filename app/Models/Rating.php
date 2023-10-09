@@ -8,17 +8,18 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Spatie\Activitylog\LogOptions;
 use Spatie\Activitylog\Traits\LogsActivity;
 
+// Egy termék értékelése a vásárló által
 class Rating extends Model
 {
     use HasFactory, LogsActivity;
 
     protected $fillable = [
-        'user_id',
-        'product_id',
-        'stars',
-        'title',
-        'body',
-        'moderated'
+        'user_id', // Értékelést végrehajtó felhasználó azonosítója
+        'product_id', // Értékelt termék azonosítója
+        'stars', // Hány csillagra lett a termék értékelve
+        'title', // Értékelés címe
+        'body', // Értékelés szövege
+        'moderated' // Ha 1, akkor az értékelés publikus
     ];
 
     // Naplózás beállítása

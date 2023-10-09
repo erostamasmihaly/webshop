@@ -12,22 +12,23 @@ use Laravel\Sanctum\HasApiTokens;
 use Spatie\Activitylog\LogOptions;
 use Spatie\Activitylog\Traits\LogsActivity;
 
+// Felhasználók adatai
 class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable, LogsActivity;
 
     protected $fillable = [
-        'name',
-        'email',
-        'password',
-        'surname',
-        'forename',
-        'active',
-        'country',
-        'state',
-        'zip',
-        'city',
-        'address'
+        'name', // Felhasználói név
+        'email', // E-mail cím
+        'password', // Jelszó
+        'surname', // Vezetéknév
+        'forename', // Keresztnév
+        'active', // Ha 1, akkor aktív a felhasználó
+        'country', // Ország
+        'state', // Területi egység
+        'zip', // Irányítószám
+        'city', // Város
+        'address' // Cím továbi részei pl: utca, házszám, stb...
     ];
 
     protected $hidden = [

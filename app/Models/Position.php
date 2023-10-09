@@ -8,15 +8,16 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Spatie\Activitylog\LogOptions;
 use Spatie\Activitylog\Traits\LogsActivity;
 
+// Munkakör, állás
 class Position extends Model
 {
     use HasFactory, LogsActivity;
 
     protected $fillable = [
-        'shop_id',
-        'name',
-        'summary',
-        'body'
+        'shop_id', // Munkakört létrehozó üzlet azonosítója
+        'name', // Munkakör neve
+        'summary', // Munkakör rövid leírása
+        'body' // Munkakör részletes leírása
     ];
 
     // Naplózás beállítása
@@ -25,7 +26,7 @@ class Position extends Model
         return LogOptions::defaults()->logFillable()->logOnlyDirty();
     }
 
-    // Pozíciót betöltő felhasználók
+    // Munkakört betöltő felhasználók
     public function users(): BelongsToMany {
         return $this->belongsToMany(User::class,'user_positions');
     }

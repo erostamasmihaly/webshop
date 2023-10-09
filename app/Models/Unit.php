@@ -9,12 +9,14 @@ use Illuminate\Database\Eloquent\Model;
 use Spatie\Activitylog\LogOptions;
 use Spatie\Activitylog\Traits\LogsActivity;
 
+// Termékhez rendelhető mértékegység
+// !! MÁR NEM HASZNÁLT, HELYETTE: külön kategória csoport és a hozzá tartozó kategóriák alkalmazása
 class Unit extends Model
 {
     use HasFactory, LogsActivity;
 
     protected $fillable = [
-        'name'
+        'name' // Méret neve
     ];
 
     // Naplózás beállítása
