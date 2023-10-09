@@ -521,18 +521,26 @@ $(function () {
         // Adatok lekérdezése
         size_id = document.querySelector("#size_id").value;
         price = document.querySelector("#price").value;
+        price_check = document.querySelector("#price_check").checked;
         vat = document.querySelector("#vat").value;
+        vat_check = document.querySelector("#vat_check").checked;
         discount = document.querySelector("#discount").value;
+        discount_check = document.querySelector("#discount_check").checked;
         quantity = document.querySelector("#quantity").value;
+        quantity_check = document.querySelector("#quantity_check").checked;
 
         // Átküldendő értékek összegyűjtése
 		body = JSON.stringify({
 			product_id: product_id,
             size_id: size_id,
             price: price,
+            price_check: (price_check) ? 1 : 0,
             vat: vat,
+            vat_check: (vat_check) ? 1 : 0,
             discount: discount,
-            quantity: quantity
+            discount_check: (discount_check) ? 1 : 0,
+            quantity: quantity,
+            quantity_check: (quantity_check) ? 1 : 0
 		});
 		
 		// Kérés küldése a szerver felé
@@ -547,6 +555,12 @@ $(function () {
                 "X-CSRF-TOKEN": document.querySelector("meta[name='csrf-token']").getAttribute("content")
             }
         }).then(response => response.text()).then(text => {
+
+            // Módosítás checkbox-ok visszaállítása
+            document.querySelector("#price_check").checked = false;
+            document.querySelector("#vat_check").checked = false;
+            document.querySelector("#discount_check").checked = false;
+            document.querySelector("#quantity_check").checked = false;
     
             // Válasz átalakítása JSON-ná
             data = JSON.parse(text);
@@ -574,6 +588,7 @@ $(function () {
             } else {
                
                 // Végigmenni minden egyes hibán
+                document.querySelector("#error").innerHTML = "";
                 [...Object.values(data.errors)].map(value => {
                     document.querySelector("#error").innerHTML += "<p>"+value+"</p>";
                 });

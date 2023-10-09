@@ -13,78 +13,95 @@
         </thead>
     </table>
 	<div class="alert alert-primary" role="alert">
-		Abban az esetben, ha a mennyiségnek 0 van megadva, akkor a mennyiségen kívül minden más érték módosulni fog!
+		Új árazás felvitele esetén nem kell bejelölni a módosítandó értékek esetén a hozzájuk tartozó Módosítás jelölőnégyzetet. Létező ár módosításakor viszont csak azon értékek fognak módosulni, amelyekhez tartozó Módosítás jelölőnégyzet is be volt jelölve.
 	</div>
     <div class="row mb-2">
 		<div class="col-sm-3 fw-bold">
 			Méret *
 		</div>
-		<div class="col-sm-9">
+		<div class="col-sm-7">
 			<select class="form-control" id="size_id">
 				@foreach($sizes AS $size)
 					<option value="{{ $size->id }}" @selected(old('size_id')==$size->id)>{{ $size->name }}</option>
 				@endforeach
 			</select>
-			@if ($errors->has('size_id'))
-				<div class="invalid-feedback d-block">{{ $errors->first('size_id') }}</div>
-			@endif
 		</div> 
 	</div>
     <div class="row mb-2">
 		<div class="col-sm-3 fw-bold">
 			Nettó ár *
 		</div>
-		<div class="col-sm-9">
+		<div class="col-sm-7">
 			<div class="input-group">
 				<input type="number" class="form-control" id="price" value="{{ old('price', 0) }}"/>
 				<span class="input-group-text">Ft</span>
 			</div>
-			@if ($errors->has('price'))
-				<div class="invalid-feedback d-block">{{ $errors->first('price') }}</div>
-			@endif
+		</div>
+		<div class="col-sm-2">
+			<div class="form-check">
+				<input class="form-check-input" type="checkbox" value="" id="price_check">
+				<label class="form-check-label" for="price_check">
+					Módosítás
+				</label>
+			</div>
 		</div>
 	</div>
 	<div class="row mb-2">
 		<div class="col-sm-3 fw-bold">
 			ÁFA *
 		</div>
-		<div class="col-sm-9">
+		<div class="col-sm-7">
 			<div class="input-group">
 				<input type="number" class="form-control" id="vat" value="{{ old('vat', 27) }}"/>
 				<span class="input-group-text">%</span>
 			</div>
-			@if ($errors->has('vat'))
-				<div class="invalid-feedback d-block">{{ $errors->first('vat') }}</div>
-			@endif
+		</div>
+		<div class="col-sm-2">
+			<div class="form-check">
+				<input class="form-check-input" type="checkbox" value="" id="vat_check">
+				<label class="form-check-label" for="vat_check">
+					Módosítás
+				</label>
+			</div>
 		</div>
 	</div>
 	<div class="row mb-2">
 		<div class="col-sm-3 fw-bold">
 			Kedvezmény *
 		</div>
-		<div class="col-sm-9">
+		<div class="col-sm-7">
 			<div class="input-group">
 				<input type="number" class="form-control" id="discount" value="{{ old('discount', 0) }}"/>
 				<span class="input-group-text">%</span>
 			</div>
-			@if ($errors->has('discount'))
-				<div class="invalid-feedback d-block">{{ $errors->first('discount') }}</div>
-			@endif
+		</div>
+		<div class="col-sm-2">
+			<div class="form-check">
+				<input class="form-check-input" type="checkbox" value="" id="discount_check">
+				<label class="form-check-label" for="discount_check">
+					Módosítás
+				</label>
+			</div>
 		</div>
 	</div>
 	<div class="row mb-2">
 		<div class="col-sm-3 fw-bold">
 			Mennyiség *
 		</div>
-		<div class="col-sm-9">
+		<div class="col-sm-7">
 			<input type="number" class="form-control" id="quantity" value="{{ old('quantity', 0) }}"/>
-			@if ($errors->has('quantity'))
-				<div class="invalid-feedback d-block">{{ $errors->first('quantity') }}</div>
-			@endif
+		</div>
+		<div class="col-sm-2">
+			<div class="form-check">
+				<input class="form-check-input" type="checkbox" value="" id="quantity_check">
+				<label class="form-check-label" for="quantity_check">
+					Módosítás
+				</label>
+			</div>
 		</div>
 	</div>
     <div>
-        <button type="button" class="btn btn-primary" id="insert_price">Ár felvitele</button>
+        <button type="button" class="btn btn-primary" id="insert_price">Árazás felvitele vagy módosítása</button>
 		<div class="alert alert-success d-none" id="success" role="alert">
   			Sikeres művelet!
 		</div>
