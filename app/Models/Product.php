@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Support\Facades\Auth;
 use Spatie\Activitylog\LogOptions;
@@ -136,6 +137,17 @@ class Product extends Model
 
         // Visszatérés a tömbből létrehozott listával
         return $array;
+    }
+
+    // Termékhez tartozó kedvelése
+    public function favourites(): HasMany {
+        return $this->hasMany(Favourite::class);
+    }
+
+    // Terméket kedvelő felhasználók
+    public function favourite_users() {
+        $this->load('favourites.user');
+        return $this->favourites->pluck('user');
     }
 
 }

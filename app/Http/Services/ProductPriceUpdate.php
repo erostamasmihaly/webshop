@@ -8,7 +8,9 @@ use Illuminate\Support\Facades\DB;
 
 class ProductPriceUpdate
 {
-    private $product_id, $size_id, $price, $vat, $discount, $quantity, $price_check, $vat_check, $discount_check, $quantity_check;
+    public $product_id;
+
+    private $size_id, $price, $vat, $discount, $quantity, $price_check, $vat_check, $discount_check, $quantity_check;
 
     // Adatok lekérdezése
     public function __construct(ProductPriceRequest $productPriceRequest)

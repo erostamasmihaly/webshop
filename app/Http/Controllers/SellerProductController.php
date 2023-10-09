@@ -16,6 +16,7 @@ use App\Models\Product;
 use App\Models\Rating;
 use App\Models\Shop;
 use App\Models\User;
+use App\Notifications\ProductPriceUser;
 use App\Notifications\RatingUser;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -226,7 +227,10 @@ class SellerProductController extends Controller
 
     // Termék árának módosítása
     public function product_price_update(ProductPriceUpdate $productPriceUpdate) {
-            
+
+        // Értesítés küldése a felhasználók felé
+        $this->product_price_notification($productPriceUpdate->product_id);
+
         // Válasz küldése
         $array['OK']=1;
         return Response::json($array);
@@ -281,6 +285,35 @@ class SellerProductController extends Controller
 
         // Normál és e-mailes értesítés küldése a felhasználónak
         Notification::send($rating->user, $rating_user);
+
+    }
+
+    // Értesítések kiküldése - Értékelés elfogadása
+    public function product_price_notification($id) {
+
+        // Kedvelés lekérdezése
+        $product = Product::find($id);
+
+        // Terméket kedvelő felhasználók lekérdezése
+        $favourite_users = Product::find($id)->favourite_users();
+
+        // Végigmenni minden egyes ilyen felhasználón
+        foreach ($favourite_users as $user) {
+
+            // Kérés létrehozása az értesítéshez
+            $notification_request = new Request();
+            $notification_request->setMethod('POST');
+            $notification_request->request->add([
+                'user' => $user,
+                'product' => $product
+            ]);
+
+            // Értesítés beállítása
+            $product_price_user = new ProductPriceUser($notification_request);
+
+            // Normál és e-mailes értesítés küldése a felhasználónak
+            Notification::send($user, $product_price_user);
+        }
 
     }
 }
