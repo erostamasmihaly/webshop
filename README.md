@@ -2,6 +2,7 @@
 <h3>ETM Webshop</h3>
 <p>Egy olyan kis magán projekt, amin keresztül meg lehet tekinteni, hogy nagyjából milyen webes alkalmazásokat tudok jelenleg fejleszteni.</p>
 <p>Egy webáruház, ahol különféle szerepkörökre bontva lehet alap feladatokat elvégezni.</p>
+<p>Az itteni folyamatok egyszerű(bb)ek, így nem tükrözik azon bonyolult folyaaatokat, amik egy valódi webáruház működését jellemzik.</p>
 <h4>Anoním felhasználók:</h4> 
 <ul>
     <li>Meg tudják tekinteni a termékek és az áruházak oldalait.</li>
