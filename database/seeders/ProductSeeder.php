@@ -121,7 +121,9 @@ class ProductSeeder extends Seeder
                 "vat" => $subarray[3],
                 "discount" => $subarray[4],
                 "brutto_price" => $brutto_price,
-                "discount_price" => $discount_price
+                "discount_price" => $discount_price,
+                "created_at" => now(),
+                "updated_at" => now()
             ]);
         }
 
@@ -181,7 +183,9 @@ class ProductSeeder extends Seeder
                 "vat" => $subarray[3],
                 "discount" => $subarray[4],
                 "brutto_price" => $brutto_price,
-                "discount_price" => $discount_price
+                "discount_price" => $discount_price,
+                "created_at" => now(),
+                "updated_at" => now()
             ]);
         }
 
@@ -240,7 +244,9 @@ class ProductSeeder extends Seeder
                 "vat" => $subarray[3],
                 "discount" => $subarray[4],
                 "brutto_price" => $brutto_price,
-                "discount_price" => $discount_price
+                "discount_price" => $discount_price,
+                "created_at" => now(),
+                "updated_at" => now()
             ]);
         }
 
@@ -299,7 +305,9 @@ class ProductSeeder extends Seeder
                 "vat" => $subarray[3],
                 "discount" => $subarray[4],
                 "brutto_price" => $brutto_price,
-                "discount_price" => $discount_price
+                "discount_price" => $discount_price,
+                "created_at" => now(),
+                "updated_at" => now()
             ]);
         }
 
@@ -359,7 +367,9 @@ class ProductSeeder extends Seeder
                 "vat" => $subarray[3],
                 "discount" => $subarray[4],
                 "brutto_price" => $brutto_price,
-                "discount_price" => $discount_price
+                "discount_price" => $discount_price,
+                "created_at" => now(),
+                "updated_at" => now()
             ]);
         }
 
@@ -418,7 +428,9 @@ class ProductSeeder extends Seeder
                 "vat" => $subarray[3],
                 "discount" => $subarray[4],
                 "brutto_price" => $brutto_price,
-                "discount_price" => $discount_price
+                "discount_price" => $discount_price,
+                "created_at" => now(),
+                "updated_at" => now()
             ]);
         }
 
@@ -477,7 +489,9 @@ class ProductSeeder extends Seeder
                 "vat" => $subarray[3],
                 "discount" => $subarray[4],
                 "brutto_price" => $brutto_price,
-                "discount_price" => $discount_price
+                "discount_price" => $discount_price,
+                "created_at" => now(),
+                "updated_at" => now()
             ]);
         }
 
