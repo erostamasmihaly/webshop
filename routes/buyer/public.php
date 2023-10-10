@@ -18,6 +18,9 @@ Route::post('rating', [App\Http\Controllers\BuyerPublicController::class, 'produ
 // Üzlet oldala
 Route::get('shop/{id}', [App\Http\Controllers\BuyerPublicController::class, 'shop'])->name('shop');
 
+// Információs oldal
+Route::get('about', [App\Http\Controllers\BuyerPublicController::class, 'about'])->name('about');
+
 // Regisztráció
 Route::group(['prefix' => 'register'], function() {
 

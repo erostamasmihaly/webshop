@@ -1,8 +1,7 @@
-<h1>Mivel sok helyen a jQuery-t átírom JavaScript-re, így előfordulhat, hogy egyes funkciók nem működnek megfelelően!</h1>
 <h3>ETM Webshop</h3>
 <p>Egy olyan kis magán projekt, amin keresztül meg lehet tekinteni, hogy nagyjából milyen webes alkalmazásokat tudok jelenleg fejleszteni.</p>
 <p>Egy webáruház, ahol különféle szerepkörökre bontva lehet alap feladatokat elvégezni.</p>
-<p>Az itteni folyamatok egyszerű(bb)ek, így nem tükrözik azon bonyolult folyaaatokat, amik egy valódi webáruház működését jellemzik.</p>
+<p>Az itteni folyamatok egyszerű(bb)ek, így nem tükrözik azon bonyolult folyamatokat, amik egy valódi webáruház működését jellemzik.</p>
 <h4>Anoním felhasználók:</h4> 
 <ul>
     <li>Meg tudják tekinteni a termékek és az áruházak oldalait.</li>
@@ -32,7 +31,6 @@
 <h4>Megjegyzések:</h4>
 <ul>
     <li>Megjelenítés esetén a BLADE-t alkalmazom. De ha kell, akkor át tudok térni esetleg másra.</li>
-    <li>JavaScript esetén már megszoktam a jQuery használatát, bár az alap JavaScripttel kapcsolatban már egy tanfolyamom is volt.</li>
     <li>Térképészeti megjelenítéshez a Leaflet van alkalmazva és az OpenStreetMap van megjelenítve.</li>
     <li>Cím alapján a koordináta meghatározása a Google Geocoding API által történik.</li>  
     <li>OTP SimplePay esetén a fejlesztői verzió van alkalmazva és a végén az IPN visszaigazolás még hiányzik.</li>
@@ -49,7 +47,4 @@
     </li>
     <li>A kategória sorbarendező még kicsit "furán" működik, de ezt később szerintem módosítom és esetleg egy másik JS kiegészítőre fogok áttérni.</li>
 </ul>
-<h4>Készítette: Erős Tamás Mihály</h4>
-<ul>
-    <li>Lakóhely: Miskolc-Avas, III. ütem</li>
-</ul>
+<h4>Készítette: Erős Tamás Mihály, miskolci lakos</h4>

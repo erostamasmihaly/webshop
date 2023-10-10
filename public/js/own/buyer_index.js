@@ -101,7 +101,7 @@ function show_products(products) {
 	products.forEach(function(product) {
 
 		// HTML elem létrehozása
-		html='<div class="col-lg-3 col-sm-4 col-6 text-center" group_id="'+product.group_id+'" age_id="'+product.age_id+'" gender_id="'+product.gender_id+'" shop_id="'+product.shop_id+'"><div class="card p-2 mb-2"><a href="/product/'+product.id+'" class="fw-bold">'+product.name+'<br><img src="'+product.image+'" class="img-fluid">';
+		html='<div class="col-lg-3 col-sm-4 col-6 text-center" group_id="'+product.group_id+'" age_id="'+product.age_id+'" gender_id="'+product.gender_id+'" shop_id="'+product.shop_id+'"><div class="card p-2 mb-2"><a href="/product/'+product.id+'" class="fw-bold"><i class="fa-solid fa-arrow-up-right-from-square"></i> '+product.name+'<br><img src="'+product.image+'" class="img-fluid">';
 
 		if (product.discount>0) {
 			// Ha leárazott, akkor kiemelt árcédulával és a leárazás nagyságának feltűntetésével

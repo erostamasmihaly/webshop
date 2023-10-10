@@ -5,6 +5,10 @@
         @include('message')
 		<div class="card">
 			<div class="card-body">
+				<div class="alert alert-success alert-dismissible fade show">
+					Ez nem egy valódi webáruház, csak egy informatikus magán projektje, referencia munkája! Fizetés esetén is csak az OTP Simple teszt fiók van alkalmazva! <a href="{{ route('about') }}"><i class="fa-solid fa-arrow-up-right-from-square"></i> Bővebb információ</a>
+					<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+				</div>
 				<div class="bg-info bg-gradient text-dark text-center mb-2 fw-bold row">
 					<div class="col-sm-2"></div>
 					<div class="col-sm-8">Szűrők</div>

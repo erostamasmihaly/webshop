@@ -215,4 +215,11 @@ class BuyerPublicController extends Controller
         ]);
     }
 
+    // Információ az alkalmazásról
+    public function about() {
+
+        // Felület betöltése
+        return view('buyer.about');
+    }
+
 }
