@@ -17,4 +17,7 @@ Route::group(['prefix' => 'admin/user'], function() {
     // Létrehozás
     Route::get('create', [App\Http\Controllers\AdminUserController::class, 'create'])->name('admin_user_create');
 
+    // Napló
+    Route::get('log', [App\Http\Controllers\AdminUserController::class, 'log'])->name('admin_user_log');
+
 });

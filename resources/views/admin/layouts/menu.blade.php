@@ -7,3 +7,6 @@
 <a class="nav-link @if(Request::is('admin/shop*')) active @endif" href="{{ route('admin_shop') }}">
     <div class="sb-nav-link-icon"><i class="fas fa-shop"></i></div>Üzletek
 </a>
+<a class="nav-link @if(Request::is('admin/log*')) active @endif" href="{{ route('admin_log') }}">
+    <div class="sb-nav-link-icon"><i class="fa-solid fa-user-secret"></i></div>Tevékenység napló
+</a>
