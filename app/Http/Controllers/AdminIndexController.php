@@ -9,7 +9,9 @@ use App\Models\Image;
 use App\Models\Payment;
 use App\Models\Position;
 use App\Models\Product;
+use App\Models\ProductCategory;
 use App\Models\ProductPrice;
+use App\Models\Rating;
 use App\Models\Role;
 use App\Models\Shop;
 use App\Models\User;
@@ -43,10 +45,10 @@ class AdminIndexController extends Controller
         foreach ($logs AS $log) {
 
             // Lekérdezni a létrehozó felhasználó nevét
-            $log->causer_name = $this->subject_name("App\Models\User", $log->causer_id); 
+            $log->causer_name = $this->subject_name("App\Models\User", $log->causer_id, null); 
 
             // Lekérdezni a módosított elem nevét
-            $log->subject_name = $this->subject_name($log->subject_type, $log->subject_id);
+            $log->subject_name = $this->subject_name($log->subject_type, $log->subject_id, $log->properties);
         }
 
         // Oldal meghívása
@@ -56,8 +58,9 @@ class AdminIndexController extends Controller
     }
 
     // Módosított elem nevének lekérdezése
-    private function subject_name($subject_type, $subject_id) {
+    private function subject_name($subject_type, $subject_id, $properties) {
         $return = $subject_id;
+        $array = json_decode($properties, TRUE);
         switch ($subject_type) {
             case "App\Models\User":
                 $return = (User::find($subject_id)) ? User::find($subject_id)->name : $subject_id;
@@ -71,23 +74,19 @@ class AdminIndexController extends Controller
             case "App\Models\Cart":
                 break;
             case "App\Models\Favourite":
-                $favourite = Favourite::find($subject_id);
-                if ($favourite) {
-                    $product = $favourite->product;
-                    if ($product) {
-                        $return = $product->name;
-                    }
+                if (isset($array["attributes"]["product_id"])) {
+                    $product = Product::find($array["attributes"]["product_id"]);
+                } else {
+                    $product = Product::find($array["old"]["product_id"]);
                 }
+                $return = ($product) ? $product->name : "-";
                 break;
             case "App\Models\Image":
                 $image = Image::find($subject_id);
                 if ($image) {
-                    $product_id = $image->product_id;
-                    $product = Product::find($product_id);
+                    $product = Product::find($image->product_id);
                     if ($product) {
-                        $return = $image->filename." (".$product->name.")";
-                    } else {
-                        $return = $image->filename;
+                        $return = $product->name." >> ".$image->filename;
                     }
                 } 
                 break;
@@ -101,6 +100,14 @@ class AdminIndexController extends Controller
                 $return = (Product::find($subject_id)) ? Product::find($subject_id)->name : $subject_id;
                 break;
             case "App\Models\ProductCategory":
+                $product_category = ProductCategory::find($subject_id);
+                if ($product_category) {
+                    $product = $product_category->product;
+                    $category = Category::find($array["attributes"]["category_id"]);
+                    $product_name = ($product) ? $product->name : "-";
+                    $category_name = ($category) ? $category->name : "-";
+                    $return = "$product_name >> $category_name"; 
+                }
                 break;
             case "App\Models\ProductPrice": 
                 $product_price = ProductPrice::find($subject_id);
@@ -112,6 +119,13 @@ class AdminIndexController extends Controller
                 }
                 break;
             case "App\Models\Rating": 
+                $rating = Rating::find($subject_id);
+                if ($rating) {
+                    $product = $rating->product;
+                    if ($product) {
+                        $return = $product->name;
+                    }
+                }
                 break;
             case "App\Models\Role": 
                 $return = (Role::find($subject_id)) ? Role::find($subject_id)->name : $subject_id;

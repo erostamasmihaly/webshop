@@ -25,8 +25,13 @@ class ProductCategory extends Model
         return LogOptions::defaults()->logFillable()->logOnlyDirty();
     }
 
-    // Kategóriák lekérdezése, ami a termékhez tarozik
+    // Kategóriák lekérdezése, ami a termékhez tartozik
     public function category():BelongsTo {
         return $this->belongsTo(Category::class);
+    } 
+
+    // Termék lekérdezése
+    public function product():BelongsTo {
+        return $this->belongsTo(Product::class);
     } 
 }

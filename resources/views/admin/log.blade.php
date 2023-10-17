@@ -13,7 +13,7 @@
                         <tr>
                             <th scope="col" class="all">Művelet</th>
                             <th scope="col" class="all">Típus</th>
-                            <th scope="col" class="all">Azonosító</th>
+                            <th scope="col" class="all">Megnevezés</th>
                             <th scope="col" class="none">Létrehozó</th>
                             <th scope="col" class="none">Adatok</th>
                             <th scope="col" class="none">Létrehozva</th>

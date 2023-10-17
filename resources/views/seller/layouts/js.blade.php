@@ -14,6 +14,6 @@
 <script src="{{ asset('js/own/tables.js') }}" defer></script>
 <script src="{{ asset('js/own/tinymce.js') }}" defer></script>
 
-@if (Request::is('seller/product/edit/*'))
+@if (Request::is('seller/product/*'))
     <script src="{{ asset('js/own/seller_product_edit.js') }}" defer></script>
 @endif
