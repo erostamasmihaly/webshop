@@ -9,7 +9,7 @@ Route::group(['prefix' => 'admin/user'], function() {
     Route::get('', [App\Http\Controllers\AdminUserController::class, 'index'])->name('admin_user');  
 
     // Szerkesztés
-    Route::get('edit/{id}', [App\Http\Controllers\AdminUserController::class, 'edit'])->name('admin_user_edit');   
+    Route::get('{id}', [App\Http\Controllers\AdminUserController::class, 'edit'])->name('admin_user_edit');   
 
     // Mentés
     Route::put('', [App\Http\Controllers\AdminUserController::class, 'update'])->name('admin_user_update');   

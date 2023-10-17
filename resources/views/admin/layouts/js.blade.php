@@ -21,6 +21,6 @@
 @endif
 
 <!-- Kategóriák sorrendje -->
-@if (Request::is('admin/category/sequence/*'))
-    <script src="{{ asset('js/own/admin_category_sequence.js') }}" defer></script>
+@if (Request::is('admin/group/sequence/*'))
+    <script src="{{ asset('js/own/admin_group_sequence.js') }}" defer></script>
 @endif

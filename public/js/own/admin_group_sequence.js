@@ -14,7 +14,7 @@ $("#sortable").sortable();
 function load_sequence() {
 	
 	// Kérés küldése a szerver felé
-	fetch("/admin/category/sequence/load/"+category_group_id, {
+	fetch("/admin/group/sequence/load/"+category_group_id, {
 		method: "GET",
 		cache: "no-cache",
 		headers: {
@@ -222,7 +222,7 @@ document.querySelector("#save").addEventListener("click", function(e){
 	});
 	
 	// Kérés küldése a szerver felé
-	fetch("/admin/category/sequence/save", {
+	fetch("/admin/group/sequence/save", {
 		body: body,
 		method: "POST",
 		cache: "no-cache",
@@ -246,7 +246,7 @@ document.querySelector("#save").addEventListener("click", function(e){
 	
 	})
 	.catch(error => {
-		alert("Hiba történt a művdelet során!");
+		alert("Hiba történt a művelet során!");
 		console.log(error);
 	});
 

@@ -9,7 +9,7 @@ Route::group(['prefix' => 'seller/position'], function() {
     Route::get('', [App\Http\Controllers\SellerPositionController::class, 'index'])->name('seller_position');  
 
     // Szerkesztés
-    Route::get('edit/{id}', [App\Http\Controllers\SellerPositionController::class, 'edit'])->name('seller_position_edit');   
+    Route::get('{id}', [App\Http\Controllers\SellerPositionController::class, 'edit'])->name('seller_position_edit');   
 
     // Mentés
     Route::put('', [App\Http\Controllers\SellerPositionController::class, 'update'])->name('seller_position_update');   
