@@ -22,9 +22,9 @@
                     <tbody>
                        @foreach ($logs as $log)
                         <tr>
-                            <td>{{ $log->description }}</td>
-                            <td>{{ $log->subject_type }}</td>
-                            <td>{{ $log->subject_id }}</td>
+                            <td>{{ __($log->description) }}</td>
+                            <td>{{ __($log->subject_type) }}</td>
+                            <td>{{ $log->subject_name }}</td>
                             <td>{{ $log->causer_name }}</td>
                             <td>{{ $log->properties }}</td>
                             <td>{{ $log->created_at }}</td>

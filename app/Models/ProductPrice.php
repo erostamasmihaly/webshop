@@ -34,4 +34,9 @@ class ProductPrice extends Model
     public function size(): BelongsTo {
         return $this->belongsTo(Category::class);
     }
+
+    // Termék lekérdezése
+    public function product(): BelongsTo {
+        return $this->belongsTo(Product::class);
+    }
 }
