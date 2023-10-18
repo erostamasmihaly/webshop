@@ -47,3 +47,6 @@ require 'seller/product.php';
 
 // Munkakörök
 require 'seller/position.php';
+
+// Üzletek
+require 'seller/shop.php';
