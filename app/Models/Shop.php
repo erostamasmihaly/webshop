@@ -53,10 +53,12 @@ class Shop extends Model
         $collection = collect();
         foreach ($this->products AS $product) {
             $payed_carts = $product->payed_carts;
-            $payed_carts->load('product');
-            $payed_carts->load('payment');
-            $payed_carts->load('user');
-            $collection->push($payed_carts);
+            if ($payed_carts->count() > 0) {
+                $payed_carts->load('product');
+                $payed_carts->load('payment');
+                $payed_carts->load('user');
+                $collection->push($payed_carts);
+            }
         }
         return $collection;
     }

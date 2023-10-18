@@ -35,9 +35,9 @@ class SellerShopController extends Controller
         // Lekérdezni a bolt minden olyan kosarát, amiért fizettek is
         $carts = Shop::find($shop_id)->payed_carts();
 
-        foreach($carts AS $cart) {
-            dd($cart);
-        } 
+        foreach ($carts AS $cart) {
+            $cart->product_name = $cart->pluck('product')[0]->name;
+        }
 
         // Oldal meghívása
         return view('seller.shop_payed_carts',[

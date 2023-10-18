@@ -17,7 +17,7 @@
                     <tbody>
                        @foreach ($carts as $cart)
                         <tr>
-                            <td>{{ $cart->product->name }}</td>
+                            <td>{{ $cart->product_name }}</td>
                         </tr>
                        @endforeach
                     </tbody>
