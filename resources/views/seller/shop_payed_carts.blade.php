@@ -12,9 +12,10 @@
                     <thead>
                         <tr>
                             <th scope="col" class="all">Termék</th>
-                            <th scope="col" class="all">Felhasználó</th>
-                            <th scope="col" class="all">Mennyiség</th>
+                            <th scope="col" class="none">Felhasználó</th>
+                            <th scope="col" class="none">Mennyiség</th>
                             <th scope="col" class="all">Összár</th>
+                            <th scope="col" class="all">Dátum</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -24,6 +25,7 @@
                             <td>{{ $cart->user->name }}</td>
                             <td>{{ $cart->quantity }} {{ $cart->product->unit->category->name }}</td>
                             <td>{{ $cart->full_price_ft }}</td>
+                            <td>{{ $cart->updated_at }}</td>
                         </tr>
                        @endforeach
                     </tbody>

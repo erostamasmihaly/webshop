@@ -152,7 +152,7 @@ class Product extends Model
 
     // Kifizetett kosarak
     public function payed_carts(): HasMany {
-        return $this->hasMany(Cart::class)->whereNotNull('payment_id');
+        return $this->hasMany(Cart::class)->whereNotNull('payment_id')->orderBy('updated_at','desc');
     }
 
 }
