@@ -9,6 +9,9 @@
 <a class="nav-link @if(Request::is('seller/product*')) active @endif" href="{{ route('seller_product') }}">
     <div class="sb-nav-link-icon"><i class="fas fa-boxes-stacked"></i></div>Termékek
 </a>
+<a class="nav-link @if(Request::is('seller/shop*')) active @endif" href="{{ route('seller_position') }}">
+    <div class="sb-nav-link-icon"><i class="fa-solid fa-shop"></i></div>Üzletek
+</a>
 <a class="nav-link @if(Request::is('seller/position*')) active @endif" href="{{ route('seller_position') }}">
     <div class="sb-nav-link-icon"><i class="fa-solid fa-briefcase"></i></div>Munkakörök
 </a>

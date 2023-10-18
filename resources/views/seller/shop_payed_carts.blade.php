@@ -11,13 +11,19 @@
                 <table id="datatable" class=" table table-bordered table-striped table-condensed d-none">
                     <thead>
                         <tr>
-                            <th scope="col" class="all">Termék neve</th>
+                            <th scope="col" class="all">Termék</th>
+                            <th scope="col" class="all">Felhasználó</th>
+                            <th scope="col" class="all">Mennyiség</th>
+                            <th scope="col" class="all">Összár</th>
                         </tr>
                     </thead>
                     <tbody>
                        @foreach ($carts as $cart)
                         <tr>
-                            <td>{{ $cart->product_name }}</td>
+                            <td>{{ $cart->product->name }}</td>
+                            <td>{{ $cart->user->name }}</td>
+                            <td>{{ $cart->quantity }} {{ $cart->product->unit->category->name }}</td>
+                            <td>{{ $cart->full_price_ft }}</td>
                         </tr>
                        @endforeach
                     </tbody>

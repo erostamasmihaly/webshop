@@ -50,16 +50,34 @@ class Shop extends Model
 
     // Bolthoz tartozó kifizetett kosarak
     public function payed_carts() {
+
+        // Üres gyűjtemény létrehozása
         $collection = collect();
+
+        // Végigmenni minden egyes terméken
         foreach ($this->products AS $product) {
+
+            // Lekérdezni minden hozzá tartozó kifizetett kosarat
             $payed_carts = $product->payed_carts;
+
+            // Ha több, mint egy ilyen elem van
             if ($payed_carts->count() > 0) {
-                $payed_carts->load('product');
-                $payed_carts->load('payment');
-                $payed_carts->load('user');
-                $collection->push($payed_carts);
+
+                // Végigmenni minden eyes kosaran
+                foreach($payed_carts AS $cart) {
+
+                    // Betölteni a kosárhoz tartozó relációkat
+                    $cart->load('product');
+                    $cart->load('payment');
+                    $cart->load('user');
+
+                    // Ezen kosár behelyezése a gyűjteménybe
+                    $collection->push($cart);
+                }
             }
         }
+
+        // Visszatérés ezen gyűjteménnyel
         return $collection;
     }
 

@@ -35,8 +35,11 @@ class SellerShopController extends Controller
         // Lekérdezni a bolt minden olyan kosarát, amiért fizettek is
         $carts = Shop::find($shop_id)->payed_carts();
 
+        // Végigmenni minden egyes elemen
         foreach ($carts AS $cart) {
-            $cart->product_name = $cart->pluck('product')[0]->name;
+
+            // Formázott teljes ár
+            $cart->full_price_ft = numformat_with_unit($cart->price * $cart->quantity, "Ft");
         }
 
         // Oldal meghívása
