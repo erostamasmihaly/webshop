@@ -33,7 +33,7 @@ class SellerShopController extends Controller
     public function payed_carts($shop_id) {
 
         // Lekérdezni a bolt minden olyan kosarát, amiért fizettek is
-        $carts = Shop::find($shop_id)->payed_carts();
+        $carts = Shop::find($shop_id)->payed_carts()->sortByDesc('updated_at');
 
         // Végigmenni minden egyes elemen
         foreach ($carts AS $cart) {

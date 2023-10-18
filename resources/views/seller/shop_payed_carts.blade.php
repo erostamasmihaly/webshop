@@ -12,20 +12,24 @@
                     <thead>
                         <tr>
                             <th scope="col" class="all">Termék</th>
-                            <th scope="col" class="none">Felhasználó</th>
-                            <th scope="col" class="none">Mennyiség</th>
                             <th scope="col" class="all">Összár</th>
                             <th scope="col" class="all">Dátum</th>
+                            <th scope="col" class="none">Felhasználó</th>
+                            <th scope="col" class="none">Mennyiség</th>
+                            <th scope="col" class="none">Egyedi azonosító</th>
+                            <th scope="col" class="none">Tranzakció azonosító</th>
                         </tr>
                     </thead>
                     <tbody>
                        @foreach ($carts as $cart)
                         <tr>
                             <td>{{ $cart->product->name }}</td>
-                            <td>{{ $cart->user->name }}</td>
-                            <td>{{ $cart->quantity }} {{ $cart->product->unit->category->name }}</td>
                             <td>{{ $cart->full_price_ft }}</td>
                             <td>{{ $cart->updated_at }}</td>
+                            <td>{{ $cart->user->name }}</td>
+                            <td>{{ $cart->quantity }} {{ $cart->product->unit->category->name }}</td>
+                            <td>{{ $cart->payment->order_ref }}</td>
+                            <td>{{ $cart->payment->transaction_id }}</td>
                         </tr>
                        @endforeach
                     </tbody>
