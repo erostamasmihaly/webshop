@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="container-fluid">
-    <h4 class="card-title">Kifizetések</h4>
+    <h4 class="card-title">Megvett termékek</h4>
     @include('message')
     <div class="card">
         <div class="card-body">

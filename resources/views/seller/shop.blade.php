@@ -22,7 +22,7 @@
                             <td>
                                 <a href="{{ route('seller_shop_payed_carts',$shop->id) }}">
                                     <i class="fa-solid fa-arrow-up-right-from-square"></i>
-                                    Fizetések
+                                    Megvett termékek
                                 </a>
                             </td>
                         </tr>
