@@ -11,3 +11,11 @@ Route::group(['prefix' => 'vue'], function() {
     })->where('vue_capture', '[\/\w\.-]*')->name('vue')->middleware(BuyerMiddleware::class);
 
 });
+
+// Vue oldalak
+Route::group(['prefix' => 'api/vue'], function() {
+
+    // Felhasználó adatai
+    Route::get('user', [App\Http\Controllers\VueApiController::class, 'user'])->name('vue_user_get');
+
+});
