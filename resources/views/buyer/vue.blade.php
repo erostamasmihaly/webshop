@@ -5,7 +5,9 @@
         @include('message')
 		<div class="card">
 			<div class="card-body">
-                <div id="app"></div>
+                <div id="app">
+                    <App/>
+                </div>
             </div>
         </div>
     </div>
