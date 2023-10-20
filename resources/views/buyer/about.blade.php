@@ -4,7 +4,9 @@
     <div class="row">
 		<div class="card">
 			<div class="card-body">
-                <h3>ETM Webshop</h3>
+            <h3>ETM Webshop</h3>
+                <h4>Éles verzió megtekinthető az alábbi <a href="http://etmwebshop.work/" target="_blank">LINK</a>-re kattintva!</h4>
+                <h4>Egy kis <a href="https://etm88.wordpress.com/2023/10/17/webshop/" target="_blank">WordPress hír</a> ezzel kapcsolatban, hogy a WordPress-t is gyakoroljam.</h4>
                 <p>Egy olyan kis magán projekt, amin keresztül meg lehet tekinteni, hogy nagyjából milyen webes alkalmazásokat tudok jelenleg fejleszteni.</p>
                 <p>Egy webáruház, ahol különféle szerepkörökre bontva lehet alap feladatokat elvégezni.</p>
                 <p>Az itteni folyamatok egyszerű(bb)ek, így nem tükrözik azon bonyolult folyamatokat, amik egy valódi webáruház működését jellemzik.</p>
