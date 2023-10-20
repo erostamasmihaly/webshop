@@ -1,5 +1,5 @@
 <template>
-    <h1>Csak nem!?</h1>
+    <h1>Ez még csak egy üres VUE oldal. Majd itt bizonyos funkciók elérhetőek lesznek, csak most VUE.js alatt! :)</h1>
 </template>
 <script>
 import {ref, onMounted} from 'vue'
