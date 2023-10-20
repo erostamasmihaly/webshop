@@ -20,6 +20,9 @@ require 'buyer/protected.php';
 // Fizetés
 require 'buyer/pay.php';
 
+// Vue
+require 'buyer/vue.php';
+
 //// Admin szerepkör
 
 // Vezérlőpult
