@@ -7,6 +7,22 @@ const router = createRouter({
             path: '/vue',
             component: () => import('./pages/Index.vue')
         },
+        {
+            path: '/vue/cart',
+            component: () => import('./pages/Cart.vue')
+        },
+        {
+            path: '/vue/payed',
+            component: () => import('./pages/Index.vue')
+        },
+        {
+            path: '/vue/product',
+            component: () => import('./pages/Product.vue')
+        },
+        {
+            path: '/vue/user',
+            component: () => import('./pages/User.vue')
+        },
     ],
 })
 
