@@ -49,15 +49,24 @@
             <input type="text" class="form-control" v-model="address"/>
         </div>
     </div>
+    <div class="alert alert-success d-none" role="alert" id="success">
+        Sikeres művelet!
+    </div>
+    <div class="alert alert-danger d-none" role="alert" id="error"></div>
     <div class="bg-dark p-2">
         <button class="btn btn-primary" @click="saveUser">Mentés</button>
     </div>
 </template>
 <script>
+// Importálás
 import {request} from '../helper'
 import {ref, onMounted} from 'vue'
+
+// Exportálás
 export default {
     setup() {
+        
+        // Elemekre történő hivatkozások megadása
         let response = ref(null);
         let id = ref(null);
         let name = ref(null);
@@ -68,12 +77,19 @@ export default {
         let zip = ref(null);
         let city = ref(null);
         let address = ref(null);
+
+        // Amikor betöltődött az oldal
         onMounted(() => {
             getUser();
         });
+
+        // Felhasználó adatainak lekérdezése
         const getUser = async () => {
             try {
+                // GET kérés küldése a szervernek
                 response = await request('get', '/api/vue/user');
+
+                // Mezők értékeinek megadása a kérés eredménye alapján
                 id.value = response.data.user.id;
                 name.value = response.data.user.name;
                 surname.value = response.data.user.surname;
@@ -88,8 +104,11 @@ export default {
             }
         }
 
+        // Felhasználó adatainak mentése
         const saveUser = async () => {
             try {
+
+                // Mezők értékeinek lekérdezése
                 const data = {
                     id: id.value,
                     name: name.value,
@@ -101,13 +120,41 @@ export default {
                     city: city.value,
                     address: address.value
                 }
+
+                // Kérés küldése a szerver felé
                 const response = await request('post', '/api/vue/user', data);
-                console.log(response);
+                
+                // Ha OK = 1 a válasz
+                if (response.data.OK == 1) {
+
+                    // Mutatni a sikerességet jelző üzenetet
+                    document.querySelector("#success").classList.remove("d-none");
+
+                    // Ezen üzenet elrejtése 3 másodperc múlva
+                    setTimeout(function() {
+                        document.querySelector("#success").classList.add("d-none");
+                    }, 3000)
+                }
             } catch (error) {
-                console.log(error);
+
+                // Hibák lekérdezése
+                let errors = error.response.data.errors;
+
+                // Hibaszöveg létrehozása ezen hibákból
+                let errorMessage = Object.values(errors).join("<br>");
+
+                // Hibaszövegek megjelenítése
+                document.querySelector("#error").classList.remove("d-none");
+                document.querySelector("#error").innerHTML = errorMessage;
+
+                // Ezen hibaszövegek elrejtése 3 másodperc múlva
+                setTimeout(function() {
+                    document.querySelector("#error").classList.add("d-none");
+                }, 3000)
             }
         }
 
+        // Visszatérés
         return {
             id,
             name,
