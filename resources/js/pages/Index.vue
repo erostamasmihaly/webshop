@@ -7,5 +7,8 @@
         <div class="p-1">
             <a class="btn btn-primary" href="/vue/payed">Eddigi vásárlások</a>
         </div>
+        <div class="p-1">
+            <a class="btn btn-primary" href="/vue/cart">Kosár tartalma</a>
+        </div>
     </p>
 </template>
