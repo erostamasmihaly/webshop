@@ -83,14 +83,23 @@ class VueApiController extends Controller
         $obj->name = $product->name;
         $obj->summary = $product->summary;
         $obj->body = $product->body;
+        $obj->unit = $product->unit->category->name;
+        $obj->gender = $product->gender->category->name;
+        $obj->age = $product->age->category->name;
+        $obj->group = $product->group->category->name;
 
         // Termékhez tartozó méretek és azok árainak lekérdezése
         $product->sizes_array();
 
         // Végigmenni minden egyes méreten
-        foreach($product->prices AS $price) {
-            dd($price);
+        $prices = [];
+        foreach ($product->prices AS $price) {
+            $prices[$price->size->name]["quantity"] = $price->quantity; 
         }
+        foreach ($product->sizes_prices() AS $key => $price) {
+            $prices[$key]["discount_ft"] = $price["discount_ft"];
+        }
+        $array['prices'] = $prices;
 
         // Termék adatainak behelyezése a tömbbe
         $array['product'] = $obj;
