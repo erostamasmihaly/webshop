@@ -16,7 +16,7 @@ const router = createRouter({
             component: () => import('./pages/Payed.vue')
         },
         {
-            path: '/vue/product',
+            path: '/vue/product/:id',
             component: () => import('./pages/Product.vue')
         },
         {

@@ -30,4 +30,7 @@ Route::group(['prefix' => 'api/vue'], function() {
     // Kosár elem módosítása
     Route::post('cart', [App\Http\Controllers\VueApiController::class, 'change_cart'])->name('vue_change_cart');
 
+    // Termék adatai
+    Route::get('product/{id}', [App\Http\Controllers\VueApiController::class, 'get_product'])->name('vue_get_product');
+
 });

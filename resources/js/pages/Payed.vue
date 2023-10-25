@@ -19,7 +19,7 @@
                 <td>{{ item.transaction_id }}</td>
                 <td>{{ item.price_ft }}</td>
                 <td>
-                    <a href="" class="btn btn-primary">Megtekintés</a>
+                    <button class="btn btn-primary" @click="openProduct(item.product_id)">Megtekintés</button>
                 </td>
             </tr>
         </tbody>
@@ -29,6 +29,7 @@
 // Importálás
 import {request} from '../helper'
 import {ref, onMounted} from 'vue'
+import router from '../route'
 
 // Exportálás
 export default {
@@ -58,10 +59,16 @@ export default {
             }
         }
 
+        // Termék oldal megnyitása
+        const openProduct = async(id) => {
+            router.push('/vue/product/'+id);
+        }
+
         // Visszatérés
         return {
             payed,
-            getPayed
+            getPayed,
+            openProduct
         }
     }
 }
