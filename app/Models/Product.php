@@ -155,4 +155,9 @@ class Product extends Model
         return $this->hasMany(Cart::class)->whereNotNull('payment_id');
     }
 
+    // Termékhez tartozó képek
+    public function images(): HasMany {
+        return $this->hasMany(Image::class)->orderBy('sequence','asc');
+    }
+
 }

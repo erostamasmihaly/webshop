@@ -7,18 +7,10 @@
             <div><span v-html="body"></span></div>
             <div class="bg-primary text-light p-2 fw-bold">Jellemzők</div>
             <table class="table table-hover">
-                <tbody>
+                <tbody v-for="(item, index) in categories">
                     <tr>
-                        <td class="fw-bold">Termékcsoport</td>
-                        <td>{{ group }}</td>
-                    </tr>
-                    <tr>
-                        <td class="fw-bold">Nem</td>
-                        <td>{{ gender }}</td>
-                    </tr>
-                    <tr>
-                        <td class="fw-bold">Korosztály</td>
-                        <td>{{ age }}</td>
+                        <td class="fw-bold">{{ index }}</td>
+                        <td>{{ item }}</td>
                     </tr>
                 </tbody>
             </table>
@@ -41,6 +33,14 @@
                     </tr>
                 </tbody>
             </table>
+            <div class="bg-primary text-light p-2 fw-bold">Képek</div>
+            <div class="row p-2">
+                <div class="col-sm-3" v-for="(item, index) in images">
+                    <a :href="item.image" target="_blank">
+                        <img :src="item.thumb" class="img-thumbnail"/>
+                    </a>
+                </div>
+            </div>
         </div>
     </div>
 </template>
@@ -61,9 +61,8 @@ export default {
         let body = ref(null);
         let prices = ref([]);
         let unit = ref(null);
-        let gender = ref(null);
-        let age = ref(null);
-        let group = ref(null);
+        let categories = ref([]);
+        let images = ref([]);
 
         // Amikor betöltődött az oldal
         onMounted(() => {
@@ -85,10 +84,12 @@ export default {
                 body.value = response.data.product.body;
                 prices.value = response.data.prices;
                 unit.value = response.data.product.unit;
-                gender.value = response.data.product.gender;
-                age.value = response.data.product.age;
-                group.value = response.data.product.group;
-
+                categories.value = {
+                    "Termékcsoport": response.data.product.group,
+                    "Nem": response.data.product.gender,
+                    "Korosztály": response.data.product.age
+                };
+                images.value = response.data.images;
             } catch (error) {
                 console.log(error);
             }
@@ -101,9 +102,8 @@ export default {
             body,
             prices,
             unit,
-            gender,
-            age,
-            group
+            categories,
+            images
         }
     }
 }
