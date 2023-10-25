@@ -13,7 +13,7 @@ const router = createRouter({
         },
         {
             path: '/vue/payed',
-            component: () => import('./pages/Index.vue')
+            component: () => import('./pages/Payed.vue')
         },
         {
             path: '/vue/product',

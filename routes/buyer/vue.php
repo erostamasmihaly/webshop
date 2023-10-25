@@ -21,4 +21,7 @@ Route::group(['prefix' => 'api/vue'], function() {
     // Felhasználó mentése
     Route::post('user', [App\Http\Controllers\VueApiController::class, 'post_user'])->name('vue_post_user');
 
+    // Eddigi vásárlások lekérdezése
+    Route::get('payed', [App\Http\Controllers\VueApiController::class, 'get_payed'])->name('vue_get_payed');
+
 });

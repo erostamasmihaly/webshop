@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Services\BuyerUserUpdate;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Response;
@@ -33,5 +34,16 @@ class VueApiController extends Controller
         $array['OK']=1;
         return Response::json($array);
 
+    }
+
+    // Eddigi vásárlások
+    public function get_payed() {
+
+        // Felhasználó adatainak lekérdezése
+        $array['payed'] = get_pay_history();
+
+        // Válasz küldése
+        $array['OK']=1;
+        return Response::json($array);
     }
 }
