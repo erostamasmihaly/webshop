@@ -15,7 +15,10 @@ Route::group(['prefix' => 'vue'], function() {
 // Vue oldalak
 Route::group(['prefix' => 'api/vue'], function() {
 
-    // Felhasználó adatai
-    Route::get('user', [App\Http\Controllers\VueApiController::class, 'user'])->name('vue_user_get');
+    // Felhasználó lekérdezése
+    Route::get('user', [App\Http\Controllers\VueApiController::class, 'get_user'])->name('vue_get_user');
+
+    // Felhasználó mentése
+    Route::post('user', [App\Http\Controllers\VueApiController::class, 'post_user'])->name('vue_post_user');
 
 });

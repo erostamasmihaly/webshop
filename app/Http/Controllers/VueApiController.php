@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\BuyerUserUpdateRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Response;
@@ -15,7 +16,7 @@ class VueApiController extends Controller
     }
 
     // Felhasználó adatai
-    public function user() {
+    public function get_user() {
 
         // Felhasználó adatainak lekérdezése
         $array['user'] = Auth::user();
@@ -23,5 +24,14 @@ class VueApiController extends Controller
         // Válasz küldése
         $array['OK']=1;
         return Response::json($array);
+    }
+
+    // Felhasználó mentése
+    public function post_user(BuyerUserUpdateRequest $buyerUserUpdateRequest) {
+        
+        // Válasz küldése
+        $array['OK']=1;
+        return Response::json($array);
+
     }
 }
