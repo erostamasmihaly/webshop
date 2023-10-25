@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Services\BuyerUserUpdate;
+use App\Http\Services\CartAdd;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -59,29 +60,15 @@ class VueApiController extends Controller
         return Response::json($array);
     }
 
-    // Hozzáadás a kosár elemhez
-    public function add_cart(Request $request) {
+    // Kosár elem módosítása
+    public function change_cart(Request $request) {
 
-        $array['id']=$request->id;
-
-        // Válasz küldése
-        $array['OK']=1;
-        return Response::json($array);
-    }
-
-    // Elvétel a kosár elemből
-    public function remove_cart(Request $request) {
+        // Darabszám módosítása
+        new CartAdd($request);
 
         // Válasz küldése
         $array['OK']=1;
         return Response::json($array);
     }
 
-    // Kosár elem törlése
-    public function delete_cart(Request $request) {
-
-        // Válasz küldése
-        $array['OK']=1;
-        return Response::json($array);
-    }
 }

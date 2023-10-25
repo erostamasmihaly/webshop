@@ -27,13 +27,7 @@ Route::group(['prefix' => 'api/vue'], function() {
     // Kosár tartalma
     Route::get('cart', [App\Http\Controllers\VueApiController::class, 'get_cart'])->name('vue_get_cart');
 
-    // Hozzáadás a kosár elemhez
-    Route::post('cart/add', [App\Http\Controllers\VueApiController::class, 'add_cart'])->name('vue_add_cart');
-
-    // Elvétel a kosár elemből
-    Route::post('cart/remove', [App\Http\Controllers\VueApiController::class, 'remove_cart'])->name('vue_remove_cart');
-
-    // Kosár elem törlése
-    Route::post('cart/delete', [App\Http\Controllers\VueApiController::class, 'delete_cart'])->name('vue_delete_cart');
+    // Kosár elem módosítása
+    Route::post('cart', [App\Http\Controllers\VueApiController::class, 'change_cart'])->name('vue_change_cart');
 
 });

@@ -17,9 +17,9 @@
                 <td>{{ item.quantity }} {{ item.unit_name  }}</td>
                 <td>{{ item.discount_ft }}</td>
                 <td>
-                    <button class="btn btn-success m-1 fw-bold" @click="addItem(item.id)">+1</button>
-                    <button class="btn btn-warning m-1 fw-bold" @click="removeItem(item.id)">-1</button>
-                    <button class="btn btn-danger m-1 fw-bold" @click="deleteItem(item.id)">Törlés</button>
+                    <button class="btn btn-success m-1 fw-bold" @click="changeItem(item.product_id, item.size_id, 1)">+1</button>
+                    <button class="btn btn-warning m-1 fw-bold" @click="changeItem(item.product_id, item.size_id, -1)">-1</button>
+                    <button class="btn btn-danger m-1 fw-bold" @click="changeItem(item.product_id, item.size_id, -1 * item.quantity)">Törlés</button>
                 </td>
             </tr>
         </tbody>
@@ -62,57 +62,26 @@ export default {
             }
         }
 
-        // Hozzáadás a kosár elemhez
-        const addItem = async(id) => {
+        // Kosár elem módosítása
+        const changeItem = async(product_id, size_id, quantity) => {
             try {
 
                 // Mezők értékeinek lekérdezése
                 const data = {
-                    id: id,
+                    product_id: product_id,
+                    size_id: size_id,
+                    quantity: quantity
                 }
 
                 // Kérés küldése a szerver felé
-                const response = await request('post', '/api/vue/cart/add', data);
+                const response = await request('post', '/api/vue/cart', data);
 
-                console.log(response);
+                // Ha minden rendben volt
+                if (response.data.OK == 1) {
 
-            } catch (error) {
-                console.log(error);
-            }
-        }
-
-        // Elvétel a kosár elemből
-        const removeItem = async(id) => {
-            try {
-
-                // Mezők értékeinek lekérdezése
-                const data = {
-                    id: id,
+                    // Lista frissítése
+                    getCart();
                 }
-
-                // Kérés küldése a szerver felé
-                const response = await request('post', '/api/vue/cart/remove', data);
-
-                console.log(response);
-
-            } catch (error) {
-                console.log(error);
-            }
-        }
-
-        // Kosár elem törlése
-        const deleteItem = async(id) => {
-            try {
-
-                // Mezők értékeinek lekérdezése
-                const data = {
-                    id: id,
-                }
-
-                // Kérés küldése a szerver felé
-                const response = await request('post', '/api/vue/cart/delete', data);
-
-                console.log(response);
 
             } catch (error) {
                 console.log(error);
@@ -124,9 +93,7 @@ export default {
             cart,
             total,
             getCart,
-            addItem,
-            removeItem,
-            deleteItem
+            changeItem
         }
     }
 }
