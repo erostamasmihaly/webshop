@@ -11,7 +11,7 @@
             </tr>
         </thead>
         <tbody>
-            <tr v-for="(item, index) in cart">
+            <tr v-for="item in cart">
                 <td>{{ item.product_name }}</td>
                 <td>{{ item.size_name }}</td>
                 <td>{{ item.quantity }} {{ item.unit_name  }}</td>
