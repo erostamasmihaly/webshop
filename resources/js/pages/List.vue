@@ -20,7 +20,7 @@ import router from '../route'
 // Exportálás
 export default {
     setup() {
-        let list = ref([]);
+        let list = ref({});
         let response = ref(null);
 
         // Amikor betöltődött az oldal
@@ -34,8 +34,6 @@ export default {
             try {
                 // GET kérés küldése a szervernek
                 response = await request('get', '/api/vue/list');
-
-                console.log(response);
 
                 // Adatok lekérdezése és megjelenítése
                 list.value = response.data;

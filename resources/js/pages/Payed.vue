@@ -37,7 +37,7 @@ export default {
 
         // Elemekre történő hivatkozások megadása
         let response = ref(null);
-        let payed = ref([]);
+        let payed = ref({});
 
         // Amikor betöltődött az oldal
         onMounted(() => {
@@ -51,8 +51,7 @@ export default {
                 response = await request('get', '/api/vue/payed');
 
                 // Lista feltöltése a válaszból
-                payed.value = response.data;
-                
+                payed.value = response.data;  
 
             } catch (error) {
                 console.log(error);

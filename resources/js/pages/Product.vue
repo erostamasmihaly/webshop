@@ -112,28 +112,13 @@ export default {
         // Elemekre történő hivatkozások megadása
         let product_id = router.currentRoute.value.params.id;
         let response = ref(null);
-        let product = ref({
-            name: null,
-            summary: null,
-            body: null,
-            unit: null,
-            categories: [],
-            prices: [],
-            images: []
-        });
-        let ratings = ref([]);
-        let popup = ref({
-            show: false,
-            image: null
-        });
+        let product = ref({});
+        let ratings = ref({});
+        let popup = ref({});
         let myrating = ref({
-            title: null,
-            body: null,
             stars: 5
         });
         let myresult = ref({
-            success: false,
-            error: false,
             button: true
         });
 
@@ -152,7 +137,6 @@ export default {
 
                 // Adatok lekérdezése és megjelenítése
                 product.value = response.data;
-
            
             } catch (error) {
                 console.log(error);
@@ -170,7 +154,6 @@ export default {
                 // Adatok lekérdezése és megjelenítése
                 ratings.value = response.data;
 
-           
             } catch (error) {
                 console.log(error);
             }

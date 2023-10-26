@@ -68,22 +68,9 @@ export default {
         
         // Elemekre történő hivatkozások megadása
         let response = ref(null);
-        let user = ref({
-            id:  null,
-            name:  null,
-            surname:  null,
-            forename:  null,
-            country:  null,
-            state:  null,
-            zip:  null,
-            city:  null,
-            address:  null
-        });
+        let user = ref({});
         let result = ref({
-            success: false,
-            error: false,
             button: true,
-            message: null
         });
 
         // Amikor betöltődött az oldal
@@ -99,6 +86,7 @@ export default {
 
                 // Mezők értékeinek megadása a kérés eredménye alapján
                 user.value = response.data;
+                
             } catch (error) {
                 console.log(error);
             }
@@ -109,17 +97,7 @@ export default {
             try {
 
                 // Mezők értékeinek lekérdezése
-                const data = {
-                    id: user.value.id,
-                    name: user.value.name,
-                    surname: user.value.surname,
-                    forename: user.value.forename,
-                    country: user.value.country,
-                    state: user.value.state,
-                    zip: user.value.zip,
-                    city: user.value.city,
-                    address: user.value.address
-                }
+                const data = user.value;
 
                 // Kérés küldése a szerver felé
                 const response = await request('post', '/api/vue/user', data);

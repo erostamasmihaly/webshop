@@ -37,7 +37,7 @@ export default {
 
         // Elemekre történő hivatkozások megadása
         let response = ref(null);
-        let cart = ref([]);
+        let cart = ref({});
         let total = ref(null);
 
         // Amikor betöltődött az oldal
