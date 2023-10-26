@@ -64,41 +64,6 @@
         </div>
     </div>
 </template>
-<style>
-.img-thumbnail {
-    cursor: pointer;
-}
-#popup_background {
-    position: fixed;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    background-color: rgba(0,0,0,0.5);
-}
-#popup {
-    position: fixed;
-    top: 10%;
-    bottom: 10%;
-    left: 20%;
-    right: 20%;
-    background: white;
-}
-#popup_close {
-    position: absolute;
-    right: 0;
-    margin: 4px;
-    font-weight: bold;
-    width: 30px;
-    height: 30px;
-    border-radius: 15px;
-    background: grey;
-    cursor: pointer;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-</style>
 <script>
 // Importálás
 import {request} from '../helper'
