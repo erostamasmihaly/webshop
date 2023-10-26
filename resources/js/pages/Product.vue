@@ -1,13 +1,13 @@
 <template>
-    <h1>{{ name }}</h1>
+    <h1>{{ product.name }}</h1>
     <div class="row">
         <div class="col-sm-6">
             <div class="bg-primary text-light p-2 fw-bold">Leírás</div>
-            <div class="fw-bold">{{ summary }}</div>
-            <div><span v-html="body"></span></div>
+            <div class="fw-bold">{{ product.summary }}</div>
+            <div><span v-html="product.body"></span></div>
             <div class="bg-primary text-light p-2 fw-bold">Jellemzők</div>
             <table class="table table-hover">
-                <tbody v-for="(item, index) in categories">
+                <tbody v-for="(item, index) in product.categories">
                     <tr>
                         <td class="fw-bold">{{ index }}</td>
                         <td>{{ item }}</td>
@@ -25,17 +25,17 @@
                         <th scope="col">Egységár</th>
                     </tr>
                 </thead>
-                <tbody v-for="(item, index) in prices">
+                <tbody v-for="(item, index) in product.prices">
                     <tr>
                         <td>{{ index }}</td>
-                        <td>{{ item.quantity }} {{ unit }}</td>
+                        <td>{{ item.quantity }} {{ product.unit }}</td>
                         <td>{{ item.discount_ft }}</td>
                     </tr>
                 </tbody>
             </table>
             <div class="bg-primary text-light p-2 fw-bold">Képek</div>
             <div class="row p-2">
-                <div class="col-sm-3 col-6" v-for="(item, index) in images">
+                <div class="col-sm-3 col-6" v-for="(item, index) in product.images">
                     <div @click="openPopup(item.image)">
                         <img :src="item.thumb" class="img-thumbnail"/>
                     </div>
@@ -43,10 +43,10 @@
             </div>
         </div>
     </div>
-    <div id="popup_background" v-show="popup_show">
+    <div id="popup_background" v-show="popup.show">
         <div id="popup" class="text-center">
             <div id="popup_close" @click="closePopup()">X</div>
-            <img :src="popup_image_src" class="img-fluid mh-100"/>
+            <img :src="popup.image" class="img-fluid mh-100"/>
         </div>
     </div>
 </template>
@@ -97,15 +97,19 @@ export default {
 
         // Elemekre történő hivatkozások megadása
         let response = ref(null);
-        let name = ref(null);
-        let summary = ref(null);
-        let body = ref(null);
-        let prices = ref([]);
-        let unit = ref(null);
-        let categories = ref([]);
-        let images = ref([]);
-        let popup_show = ref(null);
-        let popup_image_src = ref(null);
+        let product = ref({
+            name: null,
+            summary: null,
+            body: null,
+            unit: null,
+            categories: [],
+            prices: [],
+            images: []
+        });
+        let popup = ref({
+            show: false,
+            image: null
+        });
 
         // Amikor betöltődött az oldal
         onMounted(() => {
@@ -122,17 +126,12 @@ export default {
                 response = await request('get', '/api/vue/product/'+id);
 
                 // Adatok lekérdezése és megjelenítése
-                name.value = response.data.product.name;
-                summary.value = response.data.product.summary;
-                body.value = response.data.product.body;
-                prices.value = response.data.prices;
-                unit.value = response.data.product.unit;
-                categories.value = {
-                    "Termékcsoport": response.data.product.group,
-                    "Nem": response.data.product.gender,
-                    "Korosztály": response.data.product.age
-                };
-                images.value = response.data.images;
+                product.value = response.data;
+                product.value.categories = {
+                    "Termékcsoport": response.data.group,
+                    "Nem": response.data.gender,
+                    "Korosztály": response.data.age
+                };              
             } catch (error) {
                 console.log(error);
             }
@@ -140,28 +139,21 @@ export default {
 
         // Felugró ablak megnyitása
         const openPopup = async (src) => {
-            popup_show.value = true;
-            popup_image_src.value = src;
+            popup.value.show = true;
+            popup.value.image = src;
         }
 
         // Felugró ablak bezárása
         const closePopup = async () => {
-            popup_show.value = false;
+            popup.value.show = false;
         }
 
         return {
             getProduct,
             openPopup,
             closePopup,
-            name,
-            summary,
-            body,
-            prices,
-            unit,
-            categories,
-            images,
-            popup_show,
-            popup_image_src
+            product,
+            popup
         }
     }
 }

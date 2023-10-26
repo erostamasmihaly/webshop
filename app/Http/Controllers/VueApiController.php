@@ -91,7 +91,6 @@ class VueApiController extends Controller
         // Termékhez tartozó méretek és azok árainak lekérdezése
         $product->sizes_array();
 
-
         // Végigmenni minden egyes méreten
         $prices = [];
         foreach ($product->prices AS $price) {
@@ -102,7 +101,7 @@ class VueApiController extends Controller
         foreach ($product->sizes_prices() AS $key => $price) {
             $prices[$key]["discount_ft"] = $price["discount_ft"];
         }
-        $array['prices'] = $prices;
+        $obj->prices = $prices;
 
         // Képek lekérdezése
         $images = [];
@@ -112,14 +111,10 @@ class VueApiController extends Controller
             $images[$i]["image"] = asset("/images/products/".$id."/".$image->filename);
             $i++;
         }
-        $array['images'] = $images;
-
-        // Termék adatainak behelyezése a tömbbe
-        $array['product'] = $obj;
+        $obj->images = $images;
         
         // Válasz küldése
-        $array['OK']=1;
-        return Response::json($array);
+        return Response::json($obj);
     }
 
 }
