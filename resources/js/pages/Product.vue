@@ -35,15 +35,56 @@
             </table>
             <div class="bg-primary text-light p-2 fw-bold">Képek</div>
             <div class="row p-2">
-                <div class="col-sm-3" v-for="(item, index) in images">
-                    <a :href="item.image" target="_blank">
+                <div class="col-sm-3 col-6" v-for="(item, index) in images">
+                    <div @click="openPopup(item.image)">
                         <img :src="item.thumb" class="img-thumbnail"/>
-                    </a>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
+    <div id="popup_background" v-show="popup_show">
+        <div id="popup" class="text-center">
+            <div id="popup_close" @click="closePopup()">X</div>
+            <img :src="popup_image_src" class="img-fluid mh-100"/>
+        </div>
+    </div>
 </template>
+<style>
+.img-thumbnail {
+    cursor: pointer;
+}
+#popup_background {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: rgba(0,0,0,0.5);
+}
+#popup {
+    position: fixed;
+    top: 10%;
+    bottom: 10%;
+    left: 20%;
+    right: 20%;
+    background: white;
+}
+#popup_close {
+    position: absolute;
+    right: 0;
+    margin: 4px;
+    font-weight: bold;
+    width: 30px;
+    height: 30px;
+    border-radius: 15px;
+    background: grey;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+</style>
 <script>
 // Importálás
 import {request} from '../helper'
@@ -63,6 +104,8 @@ export default {
         let unit = ref(null);
         let categories = ref([]);
         let images = ref([]);
+        let popup_show = ref(null);
+        let popup_image_src = ref(null);
 
         // Amikor betöltődött az oldal
         onMounted(() => {
@@ -95,15 +138,30 @@ export default {
             }
         }
 
+        // Felugró ablak megnyitása
+        const openPopup = async (src) => {
+            popup_show.value = true;
+            popup_image_src.value = src;
+        }
+
+        // Felugró ablak bezárása
+        const closePopup = async () => {
+            popup_show.value = false;
+        }
+
         return {
             getProduct,
+            openPopup,
+            closePopup,
             name,
             summary,
             body,
             prices,
             unit,
             categories,
-            images
+            images,
+            popup_show,
+            popup_image_src
         }
     }
 }
