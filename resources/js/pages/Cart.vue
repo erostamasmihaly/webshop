@@ -10,8 +10,8 @@
                 <th scope="col">Művelet</th>
             </tr>
         </thead>
-        <tbody v-for="(item, index) in cart">
-            <tr>
+        <tbody>
+            <tr v-for="(item, index) in cart">
                 <td>{{ item.product_name }}</td>
                 <td>{{ item.size_name }}</td>
                 <td>{{ item.quantity }} {{ item.unit_name  }}</td>

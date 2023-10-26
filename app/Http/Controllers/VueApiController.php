@@ -77,9 +77,15 @@ class VueApiController extends Controller
         $obj->summary = $product->summary;
         $obj->body = $product->body;
         $obj->unit = $product->unit->category->name;
-        $obj->gender = $product->gender->category->name;
-        $obj->age = $product->age->category->name;
-        $obj->group = $product->group->category->name;
+
+        // Kategóriák
+        $categories[0]['key'] = "Termékcsoport";
+        $categories[0]['value'] = $product->gender->category->name;
+        $categories[1]['key'] = "Nem";
+        $categories[1]['value'] = $product->group->category->name;
+        $categories[2]['key'] = "Korosztály";
+        $categories[2]['value'] = $product->age->category->name;
+        $obj->categories = $categories;
 
         // Termékhez tartozó méretek és azok árainak lekérdezése
         $product->sizes_array();

@@ -7,17 +7,17 @@
             <div><span v-html="product.body"></span></div>
             <div class="bg-primary text-light p-2 fw-bold">Jellemzők</div>
             <table class="table table-hover">
-                <tbody v-for="(item, index) in product.categories">
-                    <tr>
-                        <td class="fw-bold w-50">{{ index }}</td>
-                        <td>{{ item }}</td>
+                <tbody>
+                    <tr v-for="item in product.categories">
+                        <td class="fw-bold w-50">{{ item.key }}</td>
+                        <td>{{ item.value }}</td>
                     </tr>
                 </tbody>
             </table>
             <div class="bg-primary text-light p-2 fw-bold">Értékelések</div>
             <table class="table table-hover">
-                <tbody v-for="(item, index) in product.ratings">
-                    <tr>
+                <tbody>
+                    <tr v-for="item in product.ratings">
                         <td>
                             {{ item.title }}
                             <span class="float-end">
@@ -39,8 +39,8 @@
                         <th scope="col">Egységár</th>
                     </tr>
                 </thead>
-                <tbody v-for="(item, index) in product.prices">
-                    <tr>
+                <tbody>
+                    <tr v-for="(item, index) in product.prices">
                         <td>{{ index }}</td>
                         <td>{{ item.quantity }} {{ product.unit }}</td>
                         <td>{{ item.discount_ft }}</td>
@@ -133,6 +133,7 @@ export default {
         // Termék adatainak lekérdezése
         const getProduct = async () => {
 
+            // Aktuális termék azonosító lekérdezése
             let id = router.currentRoute.value.params.id;
 
             try {
@@ -141,11 +142,7 @@ export default {
 
                 // Adatok lekérdezése és megjelenítése
                 product.value = response.data;
-                product.value.categories = {
-                    "Termékcsoport": response.data.group,
-                    "Nem": response.data.gender,
-                    "Korosztály": response.data.age
-                };              
+           
             } catch (error) {
                 console.log(error);
             }
@@ -153,13 +150,12 @@ export default {
 
         // Felugró ablak megnyitása
         const openPopup = async (src) => {
-            popup.value.show = true;
-            popup.value.image = src;
+            popup.value = { show: true, image: src};
         }
 
         // Felugró ablak bezárása
         const closePopup = async () => {
-            popup.value.show = false;
+            popup.value = { show: false, image: null };
         }
 
         return {
