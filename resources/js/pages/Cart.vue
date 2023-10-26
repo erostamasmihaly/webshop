@@ -52,10 +52,10 @@ export default {
                 response = await request('get', '/api/vue/cart');
 
                 // Lista feltöltése a válaszból
-                cart.value = response.data.cart.carts;
+                cart.value = response.data.carts;
 
                 // Összár megjelenítése
-                total.value = response.data.cart.total_ft;
+                total.value = response.data.total_ft;
                 
             } catch (error) {
                 console.log(error);

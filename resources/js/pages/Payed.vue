@@ -51,7 +51,7 @@ export default {
                 response = await request('get', '/api/vue/payed');
 
                 // Lista feltöltése a válaszból
-                payed.value = response.data.payed;
+                payed.value = response.data;
                 
 
             } catch (error) {

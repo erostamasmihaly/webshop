@@ -1,52 +1,52 @@
 <template>
     <h1>Felhasználó adatai</h1>
-    <input type="hidden" v-model="id"/>
+    <input type="hidden" v-model="user.id"/>
     <div class="row mb-2">
         <div class="col-sm-3">Felhasználói név</div>
         <div class="col-sm-9">
-            <input type="text" class="form-control" v-model="name"/>
+            <input type="text" class="form-control" v-model="user.name"/>
         </div>
     </div>
     <div class="row mb-2">
         <div class="col-sm-3">Vezetéknév</div>
         <div class="col-sm-9">
-            <input type="text" class="form-control" v-model="surname"/>
+            <input type="text" class="form-control" v-model="user.surname"/>
         </div>
     </div>
     <div class="row mb-2">
         <div class="col-sm-3">Keresztnév</div>
         <div class="col-sm-9">
-            <input type="text" class="form-control" v-model="forename"/>
+            <input type="text" class="form-control" v-model="user.forename"/>
         </div>
     </div>
     <div class="row mb-2">
         <div class="col-sm-3">Ország</div>
         <div class="col-sm-9">
-            <input type="text" class="form-control" v-model="country"/>
+            <input type="text" class="form-control" v-model="user.country"/>
         </div>
     </div>
     <div class="row mb-2">
         <div class="col-sm-3">Területi egység</div>
         <div class="col-sm-9">
-            <input type="text" class="form-control" v-model="state"/>
+            <input type="text" class="form-control" v-model="user.state"/>
         </div>
     </div>
     <div class="row mb-2">
         <div class="col-sm-3">Irányítószám</div>
         <div class="col-sm-9">
-            <input type="text" class="form-control" v-model="zip"/>
+            <input type="text" class="form-control" v-model="user.zip"/>
         </div>
     </div>
     <div class="row mb-2">
         <div class="col-sm-3">Település</div>
         <div class="col-sm-9">
-            <input type="text" class="form-control" v-model="city"/>
+            <input type="text" class="form-control" v-model="user.city"/>
         </div>
     </div>
     <div class="row mb-2">
         <div class="col-sm-3">Utca, házszám...</div>
         <div class="col-sm-9">
-            <input type="text" class="form-control" v-model="address"/>
+            <input type="text" class="form-control" v-model="user.address"/>
         </div>
     </div>
     <div class="alert alert-success d-none" role="alert" id="success">
@@ -68,15 +68,17 @@ export default {
         
         // Elemekre történő hivatkozások megadása
         let response = ref(null);
-        let id = ref(null);
-        let name = ref(null);
-        let surname = ref(null);
-        let forename = ref(null);
-        let country = ref(null);
-        let state = ref(null);
-        let zip = ref(null);
-        let city = ref(null);
-        let address = ref(null);
+        let user = ref({
+            id:  null,
+            name:  null,
+            surname:  null,
+            forename:  null,
+            country:  null,
+            state:  null,
+            zip:  null,
+            city:  null,
+            address:  null
+        });
 
         // Amikor betöltődött az oldal
         onMounted(() => {
@@ -90,15 +92,7 @@ export default {
                 response = await request('get', '/api/vue/user');
 
                 // Mezők értékeinek megadása a kérés eredménye alapján
-                id.value = response.data.user.id;
-                name.value = response.data.user.name;
-                surname.value = response.data.user.surname;
-                forename.value = response.data.user.forename;
-                country.value = response.data.user.country;
-                state.value = response.data.user.state;
-                zip.value = response.data.user.zip;
-                city.value = response.data.user.city;
-                address.value = response.data.user.address;
+                user.value = response.data;
             } catch (error) {
                 console.log(error);
             }
@@ -110,15 +104,15 @@ export default {
 
                 // Mezők értékeinek lekérdezése
                 const data = {
-                    id: id.value,
-                    name: name.value,
-                    surname: surname.value,
-                    forename: forename.value,
-                    country: country.value,
-                    state: state.value,
-                    zip: zip.value,
-                    city: city.value,
-                    address: address.value
+                    id: user.value.id,
+                    name: user.value.name,
+                    surname: user.value.surname,
+                    forename: user.value.forename,
+                    country: user.value.country,
+                    state: user.value.state,
+                    zip: user.value.zip,
+                    city: user.value.city,
+                    address: user.value.address
                 }
 
                 // Kérés küldése a szerver felé
@@ -156,15 +150,7 @@ export default {
 
         // Visszatérés
         return {
-            id,
-            name,
-            surname,
-            forename,
-            country,
-            state,
-            zip,
-            city,
-            address,
+            user,
             getUser,
             saveUser
         }

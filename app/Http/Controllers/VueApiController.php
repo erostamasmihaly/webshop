@@ -24,10 +24,9 @@ class VueApiController extends Controller
     public function get_user() {
 
         // Felhasználó adatainak lekérdezése
-        $array['user'] = Auth::user();
+        $array = Auth::user();
 
         // Válasz küldése
-        $array['OK']=1;
         return Response::json($array);
     }
 
@@ -44,10 +43,9 @@ class VueApiController extends Controller
     public function get_payed() {
 
         // Felhasználó adatainak lekérdezése
-        $array['payed'] = get_pay_history();
+        $array = get_pay_history();
 
         // Válasz küldése
-        $array['OK']=1;
         return Response::json($array);
     }
 
@@ -55,10 +53,9 @@ class VueApiController extends Controller
     public function get_cart() {
 
         // Felhasználó adatainak lekérdezése
-        $array['cart'] = get_cart();
+        $array = get_cart();
 
         // Válasz küldése
-        $array['OK']=1;
         return Response::json($array);
     }
 
