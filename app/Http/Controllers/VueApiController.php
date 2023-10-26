@@ -134,4 +134,14 @@ class VueApiController extends Controller
         $array['OK']=1;
         return Response::json($array);
     }
+
+    // Termékek listájának lekérdezése
+    public function get_list() {
+
+        // Termék értékelésének lekérdezése
+        $array = get_products(null, false);
+
+        // Válasz küldése
+        return Response::json($array);
+    } 
 }

@@ -39,4 +39,7 @@ Route::group(['prefix' => 'api/vue'], function() {
     // Értékelés felvitele
     Route::put('rating', [App\Http\Controllers\VueApiController::class, 'put_rating'])->name('vue_put_rating');
 
+    // Termékek lekérdezése
+    Route::get('list', [App\Http\Controllers\VueApiController::class, 'get_list'])->name('vue_get_list');
+
 });

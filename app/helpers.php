@@ -414,11 +414,11 @@ if (!function_exists('get_products')) {
                 if (File::exists($file_main)) {
 
                     // Ha van, akkor annak a behelyezése
-                    $object->image = 'images/products/'.$product->id.'/thumb/main_image.jpg';
+                    $object->image = asset('images/products/'.$product->id.'/thumb/main_image.jpg');
                 } else {
 
                     // Ha nincs, akkor a nincs kép fájl alkalmazása
-                    $object->image = 'images/noimage.png';
+                    $object->image = asset('images/noimage.png');
 
                 }
 
