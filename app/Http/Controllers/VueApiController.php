@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Services\BuyerUserUpdate;
 use App\Http\Services\CartAdd;
+use App\Http\Services\RatingUpdate;
 use App\Models\Product;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Response;
@@ -56,7 +57,7 @@ class VueApiController extends Controller
     }
 
     // Kosár elem módosítása
-    public function change_cart(CartAdd $cartAdd) {
+    public function post_cart(CartAdd $cartAdd) {
 
         // Válasz küldése
         $array['OK']=1;
@@ -102,9 +103,6 @@ class VueApiController extends Controller
         }
         $obj->prices = $prices;
 
-        // Értékelések lekérdezése
-        $obj->ratings = $product->ratingsModerated;
-
         // Képek lekérdezése
         $images = [];
         $i = 0;
@@ -117,5 +115,23 @@ class VueApiController extends Controller
         
         // Válasz küldése
         return Response::json($obj);
+    }
+
+    // Értékelés lekérdezése
+    public function get_rating($id) {
+        
+        // Termék értékelésének lekérdezése
+        $array = Product::find($id)->ratingsModerated;
+
+        // Válasz küldése
+        return Response::json($array);
+    }
+
+    // Értékelés felvitele
+    public function put_rating(RatingUpdate $ratingUpdate) {
+        
+        // Válasz küldése
+        $array['OK']=1;
+        return Response::json($array);
     }
 }

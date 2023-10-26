@@ -28,9 +28,15 @@ Route::group(['prefix' => 'api/vue'], function() {
     Route::get('cart', [App\Http\Controllers\VueApiController::class, 'get_cart'])->name('vue_get_cart');
 
     // Kosár elem módosítása
-    Route::post('cart', [App\Http\Controllers\VueApiController::class, 'change_cart'])->name('vue_change_cart');
+    Route::post('cart', [App\Http\Controllers\VueApiController::class, 'post_cart'])->name('vue_post_cart');
 
     // Termék adatai
     Route::get('product/{id}', [App\Http\Controllers\VueApiController::class, 'get_product'])->name('vue_get_product');
+
+    // Értékelés lekérdezése
+    Route::get('rating/{id}', [App\Http\Controllers\VueApiController::class, 'get_rating'])->name('vue_get_rating');
+
+    // Értékelés felvitele
+    Route::put('rating', [App\Http\Controllers\VueApiController::class, 'put_rating'])->name('vue_put_rating');
 
 });

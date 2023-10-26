@@ -4,6 +4,7 @@ namespace App\Http\Services;
 
 use App\Models\Rating;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class RatingUpdate {
@@ -13,7 +14,7 @@ class RatingUpdate {
 
     // Adatok lekérdezése
     function __construct(Request $request) {
-        $this->user_id = $request->user_id;
+        $this->user_id = Auth::id();
         $this->product_id = $request->product_id;
         $this->title = $request->title;
         $this->body = $request->body;

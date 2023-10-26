@@ -17,8 +17,11 @@
             <div class="bg-primary text-light p-2 fw-bold">Értékelések</div>
             <table class="table table-hover">
                 <tbody>
-                    <tr v-for="item in product.ratings">
-                        <td>
+                    <tr v-for="item in ratings">
+                        <td :style="{ 
+                            color: item.moderated == 0 ? 'red' : 'black',
+                            fontStyle: item.moderated == 0 ? 'italic' : 'normal' 
+                        }">
                             {{ item.title }}
                             <span class="float-end">
                                 <i class="fa-solid fa-star" v-for="star in item.stars"></i>
@@ -27,7 +30,37 @@
                         </td>
                     </tr>
                 </tbody>
-            </table>            
+            </table>    
+            <div class="bg-primary text-light p-2 fw-bold">Értékelés írása</div>
+            <div class="row m-1">
+                <div class="col-sm-2">Cím</div>
+                <div class="col-sm-10">
+                    <input class="form-control" type="text" v-model="myrating.title"/>
+                </div>
+            </div>
+            <div class="row m-1">
+                <div class="col-sm-2">Leírás</div>
+                <div class="col-sm-10">
+                    <textarea class="form-control" v-model="myrating.body"/>
+                </div>
+            </div>
+            <div class="row m-1">
+                <div class="col-sm-2">Csillag</div>
+                <div class="col-sm-10">
+                    <select class="form-control" v-model="myrating.stars">
+                        <option v-for="num in 5" :value="num">{{ num }}</option>
+                    </select>
+                </div>
+            </div>
+            <div>
+                <button class="btn btn-primary" type="button" @click="putRating()" v-show="myresult.button">Értékelés elküldése</button>
+                <div class="alert alert-success" role="alert" v-show="myresult.success">
+                    Értékelés sikeresen elküldve. Jelenleg moderálás alatt!
+                </div>
+                <div class="alert alert-danger" role="alert" v-show="myresult.error">
+                    Hiba történt az értékelés elküldése során!
+                </div>
+            </div>
         </div>
         <div class="col-sm-6">
             <div class="bg-primary text-light p-2 fw-bold">Méretek és árak</div>
@@ -49,7 +82,7 @@
             </table>
             <div class="bg-primary text-light p-2 fw-bold">Képek</div>
             <div class="row p-2">
-                <div class="col-sm-3 col-6" v-for="(item, index) in product.images">
+                <div class="col-sm-3 col-6" v-for="item in product.images">
                     <div @click="openPopup(item.image)">
                         <img :src="item.thumb" class="img-thumbnail"/>
                     </div>
@@ -75,6 +108,7 @@ export default {
     setup() {
 
         // Elemekre történő hivatkozások megadása
+        let product_id = router.currentRoute.value.params.id;
         let response = ref(null);
         let product = ref({
             name: null,
@@ -85,28 +119,55 @@ export default {
             prices: [],
             images: []
         });
+        let ratings = ref([]);
         let popup = ref({
             show: false,
             image: null
         });
+        let myrating = ref({
+            title: null,
+            body: null,
+            stars: 5
+        });
+        let myresult = ref({
+            success: false,
+            error: false,
+            button: true
+        })
 
         // Amikor betöltődött az oldal
         onMounted(() => {
             getProduct();
+            getRating();
         });
 
         // Termék adatainak lekérdezése
         const getProduct = async () => {
 
-            // Aktuális termék azonosító lekérdezése
-            let id = router.currentRoute.value.params.id;
-
             try {
                 // GET kérés küldése a szervernek
-                response = await request('get', '/api/vue/product/'+id);
+                response = await request('get', '/api/vue/product/'+product_id);
 
                 // Adatok lekérdezése és megjelenítése
                 product.value = response.data;
+
+           
+            } catch (error) {
+                console.log(error);
+            }
+        }
+
+        // ÉRtékelések lekérdezése
+        const getRating = async () => {
+
+            try {
+
+                // GET kérés küldése a szervernek
+                response = await request('get', '/api/vue/rating/'+product_id);
+
+                // Adatok lekérdezése és megjelenítése
+                ratings.value = response.data;
+
            
             } catch (error) {
                 console.log(error);
@@ -123,12 +184,61 @@ export default {
             popup.value = { show: false, image: null };
         }
 
+        // Értékelés elküldése
+        const putRating = async () => {
+            try {
+                
+                // Mezők értékeinek lekérdezése
+                const data = {
+                    title: myrating.value.title,
+                    body: myrating.value.body,
+                    stars: myrating.value.stars,
+                    product_id: product_id
+                }
+
+                // Kérés küldése a szerver felé
+                const response = await request('put', '/api/vue/rating', data);
+
+                // Ha OK = 1 a válasz
+                if (response.data.OK == 1) {
+
+                    // Értékelések újratöltése
+                    getRating();
+
+                    // Mezők visszaállítása
+                    myrating.value = { title: null, body: null, stars: 5 };
+
+                    // Értékelés mutatása
+                    myresult.value = { success: true, error: false, button: false }
+
+                } else {
+                    
+                    // Hiba mutatása
+                    myresult.value = { success: false, error: true, button: false }
+                }
+
+                // 3 másodperc múlva az eredmény elrejtése
+                setTimeout(function() {
+                    myresult.value = { success: false, error: false, button: true }
+                }, 3000);
+
+
+            } catch (error) {
+                console.log(error);
+            }
+        }
+
         return {
             getProduct,
+            getRating,
             openPopup,
             closePopup,
+            putRating,
             product,
-            popup
+            popup,
+            ratings,
+            myrating,
+            myresult
         }
     }
 }
