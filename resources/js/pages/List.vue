@@ -1,12 +1,12 @@
 <template>
     <h1>Termékek listája</h1>
     <div class="row gallery">
-        <div v-for="item in list" class="col-sm-2 text-center">
+        <div v-for="item in list" class="col-sm-2 text-center" @click="openProduct(item.id)">
             <p class="fw-bold">{{ item.name }}</p>
             <img :src="item.image" class="img-thumbnail"/>
             <p>
                 {{ item.discount_price }}<br>
-                <button class="btn btn-primary" @click="openProduct(item.id)">Megtekintés</button>
+                <button class="btn btn-primary">Megtekintés</button>
             </p>
         </div>
     </div>

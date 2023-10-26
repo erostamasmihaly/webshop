@@ -31,34 +31,36 @@
                     </tr>
                 </tbody>
             </table>    
-            <div class="bg-primary text-light p-2 fw-bold">Értékelés írása</div>
-            <div class="row m-1">
-                <div class="col-sm-2">Cím</div>
-                <div class="col-sm-10">
-                    <input class="form-control" type="text" v-model="myrating.title"/>
+            <div v-if="product.is_buyed">
+                <div class="bg-primary text-light p-2 fw-bold">Értékelés írása</div>
+                <div class="row m-1">
+                    <div class="col-sm-2">Cím</div>
+                    <div class="col-sm-10">
+                        <input class="form-control" type="text" v-model="myrating.title"/>
+                    </div>
                 </div>
-            </div>
-            <div class="row m-1">
-                <div class="col-sm-2">Leírás</div>
-                <div class="col-sm-10">
-                    <textarea class="form-control" v-model="myrating.body"/>
+                <div class="row m-1">
+                    <div class="col-sm-2">Leírás</div>
+                    <div class="col-sm-10">
+                        <textarea class="form-control" v-model="myrating.body"/>
+                    </div>
                 </div>
-            </div>
-            <div class="row m-1">
-                <div class="col-sm-2">Csillag</div>
-                <div class="col-sm-10">
-                    <select class="form-control" v-model="myrating.stars">
-                        <option v-for="num in 5" :value="num">{{ num }}</option>
-                    </select>
+                <div class="row m-1">
+                    <div class="col-sm-2">Csillag</div>
+                    <div class="col-sm-10">
+                        <select class="form-control" v-model="myrating.stars">
+                            <option v-for="num in 5" :value="num">{{ num }}</option>
+                        </select>
+                    </div>
                 </div>
-            </div>
-            <div>
-                <button class="btn btn-primary" type="button" @click="putRating()" v-show="myresult.button">Értékelés elküldése</button>
-                <div class="alert alert-success" role="alert" v-show="myresult.success">
-                    Értékelés sikeresen elküldve. Jelenleg moderálás alatt!
-                </div>
-                <div class="alert alert-danger" role="alert" v-show="myresult.error">
-                    Hiba történt az értékelés elküldése során!
+                <div>
+                    <button class="btn btn-primary" type="button" @click="putRating()" v-show="myresult.button">Értékelés elküldése</button>
+                    <div class="alert alert-success" role="alert" v-show="myresult.success">
+                        Értékelés sikeresen elküldve. Jelenleg moderálás alatt!
+                    </div>
+                    <div class="alert alert-danger" role="alert" v-show="myresult.error">
+                        Hiba történt az értékelés elküldése során!
+                    </div>
                 </div>
             </div>
         </div>

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Services\BuyerUserUpdate;
 use App\Http\Services\CartAdd;
 use App\Http\Services\RatingUpdate;
+use App\Models\Cart;
 use App\Models\Product;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Response;
@@ -112,6 +113,9 @@ class VueApiController extends Controller
             $i++;
         }
         $obj->images = $images;
+
+        // Elküldeni, hogy a felhasználó vihet-e fel értékelést
+        $obj->is_buyed = (Cart::where('user_id', Auth::id())->where('product_id', $id)->whereNotNull('payment_id')->count() == 0) ? false : true;
         
         // Válasz küldése
         return Response::json($obj);
