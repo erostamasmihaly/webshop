@@ -49,12 +49,12 @@
             <input type="text" class="form-control" v-model="user.address"/>
         </div>
     </div>
-    <div class="alert alert-success d-none" role="alert" id="success">
-        Sikeres művelet!
-    </div>
-    <div class="alert alert-danger d-none" role="alert" id="error"></div>
-    <div class="bg-dark p-2">
-        <button class="btn btn-primary" @click="saveUser">Mentés</button>
+    <div>
+        <button class="btn btn-primary" @click="saveUser" v-show="result.button">Mentés</button>
+        <div class="alert alert-success" role="alert" v-show="result.success">
+            Sikeres művelet!
+        </div>
+        <div class="alert alert-danger" role="alert" v-show="result.error"><span v-html="result.message"></span></div>
     </div>
 </template>
 <script>
@@ -78,6 +78,12 @@ export default {
             zip:  null,
             city:  null,
             address:  null
+        });
+        let result = ref({
+            success: false,
+            error: false,
+            button: true,
+            message: null
         });
 
         // Amikor betöltődött az oldal
@@ -121,13 +127,9 @@ export default {
                 // Ha OK = 1 a válasz
                 if (response.data.OK == 1) {
 
-                    // Mutatni a sikerességet jelző üzenetet
-                    document.querySelector("#success").classList.remove("d-none");
+                    // Eredmény mutatása
+                    result.value = { success: true, error: false, button: false, message: null }
 
-                    // Ezen üzenet elrejtése 3 másodperc múlva
-                    setTimeout(function() {
-                        document.querySelector("#success").classList.add("d-none");
-                    }, 3000)
                 }
             } catch (error) {
 
@@ -137,20 +139,21 @@ export default {
                 // Hibaszöveg létrehozása ezen hibákból
                 let errorMessage = Object.values(errors).join("<br>");
 
-                // Hibaszövegek megjelenítése
-                document.querySelector("#error").classList.remove("d-none");
-                document.querySelector("#error").innerHTML = errorMessage;
-
-                // Ezen hibaszövegek elrejtése 3 másodperc múlva
-                setTimeout(function() {
-                    document.querySelector("#error").classList.add("d-none");
-                }, 3000)
+                // Hiba mutatása
+                result.value = { success: false, error: true, button: false, message: errorMessage }
+                
             }
+
+            // 3 másodperc múlva az eredmény elrejtése
+            setTimeout(function() {
+                result.value = { success: false, error: false, button: true, message: null }
+            }, 3000);
         }
 
         // Visszatérés
         return {
             user,
+            result,
             getUser,
             saveUser
         }

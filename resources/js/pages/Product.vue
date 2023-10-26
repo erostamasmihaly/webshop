@@ -133,7 +133,7 @@ export default {
             success: false,
             error: false,
             button: true
-        })
+        });
 
         // Amikor betöltődött az oldal
         onMounted(() => {
@@ -208,7 +208,7 @@ export default {
                     // Mezők visszaállítása
                     myrating.value = { title: null, body: null, stars: 5 };
 
-                    // Értékelés mutatása
+                    // Eredmény mutatása
                     myresult.value = { success: true, error: false, button: false }
 
                 } else {
