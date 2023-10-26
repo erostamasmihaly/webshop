@@ -166,23 +166,18 @@ export default {
 
         // Felugró ablak bezárása
         const closePopup = async () => {
-            popup.value = { show: false, image: null };
+            popup.value = { };
         }
 
         // Értékelés elküldése
         const putRating = async () => {
             try {
-                
-                // Mezők értékeinek lekérdezése
-                const data = {
-                    title: myrating.value.title,
-                    body: myrating.value.body,
-                    stars: myrating.value.stars,
-                    product_id: product_id
-                }
+
+                // Termékazonosító megadása
+                myrating.value.product_id = product_id;
 
                 // Kérés küldése a szerver felé
-                const response = await request('put', '/api/vue/rating', data);
+                const response = await request('put', '/api/vue/rating', myrating.value);
 
                 // Ha OK = 1 a válasz
                 if (response.data.OK == 1) {
@@ -191,20 +186,20 @@ export default {
                     getRating();
 
                     // Mezők visszaállítása
-                    myrating.value = { title: null, body: null, stars: 5 };
+                    myrating.value = { stars: 5 };
 
                     // Eredmény mutatása
-                    myresult.value = { success: true, error: false, button: false }
+                    myresult.value = { success: true }
 
                 } else {
                     
                     // Hiba mutatása
-                    myresult.value = { success: false, error: true, button: false }
+                    myresult.value = { error: true }
                 }
 
                 // 3 másodperc múlva az eredmény elrejtése
                 setTimeout(function() {
-                    myresult.value = { success: false, error: false, button: true }
+                    myresult.value = { button: true }
                 }, 3000);
 
 

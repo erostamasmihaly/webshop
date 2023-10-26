@@ -86,7 +86,7 @@ export default {
 
                 // Mezők értékeinek megadása a kérés eredménye alapján
                 user.value = response.data;
-                
+
             } catch (error) {
                 console.log(error);
             }
@@ -96,17 +96,14 @@ export default {
         const saveUser = async () => {
             try {
 
-                // Mezők értékeinek lekérdezése
-                const data = user.value;
-
                 // Kérés küldése a szerver felé
-                const response = await request('post', '/api/vue/user', data);
+                const response = await request('post', '/api/vue/user', user.value);
                 
                 // Ha OK = 1 a válasz
                 if (response.data.OK == 1) {
 
                     // Eredmény mutatása
-                    result.value = { success: true, error: false, button: false, message: null }
+                    result.value = { success: true }
 
                 }
             } catch (error) {
@@ -118,13 +115,13 @@ export default {
                 let errorMessage = Object.values(errors).join("<br>");
 
                 // Hiba mutatása
-                result.value = { success: false, error: true, button: false, message: errorMessage }
+                result.value = { error: true, message: errorMessage }
                 
             }
 
             // 3 másodperc múlva az eredmény elrejtése
             setTimeout(function() {
-                result.value = { success: false, error: false, button: true, message: null }
+                result.value = { button: true }
             }, 3000);
         }
 
