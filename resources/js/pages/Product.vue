@@ -9,11 +9,25 @@
             <table class="table table-hover">
                 <tbody v-for="(item, index) in product.categories">
                     <tr>
-                        <td class="fw-bold">{{ index }}</td>
+                        <td class="fw-bold w-50">{{ index }}</td>
                         <td>{{ item }}</td>
                     </tr>
                 </tbody>
             </table>
+            <div class="bg-primary text-light p-2 fw-bold">Értékelések</div>
+            <table class="table table-hover">
+                <tbody v-for="(item, index) in product.ratings">
+                    <tr>
+                        <td>
+                            {{ item.title }}
+                            <span class="float-end">
+                                <i class="fa-solid fa-star" v-for="star in item.stars"></i>
+                                <i class="fa-regular fa-star" v-for="star in 5-(item.stars)"></i>
+                            </span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>            
         </div>
         <div class="col-sm-6">
             <div class="bg-primary text-light p-2 fw-bold">Méretek és árak</div>

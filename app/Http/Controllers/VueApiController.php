@@ -5,12 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Services\BuyerUserUpdate;
 use App\Http\Services\CartAdd;
 use App\Models\Product;
-use App\Models\User;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Request as FacadesRequest;
 use Illuminate\Support\Facades\Response;
-use PhpParser\Node\Expr\Cast\Object_;
 
 class VueApiController extends Controller
 {
@@ -100,6 +96,9 @@ class VueApiController extends Controller
         }
         $obj->prices = $prices;
 
+        // Értékelések lekérdezése
+        $obj->ratings = $product->ratingsModerated;
+
         // Képek lekérdezése
         $images = [];
         $i = 0;
@@ -113,5 +112,4 @@ class VueApiController extends Controller
         // Válasz küldése
         return Response::json($obj);
     }
-
 }
