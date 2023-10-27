@@ -124,9 +124,24 @@ class VueApiController extends Controller
 
     // Értékelés lekérdezése
     public function get_rating($id) {
-        
-        // Termék értékelésének lekérdezése
-        $array = Product::find($id)->ratingsModerated;
+
+        // Értékeléssel kapcsolatos tömb lekérdezése
+        $ratings_array = get_ratings($id);
+        $i = 0;
+        if (count($ratings_array["ratings"])>0) {
+            foreach ($ratings_array["ratings"] AS $rating) {
+                $array["items"][$i]["title"] = $rating["title"];
+                $array["items"][$i]["body"] = $rating["body"];
+                $array["items"][$i]["stars"] = $rating["stars"];
+                $array["items"][$i]["moderated"] = $rating["moderated"];
+                $i++;
+            }
+        } else {
+            $array["items"] = [];
+        }
+
+        // Adatok lekérdezése és behelyezése egy tömbbe
+        $array["total"] = $ratings_array["total"][0]["total"];
 
         // Válasz küldése
         return Response::json($array);

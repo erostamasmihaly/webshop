@@ -14,13 +14,19 @@
                     </tr>
                 </tbody>
             </table>
-            <div class="bg-primary text-light p-2 fw-bold">Értékelések</div>
-            <div v-if="ratings.length == 0" class="alert alert-warning mt-2" role="alert">
+            <div class="bg-primary text-light p-2 fw-bold">
+                Értékelések
+                <span class="float-end">
+                    <i class="fa-solid fa-star" v-for="star in ratings.total"></i>
+                    <i class="fa-regular fa-star" v-for="star in 5-(ratings.total)"></i>
+                </span>
+            </div>
+            <div v-if="ratings.items.length == 0" class="alert alert-warning mt-2" role="alert">
                 Még senki nem értékelte a terméket!
             </div>    
             <table v-else class="table table-hover">
                 <tbody>
-                    <tr v-for="item in ratings">
+                    <tr v-for="item in ratings.items">
                         <td :style="{ 
                             color: item.moderated == 0 ? 'red' : 'black',
                             fontStyle: item.moderated == 0 ? 'italic' : 'normal' 
@@ -146,7 +152,10 @@ export default {
         let product_id = router.currentRoute.value.params.id;
         let response = ref(null);
         let product = ref({});
-        let ratings = ref({});
+        let ratings = ref({
+            items: {},
+            total: 0
+        });
         let popup = ref({});
         let myrating = ref({
             stars: 5
