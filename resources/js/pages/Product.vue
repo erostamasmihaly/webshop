@@ -15,22 +15,28 @@
                 </tbody>
             </table>
             <div class="bg-primary text-light p-2 fw-bold">Értékelések</div>
-            <table class="table table-hover">
+            <div v-if="ratings.length == 0" class="alert alert-warning mt-2" role="alert">
+                Még senki nem értékelte a terméket!
+            </div>    
+            <table v-else class="table table-hover">
                 <tbody>
                     <tr v-for="item in ratings">
                         <td :style="{ 
                             color: item.moderated == 0 ? 'red' : 'black',
                             fontStyle: item.moderated == 0 ? 'italic' : 'normal' 
                         }">
-                            {{ item.title }}
+                            <span class="fw-bold">{{ item.title }}</span>
                             <span class="float-end">
                                 <i class="fa-solid fa-star" v-for="star in item.stars"></i>
                                 <i class="fa-regular fa-star" v-for="star in 5-(item.stars)"></i>
                             </span>
+                            <div>
+                                <span v-html="item.body"></span>
+                            </div>
                         </td>
                     </tr>
                 </tbody>
-            </table>    
+            </table>
             <div v-if="product.is_buyed">
                 <div class="bg-primary text-light p-2 fw-bold">Értékelés írása</div>
                 <div class="row m-1">
