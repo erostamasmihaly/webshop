@@ -42,4 +42,7 @@ Route::group(['prefix' => 'api/vue'], function() {
     // Termékek lekérdezése
     Route::get('list', [App\Http\Controllers\VueApiController::class, 'get_list'])->name('vue_get_list');
 
+    // Kosár elem felvitele
+    Route::put('cart', [App\Http\Controllers\VueApiController::class, 'put_cart'])->name('vue_put_cart');
+
 });

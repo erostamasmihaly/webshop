@@ -2,6 +2,7 @@
 
 namespace App\Http\Services;
 
+use App\Http\Requests\CartAddRequest;
 use App\Models\Cart;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -14,11 +15,11 @@ class CartAdd
     private $product_id, $quantity, $size_id;
 
     // Adatok lekérdezése
-    public function __construct(Request $request)
+    public function __construct(CartAddRequest $cartAddRequest)
     {
-        $this->product_id = $request->product_id;
-        $this->quantity = $request->quantity;
-        $this->size_id = $request->size_id;
+        $this->product_id = $cartAddRequest->product_id;
+        $this->quantity = $cartAddRequest->quantity;
+        $this->size_id = $cartAddRequest->size_id;
         $this->addToCart();
     }
 
@@ -27,7 +28,7 @@ class CartAdd
 
         DB::transaction(function () {
 
-            // Megnézni, hogy már ezen termék benne van-e a kosásrban
+            // Megnézni, hogy már ezen termék benne van-e a kosárban
             $cart = Cart::where("user_id", Auth::id())->where("product_id", $this->product_id)->where("size_id",$this->size_id)->whereNull("payment_id")->first();
 
             if (!$cart) {

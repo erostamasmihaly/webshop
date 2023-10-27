@@ -96,6 +96,7 @@ class VueApiController extends Controller
         $prices = [];
         foreach ($product->prices AS $price) {
             $prices[$price->size->name]["quantity"] = $price->quantity; 
+            $prices[$price->size->name]["id"] = $price->size->id;
         }
 
         // Végigmenni minden egyes áron
@@ -148,4 +149,12 @@ class VueApiController extends Controller
         // Válasz küldése
         return Response::json($array);
     } 
+
+    // Kosár elem felvitele
+    public function put_cart(CartAdd $cartAdd) {
+
+        // Válasz küldése
+        $array['OK']=1;
+        return Response::json($array);
+    }
 }

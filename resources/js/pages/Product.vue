@@ -34,19 +34,19 @@
             <div v-if="product.is_buyed">
                 <div class="bg-primary text-light p-2 fw-bold">Értékelés írása</div>
                 <div class="row m-1">
-                    <div class="col-sm-2">Cím</div>
+                    <div class="col-sm-2 fw-bold">Cím</div>
                     <div class="col-sm-10">
                         <input class="form-control" type="text" v-model="myrating.title"/>
                     </div>
                 </div>
                 <div class="row m-1">
-                    <div class="col-sm-2">Leírás</div>
+                    <div class="col-sm-2 fw-bold">Leírás</div>
                     <div class="col-sm-10">
                         <textarea class="form-control" v-model="myrating.body"/>
                     </div>
                 </div>
                 <div class="row m-1">
-                    <div class="col-sm-2">Csillag</div>
+                    <div class="col-sm-2 fw-bold">Csillag</div>
                     <div class="col-sm-10">
                         <select class="form-control" v-model="myrating.stars">
                             <option v-for="num in 5" :value="num">{{ num }}</option>
@@ -54,11 +54,11 @@
                     </div>
                 </div>
                 <div>
-                    <button class="btn btn-primary" type="button" @click="putRating()" v-show="myresult.button">Értékelés elküldése</button>
-                    <div class="alert alert-success" role="alert" v-show="myresult.success">
+                    <button class="btn btn-primary" type="button" @click="putRating()" v-show="ratingresult.button">Értékelés elküldése</button>
+                    <div class="alert alert-success" role="alert" v-show="ratingresult.success">
                         Értékelés sikeresen elküldve. Jelenleg moderálás alatt!
                     </div>
-                    <div class="alert alert-danger" role="alert" v-show="myresult.error">
+                    <div class="alert alert-danger" role="alert" v-show="ratingresult.error">
                         Hiba történt az értékelés elküldése során!
                     </div>
                 </div>
@@ -82,6 +82,33 @@
                     </tr>
                 </tbody>
             </table>
+            <div class="bg-primary text-light p-2 fw-bold">Termék kosárba helyezése</div>
+            <div class="row p-2">
+                <div class="col-sm-3 fw-bold">Méret</div>
+                <div class="col-sm-3 fw-bold">Mennyiség</div>
+                <div class="col-sm-6"></div>
+                <div class="col-sm-3">
+                    <select class="form-control" v-model="mycart.size_id">
+                        <option v-for="(item, index) in product.prices" :value="item.id">{{  index }}</option>
+                    </select>
+                </div>
+                <div class="col-sm-3">
+                    <select class="form-control" v-model="mycart.quantity">
+                        <option v-for="n in 10" :value="n">{{ n }}</option>
+                    </select>
+                </div>
+                <div class="col-sm-6">
+                    <button class="btn btn-primary w-100" @click="putCart()">Kosárba helyezés</button>
+                </div>
+                <div>
+                    <div class="alert alert-success m-2" role="alert" v-show="cartresult.success">
+                        Termék sikeresen a kosárba helyezve!
+                    </div>
+                    <div class="alert alert-danger m-2" role="alert" v-show="cartresult.error">
+                        <span v-html="cartresult.message"></span>
+                    </div>
+                </div>
+            </div>
             <div class="bg-primary text-light p-2 fw-bold">Képek</div>
             <div class="row p-2">
                 <div class="col-sm-3 col-6" v-for="item in product.images">
@@ -118,7 +145,11 @@ export default {
         let myrating = ref({
             stars: 5
         });
-        let myresult = ref({
+        let ratingresult = ref({
+            button: true
+        });
+        let mycart = ref({});
+        let cartresult = ref({
             button: true
         });
 
@@ -189,17 +220,17 @@ export default {
                     myrating.value = { stars: 5 };
 
                     // Eredmény mutatása
-                    myresult.value = { success: true }
+                    ratingresult.value = { success: true }
 
                 } else {
                     
                     // Hiba mutatása
-                    myresult.value = { error: true }
+                    ratingresult.value = { error: true }
                 }
 
                 // 3 másodperc múlva az eredmény elrejtése
                 setTimeout(function() {
-                    myresult.value = { button: true }
+                    ratingresult.value = { button: true }
                 }, 3000);
 
 
@@ -208,17 +239,67 @@ export default {
             }
         }
 
+        // Termék kosárba helyezése
+        const putCart = async () => {
+
+            try {
+
+                // Termék azonosító felvitele
+                mycart.value.product_id = product_id;
+
+                // GET kérés küldése a szervernek
+                response = await request('put', '/api/vue/cart/', mycart.value);
+
+                // Ha OK = 1 a válasz
+                if (response.data.OK == 1) {
+
+                    // Mezők visszaállítása
+                    mycart.value = { };
+
+                    // Eredmény mutatása
+                    cartresult.value = { success: true }
+
+                } else {
+
+                    // Hiba mutatása
+                    cartresult.value = { error: true, message: "Hiba történt a művelet során!" }
+                }
+                
+            } catch (error) {
+
+                // Hibák lekérdezése
+                let errors = error.response.data.errors;
+
+                // Hibaszöveg létrehozása ezen hibákból
+                let errorMessage = Object.values(errors).join("<br>");
+
+                // Hiba mutatása
+                cartresult.value = { error: true, message: errorMessage }
+
+                console.log(error);
+            }
+
+            // 3 másodperc múlva az eredmény elrejtése
+            setTimeout(function() {
+                cartresult.value = {  }
+
+            }, 3000);
+        }
+
         return {
             getProduct,
             getRating,
             openPopup,
             closePopup,
             putRating,
+            putCart,
             product,
             popup,
             ratings,
             myrating,
-            myresult
+            ratingresult,
+            mycart,
+            cartresult
         }
     }
 }
