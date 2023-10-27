@@ -142,6 +142,7 @@ class VueApiController extends Controller
 
         // Adatok lekérdezése és behelyezése egy tömbbe
         $array["total"] = $ratings_array["total"][0]["total"];
+        $array["stars"] = (int)$ratings_array["total"][0]["stars"];
 
         // Válasz küldése
         return Response::json($array);

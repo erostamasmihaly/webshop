@@ -17,8 +17,8 @@
             <div class="bg-primary text-light p-2 fw-bold">
                 Értékelések
                 <span class="float-end">
-                    <i class="fa-solid fa-star" v-for="star in ratings.total"></i>
-                    <i class="fa-regular fa-star" v-for="star in 5-(ratings.total)"></i>
+                    <i class="fa-solid fa-star" v-for="star in ratings.stars"></i>
+                    <i class="fa-regular fa-star" v-for="star in 5-(ratings.stars)"></i>
                 </span>
             </div>
             <div v-if="ratings.items.length == 0" class="alert alert-warning mt-2" role="alert">
@@ -154,7 +154,8 @@ export default {
         let product = ref({});
         let ratings = ref({
             items: {},
-            total: 0
+            total: null,
+            stars: null
         });
         let popup = ref({});
         let myrating = ref({
