@@ -7,6 +7,7 @@ use App\Http\Services\CartAdd;
 use App\Http\Services\RatingUpdate;
 use App\Models\Cart;
 use App\Models\Product;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Response;
 
@@ -168,6 +169,62 @@ class VueApiController extends Controller
 
     // Kosár elem felvitele
     public function put_cart(CartAdd $cartAdd) {
+
+        // Válasz küldése
+        $array['OK']=1;
+        return Response::json($array);
+    }
+
+    // Értesítések lekérdezése
+    public function get_notification() {
+
+        // Aktuális felhasználó lekérdezése 
+        $user = Auth::user();
+
+        // Nem olvasott értesítések lekérdezése
+        $array["unread"]["items"] = $user->notifications->whereNull('read_at');
+        $array["unread"]["total"] = $user->notifications->whereNull('read_at')->count();
+
+        // Olvasott értesítések lekérdezése
+        $array["read"]["items"] = $user->notifications->whereNotNull('read_at');
+        $array["read"]["total"] = $user->notifications->whereNotNull('read_at')->count();
+
+        // Összes értékelés száma
+        $array["total"] = $array["unread"]["total"] + $array["read"]["total"];
+
+        // Dátumok formázása
+        foreach ($array["unread"]["items"] AS $item) {
+            $item->created_formatted = $item->created_at->format('Y.m.d. H:i');
+        }
+        foreach ($array["read"]["items"] AS $item) {
+            $item->created_formatted = $item->created_at->format('Y.m.d. H:i');
+            $item->read_formatted = $item->read_at->format('Y.m.d. H:i');
+        }
+
+        // Válasz küldése
+        return Response::json($array);
+
+    }
+
+    // Értesítés olvasottnak jelölése
+    public function post_notification_one(Request $request) {
+
+        // Azonosító lekérdezése
+        $id = $request->id;
+
+        // Bejelölni, hogy látta az értesítést
+        auth()->user()->unreadNotifications->where('id', $id)->markAsRead();
+
+        // Válasz küldése
+        $array['OK']=1;
+        return Response::json($array);
+    }
+
+    // Összes értesítés olvasottnak jelölése
+    public function post_notification_all() {
+
+        // Bejelölni, hogy látta az összes értesítést
+        auth()->user()->unreadNotifications->markAsRead();
 
         // Válasz küldése
         $array['OK']=1;

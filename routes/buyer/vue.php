@@ -45,4 +45,13 @@ Route::group(['prefix' => 'api/vue'], function() {
     // Kosár elem felvitele
     Route::put('cart', [App\Http\Controllers\VueApiController::class, 'put_cart'])->name('vue_put_cart');
 
+    // Értesítések lekérdezése
+    Route::get('notification', [App\Http\Controllers\VueApiController::class, 'get_notification'])->name('vue_get_notification');
+
+    // Értesítés olvasottnak jelölése - Egy megadott
+    Route::post('notification/one', [App\Http\Controllers\VueApiController::class, 'post_notification_one'])->name('vue_post_notification_one');
+
+    // Értesítés olvasottnak jelölése - Összes
+    Route::post('notification/all', [App\Http\Controllers\VueApiController::class, 'post_notification_all'])->name('vue_post_notification_all');
+
 });
