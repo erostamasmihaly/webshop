@@ -16,7 +16,7 @@
             </table>
             <div class="bg-primary text-light p-2 fw-bold">
                 Értékelések
-                <span v-if="ratings.length>0" class="float-end fw-bold">
+                <span v-if="ratings.items.length>0" class="float-end fw-bold">
                     <span v-for="star in ratings.stars">&#9733;</span>
                     <span v-for="star in 5-(ratings.stars)">&#9734;</span>
                 </span>
