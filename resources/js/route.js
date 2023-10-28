@@ -27,6 +27,10 @@ const router = createRouter({
             path: '/vue/list',
             component: () => import('./pages/List.vue')
         },
+        {
+            path: '/vue/notification',
+            component: () => import('./pages/Notification.vue')
+        },
     ],
 })
 

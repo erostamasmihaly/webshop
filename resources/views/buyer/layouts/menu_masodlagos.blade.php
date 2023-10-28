@@ -34,7 +34,7 @@
 					<a class="dropdown-item" href="{{ route('buyer_user') }}">Profil adatok</a>
 					<a class="dropdown-item" href="{{ route('buyer_cart') }}">Kosár megtekintése</a> 
 					<a class="dropdown-item" href="{{ route('pay_history') }}">Vásárlási előzmények</a>
-					<a class="dropdown-item" href="{{ route('vue') }}">VUE oldal</a>
+					<a class="dropdown-item" href="{{ route('vue') }}">VUE.js oldalak</a>
 				@endif
 				<a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();document.getElementById('logout-form').submit();">
 				{{ __('Logout') }}
