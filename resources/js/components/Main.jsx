@@ -1,16 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 
-// Cím
-function Main() {
-    return (
-        <div>
-            <h1>REACT által készített alkalmazások</h1>
-            <h2>A szürkével jelzett részek még mincsenek készen!</h2>
-        </div>
-    );
-}
-
 // Menü megjelenítése
 const RenderMenu = props => {
 
@@ -37,6 +27,18 @@ const RenderMenu = props => {
     );
 };
 
+// Tartalom
+function Main() {
+    return (
+        <div>
+            <h1>REACT által készített alkalmazások</h1>
+            <h2>A szürkével jelzett részek még mincsenek készen!</h2>
+            <RenderMenu/>
+        </div>
+    );
+}
+
+// Tartalom betöltése
 export default Main;
 
 if (document.getElementById('main')) {
@@ -45,7 +47,6 @@ if (document.getElementById('main')) {
     Index.render(
         <React.StrictMode>
             <Main/>
-            <RenderMenu/>
         </React.StrictMode>
     )
 }
