@@ -46,10 +46,6 @@ const List = () => {
 
 };
 
-const setItems = () => {
-    
-}
-
 // Tartalom
 function Payed() {
     return (

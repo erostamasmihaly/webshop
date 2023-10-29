@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 
 // Menü megjelenítése
-const RenderMenu = props => {
+const RenderMenu = () => {
 
     // Menü elemek felsorolása
     const menu = [
