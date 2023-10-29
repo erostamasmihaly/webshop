@@ -1,26 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 
-const RenderMenu = props => {
-    const menu = [
-        { link: "list", name: "Termékek listája", btnclass: "btn-secondary"},
-        { link: "user", name: "Felhasználó adatai", btnclass: "btn-secondary"},
-        { link: "payed", name: "Eddigi vásárlások", btnclass: "btn-secondary"},
-        { link: "cart", name: "Kosár tartalma", btnclass: "btn-secondary"},
-        { link: "notification", name: "Értesítések", btnclass: "btn-secondary"},
-    ];
-  
-    return (
-        <div className="row">
-        {menu.map((item,index) => (
-            <div className="col-sm-3" key={index}>
-                <button className={"btn "+item.btnclass+" w-100 m-1"}>{ item.name }</button>
-            </div>
-        ))}
-        </div>
-    );
-};
-
+// Cím
 function Main() {
     return (
         <div>
@@ -29,6 +10,32 @@ function Main() {
         </div>
     );
 }
+
+// Menü megjelenítése
+const RenderMenu = props => {
+
+    // Menü elemek felsorolása
+    const menu = [
+        { link: "list", name: "Termékek listája", btnclass: "btn-secondary"},
+        { link: "user", name: "Felhasználó adatai", btnclass: "btn-secondary"},
+        { link: "payed", name: "Eddigi vásárlások", btnclass: "btn-secondary"},
+        { link: "cart", name: "Kosár tartalma", btnclass: "btn-secondary"},
+        { link: "notification", name: "Értesítések", btnclass: "btn-secondary"},
+    ];
+  
+    // Menü kirajzolása
+    return (
+        <div className="row">
+        {menu.map((item,index) => (
+            <div className="col-sm-3" key={index}>
+                <a href={"/react/"+item.link}>
+                    <button className={"btn "+item.btnclass+" w-100 m-1"}>{ item.name }</button>
+                </a>
+            </div>
+        ))}
+        </div>
+    );
+};
 
 export default Main;
 
