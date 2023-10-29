@@ -8,7 +8,7 @@ const RenderMenu = props => {
     const menu = [
         { link: "list", name: "Termékek listája", btnclass: "btn-secondary"},
         { link: "user", name: "Felhasználó adatai", btnclass: "btn-secondary"},
-        { link: "payed", name: "Eddigi vásárlások", btnclass: "btn-secondary"},
+        { link: "payed", name: "Eddigi vásárlások", btnclass: "btn-primary"},
         { link: "cart", name: "Kosár tartalma", btnclass: "btn-secondary"},
         { link: "notification", name: "Értesítések", btnclass: "btn-secondary"},
     ];
