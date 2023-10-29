@@ -23,6 +23,9 @@ require 'buyer/pay.php';
 // Vue
 require 'buyer/vue.php';
 
+// React
+require 'buyer/react.php';
+
 //// Admin szerepkör
 
 // Vezérlőpult

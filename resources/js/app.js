@@ -7,3 +7,7 @@ if (window.location.href.indexOf("vue") > -1) {
     app.use(router)
     app.mount("#app")
 }
+
+if (window.location.href.indexOf("react") > -1) {
+    await import('./components/Main');
+}
