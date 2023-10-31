@@ -18,7 +18,7 @@ const List = () => {
             setItems(response.data);  
         }
 
-        fetchData();
+        fetchData().catch(console.error);
 
     }, []);
 
