@@ -21,24 +21,6 @@ class ApiController extends Controller
         $this->middleware('buyer');
     }
 
-    public function token(Request $request) {
-
-        $exists = Auth::attempt(array('email' => $request->email, 'password' => $request->password, 'active' => 1 ));
-
-        if($exists){
-            $user = User::where('email',$request->email)->first();
-            $tokenResult = $user->createToken('Personal Access Token');
-            $token = $tokenResult->plainTextToken;
-
-            return response()->json([
-                'token'=> $token,
-            ],200);
-        }
-        else{
-            return response()->json(['error'=>'Hiba történt az azonosítás során!']);
-        }
-    }
-
     // Felhasználó adatai
     public function get_user() {
 

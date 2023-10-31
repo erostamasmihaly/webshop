@@ -6,6 +6,9 @@ use Illuminate\Support\Facades\Route;
 // Bejelentkezés oldal
 Auth::routes(['register' => false, 'reset' => false]);
 
+// Felhasználó azonosítása
+Route::post('token', [App\Http\Controllers\Auth\LoginController::class, 'token']);
+
 //// Teszt
 Route::get('test', [App\Http\Controllers\TestController::class, 'index'])->name('test_index');
 
@@ -56,6 +59,3 @@ require 'seller/position.php';
 
 // Üzletek
 require 'seller/shop.php';
-
-// Felhasználó mentése
-Route::post('token', [App\Http\Controllers\ApiController::class, 'token']);

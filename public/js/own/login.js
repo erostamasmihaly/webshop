@@ -22,8 +22,16 @@ document.querySelector("button[type='submit']").addEventListener("click", async(
 
             // Főoldal megnyitása
             window.location.href = "/";
+        } else {
+            
+            // Hibás állapot mutatása 
+            document.querySelector("#form").classList.add("was-validated");
+            document.querySelector("#email").classList.add("is-invalid");
+            document.querySelector("#email_error").classList.remove("d-none");
+            document.querySelector("#email_error").innerHTML = result.data.error;
         }
     } catch (error) {
+
         console.log(error);
     }
 });
