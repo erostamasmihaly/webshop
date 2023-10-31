@@ -180,7 +180,7 @@ export default {
 
             try {
                 // GET kérés küldése a szervernek
-                response = await request('get', '/api/vue/product/'+product_id);
+                response = await request('get', '/api/product/'+product_id);
 
                 // Adatok lekérdezése és megjelenítése
                 product.value = response.data;
@@ -196,7 +196,7 @@ export default {
             try {
 
                 // GET kérés küldése a szervernek
-                response = await request('get', '/api/vue/rating/'+product_id);
+                response = await request('get', '/api/rating/'+product_id);
 
                 // Adatok lekérdezése és megjelenítése
                 ratings.value = response.data;
@@ -224,7 +224,7 @@ export default {
                 myrating.value.product_id = product_id;
 
                 // Kérés küldése a szerver felé
-                const response = await request('put', '/api/vue/rating', myrating.value);
+                const response = await request('put', '/api/rating', myrating.value);
 
                 // Ha OK = 1 a válasz
                 if (response.data.OK == 1) {
@@ -264,7 +264,7 @@ export default {
                 mycart.value.product_id = product_id;
 
                 // GET kérés küldése a szervernek
-                response = await request('put', '/api/vue/cart/', mycart.value);
+                response = await request('put', '/api/cart/', mycart.value);
 
                 // Ha OK = 1 a válasz
                 if (response.data.OK == 1) {

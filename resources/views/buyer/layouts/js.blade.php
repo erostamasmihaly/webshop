@@ -32,3 +32,6 @@
 @if (Request::is('pay/confirm'))
     <script src="{{ asset('js/own/pay_confirm.js') }}" defer></script>
 @endif
+@if (Request::is('login'))
+    <script src="{{ asset('js/own/login.js') }}" defer></script>
+@endif

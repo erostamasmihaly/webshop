@@ -33,7 +33,7 @@ export default {
 
             try {
                 // GET kérés küldése a szervernek
-                response = await request('get', '/api/vue/list');
+                response = await request('get', '/api/list');
 
                 // Adatok lekérdezése és megjelenítése
                 list.value = response.data;

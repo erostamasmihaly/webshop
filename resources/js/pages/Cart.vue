@@ -49,7 +49,7 @@ export default {
         const getCart = async () => {
             try {
                 // GET kérés küldése a szervernek
-                response = await request('get', '/api/vue/cart');
+                response = await request('get', '/api/cart');
 
                 // Lista feltöltése a válaszból
                 cart.value = response.data.carts;
@@ -74,7 +74,7 @@ export default {
                 }
 
                 // Kérés küldése a szerver felé
-                const response = await request('post', '/api/vue/cart', data);
+                const response = await request('post', '/api/cart', data);
 
                 // Ha minden rendben volt
                 if (response.data.OK == 1) {

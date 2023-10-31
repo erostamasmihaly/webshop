@@ -80,9 +80,11 @@ export default {
 
         // Felhasználó adatainak lekérdezése
         const getUser = async () => {
+
             try {
+
                 // GET kérés küldése a szervernek
-                response = await request('get', '/api/vue/user');
+                response = await request('get', '/api/user');
 
                 // Mezők értékeinek megadása a kérés eredménye alapján
                 user.value = response.data;
@@ -97,7 +99,7 @@ export default {
             try {
 
                 // Kérés küldése a szerver felé
-                const response = await request('post', '/api/vue/user', user.value);
+                const response = await request('post', '/api/user', user.value);
                 
                 // Ha OK = 1 a válasz
                 if (response.data.OK == 1) {

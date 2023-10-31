@@ -4,7 +4,7 @@ import ReactDOM from 'react-dom/client';
 const List = () => {
     const [items, setItems] = useState([]);
     useEffect(() => {
-        fetch('/api/vue/payed')
+        fetch('/api/payed')
             .then((response) => response.json())
             .then((data) => {
                 console.log(data);

@@ -1,7 +1,7 @@
 import axios from "axios";
 
 export const request = async (method, url, data) => {
-    const token = localStorage.getItem('APP_DEMO_USER_TOKEN')
+    const token = localStorage.getItem('USER_TOKEN')
     if (token !== undefined || token !== "") {
         const headers = {
             headers: {

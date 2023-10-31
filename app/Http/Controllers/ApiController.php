@@ -7,16 +7,36 @@ use App\Http\Services\CartAdd;
 use App\Http\Services\RatingUpdate;
 use App\Models\Cart;
 use App\Models\Product;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Response;
 
-class VueApiController extends Controller
+class ApiController extends Controller
 {
     // Csak a vásárlók férhetnek hozzá az itteni tartalmakhoz
     public function __construct()
     {
+        $this->middleware('auth:sanctum');
         $this->middleware('buyer');
+    }
+
+    public function token(Request $request) {
+
+        $exists = Auth::attempt(array('email' => $request->email, 'password' => $request->password, 'active' => 1 ));
+
+        if($exists){
+            $user = User::where('email',$request->email)->first();
+            $tokenResult = $user->createToken('Personal Access Token');
+            $token = $tokenResult->plainTextToken;
+
+            return response()->json([
+                'token'=> $token,
+            ],200);
+        }
+        else{
+            return response()->json(['error'=>'Hiba történt az azonosítás során!']);
+        }
     }
 
     // Felhasználó adatai

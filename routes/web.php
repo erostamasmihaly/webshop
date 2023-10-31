@@ -56,3 +56,6 @@ require 'seller/position.php';
 
 // Üzletek
 require 'seller/shop.php';
+
+// Felhasználó mentése
+Route::post('token', [App\Http\Controllers\ApiController::class, 'token']);

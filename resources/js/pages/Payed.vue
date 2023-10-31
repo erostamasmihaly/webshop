@@ -48,7 +48,7 @@ export default {
         const getPayed = async () => {
             try {
                 // GET kérés küldése a szervernek
-                response = await request('get', '/api/vue/payed');
+                response = await request('get', '/api/payed');
 
                 // Lista feltöltése a válaszból
                 payed.value = response.data;  

@@ -82,7 +82,7 @@ export default {
 
             try {
                 // GET kérés küldése a szervernek
-                response = await request('get', '/api/vue/notification');
+                response = await request('get', '/api/notification');
 
                 // Adatok lekérdezése és megjelenítése
                 notifications.value = response.data;
@@ -102,7 +102,7 @@ export default {
             
             try {
                 // GET kérés küldése a szervernek
-                response = await request('post', '/api/vue/notification/one', data);
+                response = await request('post', '/api/notification/one', data);
 
                 // Ha minden rendben volt
                 if (response.data.OK == 1) {
@@ -121,7 +121,7 @@ export default {
             
             try {
                 // GET kérés küldése a szervernek
-                response = await request('post', '/api/vue/notification/all');
+                response = await request('post', '/api/notification/all');
 
                 // Ha minden rendben volt
                 if (response.data.OK == 1) {
