@@ -1,18 +1,25 @@
 import React, { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom/client';
+import {request} from '../helper'
+
 
 const List = () => {
+
     const [items, setItems] = useState([]);
     useEffect(() => {
-        fetch('/api/payed')
-            .then((response) => response.json())
-            .then((data) => {
-                console.log(data);
-                setItems(data);
-            })
-            .catch((err) => {
-                console.log(err.message);
-            });
+        
+        // Adatok lekérdezése
+        const fetchData = async () => {
+
+            // GET kérés küldése a szervernek
+            let response = await request('get', '/api/payed');
+
+            // Lista feltöltése a válaszból
+            setItems(response.data);  
+        }
+
+        fetchData();
+
     }, []);
 
     return (
