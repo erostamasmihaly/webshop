@@ -140,7 +140,7 @@
 </template>
 <script>
 // Importálás
-import {request} from '../helper'
+import {request} from '../helper_vue'
 import {ref, onMounted} from 'vue'
 import router from '../route'
 
