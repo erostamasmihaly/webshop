@@ -7,9 +7,13 @@ const List = () => {
 
     const [items, setItems] = useState([]);
     useEffect(() => {
+
+        console.log("ok1");
         
         // Adatok lekérdezése
         const fetchData = async () => {
+
+            console.log("ok2");
 
             // GET kérés küldése a szervernek
             let response = await request('get', '/api/payed');
