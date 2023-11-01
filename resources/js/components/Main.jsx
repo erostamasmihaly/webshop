@@ -6,7 +6,7 @@ const RenderMenu = () => {
 
     // Menü elemek felsorolása
     const menu = [
-        { link: "list", name: "Termékek listája", btnclass: "btn-secondary"},
+        { link: "list", name: "Termékek listája", btnclass: "btn-primary"},
         { link: "user", name: "Felhasználó adatai", btnclass: "btn-secondary"},
         { link: "payed", name: "Eddigi vásárlások", btnclass: "btn-primary"},
         { link: "cart", name: "Kosár tartalma", btnclass: "btn-secondary"},
@@ -32,7 +32,7 @@ function Main() {
     return (
         <div>
             <h1>REACT által készített alkalmazások</h1>
-            <h2>A szürkével jelzett részek még mincsenek készen!</h2>
+            <h2>A szürkével jelzett részek még nincsenek készen!</h2>
             <RenderMenu/>
         </div>
     );

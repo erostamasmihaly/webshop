@@ -11,4 +11,6 @@ if (window.location.href.indexOf("vue") > -1) {
 if (window.location.href.indexOf("react") > -1) {
     await import('./components/Main');
     await import('./components/Payed');
+    await import('./components/List');
+    await import('./components/User');
 }

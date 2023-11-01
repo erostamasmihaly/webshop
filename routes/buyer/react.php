@@ -12,6 +12,14 @@ Route::group(['prefix' => 'react'], function() {
 
     Route::get('payed', function() {
         return view('buyer.react.payed');
-    })->name('payed')->middleware(BuyerMiddleware::class);
+    })->middleware(BuyerMiddleware::class);
+
+    Route::get('list', function() {
+        return view('buyer.react.list');
+    })->middleware(BuyerMiddleware::class);
+
+    Route::get('user', function() {
+        return view('buyer.react.user');
+    })->middleware(BuyerMiddleware::class);
 
 });
