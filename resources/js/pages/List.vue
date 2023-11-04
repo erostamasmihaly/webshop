@@ -1,24 +1,20 @@
 <template>
     <h1>Termékek listája</h1>
     <div class="row gallery">
-        <div v-for="item in list" class="col-sm-2 text-center" @click="openProduct(item.id)">
-            <p class="fw-bold">{{ item.name }}</p>
-            <img :src="item.image" class="img-thumbnail"/>
-            <p>
-                {{ item.discount_price }}<br>
-                <button class="btn btn-primary">Megtekintés</button>
-            </p>
-        </div>
+        <ListItem v-for="item in list" :item="item"/>
     </div>
 </template>
 <script>
 // Importálás
 import {request} from '../helper_vue'
 import {ref, onMounted} from 'vue'
-import router from '../route'
+import ListItem from './ListItem.vue'
 
 // Exportálás
 export default {
+    components: {
+        ListItem
+    },
     setup() {
         let list = ref({});
         let response = ref(null);
@@ -43,14 +39,8 @@ export default {
             }
         }
 
-        // Termék oldal megnyitása
-        const openProduct = async(id) => {
-            router.push('/vue/product/'+id);
-        }
-
         return {
             getList,
-            openProduct,
             list
         }
     }
