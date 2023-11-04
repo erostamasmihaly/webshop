@@ -8,7 +8,7 @@
 // Importálás
 import {request} from '../helper_vue'
 import {ref, onMounted} from 'vue'
-import ListItem from './ListItem.vue';
+import ListItem from './components/ListItem.vue';
 
 // Exportálás
 export default {

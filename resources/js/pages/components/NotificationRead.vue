@@ -25,6 +25,7 @@
 <script>
 // Exportálás
 export default {
+    
     // Változó definiálása
     props: ['notifications'],
 
