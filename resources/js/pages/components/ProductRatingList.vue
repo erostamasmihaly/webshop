@@ -32,50 +32,24 @@
 <script>
 
 // Importálás
-import {ref, onMounted} from 'vue'
-import {request} from '../../helper_vue'
-import router from '../../route'
+import { onMounted } from 'vue'
+import { getRating, ratings } from './rating'
 
 // Exportálás
 export default {
-    
-    // Változó definiálása
-    props: ['ratings'],
 
     // Beállítás
-    setup(props) {
-
-		// Definiálás
-		let product_id = router.currentRoute.value.params.id;
-		let response = ref(null);
-		let ratings = ref({
-            items: {},
-            total: null,
-            stars: null
-        });
+    setup() {
 
 		// Amikor betöltődött az oldal
 		onMounted(() => {
-            getRating();
+            getRating()
         });
-
-		// Értékelések lekérdezése
-		const getRating = async () => {
-            try {
-                // GET kérés küldése a szervernek
-                response = await request('get', '/api/rating/' + product_id);
-                // Adatok lekérdezése és megjelenítése
-                ratings.value = response.data;
-            }
-            catch (error) {
-                console.log(error);
-            }
-        };
 
         return {
 			getRating,
 			ratings
-        }
+		}
     }
 }
 </script>

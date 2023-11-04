@@ -37,6 +37,7 @@
 import {ref} from 'vue'
 import router from '../../route'
 import {request} from '../../helper_vue'
+import { getRating, ratings } from './rating'
 
 // Exportálás
 export default {
