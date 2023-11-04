@@ -8,13 +8,10 @@
 // Importálás
 import {request} from '../helper_vue'
 import {ref, onMounted} from 'vue'
-import ListItem from './ListItem.vue'
+import ListItem from './ListItem.vue';
 
 // Exportálás
 export default {
-    components: {
-        ListItem
-    },
     setup() {
         let list = ref({});
         let response = ref(null);
@@ -43,6 +40,7 @@ export default {
             getList,
             list
         }
-    }
+    },
+    components: { ListItem }
 }
 </script>
