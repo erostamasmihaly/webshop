@@ -34,10 +34,10 @@
 </template>
 <script>
 // Importálás
-import {ref} from 'vue'
+import { ref } from 'vue'
 import router from '../../route'
-import {request} from '../../helper_vue'
-import { getRating, ratings } from './rating'
+import { request } from '../../helper_vue'
+import { getRating } from './rating'
 
 // Exportálás
 export default {
@@ -53,13 +53,12 @@ export default {
         let ratingresult = ref({
             button: true
         });
-        let product_id = router.currentRoute.value.params.id;
 
         // Értékelés elküldése
         const putRating = async () => {
             try {
                 // Termékazonosító megadása
-                myrating.value.product_id = product_id;
+                myrating.value.product_id = router.currentRoute.value.params.id;
                 // Kérés küldése a szerver felé
                 const response = await request('put', '/api/rating', myrating.value);
                 // Ha OK = 1 a válasz

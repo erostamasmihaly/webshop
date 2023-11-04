@@ -1,7 +1,9 @@
+// Importálás
 import { request } from "../../helper_vue";
 import { ref } from 'vue'
 import router from '../../route'
 
+// Definiálás
 let response = ref(null);
 
 let ratings = ref({
@@ -10,6 +12,7 @@ let ratings = ref({
     stars: null
 });
 
+// Értékelések lekérdezése
 const getRating = async () => {
     
     try {
@@ -24,6 +27,7 @@ const getRating = async () => {
     }
 }
 
+// Exportálás
 export {
     ratings,
     getRating
