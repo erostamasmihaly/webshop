@@ -13,20 +13,6 @@ let ratings = ref({
     images: null
 });
 
-// Értékelések lekérdezése
-const getImages = async (id) => {
-            
-    try {
-        // GET kérés küldése a szervernek
-        response = await request('get', '/api/rating/' + id + '/images');
-                
-        // Adatok lekérdezése és megjelenítése
-        return response.data;
-    }
-    catch (error) {
-        return null;
-    }
-}
 
 // Értékelések lekérdezése
 const getRating = async () => {
@@ -34,11 +20,6 @@ const getRating = async () => {
     try {
         // GET kérés küldése a szervernek
         response = await request('get', '/api/rating/' + router.currentRoute.value.params.id);
-
-        // Végigmenni minden egyes értékelésen és betölteni a hozzá kapcsolódó képeket
-        [...response.data.items].forEach(element => {
-            getImages(element.id);
-        });
 
         // Adatok lekérdezése és megjelenítése
         ratings.value = response.data;
@@ -54,6 +35,5 @@ const getRating = async () => {
 // Exportálás
 export {
     ratings,
-    getRating,
-    getImages
+    getRating
 }

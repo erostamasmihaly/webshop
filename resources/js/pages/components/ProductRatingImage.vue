@@ -12,7 +12,7 @@
 <script>
 // Importálás
 import { onMounted, ref } from 'vue'
-import { getImages } from './rating';
+import { request } from "../../helper_vue";
 
 // Exportálás
 export default {
@@ -24,10 +24,26 @@ export default {
     setup(props) {
 
         let images = ref([]);
+        let response = ref(null);
+
+        // Értékelések lekérdezése
+        const getImages = async (id) => {
+            
+            try {
+                // GET kérés küldése a szervernek
+                response = await request('get', '/api/rating/' + id + '/images');
+                        
+                // Adatok lekérdezése és megjelenítése
+                images.value = response.data;
+            }
+            catch (error) {
+                console.log(error);
+            }
+        }
 
         // Amikor betöltődött az oldal
         onMounted(async () => {
-            images.value = await getImages(props.id);
+            getImages(props.id);
         });
 
         return {
