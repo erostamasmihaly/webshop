@@ -23,6 +23,9 @@ Route::get('product/{id}', [App\Http\Controllers\ApiController::class, 'get_prod
 // Értékelés lekérdezése
 Route::get('rating/{id}', [App\Http\Controllers\ApiController::class, 'get_rating']);
 
+// Értékelés fényképeinek lekérdezése
+Route::get('rating/{id}/images', [App\Http\Controllers\ApiController::class, 'get_rating_images']);
+
 // Értékelés felvitele
 Route::put('rating', [App\Http\Controllers\ApiController::class, 'put_rating']);
 

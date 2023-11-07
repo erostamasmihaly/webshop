@@ -29,15 +29,7 @@
 					<div>
 						<span v-html="item.body"></span>
 					</div>
-					<div v-if="item.images!=null">
-						<div class="row p-2">
-							<div class="col-sm-3 col-6" v-for="image in item.images">
-								<div @click="openPopup(image.image)">
-									<img :src="image.thumb" class="img-thumbnail"/>
-								</div>
-							</div>
-						</div>
-					</div>
+					<ProductRatingImage :id="item.id"/>
 				</td>
 			</tr>
 		</tbody>
@@ -55,9 +47,13 @@
 // Importálás
 import { onMounted, ref } from 'vue'
 import { getRating, ratings } from './rating'
+import ProductRatingImage from './ProductRatingImage.vue';
 
 // Exportálás
 export default {
+	components: { 
+        ProductRatingImage 
+    },
 
     // Beállítás
     setup() {

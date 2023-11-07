@@ -7,6 +7,7 @@ use App\Http\Services\CartAdd;
 use App\Http\Services\RatingUpdate;
 use App\Models\Cart;
 use App\Models\Product;
+use App\Models\RatingImage;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -133,12 +134,12 @@ class ApiController extends Controller
         $i = 0;
         if (count($ratings_array["ratings"])>0) {
             foreach ($ratings_array["ratings"] AS $rating) {
+                $array["items"][$i]["id"] = $rating["id"];
                 $array["items"][$i]["title"] = $rating["title"];
                 $array["items"][$i]["body"] = $rating["body"];
                 $array["items"][$i]["stars"] = $rating["stars"];
                 $array["items"][$i]["moderated"] = $rating["moderated"];
                 $array["items"][$i]["user_name"] = $rating["user_name"];
-                $array["items"][$i]["images"] = $rating["images"];
                 $i++;
             }
         } else {
@@ -148,6 +149,27 @@ class ApiController extends Controller
         // Adatok lekérdezése és behelyezése egy tömbbe
         $array["total"] = $ratings_array["total"][0]["total"];
         $array["stars"] = (int)$ratings_array["total"][0]["stars"];
+
+        // Válasz küldése
+        return Response::json($array);
+    }
+
+    // Értékelés fényképeinek lekérdezése
+    public function get_rating_images($id) {
+
+        // Értékelés fényképeinek lekérdezése
+        $images = RatingImage::where('rating_id', $id)->get(['filename']);
+        if ($images->count()>0) {
+            $i = 0;
+            $array = [];
+            foreach ($images AS $image) {
+                $array[$i]["thumb"] = asset('images/ratings/'.$id.'/thumb/'.$image->filename);
+                $array[$i]["image"] = asset('images/ratings/'.$id.'/'.$image->filename);
+                $i++;
+            }
+        } else {
+            $array = null;
+        }
 
         // Válasz küldése
         return Response::json($array);
