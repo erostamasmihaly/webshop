@@ -15,12 +15,11 @@ class RatingUpdateRequest extends FormRequest
     public function rules() {
 
         // Szabályok megadása
-        /*$rules['images'] = 'nullable';
+        $rules['images'] = 'nullable';
         $rules['images.*'] = 'mimes:jpeg,png|max:51200';
 
         // Visszatérés a szabályokkal
-        return $rules;*/
-        return [];
+        return $rules;
     }
 
     // Validálási hibaüzenetek

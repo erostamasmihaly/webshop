@@ -1,11 +1,21 @@
 import axios from "axios";
 
-export const request = async (method, url, data) => {
+export const request = async (method, url, data, is_multiform = false) => {
     const token = localStorage.getItem('USER_TOKEN')
     if (token !== undefined || token !== "") {
-        const headers = {
-            headers: {
-                Authorization: 'Bearer ' + token
+        let headers = null;
+        if (is_multiform) {
+            headers = {
+                headers: {
+                    Authorization: 'Bearer ' + token,
+                    'Content-Type': 'multipart/form-data'
+                }
+            }
+        } else {
+            headers = {
+                headers: {
+                    Authorization: 'Bearer ' + token
+                }
             }
         }
         let response = null;

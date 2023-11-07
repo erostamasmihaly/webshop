@@ -8,6 +8,7 @@ use App\Models\RatingImage;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
+use ImageMod;
 
 class RatingUpdate {
 
@@ -78,11 +79,14 @@ class RatingUpdate {
                 // Publikus átméretezett képek létrehozása
                 $this->createImage($image, $filename);
                 
-                // Képet hozzárendelni az ingatlanhoz
-                $image = new RatingImage();
-                $image->product_id = $this->id;
-                $image->filename = $filename;
-                $image->save();
+                // Képet hozzárendelni az értékeléshez
+                $image = RatingImage::where('rating_id', $this->id)->where('filename', $filename)->first();
+                if (!$image) {
+                    $image = new RatingImage();
+                    $image->rating_id = $this->id;
+                    $image->filename = $filename;
+                    $image->save();
+                }
             }
         }
     }

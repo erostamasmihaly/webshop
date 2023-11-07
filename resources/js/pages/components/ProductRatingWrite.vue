@@ -70,42 +70,46 @@ export default {
             try {
                 
                 // Űrlapadatok tárolása - képek miatt FormData() alkalmazása 
-                /*let formData = new FormData();
-                formData.append('product_id', router.currentRoute.value.params.id);
-                formData.append('title',myrating.value.title);
-                formData.append('body', myrating.value.body);
-                formData.append('stars', myrating.value.stars);
-                formData.append('images', collectedImages);*/
-
-                myrating.value.product_id = router.currentRoute.value.params.id;
-                myrating.value.images = collectedImages;
-
-                console.log(myrating.value);
+                var body = new FormData();
+                body.append('product_id', router.currentRoute.value.params.id);
+                if (myrating.value.title!=undefined) {
+                    body.append('title',myrating.value.title);
+                }
+                if (myrating.value.body!=undefined) {
+                    body.append('body', myrating.value.body);
+                }
+                body.append('stars', myrating.value.stars);
+                if (collectedImages) {
+                    for (let i=0; i<collectedImages.length; i++) {
+                        body.append('images[]', collectedImages[i]);
+                    }
+                }
                 
                 // Kérés küldése a szerver felé
-                const response = await request('put', '/api/rating', myrating.value);
-                
+                const response = await request('post', '/api/rating', body, true);
+
                 // Ha OK = 1 a válasz
                 if (response.data.OK == 1) {
-                    
+                        
                     // Értékelések újratöltése
                     getRating();
-                    
+                        
                     // Mezők visszaállítása
                     myrating.value = { stars: 5 };
-                    
+                        
                     // Eredmény mutatása
-                    ratingresult.value = { success: true };
+                    ratingresult.value = { success: true };  
                 }
                 else {
                     // Hiba mutatása
                     ratingresult.value = { error: true };
                 }
-                
+                    
                 // 3 másodperc múlva az eredmény elrejtése
                 setTimeout(function () {
                     ratingresult.value = { button: true };
                 }, 3000);
+                
             }
             catch (error) {
                 console.log(error);

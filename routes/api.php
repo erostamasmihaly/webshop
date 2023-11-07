@@ -26,6 +26,9 @@ Route::get('rating/{id}', [App\Http\Controllers\ApiController::class, 'get_ratin
 // Értékelés felvitele
 Route::put('rating', [App\Http\Controllers\ApiController::class, 'put_rating']);
 
+// Értékelés felvitele
+Route::post('rating', [App\Http\Controllers\ApiController::class, 'post_rating']);
+
 // Termékek lekérdezése
 Route::get('list', [App\Http\Controllers\ApiController::class, 'get_list']);
 

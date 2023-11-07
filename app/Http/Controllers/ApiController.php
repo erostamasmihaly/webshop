@@ -160,6 +160,14 @@ class ApiController extends Controller
         return Response::json($array);
     }
 
+    // Értékelés felvitele
+    public function post_rating(RatingUpdate $ratingUpdate) {
+        
+        // Válasz küldése
+        $array['OK']=1;
+        return Response::json($array);
+    }
+
     // Termékek listájának lekérdezése
     public function get_list() {
 
