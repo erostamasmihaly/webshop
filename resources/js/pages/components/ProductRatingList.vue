@@ -29,7 +29,7 @@
 					<div>
 						<span v-html="item.body"></span>
 					</div>
-					<ProductRatingImage :id="item.id"/>
+					<ProductRatingImage :id="item.id" :key="item.key"/>
 				</td>
 			</tr>
 		</tbody>

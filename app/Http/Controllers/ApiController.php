@@ -11,6 +11,7 @@ use App\Models\RatingImage;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Response;
 
 class ApiController extends Controller
@@ -140,6 +141,7 @@ class ApiController extends Controller
                 $array["items"][$i]["stars"] = $rating["stars"];
                 $array["items"][$i]["moderated"] = $rating["moderated"];
                 $array["items"][$i]["user_name"] = $rating["user_name"];
+                $array["items"][$i]["key"] = Hash::make(time());
                 $i++;
             }
         } else {
