@@ -21,6 +21,12 @@
 				</select>
 			</div>
 		</div>
+        <div class="row m-1">
+			<div class="col-sm-2 fw-bold">Képek</div>
+			<div class="col-sm-10">
+				<input type="file" multiple @change="collectImages"/>
+			</div>
+		</div>
 		<div>
 			<button class="btn btn-primary" type="button" @click="putRating()" v-show="ratingresult.button">Értékelés elküldése</button>
 			<div class="alert alert-success" role="alert" v-show="ratingresult.success">
@@ -50,23 +56,34 @@ export default {
         let myrating = ref({
             stars: 5
         });
+
         let ratingresult = ref({
             button: true
         });
+
+        let collectedImages = null;
 
         // Értékelés elküldése
         const putRating = async () => {
             try {
                 // Termékazonosító megadása
                 myrating.value.product_id = router.currentRoute.value.params.id;
+
+                // Képek megadása
+                myrating.value.images = collectedImages;
+                
                 // Kérés küldése a szerver felé
                 const response = await request('put', '/api/rating', myrating.value);
+                
                 // Ha OK = 1 a válasz
                 if (response.data.OK == 1) {
+                    
                     // Értékelések újratöltése
                     getRating();
+                    
                     // Mezők visszaállítása
                     myrating.value = { stars: 5 };
+                    
                     // Eredmény mutatása
                     ratingresult.value = { success: true };
                 }
@@ -74,6 +91,7 @@ export default {
                     // Hiba mutatása
                     ratingresult.value = { error: true };
                 }
+                
                 // 3 másodperc múlva az eredmény elrejtése
                 setTimeout(function () {
                     ratingresult.value = { button: true };
@@ -84,8 +102,14 @@ export default {
             }
         };
 
+        // Képek összegyűjtése
+        const collectImages = async (event) => {
+            collectedImages = event.target.files;
+        }
+
         return {
             putRating,
+            collectImages,
             myrating,
             ratingresult
         }

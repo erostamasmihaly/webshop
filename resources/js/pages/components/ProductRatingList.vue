@@ -16,11 +16,16 @@
 					color: item.moderated == 0 ? 'red' : 'black',
 					fontStyle: item.moderated == 0 ? 'italic' : 'normal' 
 				}">
-					<span class="fw-bold">{{ item.title }}</span>
-					<span class="float-end fw-bold">
-						<span v-for="star in item.stars">&#9733;</span>
-						<span v-for="star in 5-(item.stars)">&#9734;</span>
-					</span>
+					<div>
+						<span class="fw-bold text-uppercase">{{ item.user_name }}</span>
+						<span class="float-end fw-bold">
+							<span v-for="star in item.stars">&#9733;</span>
+							<span v-for="star in 5-(item.stars)">&#9734;</span>
+						</span>
+					</div>
+					<div>
+						<span class="fw-bold">{{ item.title }}</span>
+					</div>
 					<div>
 						<span v-html="item.body"></span>
 					</div>

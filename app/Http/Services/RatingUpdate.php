@@ -2,23 +2,26 @@
 
 namespace App\Http\Services;
 
+use App\Http\Requests\RatingUpdateRequest;
 use App\Models\Rating;
-use Illuminate\Http\Request;
+use App\Models\RatingImage;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 
 class RatingUpdate {
 
     public $id;
-    private $user_id, $product_id, $title, $body, $stars;
+    private $user_id, $product_id, $title, $body, $stars, $images;
 
     // Adatok lekérdezése
-    function __construct(Request $request) {
+    function __construct(RatingUpdateRequest $ratingUpdateRequest) {
         $this->user_id = Auth::id();
-        $this->product_id = $request->product_id;
-        $this->title = $request->title;
-        $this->body = $request->body;
-        $this->stars = $request->stars;   
+        $this->product_id = $ratingUpdateRequest->product_id;
+        $this->title = $ratingUpdateRequest->title;
+        $this->body = $ratingUpdateRequest->body;
+        $this->stars = $ratingUpdateRequest->stars;   
+        $this->images = $ratingUpdateRequest->images;
         $this->updateRating();
     }
 
@@ -47,7 +50,67 @@ class RatingUpdate {
 
             // Azonosító lekérdezése
             $this->id = $rating->id;
+
+            // Fényképek felvitele
+            $this->uploadImages();
         });
+    }
+
+    // Fényképek felvitele
+    private function uploadImages() {
+
+        // Képek elmentése, ha volt
+        if ($this->images!=null) {
+
+            // Végigmenni minden egyes képen
+            foreach ($this->images AS $image) {
+
+                // Lekérdezni a kép fájl nevét
+                $filename = $image->getClientOriginalName();
+                
+                // Kép eltárolása fizikailag
+                Storage::putFileAs(
+                    'images/ratings/'.$this->id,
+                    $image,
+                    $filename
+                );
+
+                // Publikus átméretezett képek létrehozása
+                $this->createImage($image, $filename);
+                
+                // Képet hozzárendelni az ingatlanhoz
+                $image = new RatingImage();
+                $image->product_id = $this->id;
+                $image->filename = $filename;
+                $image->save();
+            }
+        }
+    }
+
+    // Kép létrehozása
+    private function createImage($image, $name) {
+
+        // Full HD-s kép
+        $dir = public_path('images/ratings/'.$this->id);
+        $dir_exists = is_dir($dir);
+        if (!$dir_exists) {
+            mkdir($dir, 0777, true);
+        }
+        $fullhd = ImageMod::make($image);            
+        $fullhd->resize(1920, 1080, function ($const) {
+            $const->aspectRatio();
+        })->save($dir.'/'.$name);
+
+        // 150x150-es kép
+        $dir = public_path('images/ratings/'.$this->id.'/thumb');
+        $dir_exists = is_dir($dir);
+        if (!$dir_exists) {
+            mkdir($dir, 0777, true);
+        }
+        $thumb = ImageMod::make($image);            
+        $thumb->resize(150, 150, function ($const) {
+            $const->aspectRatio();
+        })->save($dir.'/'.$name);
     }
 
 }
