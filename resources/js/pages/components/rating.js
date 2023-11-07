@@ -18,6 +18,8 @@ const getRating = async () => {
     try {
         // GET kérés küldése a szervernek
         response = await request('get', '/api/rating/' + router.currentRoute.value.params.id);
+
+        console.log(response.data);
         
         // Adatok lekérdezése és megjelenítése
         ratings.value = response.data;

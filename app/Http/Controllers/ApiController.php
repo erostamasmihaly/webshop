@@ -138,6 +138,7 @@ class ApiController extends Controller
                 $array["items"][$i]["stars"] = $rating["stars"];
                 $array["items"][$i]["moderated"] = $rating["moderated"];
                 $array["items"][$i]["user_name"] = $rating["user_name"];
+                $array["items"][$i]["images"] = $rating["images"];
                 $i++;
             }
         } else {

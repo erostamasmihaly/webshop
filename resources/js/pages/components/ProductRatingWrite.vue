@@ -25,7 +25,7 @@
             <div class="row m-1">
                 <div class="col-sm-2 fw-bold">Képek</div>
                 <div class="col-sm-10">
-                    <input type="file" multiple @change="collectImages"/>
+                    <input type="file" multiple @change="collectImages" :value="myrating.file"/>
                 </div>
             </div>
             <div>

@@ -10,6 +10,7 @@ use App\Models\Rating;
 use App\Models\Role;
 use App\Models\User;
 use App\Models\UserRole;
+use App\Models\RatingImage;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
@@ -488,6 +489,21 @@ if (!function_exists('get_ratings')) {
 
             // Ezen csillagok behelyezése a válaszba
             $rating->fa_stars = $fa_stars;
+
+            // Képek lekérdezése
+            $images = RatingImage::where('rating_id', $rating->id)->get(['filename']);
+            if ($images->count()>0) {
+                $i = 0;
+                $array = [];
+                foreach ($images AS $image) {
+                    $array[$i]["thumb"] = asset('images/ratings/'.$rating->id.'/thumb/'.$image->filename);
+                    $array[$i]["image"] = asset('images/ratings/'.$rating->id.'/'.$image->filename);
+                    $i++;
+                }
+                $rating->images = $array;
+            } else {
+                $rating->images = null;
+            }
         }
 
         // Csillagonkénti statisztika
