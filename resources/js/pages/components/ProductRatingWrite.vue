@@ -1,41 +1,43 @@
 <template>
 	<div v-if="is_buyed">
-		<div class="bg-primary text-light p-2 fw-bold">Értékelés írása</div>
-		<div class="row m-1">
-			<div class="col-sm-2 fw-bold">Cím</div>
-			<div class="col-sm-10">
-				<input class="form-control" type="text" v-model="myrating.title"/>
-			</div>
-		</div>
-		<div class="row m-1">
-			<div class="col-sm-2 fw-bold">Leírás</div>
-			<div class="col-sm-10">
-				<textarea class="form-control" v-model="myrating.body"/>
-			</div>
-		</div>
-		<div class="row m-1">
-			<div class="col-sm-2 fw-bold">Csillag</div>
-			<div class="col-sm-10">
-				<select class="form-control" v-model="myrating.stars">
-					<option v-for="num in 5" :value="num">{{ num }}</option>
-				</select>
-			</div>
-		</div>
-        <div class="row m-1">
-			<div class="col-sm-2 fw-bold">Képek</div>
-			<div class="col-sm-10">
-				<input type="file" multiple @change="collectImages"/>
-			</div>
-		</div>
-		<div>
-			<button class="btn btn-primary" type="button" @click="putRating()" v-show="ratingresult.button">Értékelés elküldése</button>
-			<div class="alert alert-success" role="alert" v-show="ratingresult.success">
-				Értékelés sikeresen elküldve. Jelenleg moderálás alatt!
-			</div>
-			<div class="alert alert-danger" role="alert" v-show="ratingresult.error">
-				Hiba történt az értékelés elküldése során!
-			</div>
-		</div>
+        <form method="POST" enctype="multipart/form-data">
+            <div class="bg-primary text-light p-2 fw-bold">Értékelés írása</div>
+            <div class="row m-1">
+                <div class="col-sm-2 fw-bold">Cím</div>
+                <div class="col-sm-10">
+                    <input class="form-control" type="text" v-model="myrating.title"/>
+                </div>
+            </div>
+            <div class="row m-1">
+                <div class="col-sm-2 fw-bold">Leírás</div>
+                <div class="col-sm-10">
+                    <textarea class="form-control" v-model="myrating.body"/>
+                </div>
+            </div>
+            <div class="row m-1">
+                <div class="col-sm-2 fw-bold">Csillag</div>
+                <div class="col-sm-10">
+                    <select class="form-control" v-model="myrating.stars">
+                        <option v-for="num in 5" :value="num">{{ num }}</option>
+                    </select>
+                </div>
+            </div>
+            <div class="row m-1">
+                <div class="col-sm-2 fw-bold">Képek</div>
+                <div class="col-sm-10">
+                    <input type="file" multiple @change="collectImages"/>
+                </div>
+            </div>
+            <div>
+                <button class="btn btn-primary" type="button" @click="putRating()" v-show="ratingresult.button">Értékelés elküldése</button>
+                <div class="alert alert-success" role="alert" v-show="ratingresult.success">
+                    Értékelés sikeresen elküldve. Jelenleg moderálás alatt!
+                </div>
+                <div class="alert alert-danger" role="alert" v-show="ratingresult.error">
+                    Hiba történt az értékelés elküldése során!
+                </div>
+            </div>
+        </form>
 	</div>
 </template>
 <script>
@@ -66,11 +68,19 @@ export default {
         // Értékelés elküldése
         const putRating = async () => {
             try {
-                // Termékazonosító megadása
-                myrating.value.product_id = router.currentRoute.value.params.id;
+                
+                // Űrlapadatok tárolása - képek miatt FormData() alkalmazása 
+                /*let formData = new FormData();
+                formData.append('product_id', router.currentRoute.value.params.id);
+                formData.append('title',myrating.value.title);
+                formData.append('body', myrating.value.body);
+                formData.append('stars', myrating.value.stars);
+                formData.append('images', collectedImages);*/
 
-                // Képek megadása
+                myrating.value.product_id = router.currentRoute.value.params.id;
                 myrating.value.images = collectedImages;
+
+                console.log(myrating.value);
                 
                 // Kérés küldése a szerver felé
                 const response = await request('put', '/api/rating', myrating.value);
