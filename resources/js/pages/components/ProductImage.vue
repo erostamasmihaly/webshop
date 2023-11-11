@@ -7,16 +7,10 @@
 			</div>
 		</div>
 	</div>
-	<div id="popup_background" v-show="popup.show">
-		<div id="popup" class="text-center">
-			<div id="popup_close" @click="closePopup()">X</div>
-			<img :src="popup.image" class="img-fluid mh-100"/>
-		</div>
-	</div>
 </template>
 <script>
 // Importálás
-import { ref } from 'vue'
+import { openPopup } from './popup';
 
 // Exportálás
 export default {
@@ -25,25 +19,9 @@ export default {
     props: ['images'],
 
     // Beállítás
-    setup(props) {
-
-        // Definiálás
-        let popup = ref({});
-
-        // Felugró ablak megnyitása
-        const openPopup = async (src) => {
-            popup.value = { show: true, image: src };
-        };
-
-        // Felugró ablak bezárása
-        const closePopup = async () => {
-            popup.value = {};
-        };
-
+    setup() {
         return {
-            openPopup,
-            closePopup,
-            popup
+            openPopup
         }
     }
 }

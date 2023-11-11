@@ -13,6 +13,7 @@
 // Importálás
 import { onMounted, ref } from 'vue'
 import { request } from "../../helper_vue";
+import { openPopup } from './popup';
 
 // Exportálás
 export default {
@@ -48,6 +49,7 @@ export default {
 
         return {
             getImages, 
+            openPopup,
             images
         }
     }

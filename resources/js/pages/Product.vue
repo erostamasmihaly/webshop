@@ -13,11 +13,13 @@
             <ProductImage :images="product.images"/>
         </div>
     </div>
+    <ProductPopup :show="popup.show" :image="popup.image"/>
 </template>
 <script>
 // Importálás
-import {request} from '../helper_vue'
-import {ref, onMounted} from 'vue'
+import { request } from '../helper_vue'
+import { ref, onMounted } from 'vue'
+import { popup } from './components/popup';
 import router from '../route'
 import ProductSizes from './components/ProductSizes.vue'
 import ProductData from './components/ProductData.vue'
@@ -26,17 +28,20 @@ import ProductRatingList from './components/ProductRatingList.vue'
 import ProductRatingWrite from './components/ProductRatingWrite.vue'
 import ProductCart from './components/ProductCart.vue'
 import ProductImage from './components/ProductImage.vue'
+import ProductPopup from './components/ProductPopup.vue'
 
 // Exportálás
 export default {
-    components: { 
-        ProductSizes, 
-        ProductData, 
+    components: {
+        ProductSizes,
+        ProductData,
         ProductCategory,
         ProductRatingList,
         ProductRatingWrite,
         ProductCart,
-        ProductImage
+        ProductImage,
+        ProductPopup,
+        ProductPopup
     },
     setup() {
         
@@ -46,6 +51,7 @@ export default {
         let product = ref({
             is_buyed: false
         });
+
 
         // Amikor betöltődött az oldal
         onMounted(() => {
@@ -68,7 +74,8 @@ export default {
 
         return {
             getProduct,
-            product
+            product,
+            popup
         };
     }
 }
