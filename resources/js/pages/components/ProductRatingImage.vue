@@ -1,8 +1,8 @@
 <template>
     <div v-if="images!=null">
 		<div class="row p-2">
-			<div class="col-sm-3 col-6" v-for="image in images">
-				<div @click="openPopup(image.image)">
+			<div class="col-sm-3 col-6" v-for="(image, index) in images">
+				<div @click="openPopup(images, index)">
 					<img :src="image.thumb" class="img-thumbnail"/>
 				</div>
 			</div>

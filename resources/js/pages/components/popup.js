@@ -8,7 +8,8 @@ let popup = ref({
 });
 
 // Felugró ablak megnyitása
-const openPopup = async (src) => {
+const openPopup = async (images, index) => {
+    let src = images[index].image;
     popup.value = { show: true, image: src };
 };
 
