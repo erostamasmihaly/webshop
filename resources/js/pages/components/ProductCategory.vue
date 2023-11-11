@@ -13,13 +13,8 @@
 // Exportálás
 export default {
     
-    // Változó definiálása
-    props: ['categories'],
+    // Attribútum definiálása
+    props: ['categories']
 
-    // Beállítás
-    setup(props) {
-        return {
-        }
-    }
 }
 </script>

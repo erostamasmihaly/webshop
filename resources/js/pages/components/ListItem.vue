@@ -18,13 +18,14 @@ export default {
     props: ['item'],
 
     // Beállítás
-    setup(props) {
+    setup() {
         
         // Termék oldal megnyitása
         const openProduct = async(id) => {
             router.push('/vue/product/'+id);
         }
 
+        // Visszatérés
         return {
             openProduct
         }

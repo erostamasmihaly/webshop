@@ -50,11 +50,13 @@ import { getRating } from './rating'
 // Exportálás
 export default {
     
-    // Változó definiálása
+    // Attribútum definiálása
     props: ['is_buyed'],
 
     // Beállítás
-    setup(props) {
+    setup() {
+
+        // Változók definiálása
         let myrating = ref({
             stars: 5
         });
@@ -121,6 +123,7 @@ export default {
             collectedImages = event.target.files;
         }
 
+        // Visszatérés
         return {
             putRating,
             collectImages,

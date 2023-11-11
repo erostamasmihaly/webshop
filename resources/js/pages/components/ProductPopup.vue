@@ -29,12 +29,13 @@ import { popup, closePopup, prevImage, nextImage } from './popup';
 // Exportálás
 export default {
     
-    // Változó definiálása
+    // Attribútumok definiálása
     props: ['show','image'],
 
     // Beállítás
     setup() {
 
+        // Visszatérés
         return {
             closePopup,
             prevImage,

@@ -28,6 +28,7 @@
 	</div>
 </template>
 <script>
+
 // Importálás
 import { request } from "../../helper_vue";
 import { ref } from 'vue'
@@ -36,12 +37,13 @@ import router from '../../route'
 // Exportálás
 export default {
     
-    // Változó definiálása
+    // Attribútum definiálása
     props: ['prices'],
 
     // Beállítás
-    setup(props) {
+    setup() {
         
+        // Változók definiálása
         let mycart = ref({});
         let cartresult = ref({
             button: true
@@ -73,8 +75,6 @@ export default {
             }
             catch (error) {
 
-                console.log(error);
-
                 // Hibák lekérdezése
                 let errors = error.response.data.errors;
 
@@ -92,6 +92,7 @@ export default {
             }, 3000);
         };
 
+        // Visszatérés
         return {
             putCart,
             mycart,

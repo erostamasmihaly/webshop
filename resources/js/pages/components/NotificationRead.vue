@@ -27,12 +27,7 @@
 export default {
     
     // Változó definiálása
-    props: ['notifications'],
+    props: ['notifications']
 
-    // Beállítás
-    setup(props) {
-        return {
-        }
-    }
 }
 </script>

@@ -30,11 +30,12 @@
 <script>
 // Exportálás
 export default {
-    // Változó definiálása
+
+    // Attribútum definiálása
     props: ['notifications'],
 
     // Beállítás
-    setup(props) {
+    setup() {
 
         // Olvasottnak jelölés - Egy megadott
         const postNotificationOne = async (id) => {
@@ -60,6 +61,7 @@ export default {
             }
         }
 
+        // Visszatérés
         return {
             postNotificationOne
         }

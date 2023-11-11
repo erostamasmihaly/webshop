@@ -15,11 +15,13 @@ import { openPopup } from './popup';
 // Exportálás
 export default {
     
-    // Változó definiálása
+    // Attribútum definiálása
     props: ['images'],
 
     // Beállítás
     setup() {
+
+        // Visszatérés
         return {
             openPopup
         }

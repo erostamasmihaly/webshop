@@ -34,23 +34,18 @@
 			</tr>
 		</tbody>
 	</table>
-	<div id="rating_popup_background" v-show="popup.show">
-		<div id="rating_popup" class="text-center">
-			<div id="rating_popup_close" @click="closePopup()">X</div>
-			<img :src="popup.image" class="img-fluid"/>
-			<button class="btn btn-primary w-100">Törlés</button>
-		</div>
-	</div>
 </template>
 <script>
 
 // Importálás
-import { onMounted, ref } from 'vue'
+import { onMounted } from 'vue'
 import { getRating, ratings } from './rating'
 import ProductRatingImage from './ProductRatingImage.vue';
 
 // Exportálás
 export default {
+
+	// Komponensek
 	components: { 
         ProductRatingImage 
     },
@@ -63,25 +58,9 @@ export default {
             getRating()
         });
 
-		// Definiálás
-        let popup = ref({});
-
-        // Felugró ablak megnyitása
-        const openPopup = async (src) => {
-            popup.value = { show: true, image: src };
-        };
-
-        // Felugró ablak bezárása
-        const closePopup = async () => {
-            popup.value = {};
-        };
-
+		// Visszatérés
         return {
-			getRating,
-			ratings,
-			openPopup,
-            closePopup,
-            popup
+			ratings
 		}
     }
 }

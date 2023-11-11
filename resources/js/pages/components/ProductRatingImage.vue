@@ -18,12 +18,13 @@ import { openPopup } from './popup';
 // Exportálás
 export default {
 
-    // Változó definiálása
+    // Attribútum definiálása
     props: ['id'],
 
     // Beállítás
     setup(props) {
 
+        // Változók definiálása
         let images = ref([]);
         let response = ref(null);
 
@@ -44,9 +45,12 @@ export default {
 
         // Amikor betöltődött az oldal
         onMounted(async () => {
+
+            // Képek lekérdezése
             getImages(props.id);
         });
 
+        // Visszatérés
         return {
             getImages, 
             openPopup,

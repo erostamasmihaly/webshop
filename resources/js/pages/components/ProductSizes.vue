@@ -21,13 +21,8 @@
 // Exportálás
 export default {
     
-    // Változó definiálása
-    props: ['prices','unit'],
+    // Attribútumok definiálása
+    props: ['prices','unit']
 
-    // Beállítás
-    setup(props) {
-        return {
-        }
-    }
 }
 </script>

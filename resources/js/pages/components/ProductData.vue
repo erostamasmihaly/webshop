@@ -7,13 +7,8 @@
 // Exportálás
 export default {
     
-    // Változó definiálása
-    props: ['product'],
+    // Attribútum definiálása
+    props: ['product']
 
-    // Beállítás
-    setup(props) {
-        return {
-        }
-    }
 }
 </script>
