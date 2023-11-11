@@ -10,12 +10,12 @@
                 </button>
             </div>
             <div class="position-absolute bottom-0 start-0 m-2">
-                <button class="btn btn-primary">
+                <button class="btn btn-primary" @click="prevImage()">
                     <i class="fa-solid fa-square-caret-left"></i>
                 </button>
             </div>
             <div class="position-absolute bottom-0 end-0 m-2">
-                <button class="btn btn-primary">
+                <button class="btn btn-primary" @click="nextImage()">
                     <i class="fa-solid fa-square-caret-right"></i>
                 </button>
             </div>
@@ -24,7 +24,7 @@
 </template>
 <script>
 // Importálás
-import { popup, closePopup } from './popup'; 
+import { popup, closePopup, prevImage, nextImage } from './popup'; 
 
 // Exportálás
 export default {
@@ -37,6 +37,8 @@ export default {
 
         return {
             closePopup,
+            prevImage,
+            nextImage,
             popup
         }
     }
