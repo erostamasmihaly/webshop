@@ -1,7 +1,7 @@
 <template>
-    <div class="col-sm-2 text-center" @click="openProduct(item.id)">
+    <div class="col-sm-2 text-center" style="cursor: pointer" @click="openProduct(item.id)">
         <p class="fw-bold">{{ item.name }}</p>
-        <img :src="item.image" class="img-thumbnail"/>
+        <img :src="item.image" style="max-height: 100px; min-height: 100px;" class="img-thumbnail"/>
         <p>
             {{ item.discount_price }}<br>
             <button class="btn btn-primary">Megtekintés</button>

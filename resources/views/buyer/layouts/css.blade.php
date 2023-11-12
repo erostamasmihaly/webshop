@@ -5,9 +5,6 @@
 
 <!-- Saját --->
 <link href="{{ asset('css/own/tables.css') }}" rel="stylesheet">
-@if (Request::is('vue/*'))
-    <link href="{{ asset('css/own/vue.css') }}" rel="stylesheet">
-@endif
 @if (Request::is('/'))
     <link href="{{ asset('css/own/buyer_index.css') }}" rel="stylesheet">
 @endif
