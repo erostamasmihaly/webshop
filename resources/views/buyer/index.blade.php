@@ -7,7 +7,7 @@
 			<div class="card-body">
 				<div class="alert alert-success alert-dismissible fade show">
 					<p>Ez nem egy valódi webáruház, csak egy informatikus magán projektje, referencia munkája! Fizetés esetén is csak az OTP Simple teszt fiók van alkalmazva! <a href="{{ route('about') }}"><i class="fa-solid fa-arrow-up-right-from-square"></i> Bővebb információ</a></p>
-					<p>VUE.js tartalmak csak belépés során érhetőek el a jobb oldali menüből elérhető <b>VUE.js oldalak</b> menüpontra kattintva/nyomva! Egy ilyen tesztfiók belépési adatai:
+					<p>VUE.js tartalmak csak belépés során érhetőek el a jobb oldali menüben található <b>VUE.js oldalak</b> menüpontra kattintva/nyomva! Egy ilyen tesztfiók belépési adatai:
 						<ul>
 							<li><b>E-mail cím:</b> vasarlo@etm.hu</li>
 							<li><b>Jelszó:</b> Vasarlo1234</li>
