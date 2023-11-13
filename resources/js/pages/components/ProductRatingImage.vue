@@ -2,7 +2,7 @@
     <div v-if="images!=null">
 		<div class="row p-2">
 			<div class="col-sm-3 col-6" v-for="(image, index) in images">
-				<div @click="openPopup(images, index)">
+				<div @click="openPopup(images, index, owner)">
 					<img :src="image.thumb" class="img-thumbnail"/>
 				</div>
 			</div>
@@ -19,7 +19,7 @@ import { openPopup } from './popup';
 export default {
 
     // Attribútum definiálása
-    props: ['id'],
+    props: ['id','owner'],
 
     // Beállítás
     setup(props) {

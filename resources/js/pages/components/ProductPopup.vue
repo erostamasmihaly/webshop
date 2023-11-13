@@ -14,6 +14,11 @@
                     <i class="fa-solid fa-square-caret-left"></i>
                 </button>
             </div>
+            <div v-if="popup.owner == 1" class="position-absolute bottom-0 start-50 m-2 translate-middle-x">
+                <button class="btn btn-primary" @click="deleteImage()">
+                    Kép törlése
+                </button>
+            </div>
             <div class="position-absolute bottom-0 end-0 m-2">
                 <button class="btn btn-primary" @click="nextImage()">
                     <i class="fa-solid fa-square-caret-right"></i>
@@ -35,11 +40,16 @@ export default {
     // Beállítás
     setup() {
 
+        const deleteImage = async () => {
+
+        }
+
         // Visszatérés
         return {
             closePopup,
             prevImage,
             nextImage,
+            deleteImage,
             popup
         }
     }

@@ -137,6 +137,7 @@ class ApiController extends Controller
         $i = 0;
         if (count($ratings_array["ratings"])>0) {
             foreach ($ratings_array["ratings"] AS $rating) {
+                $array["items"][$i]["owner"] = $rating["user_id"] == Auth::id() ? 1 : 0; 
                 $array["items"][$i]["id"] = $rating["id"];
                 $array["items"][$i]["title"] = $rating["title"];
                 $array["items"][$i]["body"] = $rating["body"];

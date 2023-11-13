@@ -8,15 +8,16 @@ let popup = ref({
 });
 
 let popup_images = [];
-
 let popup_index = 0;
+let popup_owner = 0;
 
 // Felugró ablak megnyitása
-const openPopup = (images, index) => {
+const openPopup = (images, index, owner = 0) => {
     
     // Átvenni a megadott értékeket
     popup_index = index;
     popup_images = images;
+    popup_owner = owner;
 
     // Kép megjelenítése
     showImage();
@@ -70,7 +71,7 @@ const showImage = () => {
     let src = popup_images[popup_index].image;
 
     // Ezen kép és a popup ablak megjelenítése
-    popup.value = { show: true, image: src };
+    popup.value = { show: true, image: src, owner: popup_owner };
 }
 
 // Exportálás
