@@ -8,6 +8,7 @@
             <ProductRatingWrite :is_buyed="product.is_buyed"/>
         </div>
         <div class="col-sm-6">
+            <ProductFavourite/>
             <ProductSizes :prices="product.prices" :unit="product.unit"/>
             <ProductCart :prices="product.prices"/>
             <ProductImage :images="product.images"/>
@@ -29,6 +30,7 @@ import ProductRatingWrite from './components/ProductRatingWrite.vue'
 import ProductCart from './components/ProductCart.vue'
 import ProductImage from './components/ProductImage.vue'
 import ProductPopup from './components/ProductPopup.vue'
+import ProductFavourite from './components/ProductFavourite.vue';
 
 // Exportálás
 export default {
@@ -41,7 +43,8 @@ export default {
         ProductCart,
         ProductImage,
         ProductPopup,
-        ProductPopup
+        ProductPopup,
+        ProductFavourite
     },
     setup() {
         

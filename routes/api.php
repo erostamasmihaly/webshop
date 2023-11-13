@@ -46,3 +46,9 @@ Route::post('notification/one', [App\Http\Controllers\ApiController::class, 'pos
 
 // Értesítés olvasottnak jelölése - Összes
 Route::post('notification/all', [App\Http\Controllers\ApiController::class, 'post_notification_all']);
+
+// Kedvelés lekérdezése
+Route::get('favourite/{id}', [App\Http\Controllers\ApiController::class, 'get_favourite']);
+
+// Kedvelés módosítása
+Route::post('favourite', [App\Http\Controllers\ApiController::class, 'post_favourite']);

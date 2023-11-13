@@ -53,7 +53,7 @@ export default {
         const putCart = async () => {
             try {
                 // Termék azonosító felvitele
-                mycart.value.product_id = router.currentRoute.value.params.id;;
+                mycart.value.product_id = router.currentRoute.value.params.id;
                 
                 // GET kérés küldése a szervernek
                 const response = await request('put', '/api/cart/', mycart.value);

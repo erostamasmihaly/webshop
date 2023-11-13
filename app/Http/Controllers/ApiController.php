@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Http\Services\BuyerUserUpdate;
 use App\Http\Services\CartAdd;
+use App\Http\Services\FavouriteUpdate;
 use App\Http\Services\RatingUpdate;
 use App\Models\Cart;
+use App\Models\Favourite;
 use App\Models\Product;
 use App\Models\RatingImage;
 use App\Models\User;
@@ -261,6 +263,27 @@ class ApiController extends Controller
 
         // Bejelölni, hogy látta az összes értesítést
         auth()->user()->unreadNotifications->markAsRead();
+
+        // Válasz küldése
+        $array['OK']=1;
+        return Response::json($array);
+    }
+
+    // Kedvelés lekérdezése
+    public function get_favourite($id) {
+
+        // Lekérdezni, hogy az adott terméket mennyien kedvelték
+        $array["number"] = Favourite::where('product_id', $id)->count();
+
+        // Lekérdezni, hogy a felhasználó kedvelte-e a terméket
+        $array["state"] = Favourite::where('product_id', $id)->where('user_id', Auth::id())->count();
+        
+        // Válasz küldése
+        return Response::json($array);
+    }
+
+    // Kedvelés módosítása
+    public function post_favourite(FavouriteUpdate $favouriteUpdate) {
 
         // Válasz küldése
         $array['OK']=1;
