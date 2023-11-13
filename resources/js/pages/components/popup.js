@@ -4,7 +4,9 @@ import { ref } from 'vue'
 // Definiálás
 let popup = ref({
     show: false,
-    image: null
+    image: null,
+    popup_owner: 0,
+    id: 0
 });
 
 let popup_images = [];
@@ -69,9 +71,10 @@ const showImage = () => {
 
     // Lekérdezni az aktuális képek közül az aktuális indexűt
     let src = popup_images[popup_index].image;
+    let id = popup_images[popup_index].id;
 
     // Ezen kép és a popup ablak megjelenítése
-    popup.value = { show: true, image: src, owner: popup_owner };
+    popup.value = { show: true, image: src, owner: popup_owner, id: id };
 }
 
 // Exportálás

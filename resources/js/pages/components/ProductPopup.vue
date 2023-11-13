@@ -15,7 +15,7 @@
                 </button>
             </div>
             <div v-if="popup.owner == 1" class="position-absolute bottom-0 start-50 m-2 translate-middle-x">
-                <button class="btn btn-primary" @click="deleteImage()">
+                <button class="btn btn-primary" @click="deleteImage(popup.id)">
                     Kép törlése
                 </button>
             </div>
@@ -30,6 +30,8 @@
 <script>
 // Importálás
 import { popup, closePopup, prevImage, nextImage } from './popup'; 
+import { request } from "../../helper_vue";
+import { getRating } from './rating';
 
 // Exportálás
 export default {
@@ -40,8 +42,34 @@ export default {
     // Beállítás
     setup() {
 
-        const deleteImage = async () => {
+        // Értékeléshez tartozó kép törlése
+        const deleteImage = async (id) => {
 
+            // Megkérdezni a felhasználót, hogy akarja-e a képet törölni
+            let user_confirm = confirm("Biztosan törölni szeretné a fényképet?");
+
+            // Ha igen
+            if (user_confirm) {
+                
+                try {
+                
+                    // DELETE kérés küldése a szervernek
+                    const response = await request('delete', '/api/rating/image/'+id);
+
+                    // Ha minden rendben volt
+                    if (response.data.OK == 1) {
+
+                        // Popup bezárása
+                        closePopup();
+
+                        // Értékelések újbóli lekérdezése
+                        getRating();
+                    }
+
+                } catch (error) {
+                    console.log(error);
+                }
+            }
         }
 
         // Visszatérés

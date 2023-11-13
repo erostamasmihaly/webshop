@@ -26,6 +26,9 @@ Route::get('rating/{id}', [App\Http\Controllers\ApiController::class, 'get_ratin
 // Értékelés fényképeinek lekérdezése
 Route::get('rating/{id}/images', [App\Http\Controllers\ApiController::class, 'get_rating_images']);
 
+// Értékelés fényképének törlése
+Route::delete('rating/image/{id}', [App\Http\Controllers\ApiController::class, 'delete_rating_image']);
+
 // Értékelés felvitele
 Route::put('rating', [App\Http\Controllers\ApiController::class, 'put_rating']);
 
