@@ -81,7 +81,6 @@ export default {
 
         // Visszatérés
         return {
-            getFavourite,
             postFavourite,
             favourite
         }
