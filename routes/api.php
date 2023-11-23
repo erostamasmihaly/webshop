@@ -55,3 +55,6 @@ Route::get('favourite/{id}', [App\Http\Controllers\ApiController::class, 'get_fa
 
 // Kedvelés módosítása
 Route::post('favourite', [App\Http\Controllers\ApiController::class, 'post_favourite']);
+
+// Kategóriák lekérdezése
+Route::get('categories', [App\Http\Controllers\ApiController::class, 'get_categories']);

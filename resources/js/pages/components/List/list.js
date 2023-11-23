@@ -20,11 +20,18 @@ const getList = async () => {
 }
 
 // Termékek listájának szűrése
-const filterList = (value, index, arr) => {
+const filterList = (value) => {
+
+    // Alapesetben mutassa a terméket 
+    let show = true;
+
+    // Ha nem a megadott nemek vannak megadva, akkor szűrés
     if (value.gender_id!=11) {
-        return false;
+        show = false;
     }
-    return true;
+
+    // Visszatérés azzal, hogy meg kell-e jeleníteni a terméket
+    return show;
 }
 
 // Szűrt lista megjelenítése

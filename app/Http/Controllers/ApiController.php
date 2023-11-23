@@ -8,9 +8,11 @@ use App\Http\Services\FavouriteUpdate;
 use App\Http\Services\RatingImageDelete;
 use App\Http\Services\RatingUpdate;
 use App\Models\Cart;
+use App\Models\CategoryGroup;
 use App\Models\Favourite;
 use App\Models\Product;
 use App\Models\RatingImage;
+use App\Models\Shop;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -319,5 +321,20 @@ class ApiController extends Controller
         // Válasz küldése
         $array['OK'] = 1;
         return Response::json($array);
+    }
+
+    // Kategóriák lekérdezése
+    public function get_categories() {
+
+       // Kategória csoport elemek lekérdezése
+       $array["ages"] = CategoryGroup::find(get_category_group_id('Korosztályok'))->categories;
+       $array["genders"] = CategoryGroup::find(get_category_group_id('Nemek'))->categories;  
+       $array["sizes"] = CategoryGroup::find(get_category_group_id('Méretek'))->categories; 
+
+       // Boltok lekérdezése
+       $array["shops"] = Shop::orderBy('name')->get();
+
+       // Válasz küldése
+       return Response::json($array);
     }
 }
