@@ -24,6 +24,7 @@
 					<a class="dropdown-item" href="{{ route('seller_index') }}">Alkalmazotti felület</a> 
 				@endif
 				@if(has_role('vásárló'))
+					<b class="dropdown-item fw-bold">Laravel oldalak</b>
 					<a class="dropdown-item" href="{{ route('buyer_notification') }}">Értesítések
 					@if(auth()->user()->unreadNotifications->count()>0)
 						<span class="w-100">
@@ -34,9 +35,15 @@
 					<a class="dropdown-item" href="{{ route('buyer_user') }}">Profil adatok</a>
 					<a class="dropdown-item" href="{{ route('buyer_cart') }}">Kosár megtekintése</a> 
 					<a class="dropdown-item" href="{{ route('pay_history') }}">Vásárlási előzmények</a>
-					<a class="dropdown-item" href="{{ route('vue') }}">VUE.js oldalak</a>
+					<b class="dropdown-item fw-bold">VUE.js oldalak</b>
+					<a class="dropdown-item" href="{{ route('vue') }}/list">Termékek listája</a>
+					<a class="dropdown-item" href="{{ route('vue') }}/user">Felhasználó adatai</a>
+					<a class="dropdown-item" href="{{ route('vue') }}/payed">Eddigi vásárlások</a>
+					<a class="dropdown-item" href="{{ route('vue') }}/cart">Kosár tartalma</a>
+					<a class="dropdown-item" href="{{ route('vue') }}/notification">Értesítések</a>
 					<!--a class="dropdown-item" href="{{ route('react') }}">React oldalak</a-->
 				@endif
+				<b class="dropdown-item fw-bold">Egyéb</b>
 				<a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();document.getElementById('logout-form').submit();">
 				{{ __('Logout') }}
 				</a>
