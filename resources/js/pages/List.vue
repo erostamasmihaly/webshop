@@ -9,8 +9,8 @@
 </template>
 <script>
 // Importálás
-import {request} from '../helper_vue'
-import {ref, onMounted} from 'vue'
+import { list, getList, showList } from './components/List/list';
+import { onMounted } from 'vue'
 import ListItem from './components/List/ListItem.vue';
 import ListFilter from './components/List/ListFilter.vue'
 
@@ -21,31 +21,16 @@ export default {
         ListFilter 
     },
     setup() {
-        let list = ref({});
-        let response = ref(null);
 
         // Amikor betöltődött az oldal
-        onMounted(() => {
-            getList();
+        onMounted(async () => {
+            await getList();
+            showList();
         });
-
-        // Termékek listájának lekérdezése
-        const getList = async () => {
-
-            try {
-                // GET kérés küldése a szervernek
-                response = await request('get', '/api/list');
-
-                // Adatok lekérdezése és megjelenítése
-                list.value = response.data;
-
-            } catch (error) {
-                console.log(error);
-            }
-        }
 
         return {
             getList,
+            showList,
             list
         }
     }
