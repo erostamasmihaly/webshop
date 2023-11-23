@@ -1,5 +1,4 @@
 <template>
-    <h1>Eddigi vásárlások</h1>
     <table class="table table-hover">
         <thead>
             <tr>
@@ -27,9 +26,9 @@
 </template>
 <script>
 // Importálás
-import {request} from '../helper_vue'
+import {request} from '../../../helper_vue'
 import {ref, onMounted} from 'vue'
-import router from '../route'
+import router from '../../../route'
 
 // Exportálás
 export default {

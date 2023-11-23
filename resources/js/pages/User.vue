@@ -1,139 +1,72 @@
 <template>
-    <h1>Felhasználó adatai</h1>
-    <input type="hidden" v-model="user.id"/>
-    <div class="row mb-2">
-        <div class="col-sm-3">Felhasználói név</div>
-        <div class="col-sm-9">
-            <input type="text" class="form-control" v-model="user.name"/>
-        </div>
-    </div>
-    <div class="row mb-2">
-        <div class="col-sm-3">Vezetéknév</div>
-        <div class="col-sm-9">
-            <input type="text" class="form-control" v-model="user.surname"/>
-        </div>
-    </div>
-    <div class="row mb-2">
-        <div class="col-sm-3">Keresztnév</div>
-        <div class="col-sm-9">
-            <input type="text" class="form-control" v-model="user.forename"/>
-        </div>
-    </div>
-    <div class="row mb-2">
-        <div class="col-sm-3">Ország</div>
-        <div class="col-sm-9">
-            <input type="text" class="form-control" v-model="user.country"/>
-        </div>
-    </div>
-    <div class="row mb-2">
-        <div class="col-sm-3">Területi egység</div>
-        <div class="col-sm-9">
-            <input type="text" class="form-control" v-model="user.state"/>
-        </div>
-    </div>
-    <div class="row mb-2">
-        <div class="col-sm-3">Irányítószám</div>
-        <div class="col-sm-9">
-            <input type="text" class="form-control" v-model="user.zip"/>
-        </div>
-    </div>
-    <div class="row mb-2">
-        <div class="col-sm-3">Település</div>
-        <div class="col-sm-9">
-            <input type="text" class="form-control" v-model="user.city"/>
-        </div>
-    </div>
-    <div class="row mb-2">
-        <div class="col-sm-3">Utca, házszám...</div>
-        <div class="col-sm-9">
-            <input type="text" class="form-control" v-model="user.address"/>
-        </div>
-    </div>
+    <h1>Felhasználó</h1>
     <div>
-        <button class="btn btn-primary" @click="saveUser" v-show="result.button">Mentés</button>
-        <div class="alert alert-success" role="alert" v-show="result.success">
-            Sikeres művelet!
+        <button class="btn m-1" :class="(activeTab==0) ? 'btn-primary' : 'btn-secondary'" @click="showTab(0)">Adatok</button>
+        <button class="btn m-1" :class="(activeTab==1) ? 'btn-primary' : 'btn-secondary'" @click="showTab(1)">Kosár</button>
+        <button class="btn m-1" :class="(activeTab==2) ? 'btn-primary' : 'btn-secondary'" @click="showTab(2)">Vásárlások</button>
+        <button class="btn m-1" :class="(activeTab==3) ? 'btn-primary' : 'btn-secondary'" @click="showTab(3)">Értesítések</button>
+    </div>
+    <div class="card-body">
+        <div v-show="activeTab==0">
+            <UserData />
         </div>
-        <div class="alert alert-danger" role="alert" v-show="result.error"><span v-html="result.message"></span></div>
+        <div v-show="activeTab==1">
+            <UserCart />
+        </div>
+        <div v-show="activeTab==2">
+            <UserPayed />
+        </div>
+        <div v-show="activeTab==3">
+            <UserNotification />
+        </div>
     </div>
 </template>
 <script>
 // Importálás
-import {request} from '../helper_vue'
-import {ref, onMounted} from 'vue'
+import UserData from './components/User/UserData.vue'
+import UserCart from './components/User/UserCart.vue'
+import UserPayed from './components/User/UserPayed.vue'
+import UserNotification from './components/User/UserNotification.vue'
+import { ref, onMounted } from 'vue';
 
 // Exportálás
 export default {
+
+    // Komponensek
+    components: {
+        UserData,
+        UserCart,
+        UserPayed,
+        UserNotification
+    },
+
+    // Beállítás
     setup() {
-        
-        // Elemekre történő hivatkozások megadása
-        let response = ref(null);
-        let user = ref({});
-        let result = ref({
-            button: true,
-        });
+
+        // Definiálás
+        let activeTab = ref(0);
+        let tabs = ref({});
 
         // Amikor betöltődött az oldal
         onMounted(() => {
-            getUser();
+            showTab(0);
         });
 
-        // Felhasználó adatainak lekérdezése
-        const getUser = async () => {
+        // Megadott fül mutatása
+        const showTab = (tab) => {
 
-            try {
+            // Megadott fül legyen aktív
+            activeTab.value = tab;
 
-                // GET kérés küldése a szervernek
-                response = await request('get', '/api/user');
-
-                // Mezők értékeinek megadása a kérés eredménye alapján
-                user.value = response.data;
-
-            } catch (error) {
-                console.log(error);
-            }
-        }
-
-        // Felhasználó adatainak mentése
-        const saveUser = async () => {
-            try {
-
-                // Kérés küldése a szerver felé
-                const response = await request('post', '/api/user', user.value);
-                
-                // Ha OK = 1 a válasz
-                if (response.data.OK == 1) {
-
-                    // Eredmény mutatása
-                    result.value = { success: true }
-
-                }
-            } catch (error) {
-
-                // Hibák lekérdezése
-                let errors = error.response.data.errors;
-
-                // Hibaszöveg létrehozása ezen hibákból
-                let errorMessage = Object.values(errors).join("<br>");
-
-                // Hiba mutatása
-                result.value = { error: true, message: errorMessage }
-                
-            }
-
-            // 3 másodperc múlva az eredmény elrejtése
-            setTimeout(function() {
-                result.value = { button: true }
-            }, 3000);
         }
 
         // Visszatérés
         return {
-            user,
-            result,
-            getUser,
-            saveUser
+            activeTab,
+            showTab,
+            tabs
         }
+        
     }
 }
 </script>

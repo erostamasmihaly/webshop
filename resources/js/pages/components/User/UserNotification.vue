@@ -1,20 +1,18 @@
 <template>
-    <h1>Értesítések ({{ notifications.total }} db)</h1>
     <NotificationUnread :notifications="notifications" />
     <NotificationRead :notifications="notifications" />
 </template>
 <script>
 // Importálás
-import {request} from '../helper_vue'
+import {request} from '../../../helper_vue'
 import {ref, onMounted} from 'vue'
-import NotificationUnread from './components/Notification/NotificationUnread.vue';
-import NotificationRead from './components/Notification/NotificationRead.vue';
+import NotificationUnread from '../Notification/NotificationUnread.vue';
+import NotificationRead from '../Notification/NotificationRead.vue';
 
 // Exportálás
 export default {
     setup() {
         let notifications = ref({
-            total: 0,
             unread: {
                 items: {},
                 total: 0

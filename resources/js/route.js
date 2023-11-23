@@ -4,14 +4,6 @@ const router = createRouter({
     history: createWebHistory(),
     routes: [
         {
-            path: '/vue/cart',
-            component: () => import('./pages/Cart.vue')
-        },
-        {
-            path: '/vue/payed',
-            component: () => import('./pages/Payed.vue')
-        },
-        {
             path: '/vue/product/:id',
             component: () => import('./pages/Product.vue')
         },
@@ -22,10 +14,6 @@ const router = createRouter({
         {
             path: '/vue/list',
             component: () => import('./pages/List.vue')
-        },
-        {
-            path: '/vue/notification',
-            component: () => import('./pages/Notification.vue')
         },
     ],
 })

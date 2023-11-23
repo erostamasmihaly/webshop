@@ -37,10 +37,7 @@
 					<a class="dropdown-item" href="{{ route('pay_history') }}">Vásárlási előzmények</a>
 					<b class="dropdown-item fw-bold">VUE.js oldalak</b>
 					<a class="dropdown-item" href="{{ route('vue') }}/list">Termékek listája</a>
-					<a class="dropdown-item" href="{{ route('vue') }}/user">Felhasználó adatai</a>
-					<a class="dropdown-item" href="{{ route('vue') }}/payed">Eddigi vásárlások</a>
-					<a class="dropdown-item" href="{{ route('vue') }}/cart">Kosár tartalma</a>
-					<a class="dropdown-item" href="{{ route('vue') }}/notification">Értesítések</a>
+					<a class="dropdown-item" href="{{ route('vue') }}/user">Felhasználó</a>
 					<!--a class="dropdown-item" href="{{ route('react') }}">React oldalak</a-->
 				@endif
 				<b class="dropdown-item fw-bold">Egyéb</b>
