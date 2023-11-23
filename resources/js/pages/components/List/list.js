@@ -6,6 +6,12 @@ import { ref } from 'vue'
 let list = ref({});
 let unfiltered = ref(null);
 let filtered = [];
+let selected = {
+    shop: 0,
+    size: 0,
+    gender: 0,
+    age: 0
+};
 
 // Termékek listájának lekérdezése
 const getList = async () => {
@@ -25,8 +31,23 @@ const filterList = (value) => {
     // Alapesetben mutassa a terméket 
     let show = true;
 
-    // Ha nem a megadott nemek vannak megadva, akkor szűrés
-    if (value.gender_id!=11) {
+    // Ha nem a megadott nem van megadva, akkor szűrés
+    if ((selected.gender!=0) && (selected.gender!=value.gender_id)) {
+        show = false;
+    }
+
+    // Ha nem a megadott méret van megadva, akkor szűrés
+    if ((selected.size!=0) && (!value.sizes.includes(selected.size))) {
+        show = false;
+    }
+
+    // Ha nem a megadott korosztály van megadva, akkor szűrés
+    if ((selected.age!=0) && (selected.age!=value.age_id)) {
+        show = false;
+    }
+
+    // Ha nem a megadott bolt van megadva, akkor szűrés
+    if ((selected.shop!=0) && (selected.shop!=value.shop_id)) {
         show = false;
     }
 
@@ -39,7 +60,6 @@ const showList = () => {
 
     // Szűrés elvégzése
     filtered = unfiltered.data.filter(filterList);
-    console.log(filtered);
 
     // Adatok megjelenítése
     list.value = filtered;
@@ -48,6 +68,7 @@ const showList = () => {
 // Exportálás
 export {
     list,
+    selected,
     getList,
     showList
 }

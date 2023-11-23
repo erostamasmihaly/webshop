@@ -1,30 +1,30 @@
 <template>
     <div class="row p-2">
         <div class="col-sm-2">
-            Bolt
-            <select class="form-control">
-                <option>Összes</option>
+            <div class="fw-bold">Bolt</div>
+            <select class="form-control" @change="onChange('shop',$event)">
+                <option value="0">Összes</option>
                 <option :value="item.id" v-for="item in filters.shops">{{ item.name }}</option>
             </select>
         </div>
         <div class="col-sm-2">
-            Méret
-            <select class="form-control">
-                <option>Összes</option>
+            <div class="fw-bold">Méret</div>
+            <select class="form-control" @change="onChange('size',$event)">
+                <option value="0">Összes</option>
                 <option :value="item.id" v-for="item in filters.sizes">{{ item.name }}</option>
             </select>
         </div>
         <div class="col-sm-2">
-            Nem
-            <select class="form-control">
-                <option>Összes</option>
+            <div class="fw-bold">Nem</div>
+            <select class="form-control" @change="onChange('gender',$event)">
+                <option value="0">Összes</option>
                 <option :value="item.id" v-for="item in filters.genders">{{ item.name }}</option>
             </select>
         </div>
         <div class="col-sm-2">
-            Korosztály
-            <select class="form-control">
-                <option>Összes</option>
+            <div class="fw-bold">Korosztály</div>
+            <select class="form-control"  @change="onChange('age',$event)">
+                <option value="0">Összes</option>
                 <option :value="item.id" v-for="item in filters.ages">{{ item.name }}</option>
             </select>
         </div>
@@ -34,6 +34,7 @@
 // Importálás
 import { request } from '../../../helper_vue'
 import { ref, onMounted } from 'vue'
+import { selected, showList } from './list'
 
 // Exportálás
 export default {
@@ -44,10 +45,10 @@ export default {
         // Definiálás
         let response = ref(null);
         let filters = ref({
-            shops: {},
-            ages: {},
+            shop: {},
+            age: {},
             gender: {},
-            sizes: {}
+            size: {},
         });
 
         // Amikor betöltődött az oldal
@@ -71,9 +72,23 @@ export default {
             }
         }
 
+        // Módosítás során
+        const onChange = (category, event) => {
+
+            // Kiválasztott érték lekérdezése
+            let value = parseInt(event.target.value);
+
+            // Ezen érték beállítása az aktuális szűrőhöz
+            selected[category] = value;
+
+            // Lista frissítése
+            showList();
+        }
+
         // Visszatérés
         return {
-            filters
+            filters,
+            onChange
         }
     }
 

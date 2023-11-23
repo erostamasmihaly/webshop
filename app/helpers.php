@@ -369,6 +369,7 @@ if (!function_exists('get_products')) {
                 $object->group_id = $product->group->category->id;
                 $object->age_id = $product->age->category->id;
                 $object->gender_id = $product->gender->category->id;
+                $object->shop_id = $product->shop->id;
                 $object->sizes = $product->sizes();
             }
 
