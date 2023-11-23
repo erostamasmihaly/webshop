@@ -30,7 +30,7 @@
 <script>
 // Importálás
 import { popup, closePopup, prevImage, nextImage } from './popup'; 
-import { request } from "../../helper_vue";
+import { request } from "../../../helper_vue";
 import { getRating } from './rating';
 
 // Exportálás

@@ -20,17 +20,17 @@
 // Importálás
 import { request } from '../helper_vue'
 import { ref, onMounted } from 'vue'
-import { popup } from './components/popup';
+import { popup } from './components/Product/popup';
 import router from '../route'
-import ProductSizes from './components/ProductSizes.vue'
-import ProductData from './components/ProductData.vue'
-import ProductCategory from './components/ProductCategory.vue'
-import ProductRatingList from './components/ProductRatingList.vue'
-import ProductRatingWrite from './components/ProductRatingWrite.vue'
-import ProductCart from './components/ProductCart.vue'
-import ProductImage from './components/ProductImage.vue'
-import ProductPopup from './components/ProductPopup.vue'
-import ProductFavourite from './components/ProductFavourite.vue';
+import ProductSizes from './components/Product/ProductSizes.vue'
+import ProductData from './components/Product/ProductData.vue'
+import ProductCategory from './components/Product/ProductCategory.vue'
+import ProductRatingList from './components/Product/ProductRatingList.vue'
+import ProductRatingWrite from './components/Product/ProductRatingWrite.vue'
+import ProductCart from './components/Product/ProductCart.vue'
+import ProductImage from './components/Product/ProductImage.vue'
+import ProductPopup from './components/Product/ProductPopup.vue'
+import ProductFavourite from './components/Product/ProductFavourite.vue';
 
 // Exportálás
 export default {

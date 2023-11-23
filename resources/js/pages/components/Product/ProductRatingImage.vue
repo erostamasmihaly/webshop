@@ -12,7 +12,7 @@
 <script>
 // Importálás
 import { onMounted, ref } from 'vue'
-import { request } from "../../helper_vue";
+import { request } from "../../../helper_vue";
 import { openPopup } from './popup';
 
 // Exportálás

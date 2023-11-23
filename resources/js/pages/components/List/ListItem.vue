@@ -10,7 +10,7 @@
 </template>
 <script>
 // Importálás
-import router from '../../route'
+import router from '../../../route'
 
 // Exportálás
 export default {

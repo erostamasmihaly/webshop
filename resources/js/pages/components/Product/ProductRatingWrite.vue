@@ -43,8 +43,8 @@
 <script>
 // Importálás
 import { ref } from 'vue'
-import router from '../../route'
-import { request } from '../../helper_vue'
+import router from '../../../route'
+import { request } from '../../../helper_vue'
 import { getRating } from './rating'
 
 // Exportálás

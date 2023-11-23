@@ -7,8 +7,8 @@
 // Importálás
 import {request} from '../helper_vue'
 import {ref, onMounted} from 'vue'
-import NotificationUnread from './components/NotificationUnread.vue';
-import NotificationRead from './components/NotificationRead.vue';
+import NotificationUnread from './components/Notification/NotificationUnread.vue';
+import NotificationRead from './components/Notification/NotificationRead.vue';
 
 // Exportálás
 export default {

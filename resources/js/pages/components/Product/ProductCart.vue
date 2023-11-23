@@ -30,9 +30,9 @@
 <script>
 
 // Importálás
-import { request } from "../../helper_vue";
+import { request } from "../../../helper_vue";
 import { ref } from 'vue'
-import router from '../../route'
+import router from '../../../route'
 
 // Exportálás
 export default {

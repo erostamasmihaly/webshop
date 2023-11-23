@@ -4,10 +4,6 @@ const router = createRouter({
     history: createWebHistory(),
     routes: [
         {
-            path: '/vue',
-            component: () => import('./pages/Index.vue')
-        },
-        {
             path: '/vue/cart',
             component: () => import('./pages/Cart.vue')
         },
